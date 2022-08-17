@@ -1,0 +1,54 @@
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Image from "next/image";
+import { MenuIcon, XIcon } from "@heroicons/react/solid";
+import { openMenu, closeMenu, openState } from "../features/HeaderMenu";
+import Link from "next/link";
+
+function Header() {
+	const dispatch = useDispatch();
+	const isOpen = useSelector(openState);
+
+	return (
+		<div className=' bg-black lg:p-4 lg:px-24 md:p-2 md:px-12 p-2  fixed mb-10 top-0 w-full z-50'>
+			<div className='flex justify-between items-center '>
+				<Image
+					src='/image/logo.png'
+					width={50}
+					height={50}
+					layout='fixed'
+					alt='ojarh'					
+				/>
+				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden '>
+					<Link  href="/"className="cursor-pointer"><li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov'><a>Home</a></li></Link>
+					<Link  href="/properties"><li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md '><a>Properties</a></li></Link>
+					<Link  href="/About"><li className='text-white uppercase hov active:text-red-600 a cursor-pointer text-md'><a>About us</a></li></Link>
+					<Link  href="/Login"><li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-md'><a>Sign up/Login</a></li></Link>
+				</ul>
+				{isOpen ? (
+					<XIcon
+						onClick={() => dispatch(closeMenu())}
+						className='h-7 w-7 text-white bg-red lg:hidden cursor-pointer'
+					/>
+				) : (
+					<MenuIcon
+						onClick={() => dispatch(openMenu())}
+						className='h-7 w-7 text-white bg-red lg:hidden cursor-pointer'
+					/>
+				)}
+			</div>
+			{isOpen ? 
+      <div className='w-full bg-black items-end space-y-2 mt-4 z-50'>
+				<ul className='flex flex-col items-start justify-between text-uppercase w-6/12 lg:hidden space-y-3'>
+        <Link  href="/" className="cursor-pointer"><li  onClick={() => dispatch(closeMenu())} className='text-white  uppercase cursor-pointer text-md'>Home</li></Link>
+					<Link  href="/properties"><li onClick={() => dispatch(closeMenu())} className='text-white  uppercase hov cursor-pointer text-md'>Properties</li></Link>
+					<Link  href="/About"><li onClick={() => dispatch(closeMenu())} className='text-white  uppercase hov cursor-pointer text-md'>About us</li></Link>
+					<Link  href="/Login"><li onClick={() => dispatch(closeMenu())} className='text-white  uppercase hov cursor-pointer text-md'>Sign up/Login</li></Link>
+				</ul>
+			</div>
+		 : ""}
+     </div>
+	  );
+}
+
+export default Header;
