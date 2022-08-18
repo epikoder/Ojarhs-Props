@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React from 'react'
 
 function Notice() {
@@ -8,7 +9,7 @@ function Notice() {
         </div>
 
         <div className='lg:w-8/12 w-full'>
-            <img src="/image/sign2.jpg" alt="" className='w-full h-full' />
+            <Image src="/image/sign2.jpg" alt="" className='w-full h-full' />
         </div>
     </div>
   )

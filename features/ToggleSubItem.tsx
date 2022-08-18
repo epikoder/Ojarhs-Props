@@ -9,7 +9,7 @@ const ToggleSubItem = createSlice({
 	name: "ToggleSubItem",
 	initialState,
 	reducers: {
-		Toggle: (state, action) => {
+		Toggle: (state) => {
 			state.isToggled = !state.isToggled;
 		},
 		

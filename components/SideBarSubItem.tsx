@@ -3,9 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { toggleState } from "../features/ToggleSubItem";
 
-type subItem = {
-	subItem: [];
-};
+
 
 function SideBarSubItem({ subItem }) {
 	const ToggleState = useSelector(toggleState);	

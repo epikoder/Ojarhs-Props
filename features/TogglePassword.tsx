@@ -14,11 +14,11 @@ const TogglePassword = createSlice({
     name:"TogglePassword",
     initialState: initialState,
     reducers: {
-        ShowPassword: (state, action) => {
+        ShowPassword: (state) => {
             state.show = false                               
         },
 
-        HidePassword: (state, action) => {
+        HidePassword: (state) => {
             state.show = true
             
 

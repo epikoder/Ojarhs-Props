@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 typeof window !== "undefined" ? import("tw-elements") : " ";
 
@@ -6,22 +7,22 @@ function Slider() {
 		<div id="carouselExampleSlidesOnly" className="carousel slide relative h-full w-full" data-bs-ride="carousel">
   <div className="carousel-inner relative w-full overflow-hidden h-full">
     <div className="carousel-item active relative float-left w-full h-full">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
+      <Image
+        src={"https://mdbcdn.b-cdn.net/img/new/slides/041.webp"}
         className="block w-full h-full"
         alt="Wild Landscape"
       />
     </div>
     <div className="carousel-item relative float-left w-full h-full">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
+      <Image
+        src={"https://mdbcdn.b-cdn.net/img/new/slides/042.webp"}
         className="block w-full h-full"
         alt="Camera"
       />
     </div>
     <div className="carousel-item relative float-left w-full h-full">
-      <img
-        src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
+      <Image
+        src={"https://mdbcdn.b-cdn.net/img/new/slides/043.webp"}
         className="block w-full h-full"
         alt="Exotic Fruits"
       />

@@ -15,11 +15,11 @@ const menuSlice  = createSlice({
     name: "Menu",
     initialState,
     reducers: {
-        openMenu: (state, action) => {
+        openMenu: (state) => {
            state.isOpen = true
         },
 
-        closeMenu: (state, action) => {
+        closeMenu: (state) => {
             state.isOpen = false
         },
     }

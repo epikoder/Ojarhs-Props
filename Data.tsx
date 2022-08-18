@@ -488,6 +488,8 @@ export const warehouse = [
 	},
 ];
 
+
+
 export const services = [
 	{
 		amount: 40000,
@@ -770,3 +772,19 @@ export const TenantsDetails = [
 		states: "banned",
 	},
 ];
+
+
+export const DashProp = [
+	{
+		id:uniqid(),
+		name: "Property1",
+		PropNo:12,
+		PropSize:"20 by 20",
+		PropDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi sint placeat ab dolorum fuga unde laboriosam at cumque eos architecto voluptas ut vitae, dolor impedit reiciendis expedita quia, optio vel.",
+		PropPrice:20000,
+		PropType:"warehouse",
+		PropImages:[
+			
+		]
+	}
+]

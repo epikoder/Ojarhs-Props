@@ -23,12 +23,12 @@ function Home() {
      <Link href="/Dashboard" className="mt-24 red"> Go to dashboard </Link>
         <TopSection />        
         <SignUp />
-        <Plaza name="plaza shops" store={shops} />
+        <Plaza name="plaza shops" store={shops} prop="" />
         <Notice />
-        <Plaza name="plaza office" store={offices}/>
+        <Plaza name="plaza office" store={offices} prop="" />
         <Adverts />
-        <Plaza name="plaza warehouse" store= {warehouse} />
-        <Plaza name ="Services" store={services} />
+        <Plaza name="plaza warehouse" store= {warehouse} prop="" />
+        <Plaza name ="Services" store={services} prop="" />
         <Testimonials testimony={Testimony}/>            
       </main>
      </Layout>

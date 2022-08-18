@@ -1,9 +1,9 @@
 import React from "react";
-import { Shop } from "../Typing.d";
+import { Serv, Shop } from "../Typing.d";
 import Card from "./Card";
 
 interface Shops {
-	store: Shop[];
+	store: Shop[]  | Serv[] ;
 	name:string
 	prop:string
 }
@@ -21,7 +21,7 @@ function Plaza({ name, store, prop}:Shops) {
 
 			<div className='flex flex-row flex-wrap gap-8 items-center justify-center w-[90vw] mx-auto'>
 				{store.map((shop, index) => (
-					<Card key={index} shop={shop} prop={prop}/>
+					<Card key={index} shop={shop}/>
 				))}
 			</div>
 

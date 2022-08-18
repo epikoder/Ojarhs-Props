@@ -9,7 +9,7 @@ function SideBarItem({ name, subItem }) {
 
 	if (subItem) {
 		return (
-			<div className='hov text-white transition-all duration-200 ease-in-out' onClick={() => dispatch(Toggle())}>
+			<div className='hov text-white transition-all duration-200 ease-in-out ' onClick={() => dispatch(Toggle())}>
 				<div
 					className='flex justify-between hov cursor-pointer my-2 transition
           duration-700

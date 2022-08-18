@@ -42,8 +42,8 @@ function AllTenants() {
 							Add new
 						</button>
 					</div>
-						{open ? <NewTenant type ="new" setOpen={setOpen} tenant= {Tenants}  /> : ""}
-						{updateOpen ? <NewTenant type="update" setOpen={setUpdateOpen} tenant= {Tenants} /> : ""}
+						{open ? <NewTenant type ="new" setOpen={setOpen}   /> : ""}
+						{updateOpen ? <NewTenant type="update" setOpen={setUpdateOpen}  /> : ""}
 
 					{tenantListArr.length !== 0 ? <div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
 						<table id='customers'>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver }  from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -17,17 +17,29 @@ import {
 import uniqid from "uniqid";
 import { Inputs, Tenants } from "../Typing.d";
 
-type Tenant = {
-	tenant: Tenants;
-	type: string;
-	setOpen: any;	
-};
+// type Tenant = {
+// 	tenant: Tenants;
+// 	type: string;
+// 	setOpen: any;
+// 	individualTenant: Tenants;
+// };
 
-function NewTenant({ setOpen, type }: Tenant) {
+// type individualTenant = {
+// 	firstName: string;
+// 	lastName: string;
+// 	address: string;
+// 	shopNo: string;
+// 	phoneNo: string;
+// 	email: string;
+// 	picture: string;
+// 	states: string;
+// 	individualTenant : {}
+// };
+
+function NewTenant({ setOpen, type }) {
 	const dispatch = useDispatch();
 	const togglePasswordState = useSelector(TogglePasswordState);
-	const individualTenant:Tenants = useSelector(getIndividualTenant);
-	const tenantList = useSelector(tenantsList);
+	const individualTenant = useSelector(getIndividualTenant);
 	const [status, setStatus] = useState("active");
 	const [firstName, setName] = useState("");
 	const [lastName, setLastName] = useState("");
@@ -41,80 +53,75 @@ function NewTenant({ setOpen, type }: Tenant) {
 	const addressRef = useRef();
 	const emailRef = useRef();
 	const shopNoRef = useRef();
-	const phoneRef = useRef();		
+	const phoneRef = useRef();
 
-
-	useEffect(()=> {
+	useEffect(() => {
 		if (type === "update") {
-			setName(individualTenant.firstName)
-			setLastName(individualTenant.lastName)
-			setAddress(individualTenant.address)
-			setEmail(individualTenant.email)
-			setShop(individualTenant.shopNo)
-			setPhone(individualTenant.phoneNo)
-			setStatus(individualTenant.states)
-		}}, [ type ])
-
-		const validationSchema = Yup.object().shape({
-			phoneNo: Yup.string().required("PhoneNo is required"),
-			shopNo: Yup.string().required("ShopNo is required"),
-			firstName: Yup.string().required("firstName is required"),
-			lastName: Yup.string().required("Last name is required"),
-			email: Yup.string().required("Email is required").email("Email is invalid"),
-			address: Yup.string().required("Address is required"),
-			registerationCode: Yup.string().required("Registeration Code is required"),
-			password: Yup.string()
-				.min(6, "Password must be at least 6 characters")
-				.required("Password is required"),
-			acceptTerms: Yup.string().oneOf([true], "Accept Ts & Cs is required"),
-		});
-		const formOptions = { resolver: yupResolver(validationSchema) };
-	
-		// get functions to build form with useForm() hook
-		const { register, handleSubmit, reset, formState } =
-			useForm<Inputs>(formOptions);
-		const { errors } = formState;
-	
-		function onSubmit(data) {
-			if (type === "new") {
-				console.log(data)
-				dispatch(
-					addTenant({
-						id: uniqid(),
-						firstName: data.firstName,
-						lastName: data.lastName,
-						email: data.email,
-						phoneNo: data.phoneNo,
-						shopNo: data.shopNo,
-						address: data.address,
-						states: status,
-					}),				
-				);
-	
-				setOpen(false);
-			}
-
+			setName(individualTenant.firstName);
+			setLastName(individualTenant.lastName);
+			setAddress(individualTenant.address);
+			setEmail(individualTenant.email);
+			setShop(individualTenant.shopNo);
+			setPhone(individualTenant.phoneNo);
+			setStatus(individualTenant.states);
 		}
+	}, [type]);
+
+	const validationSchema = Yup.object().shape({
+		phoneNo: Yup.string().required("PhoneNo is required"),
+		shopNo: Yup.string().required("ShopNo is required"),
+		firstName: Yup.string().required("firstName is required"),
+		lastName: Yup.string().required("Last name is required"),
+		email: Yup.string().required("Email is required").email("Email is invalid"),
+		address: Yup.string().required("Address is required"),
+		registerationCode: Yup.string().required("Registeration Code is required"),
+		password: Yup.string()
+			.min(6, "Password must be at least 6 characters")
+			.required("Password is required"),
+	});
+	const formOptions = { resolver: yupResolver(validationSchema) };
+
+	// get functions to build form with useForm() hook
+	const { register, handleSubmit, reset, formState } =
+		useForm(formOptions);
+	const { errors } = formState;
+
+	function onSubmit(data) {
+		if (type === "new") {
+			console.log(data);
+			dispatch(
+				addTenant({
+					id: uniqid(),
+					firstName: data.firstName,
+					lastName: data.lastName,
+					email: data.email,
+					phoneNo: data.phoneNo,
+					shopNo: data.shopNo,
+					address: data.address,
+					states: status,
+				}),
+			);
+
+			setOpen(false);
+		}
+	}
 
 	const handleUpdate = (e) => {
-		e.preventDefault();				
-		dispatch(updateTenant(			
-			{
-			...individualTenant,
-				 Fname : firstName,
-				 Lname: lastName,
-				 Adress: address,
-				 Shop: shop,
-				 Phone: phone,
-				 Email:email,
-				 State: status
-			}
-			))			
+		e.preventDefault();
+		dispatch(
+			updateTenant({
+				...individualTenant,
+				Fname: firstName,
+				Lname: lastName,
+				Adress: address,
+				Shop: shop,
+				Phone: phone,
+				Email: email,
+				State: status,
+			}),
+		);
 		setOpen(false);
 	};
-
-	
-	
 
 	return (
 		<div className='bg-gray-0  z-40 absolute w-full new  mx-auto pb-12 overflow-scroll h-[90vh] scrollbar-hide p-4'>
@@ -128,7 +135,7 @@ function NewTenant({ setOpen, type }: Tenant) {
 					{type === "new" ? <p>Add New Tenant</p> : <p>Update Tenant</p>}
 				</h1>
 				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>
-				<div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
@@ -141,7 +148,7 @@ function NewTenant({ setOpen, type }: Tenant) {
 								type='text'
 								placeholder='First Name'
 								value={firstName}
-								{...register("firstName", {required: true})}
+								{...register("firstName", { required: true })}
 								onChange={(e) => setName(e.target.value)}
 								className={`${
 									errors.firstName
@@ -230,7 +237,7 @@ function NewTenant({ setOpen, type }: Tenant) {
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>Phone No</span>
-							<input								
+							<input
 								ref={phoneRef}
 								type='text'
 								placeholder='Phone No'
@@ -346,7 +353,6 @@ function NewTenant({ setOpen, type }: Tenant) {
 						</select>
 					</label>
 
-
 					{type === "new" ? (
 						<button
 							type='submit'
@@ -358,10 +364,7 @@ function NewTenant({ setOpen, type }: Tenant) {
 							</div>
 						</button>
 					) : (
-						<button							
-							className='w-full outline-none'
-							onClick={handleUpdate}
-						>
+						<button className='w-full outline-none' onClick={handleUpdate}>
 							<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer'>
 								Update
 							</div>

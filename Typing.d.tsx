@@ -22,7 +22,7 @@ export type Tenants = {
 	phoneNo: string;
 	email: string;
 	picture: string;
-	states: string;
+	states: string;	
 };
 
 export type Inputs = {	
@@ -35,3 +35,19 @@ export type Inputs = {
 	address:string	
 	password:string
   };
+
+  export type Properties = {
+	id:string
+	name:string
+	PropNo:number
+	PropSize:string
+	PropType:string
+	PropDescription:string
+	PropPrice:number	
+  }
+
+
+  export type Serv = {
+	amount:number
+	type:string
+  }
