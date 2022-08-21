@@ -19,14 +19,14 @@
 //   }
 
   export type Space = {
-	Id:string
-	Name:string
-	No:number
-	Size:string
-	Type:string
-	Description:string
-	Price:number
-	Address?:string
+	id:string
+	name:string
+	no:number
+	size:string
+	type:string
+	description:string
+	amount:number
+	address?:string
   }
 
 export type Testimony = {

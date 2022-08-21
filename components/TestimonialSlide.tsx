@@ -18,7 +18,7 @@ function TestimonialSlide({ testimony }: Testimonies) {
 				className='carousel slide relative h-full w-full  border-l-600 border-t-o border-r-0 border-b-0 border-l-2 '
 				data-bs-ride='carousel'
 			>
-				<div className='carousel-inner relative w-full overflow-hidden h-full '>
+				<div className='carousel-inner relative w-full overflow-hidden h-full'>
 					{testimony.map((testimony, index) => (
 						<div
 							className={
@@ -30,7 +30,7 @@ function TestimonialSlide({ testimony }: Testimonies) {
 						>
 							<div className=' h-full p-4 flex flex-col '>
 								<div className='text-gray-500 text-md'>{testimony.testimony}</div>
-								<p className='red text-end  p-4 mt-12 flex-end ' space-x-1> -
+								<p className='red text-end  p-4 mt-12 flex-end space-x-1'> -
 									{testimony.name}
 								</p>
 							</div>

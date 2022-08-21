@@ -13,9 +13,7 @@ function Notice() {
 					src='/image/041.webp'
 					alt=''
 					className='w-full h-full '
-					width={30}
-          height={30}
-          layout="fill"
+					layout="fill"
 				/>
 			</div>
 		</div>
