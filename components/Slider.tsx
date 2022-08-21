@@ -8,23 +8,26 @@ function Slider() {
   <div className="carousel-inner relative w-full overflow-hidden h-full">
     <div className="carousel-item active relative float-left w-full h-full">
       <Image
-        src={"https://mdbcdn.b-cdn.net/img/new/slides/041.webp"}
+        src="/image/041.webp"
         className="block w-full h-full"
         alt="Wild Landscape"
+        layout="fill"
       />
     </div>
     <div className="carousel-item relative float-left w-full h-full">
       <Image
-        src={"https://mdbcdn.b-cdn.net/img/new/slides/042.webp"}
+        src="/image/042.webp"
         className="block w-full h-full"
         alt="Camera"
+        layout="fill"
       />
     </div>
     <div className="carousel-item relative float-left w-full h-full">
       <Image
-        src={"https://mdbcdn.b-cdn.net/img/new/slides/043.webp"}
+        src="/image/043.webp"
         className="block w-full h-full"
         alt="Exotic Fruits"
+        layout="fill"
       />
     </div>
   </div>

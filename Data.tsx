@@ -1,6 +1,8 @@
 import uniqid from 'uniqid';
 import  nextId  from "react-id-generator";
-
+import { tenantsList } from './features/TenantsSlice';
+import { useSelector } from 'react-redux';
+// const tenant = useSelector(tenantsList)
 export const AllProducts = [
 	{
 		amount: 40000,
@@ -788,3 +790,5 @@ export const DashProp = [
 		]
 	}
 ]
+
+

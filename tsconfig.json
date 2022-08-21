@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "components/SideBarItem.jsx", "components/NewTenant.jsx"  ],
+, "components/SideBarItem.jsx", "components/NewTenant.jsx", "components/NewProps.jsx"  ],
   "exclude": [
     "node_modules"
   ]

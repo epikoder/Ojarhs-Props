@@ -6,6 +6,7 @@ import SideBarHeader from "../../components/SideBarHeader";
 import SideBar from "../../components/SideBar";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
+import { tenantsList } from "../../features/TenantsSlice";
 
 function Id({ Tenant, Id }) {
 	const sideBarState = useSelector(SideBarToggleState);
@@ -20,18 +21,18 @@ function Id({ Tenant, Id }) {
 					<SideBar />
 				</div>
 
-				<div className='p-8'>
-					<h1 className="mb-4 ">Ezomon Glory</h1>
+				<div className='p-8 w-full'>
+					<h1 className='mb-4 '>Ezomon Glory</h1>
 
-					<div className=' lg:flex w-full space-x-4'>
+					<div className=' lg:flex w-full space-x-4 '>
+						<div className="relative w-3/12">
 						<Image
 							src='/image/eg.jfif'
-							alt='glory'
-							height={250}
-							width={250}
-							layout='fixed'
+							alt='glory'		
+							layout='fill'
 							className='rounded-lg lg:w-5/12 w-full'
 						/>
+						</div>
 
 						<div className='bg-transparent lg:w-9/12 w-full'>
 							<div className='bg-re w-full space-y-4 p-2'>
@@ -73,13 +74,7 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	console.log(context + "hi");
-
-	console.log(context.params.tenant + "hello");
-
 	const Id = context.params.Id;
-
-	console.log(TenantsDetails.map((tenant) => tenant.id));
 
 	return {
 		props: {

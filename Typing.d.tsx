@@ -1,12 +1,33 @@
-export type Shop = {
-	status: string;
-	amount: number;
-	shopNo: string;
-	shopAddress: string;
-	shopSize: string;
-	shopDescription: string;
-	type: string;
-};
+// export type Shop = {
+// 	status: string;
+// 	amount: number;
+// 	shopNo: string;
+// 	shopAddress: string;
+// 	shopSize: string;
+// 	shopDescription: string;
+// 	type: string;
+// };
+
+// export type Properties = {
+// 	id:string
+// 	name:string
+// 	PropNo:number
+// 	PropSize:string
+// 	PropType:string
+// 	PropDescription:string
+// 	PropPrice:number	
+//   }
+
+  export type Space = {
+	Id:string
+	Name:string
+	No:number
+	Size:string
+	Type:string
+	Description:string
+	Price:number
+	Address?:string
+  }
 
 export type Testimony = {
 	name: string;
@@ -36,15 +57,6 @@ export type Inputs = {
 	password:string
   };
 
-  export type Properties = {
-	id:string
-	name:string
-	PropNo:number
-	PropSize:string
-	PropType:string
-	PropDescription:string
-	PropPrice:number	
-  }
 
 
   export type Serv = {

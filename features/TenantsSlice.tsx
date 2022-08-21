@@ -3,19 +3,16 @@ import { TenantsDetails } from "../Data";
 import { RootState } from "../store";
 const getTenant = typeof window !== "undefined";
 
-console.log(TenantsDetails);
 
-const getInitialTenants = () => {
+const getInitialTenants = () => {	
 	const tenantsList = window.localStorage.getItem("tenantsList");
 
-	if (tenantsList) {
-		console.log(tenantsList + "windows");
-
+	if (tenantsList) {		
 		return JSON.parse(tenantsList);
 	}
 
 	window.localStorage.setItem("tenantsList", JSON.stringify([]));
-	return TenantsDetails;
+	return [];
 };
 
 const initialValue = {
@@ -28,6 +25,8 @@ const TenantsSlice = createSlice({
 	initialState: initialValue,
 	reducers: {
 		addTenant: (state, action) => {
+			console.log(state.tenantsList);
+			
 			state.tenantsList.push(action.payload);
 
 			const tenantList = window.localStorage.getItem("tenantsList");

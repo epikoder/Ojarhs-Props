@@ -22,18 +22,18 @@ function SideBar() {
 		>
 			<div className='flex flex-col justify-between space-y-1'>
 				<div onClick={() => router.push("/Dashboard")}>
-					<SideBarItem name='Dashboard' subItem={[]}/>{" "}
+					<SideBarItem name='Dashboard' subItem={""}/>{" "}
 				</div>
 				<SideBarItem name='Tenants' subItem={TenantsSubItem} />
-				<SideBarItem name='Messages' subItem={MessageSubItem}/>
+				<SideBarItem name='Messages' subItem={""}/>
 				<div onClick={() => router.push("/Services")}>
-					<SideBarItem name='Services' subItem={[]}/>
+					<SideBarItem name='Services' subItem={""}/>
 				</div>
-				<div onClick={()=> router.push("/Dash-Props")}><SideBarItem subItem={[]} name='Properties' /></div>
-				<SideBarItem name='Records' subItem={[]} />
-				<SideBarItem name='Dispute & Reports' subItem={[]} />
-				<SideBarItem name='Adverts' subItem={[]} />
-				<SideBarItem name='Ojarh Office' subItem={[]}/>
+				<div onClick={()=> router.push("/Dash-Props")}><SideBarItem subItem={""} name='Properties' /></div>
+				<SideBarItem name='Records' subItem={""} />
+				<SideBarItem name='Dispute & Reports' subItem={""} />
+				<SideBarItem name='Adverts' subItem={""} />
+				<SideBarItem name='Ojarh Office' subItem={""}/>
 			</div>
 		</div>
 	);

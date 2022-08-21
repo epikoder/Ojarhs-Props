@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import SideBar from "../components/SideBar";
 import SideBarHeader from "../components/SideBarHeader";
 import Tenant from "../components/Tenant";
-import { TenantsDetails } from "../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../features/ToggleSideBar";
-import Link from "next/link";
 import NewTenant from "../components/NewTenant";
 import { tenantsList } from "../features/TenantsSlice";
 
@@ -14,11 +12,8 @@ function AllTenants() {
 	const [updateOpen, setUpdateOpen] = useState(false);	
 	const sideBarState = useSelector(SideBarToggleState);
 	const tenantListArr = useSelector(tenantsList)
-	
-	const Tenants = tenantListArr.map((tenant, index)=> {
-		return tenant
 		
-	})
+	
 	
 	return (
 		<div className='w-full'>
@@ -61,8 +56,9 @@ function AllTenants() {
 						</table>
 					</div> : <div className="text-center uppercase mt-4 ">No New Tenant </div>}
 				</div>
-			</div>
+			</div>			
 		</div>
 	);
 }
+
 export default AllTenants;

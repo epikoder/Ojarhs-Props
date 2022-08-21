@@ -11,30 +11,9 @@ import { XIcon } from "@heroicons/react/outline";
 import {
 	addTenant,
 	getIndividualTenant,
-	tenantsList,
 	updateTenant,
 } from "../features/TenantsSlice";
 import uniqid from "uniqid";
-import { Inputs, Tenants } from "../Typing.d";
-
-// type Tenant = {
-// 	tenant: Tenants;
-// 	type: string;
-// 	setOpen: any;
-// 	individualTenant: Tenants;
-// };
-
-// type individualTenant = {
-// 	firstName: string;
-// 	lastName: string;
-// 	address: string;
-// 	shopNo: string;
-// 	phoneNo: string;
-// 	email: string;
-// 	picture: string;
-// 	states: string;
-// 	individualTenant : {}
-// };
 
 function NewTenant({ setOpen, type }) {
 	const dispatch = useDispatch();
@@ -47,13 +26,6 @@ function NewTenant({ setOpen, type }) {
 	const [email, setEmail] = useState("");
 	const [shop, setShop] = useState("");
 	const [phone, setPhone] = useState("");
-	const dispath = useDispatch();
-	const fnRef = useRef();
-	const lnRef = useRef();
-	const addressRef = useRef();
-	const emailRef = useRef();
-	const shopNoRef = useRef();
-	const phoneRef = useRef();
 
 	useEffect(() => {
 		if (type === "update") {
@@ -82,13 +54,11 @@ function NewTenant({ setOpen, type }) {
 	const formOptions = { resolver: yupResolver(validationSchema) };
 
 	// get functions to build form with useForm() hook
-	const { register, handleSubmit, reset, formState } =
-		useForm(formOptions);
+	const { register, handleSubmit, reset, formState } = useForm(formOptions);
 	const { errors } = formState;
 
 	function onSubmit(data) {
 		if (type === "new") {
-			console.log(data);
 			dispatch(
 				addTenant({
 					id: uniqid(),
@@ -144,7 +114,7 @@ function NewTenant({ setOpen, type }) {
 								First Name
 							</span>
 							<input
-								ref={fnRef}
+								// ref={fnRef}
 								type='text'
 								placeholder='First Name'
 								value={firstName}
@@ -169,7 +139,7 @@ function NewTenant({ setOpen, type }) {
 								Last Name
 							</span>
 							<input
-								ref={lnRef}
+								// ref={lnRef}
 								type='text'
 								placeholder='Last Name'
 								value={lastName}
@@ -192,7 +162,7 @@ function NewTenant({ setOpen, type }) {
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>Address</span>
 							<input
-								ref={addressRef}
+								// ref={addressRef}
 								type='text'
 								placeholder='Adress'
 								value={address}
@@ -215,7 +185,7 @@ function NewTenant({ setOpen, type }) {
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>Email</span>
 							<input
-								ref={emailRef}
+								// ref={emailRef}
 								type='email'
 								placeholder='Email'
 								value={email}
@@ -238,7 +208,7 @@ function NewTenant({ setOpen, type }) {
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>Phone No</span>
 							<input
-								ref={phoneRef}
+								// ref={phoneRef}
 								type='text'
 								placeholder='Phone No'
 								value={phone}
@@ -261,7 +231,7 @@ function NewTenant({ setOpen, type }) {
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>Shop No</span>
 							<input
-								ref={shopNoRef}
+								// ref={shopNoRef}
 								type='text'
 								placeholder='Shop No'
 								value={shop}
