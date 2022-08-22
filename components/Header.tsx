@@ -18,30 +18,30 @@ function Header() {
 				<a href='/'>
 					<Image
 						src='/image/logo.png'
-						width={50}
+						width={70}
 						height={50}
 						layout='fixed'
 						alt='ojarh'
 					/>
 				</a>
-				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden '>
+				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden'>
 					<NavLink href='/'>
-						<li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov'>
+						<li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov duration-300 transition-all ease-in-out'>
 							<a>Home</a>
 						</li>
 					</NavLink>
 					<NavLink href='/properties'>
-						<li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md '>
+						<li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md duration-300 transition-all ease-in-out'>
 							<a>Properties</a>
 						</li>
 					</NavLink>
 					<NavLink href='/About'>
-						<li className='text-white uppercase hov active:text-red-600 a cursor-pointer text-md'>
+						<li className='text-white uppercase hov active:text-red-600 a cursor-pointer text-md duration-300 transition-all ease-in-out'>
 							<a>About us</a>
 						</li>
 					</NavLink>
 					<NavLink href='/Login'>
-						<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-md'>
+						<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
 							<a>Sign up/Login</a>
 						</li>
 					</NavLink>

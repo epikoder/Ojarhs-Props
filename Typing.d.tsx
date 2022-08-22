@@ -1,33 +1,14 @@
-// export type Shop = {
-// 	status: string;
-// 	amount: number;
-// 	shopNo: string;
-// 	shopAddress: string;
-// 	shopSize: string;
-// 	shopDescription: string;
-// 	type: string;
-// };
-
-// export type Properties = {
-// 	id:string
-// 	name:string
-// 	PropNo:number
-// 	PropSize:string
-// 	PropType:string
-// 	PropDescription:string
-// 	PropPrice:number	
-//   }
-
-  export type Space = {
-	id:string
-	name:string
-	no:number
-	size:string
-	type:string
-	description:string
-	amount:number
-	address?:string
-  }
+export type Space = {
+	id: string
+	name: string
+	no: string
+	size: string
+	type: string
+	description: string
+	amount: number
+	status: 'open' | 'occupied'
+	address?: string
+}
 
 export type Testimony = {
 	name: string;
@@ -35,31 +16,34 @@ export type Testimony = {
 };
 
 export type Tenants = {
-	id:string
-	firstName: string;
-	lastName: string;
+	id: string
+	fname: string;
+	lname: string;
 	address: string;
-	shopNo: string;
-	phoneNo: string;
+	phone: string;
 	email: string;
 	picture: string;
-	states: string;	
+	state: string;
 };
 
-export type Inputs = {	
-	firstName:string
-	lastName:string
-	email:string
-	shopNo:string
-	phoneNo:string	
-	registerationCode:string
-	address:string	
-	password:string
-  };
+export type Inputs = {
+	fname: string
+	lname: string
+	email: string
+	shopNo: string
+	phoneNo: string
+	registerationCode: string
+	address: string
+	password: string
+};
 
 
 
-  export type Serv = {
-	amount:number
-	type:string
-  }
+export type Service = {
+	id: string
+	name: string
+	description: string
+	amount: number
+	manager: string
+	type: string
+}

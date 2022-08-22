@@ -10,27 +10,23 @@ import {
 } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProperty, GetProperty, updateProperty } from "../features/PropertySlice";
+import { deleteProperty, getProperty, updateProperty } from "../features/PropertySlice";
 
 type Props = {
 	Prop: Space;
 	setOpen: any;
 };
 
-function Property({ Prop, setOpen }: Props) {	
-	
-	
+function Property({ Prop, setOpen }: Props) {
 	const dispatch = useDispatch();
-
 	const handleDelete = () => {
 		dispatch(deleteProperty(Prop.id));
 	};
 	const handleEdit = () => {
-		dispatch(GetProperty(Prop.id))
-			setOpen(true);
+		dispatch(getProperty(Prop.id))
+		setOpen(true);
 	};
 
-	
 	const str = Prop.amount.toString()
 
 	const price = parseInt(str)

@@ -5,7 +5,14 @@ module.exports = {
 		"./components/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: {},
+		extend: {
+			width: {
+				"70": "19rem"
+			},
+			fontSize: {
+				"prop": ".9rem"
+			}
+		},
 	},
 	plugins: [
 		require("tw-elements/dist/plugin"),
