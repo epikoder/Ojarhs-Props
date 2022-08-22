@@ -1,7 +1,8 @@
 import uniqid from 'uniqid';
-import  nextId  from "react-id-generator";
+import nextId from "react-id-generator";
 import { tenantsList } from './features/TenantsSlice';
 import { useSelector } from 'react-redux';
+import { Service, Space, Testimony } from './Typing.d';
 // const tenant = useSelector(tenantsList)
 export const AllProducts = [
 	{
@@ -220,321 +221,227 @@ export const AllProducts = [
 	},
 ]
 
-export const shops = [
+export const shops: Space[] = [
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df1065442f",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
 		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df1065442a",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
 		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
 		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
 		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f45e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
 		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f9a330b8-f44e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "shop",
-	},
-
-	{
-		status: "open",
-		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "shop",
-	},
-
-	{
-		status: "open",
-		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
 		type: "shop",
 	},
 ];
 
-export const offices = [
+export const offices: Space[] = [
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df1065442f",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df1065442a",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f45e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f9a330b8-f44e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
-	},
-
-	{
-		status: "open",
-		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
-	},
-
-	{
-		status: "open",
-		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "office",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
 ];
 
-export const warehouse = [
+export const warehouse: Space[] = [
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df1065442f",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df1065442a",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-bff7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f44e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f8a330b8-f45e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
-
 	{
-		status: "open",
+		id: "f9a330b8-f44e-469b-baf7-a5df10654423",
+		name: "A property",
+		status: 'open',
 		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
-	},
-
-	{
-		status: "open",
-		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
-	},
-
-	{
-		status: "open",
-		amount: 40000,
-		shopNo: "B24",
-		shopAddress: "no 13, eliot lagos, Nigeria",
-		shopSize: " 20 by 20  ",
-		shopDescription:
-			"This is a great store where you can sell all types of things ",
-		type: "warehouse",
+		no: "B24",
+		address: "no 13, eliot lagos, Nigeria",
+		size: " 20 by 20  ",
+		description: "This is a great store where you can sell all types of things ",
+		type: "shop",
 	},
 ];
 
 
 
-export const services = [
+export const services: Service[] = [
 	{
+		id: "f9a330b8-f44e-469b-baf7-a5df10654423",
 		amount: 40000,
-		type: "service",
-	},
-
-	{
-		amount: 20000,
-		type: "service",
-	},
-
-	{
-		amount: 10000,
-		type: "service",
-	},
-
-	{
-		amount: 50000,
-		type: "service",
-	},
-
-	{
-		amount: 10000,
-		type: "service",
-	},
-
-	{
-		amount: 40000,
-		type: "service",
-	},
-
-	{
-		amount: 40000,
-		type: "service",
-	},
-
-	{
-		amount: 40000,
-		type: "service",
+		description: "Electrical Maintenance and repairs",
+		manager: "Emma Glory",
+		name: "Electrical Maintenance",
+		type: "service"
 	},
 ];
 
-export const Testimony = [
+export const testimony: Testimony[] = [
 	{
 		name: "Glory",
 		testimony: "A very nice location, now i sell faster. Thank you Ojarhs ",
@@ -591,148 +498,137 @@ export const TenantsSubItem = [
 export const TenantsDetails = [
 	{
 		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "active",
-	},
-	{
-		id: uniqid(),
-        firstName: "Glory",
-		lastName: "Ezomon",
-		address: "12, Kgb street, Elliot, Lagos",
-		shopNo: "15",
-		phoneNo: "08056728846",
-		email: "ezomonglory01@gmail.com",
-		picture: "eg.jfif",
-		states: "banned",
-	},
-	{
-        id: uniqid(),
-		lastName: "Ezomon",
 		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "active",
+	},
+	{
+		id: uniqid(),
+		firstName: "Glory",
+		lastName: "Ezomon",
 		address: "12, Kgb street, Elliot, Lagos",
 		shopNo: "15",
 		phoneNo: "08056728846",
@@ -741,7 +637,7 @@ export const TenantsDetails = [
 		states: "banned",
 	},
 	{
-        id: uniqid(),
+		id: uniqid(),
 		lastName: "Ezomon",
 		firstName: "Glory",
 		address: "12, Kgb street, Elliot, Lagos",
@@ -753,7 +649,18 @@ export const TenantsDetails = [
 	},
 	{
 		id: uniqid(),
-        lastName: "Ezomon",
+		lastName: "Ezomon",
+		firstName: "Glory",
+		address: "12, Kgb street, Elliot, Lagos",
+		shopNo: "15",
+		phoneNo: "08056728846",
+		email: "ezomonglory01@gmail.com",
+		picture: "eg.jfif",
+		states: "banned",
+	},
+	{
+		id: uniqid(),
+		lastName: "Ezomon",
 		firstName: "Glory",
 		address: "12, Kgb street, Elliot, Lagos",
 		shopNo: "15",
@@ -778,15 +685,15 @@ export const TenantsDetails = [
 
 export const DashProp = [
 	{
-		id:uniqid(),
+		id: uniqid(),
 		name: "Property1",
-		PropNo:12,
-		PropSize:"20 by 20",
+		PropNo: 12,
+		PropSize: "20 by 20",
 		PropDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi sint placeat ab dolorum fuga unde laboriosam at cumque eos architecto voluptas ut vitae, dolor impedit reiciendis expedita quia, optio vel.",
-		PropPrice:20000,
-		PropType:"warehouse",
-		PropImages:[
-			
+		PropPrice: 20000,
+		PropType: "warehouse",
+		PropImages: [
+
 		]
 	}
 ]

@@ -15,31 +15,33 @@ function Header() {
 	return (
 		<div className=' bg-black lg:p-4 lg:px-24 md:p-2 md:px-12 p-2  fixed mb-10 top-0 w-full z-50'>
 			<div className='flex justify-between items-center '>
-				<Image
-					src='/image/logo.png'
-					width={50}
-					height={50}
-					layout='fixed'
-					alt='ojarh'
-				/>
-				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden '>
+				<a href='/'>
+					<Image
+						src='/image/logo.png'
+						width={70}
+						height={50}
+						layout='fixed'
+						alt='ojarh'
+					/>
+				</a>
+				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden'>
 					<NavLink href='/'>
-						<li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov'>
+						<li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov duration-300 transition-all ease-in-out'>
 							<a>Home</a>
 						</li>
 					</NavLink>
 					<NavLink href='/properties'>
-						<li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md '>
+						<li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md duration-300 transition-all ease-in-out'>
 							<a>Properties</a>
 						</li>
 					</NavLink>
 					<NavLink href='/About'>
-						<li className='text-white uppercase hov active:text-red-600 a cursor-pointer text-md'>
+						<li className='text-white uppercase hov active:text-red-600 a cursor-pointer text-md duration-300 transition-all ease-in-out'>
 							<a>About us</a>
 						</li>
 					</NavLink>
 					<NavLink href='/Login'>
-						<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-md'>
+						<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
 							<a>Sign up/Login</a>
 						</li>
 					</NavLink>

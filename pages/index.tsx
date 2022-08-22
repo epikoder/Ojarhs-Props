@@ -2,7 +2,7 @@ import Head from "next/head"
 import React from "react";
 import Plaza from "../components/Plaza";
 import SignUp from "../components/SignUp";
-import { offices, shops, warehouse, services, Testimony } from "../Data";
+import { offices, shops, warehouse, services, testimony } from "../Data";
 import TopSection from "../components/TopSection";
 import Notice from "../components/Notice";
 import Adverts from "../components/Adverts";
@@ -12,28 +12,27 @@ import Link from "next/link";
 
 
 function Home() {
-  return (   
-     <div >
+  return (
+    <div >
       <Head>
-        <title>ojars</title>                        
+        <title>ojarh</title>
       </Head>
 
-     <Layout>
-     <main className="space-y-4 mt-24">        
-     <Link href="/Dashboard" className="mt-24 red"> Go to dashboard </Link>
-        <TopSection />        
-        <SignUp />
-        <Plaza name="plaza shops" store={shops} prop="" />
-        <Notice />
-        <Plaza name="plaza office" store={offices} prop="" />
-        <Adverts />
-        <Plaza name="plaza warehouse" store= {warehouse} prop="" />
-        <Plaza name ="Services" store={services} prop="" />
-        <Testimonials testimony={Testimony}/>            
-      </main>
-     </Layout>
-      
-     </div>
+      <Layout>
+        <main className="space-y-4 mt-20 lg:mt-24">
+          {/* <Link href="/Dashboard" className="mt-24 red"> Go to dashboard </Link> */}
+          <TopSection />
+          <SignUp />
+          <Plaza name="plaza shops" store={shops} prop="" />
+          <Notice />
+          <Plaza name="plaza office" store={offices} prop="" />
+          <Adverts />
+          <Plaza name="plaza warehouse" store={warehouse} prop="" />
+          <Plaza name="Services" store={services} prop="" />
+          <Testimonials testimony={testimony} />
+        </main>
+      </Layout>
+    </div>
   );
 }
 
