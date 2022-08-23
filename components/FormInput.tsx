@@ -78,32 +78,32 @@ export const FormCountryInput = ({ props }: {
     }
 }) => {
     const [countries, setCountries] = useState<Country[]>([])
-    useEffect(() => {
-        var fetchCountries = async () => {
-            try {
-                var res = await fetch(BASEURL + "/resources/countries")
-                if (res.status != 200) {
-                    return fetchCountries()
-                }
-                // console.log(await res.json() as Country[]);
-                setCountries((await res.json() as {
-                    data: Country[],
-                    status: string
-                }).data)
-            } catch (error) {
-                console.log();
-
+    var fetchCountries = async () => {
+        try {
+            var res = await fetch(BASEURL + "/resources/countries")
+            if (res.status != 200) {
+                return
             }
+            setCountries((await res.json() as {
+                data: Country[],
+                status: string
+            }).data)
+        } catch (error) {
+            console.log();
         }
+    }
+    useEffect(() => {
         fetchCountries()
     }, [])
+
+
     return <>
         <label
             htmlFor=''
             className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg px-4 py-2 my-2'
         >
             <span className='text-gray-600 mb-2 text-sm idden'>{props.title}</span>
-            <select key={"se"} onChange={(e) => { props.handleChange(e.target.value) }} className='py-1' >
+            <select key={"se"} onChange={(e) => { props.handleChange(e.target.value) }} className='my-2' >
                 <option key={"unique"} value={"Select country"}>Select Country</option>
                 {countries !== undefined && countries.map((c, i) => <>
                     <option key={i} value={c.code}>{c.name}</option>
