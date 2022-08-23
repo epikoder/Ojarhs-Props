@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { BASEURL } from "../constants"
 import Loader from "./Loader"
 
@@ -15,26 +15,24 @@ export const ImageUpload = ({ handleUpload }: { handleUpload?: (s: string) => vo
                 var req = new FormData()
                 setLoading(true)
                 req.set("photo", await (await fetch(e.target.result as string)).blob())
-                setTimeout(async () => {
-                    const res = await fetch(BASEURL + "/auth/register/upload", {
-                        method: "POST",
-                        body: req
-                    })
-                    setLoading(false)
-                    if (res.status !== 200) {
-                        setUrl('')
-                        return
-                    }
-                    var data = await (res).json() as {
-                        status: 'success' | 'failed'
-                        photo?: string
-                    }
-                    if (data.status === 'failed') {
-                        setUrl('')
-                        return
-                    }
-                    handleUpload(data.photo)
-                }, 3000)
+                const res = await fetch(BASEURL + "/auth/register/upload", {
+                    method: "POST",
+                    body: req
+                })
+                setLoading(false)
+                if (res.status !== 200) {
+                    setUrl('')
+                    return
+                }
+                var data = await (res).json() as {
+                    status: 'success' | 'failed'
+                    photo?: string
+                }
+                if (data.status === 'failed') {
+                    setUrl('')
+                    return
+                }
+                handleUpload(data.photo)
 
             } catch (error) {
                 console.log(error);
