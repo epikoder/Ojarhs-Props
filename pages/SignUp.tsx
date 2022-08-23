@@ -406,8 +406,9 @@ function SignUp() {
 									}
 								}} />
 							</div>
-						</>
-					)}
+						</div>
+					</>
+					}
 
 					<div className="col-span-2">
 						<div className={`text-center text-md py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
