@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Staff } from "../Typing.d";
-import {
-	EyeIcon,
+import {	
 	TrashIcon,
 	MailIcon,
 	PencilAltIcon,

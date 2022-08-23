@@ -24,16 +24,34 @@ function SideBar() {
 				<div onClick={() => router.push("/Dashboard")}>
 					<SideBarItem name='Dashboard' subItem={""} type={""} />{" "}
 				</div>
-				<SideBarItem name='Tenants' subItem={TenantsSubItem} type={""}/>
-				<SideBarItem name='Messages' subItem={""} type={""}/>
-				<div onClick={() => router.push("/Services")}>
-					<SideBarItem name='Services' subItem={""} type={""}/>
+				<div>
+					<SideBarItem name='Tenants' subItem={TenantsSubItem} type={""} />
 				</div>
-				<div onClick={()=> router.push("/Dash-Props")}><SideBarItem subItem={""} type={""} name='Properties' /></div>
-				<SideBarItem name='Records' subItem={""} type={""} />
-				<SideBarItem name='Dispute & Reports' subItem={""} type={""} />
-				<SideBarItem name='Adverts' subItem={""} type={""} />
-				<SideBarItem name='Ojarh Office' subItem={OfficeSubItem} type="office"/>
+				<div onClick={() => router.push("/Message")}>
+					<SideBarItem name='Messages' subItem={""} type={""} />
+				</div>
+				<div onClick={() => router.push("/Services")}>
+					<SideBarItem name='Services' subItem={""} type={""} />
+				</div>
+				<div onClick={() => router.push("/Dash-Props")}>
+					<SideBarItem subItem={""} type={""} name='Properties' />
+				</div>
+				<div onClick={() => router.push("/Records")}>
+					<SideBarItem name='Records' subItem={""} type={""} />
+				</div>
+				<div onClick={() => router.push("/D&R")}>
+					<SideBarItem name='Dispute & Reports' subItem={""} type={""} />
+				</div>
+				<div onClick={() => router.push("/Adverts")}>
+					<SideBarItem name='Adverts' subItem={""} type={""} />
+				</div>
+				<div>
+					<SideBarItem
+						name='Ojarh Office'
+						subItem={OfficeSubItem}
+						type='office'
+					/>
+				</div>
 			</div>
 		</div>
 	);
