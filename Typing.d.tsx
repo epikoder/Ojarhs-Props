@@ -17,13 +17,13 @@ export type Testimony = {
 
 export type Tenants = {
 	id: string
-	fname: string;
-	lname: string;
+	firstName: string;
+	lastName: string;
 	address: string;
 	phone: string;
 	email: string;
 	picture: string;
-	state: string;
+	states: string;
 };
 
 export type Inputs = {
@@ -46,6 +46,15 @@ export type Service = {
 	amount: number
 	manager: string
 	type: string
+}
+
+export type Staff = {
+	id:string
+	name:string
+	description:string
+	fee:number
+	no:string
+	email:String	
 }
 
 export type NextOfKin = {
