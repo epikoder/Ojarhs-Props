@@ -22,8 +22,12 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-, "components/SideBarItem.jsx", "components/NewTenant.jsx", "components/NewProps.jsx", "components/NewStaff.jsx"  ],
+    "**/*.tsx",
+    "components/SideBarItem.jsx",
+    "components/NewTenant.jsx",
+    "components/NewProps.jsx",
+    "components/NewStaff.jsx"
+  ],
   "exclude": [
     "node_modules"
   ]
