@@ -24,10 +24,6 @@ function SignUp() {
 	const [nextOfKinForm, setNextOfKinForm] = useState<NextOfKin[]>([{} as NextOfKin])
 
 	useEffect(() => {
-		console.log(form);
-	}, [form])
-
-	useEffect(() => {
 		if (secondNextofKin) {
 			if (nextOfKinForm.length === 2) {
 				setNextOfKinForm(nextOfKinForm)
