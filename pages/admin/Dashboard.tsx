@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import SideBar from "../components/SideBar";
-import SideBarHeader from "../components/SideBarHeader";
-import Tenant from "../components/Tenant";
-import { DashProp, TenantsDetails } from "../Data";
+import SideBar from "../../components/SideBar";
+import SideBarHeader from "../../components/SideBarHeader";
+import Tenant from "../../components/Tenant";
+import { DashProp, TenantsDetails } from "../../Data";
 import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../features/ToggleSideBar";
+import { SideBarToggleState } from "../../features/ToggleSideBar";
 import Link from "next/link";
-import NewTenant from "../components/NewTenant";
-import { tenantsList } from "../features/TenantsSlice";
-import DashCards from "../components/DashCards";
+import NewTenant from "../../components/NewTenant";
+import { tenantsList } from "../../features/TenantsSlice";
+import DashCards from "../../components/DashCards";
 import DashTenant from "./DashTenant";
-import Property from "../components/Property";
-import { PropertyList } from "../features/PropertySlice";
-import DashProps from "../components/DashProp";
+import Property from "../../components/Property";
+import { PropertyList } from "../../features/PropertySlice";
+import DashProps from "../../components/DashProp";
 
 function Dashboard() {
 	const [open, setOpen] = useState(false);

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import SideBar from "../components/SideBar";
-import SideBarHeader from "../components/SideBarHeader";
-import { DashProp } from "../Data";
+import SideBar from "../../components/SideBar";
+import SideBarHeader from "../../components/SideBarHeader";
+import { DashProp } from "../../Data";
 import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../features/ToggleSideBar";
-import Property from "../components/Property";
-import NewProps from "../components/NewProps";
-import { PropertyList } from "../features/PropertySlice";
+import { SideBarToggleState } from "../../features/ToggleSideBar";
+import Property from "../../components/Property";
+import NewProps from "../../components/NewProps";
+import { PropertyList } from "../../features/PropertySlice";
 
 function DashProps() {
 	const [open, setOpen] = useState(false);

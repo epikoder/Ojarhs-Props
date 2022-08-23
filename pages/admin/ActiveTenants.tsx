@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import SideBar from "../components/SideBar";
-import SideBarHeader from "../components/SideBarHeader";
-import Tenant from "../components/Tenant";
+import SideBar from "../../components/SideBar";
+import SideBarHeader from "../../components/SideBarHeader";
+import Tenant from "../../components/Tenant";
+import { TenantsDetails } from "../../Data";
 import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../features/ToggleSideBar";
-import NewTenant from "../components/NewTenant";
-import { tenantsList } from "../features/TenantsSlice";
+import { SideBarToggleState } from "../../features/ToggleSideBar";
+import Link from "next/link";
+import NewTenant from "../../components/NewTenant";
+import { tenantsList } from "../../features/TenantsSlice";
 
-function AllTenants() {
+function Active() {
 	const [open, setOpen] = useState(false);
 	const [updateOpen, setUpdateOpen] = useState(false);	
 	const sideBarState = useSelector(SideBarToggleState);
 	const tenantListArr = useSelector(tenantsList)
-		
 	
+	const Tenants = tenantListArr.map((tenant, index)=> {
+		return tenant
+		
+	})
 	
 	return (
 		<div className='w-full'>
@@ -27,7 +32,7 @@ function AllTenants() {
 
 				<div className='w-full h-[100vh] overflow-scroll pb-24'>
 					<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
-						<h1 className='lg:text-3xl text-md red'>All tenants</h1>
+						<h1 className='lg:text-3xl text-md red'>Active tenants</h1>
 
 						<button
 							type='button'
@@ -40,7 +45,7 @@ function AllTenants() {
 						{open ? <NewTenant type ="new" setOpen={setOpen}   /> : ""}
 						{updateOpen ? <NewTenant type="update" setOpen={setUpdateOpen}  /> : ""}
 
-					{tenantListArr.length !== 0 ? <div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
+					{tenantListArr.length !== 0 ? <div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll \ pb-12 px-8'>
 						<table id='customers'>
 							<tr className='he w-full flex justify-between'>
 								<th className='inline-block w-[50%] lg:w-[30%]'>Name</th>
@@ -51,14 +56,15 @@ function AllTenants() {
 							</tr>
 
 							{tenantListArr.map((tenant, index) => {								
-								return <Tenant Tenant={tenant} key={index}  setOpen = {setUpdateOpen} />;
+								if (tenant.states === "active") {
+									return <Tenant Tenant={tenant} key={index}  setOpen = {setUpdateOpen} />;
+								}
 							})}
 						</table>
-					</div> : <div className="text-center uppercase mt-4 ">No New Tenant </div>}
+					</div> : <div className="text-center uppercase mt-4 ">No Active Tenant </div>}
 				</div>
-			</div>			
+			</div>
 		</div>
 	);
 }
-
-export default AllTenants;
+export default Active;

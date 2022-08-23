@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import SideBar from "../components/SideBar";
-import SideBarHeader from "../components/SideBarHeader";
-import Tenant from "../components/Tenant";
-import { TenantsDetails } from "../Data";
+import SideBar from "../../components/SideBar";
+import SideBarHeader from "../../components/SideBarHeader";
+import Tenant from "../../components/Tenant";
+import { TenantsDetails } from "../../Data";
 import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../features/ToggleSideBar";
+import { SideBarToggleState } from "../../features/ToggleSideBar";
 import Link from "next/link";
-import NewTenant from "../components/NewTenant";
-import { tenantsList } from "../features/TenantsSlice";
+import NewTenant from "../../components/NewTenant";
+import { tenantsList } from "../../features/TenantsSlice";
 
 
 function Services() {

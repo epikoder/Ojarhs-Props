@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tenants } from "../Typing.d";
+import { Tenants } from "../../Typing.d";
 import Link from "next/link";
 
 type Tenant = {

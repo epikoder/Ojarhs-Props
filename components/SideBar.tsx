@@ -21,28 +21,28 @@ function SideBar() {
 			id='side'
 		>
 			<div className='flex flex-col justify-between space-y-1'>
-				<div onClick={() => router.push("/Dashboard")}>
+				<div onClick={() => router.push("/admin/Dashboard")}>
 					<SideBarItem name='Dashboard' subItem={""} type={""} />{" "}
 				</div>
 				<div>
 					<SideBarItem name='Tenants' subItem={TenantsSubItem} type={""} />
 				</div>
-				<div onClick={() => router.push("/Message")}>
+				<div onClick={() => router.push("/admin/Message")}>
 					<SideBarItem name='Messages' subItem={""} type={""} />
 				</div>
-				<div onClick={() => router.push("/Services")}>
+				<div onClick={() => router.push("/admin/Services")}>
 					<SideBarItem name='Services' subItem={""} type={""} />
 				</div>
-				<div onClick={() => router.push("/Dash-Props")}>
+				<div onClick={() => router.push("/admin/Dash-Props")}>
 					<SideBarItem subItem={""} type={""} name='Properties' />
 				</div>
-				<div onClick={() => router.push("/Records")}>
+				<div onClick={() => router.push("/admin/Records")}>
 					<SideBarItem name='Records' subItem={""} type={""} />
 				</div>
-				<div onClick={() => router.push("/D&R")}>
+				<div onClick={() => router.push("/admin/D&R")}>
 					<SideBarItem name='Dispute & Reports' subItem={""} type={""} />
 				</div>
-				<div onClick={() => router.push("/Adverts")}>
+				<div onClick={() => router.push("/admin/Adverts")}>
 					<SideBarItem name='Adverts' subItem={""} type={""} />
 				</div>
 				<div>

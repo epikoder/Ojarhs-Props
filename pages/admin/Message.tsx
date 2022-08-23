@@ -1,11 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import SideBar from "../components/SideBar";
-import SideBarHeader from "../components/SideBarHeader";
-import { SideBarToggleState } from "../features/ToggleSideBar";
+import SideBar from "../../components/SideBar";
+import SideBarHeader from "../../components/SideBarHeader";
+import { SideBarToggleState } from "../../features/ToggleSideBar";
 
-function DR() {
-
+function Message() {
     const sideBarState = useSelector(SideBarToggleState );
 	return (
 		<div className='w-full'>
@@ -18,11 +17,11 @@ function DR() {
 				</div>
 
                 <div className="w-full h-[100vh] overflow-scroll mt-8">
-                    Dispute and Reports
+                    Message
                 </div>
 			</div>
 		</div>
 	);
 }
 
-export default DR;
+export default Message;

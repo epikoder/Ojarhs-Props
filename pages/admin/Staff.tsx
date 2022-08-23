@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import SideBar from "../components/SideBar";
-import SideBarHeader from "../components/SideBarHeader";
-import Tenant from "../components/Tenant";
+import SideBar from "../../components/SideBar";
+import SideBarHeader from "../../components/SideBarHeader";
+import Tenant from "../../components/Tenant";
 import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../features/ToggleSideBar";
-import NewTenant from "../components/NewTenant";
-import { tenantsList } from "../features/TenantsSlice";
-import { staffList } from "../features/StaffSlice";
-import NewStaff from "../components/NewStaff";
-import Staff from "../components/Staff";
+import { SideBarToggleState } from "../../features/ToggleSideBar";
+import NewTenant from "../../components/NewTenant";
+import { tenantsList } from "../../features/TenantsSlice";
+import { staffList } from "../../features/StaffSlice";
+import NewStaff from "../../components/NewStaff";
+import Staff from "../../components/Staff";
 
 function Staffs() {
 	const [open, setOpen] = useState(false);
