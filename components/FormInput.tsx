@@ -7,7 +7,7 @@ import { HidePassword, ShowPassword } from "../features/TogglePassword"
 export const FormInput = ({ props }: {
     props?: {
         title: String
-        type?: React.HTMLInputTypeAttribute
+        type?: React.HTMLInputTypeAttribute           
         handleChange?: <T>(s: T) => {}
     }
 }) => {
@@ -19,7 +19,7 @@ export const FormInput = ({ props }: {
             <span className='text-gray-600 mb-2 text-sm idden'>{props.title}</span>
             <input
                 type={props.type}
-                placeholder='First Name'
+                placeholder={props.title.toString()}
                 className='text-gray-800 bg-transparent outline-none'
                 onChange={(e) => props.handleChange(e.target.value)}
             />
