@@ -15,11 +15,9 @@ import Loader from "../components/Loader";
 function SignUp() {
 	const dispatch = useDispatch();
 	const togglePasswordState = useSelector(TogglePasswordState);
-	const [imageUrl, setImageUrl] = useState([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
 	const [secondNextofKin, setSecondNextofKin] = useState<boolean>(false)
-
 	const [form, setForm] = useState<SignUpForm>({} as SignUpForm)
 	const [nextOfKinForm, setNextOfKinForm] = useState<NextOfKin[]>([{} as NextOfKin])
 
@@ -84,7 +82,6 @@ function SignUp() {
 
 	return (
 		<Layout>
-
 			<div className='my-16 bg-gray-100 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 py-4'>
 				<h1 className='red text-center text-2xl my-2'> Sign Up</h1>
 				<div className={`text-center text-md font-sans text-${message.status ? 'blue' : 'red'}-500`}>
@@ -194,7 +191,7 @@ function SignUp() {
 						</label>
 					</div>
 					<div>
-						<div className="row-span-1">
+						<div className='row-span-1'>
 							<h2 className='red'>Guarantor</h2>
 							<FormInput props={{
 								title: 'Name',
@@ -313,7 +310,11 @@ function SignUp() {
 								<span className="text-sm px-4 text-gray-600">
 									Add Next of Kin
 								</span>
-								<input type="checkbox" checked={secondNextofKin} onChange={() => setSecondNextofKin(!secondNextofKin)} />
+								<input
+									type='checkbox'
+									checked={secondNextofKin}
+									onChange={() => setSecondNextofKin(!secondNextofKin)}
+								/>
 							</div>
 						</div>
 					</div>
@@ -405,7 +406,8 @@ function SignUp() {
 									}
 								}} />
 							</div>
-						</div></>}
+						</>
+					)}
 
 					<div className="col-span-2">
 						<div className={`text-center text-md py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
@@ -414,6 +416,7 @@ function SignUp() {
 						<div className="w-full flex">
 							{!loading ? <>
 								<button type='submit' className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out" onClick={submit}>
+
 									Sign Up
 								</button>
 							</> : <div className="relative bg-red mx-auto text-center py-1 px-2 rounded-full mt-4 w-48 h-10 text-white cursor-wait">
