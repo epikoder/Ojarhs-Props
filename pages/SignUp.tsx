@@ -102,7 +102,6 @@ function SignUp() {
 							name: "fname",
 							type: 'text',
 							handleChange: (s) => {
-								console.log(s)
 								setForm({
 									...form, fname: s as unknown as string
 								})
