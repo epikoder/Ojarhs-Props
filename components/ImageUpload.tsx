@@ -1,8 +1,9 @@
+import Image from "next/image"
 import React, { useRef, useState } from "react"
 import { BASEURL } from "../constants"
 import Loader from "./Loader"
 
-export const ImageUpload = ({ handleUpload }: { handleUpload?: (s: string) => void }) => {
+export const ImageUpload = ({ handleUpload, required = false }: { handleUpload?: (s: string) => void, required?: boolean }) => {
     const [url, setUrl] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     const ref = useRef<HTMLInputElement>()
@@ -49,6 +50,10 @@ export const ImageUpload = ({ handleUpload }: { handleUpload?: (s: string) => vo
     return <>
         <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
             if (loading) return
+            if (!required && url !== '') {
+                setUrl('')
+                return
+            }
             const uploader = ref.current;
             if (uploader !== undefined) {
                 uploader.click()
