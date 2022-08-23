@@ -1,7 +1,7 @@
 import Head from "next/head"
 import React from "react";
 import Plaza from "../components/Plaza";
-import SignUp from "../components/SignUp";
+import HomeSignUp from "../components/HomeSignUp";
 import { offices, shops, warehouse, services, testimony } from "../Data";
 import TopSection from "../components/TopSection";
 import Notice from "../components/Notice";
@@ -19,10 +19,10 @@ function Home() {
       </Head>
 
       <Layout>
-        <main className="space-y-4 mt-20 lg:mt-24">
+        <main className="space-y-4">
           {/* <Link href="/Dashboard" className="mt-24 red"> Go to dashboard </Link> */}
           <TopSection />
-          <SignUp />
+          <HomeSignUp />
           <Plaza name="plaza shops" store={shops} prop="" />
           <Notice />
           <Plaza name="plaza office" store={offices} prop="" />
