@@ -47,3 +47,44 @@ export type Service = {
 	manager: string
 	type: string
 }
+
+export type NextOfKin = {
+	fname: string
+	lname: string
+	email: string
+	phone: number
+	address: string
+	lga: string
+	state: string
+	country: string
+}
+
+export type SignUpForm = {
+	fname: string
+	lname: string
+	email: string
+	phone: number
+	password: string
+	address: string
+	lga: string
+	state: string
+	country: string
+	photo: string
+	guarantor_name: string
+	guarantor_address: string
+	guarantor_phone: number
+	next_of_kins: NextOfKin[]
+}
+
+export type Country = {
+	id: number
+	name: string
+	code: string
+}
+
+export type ApiResponse<T = any> = {
+	status: 'success' | 'failed'
+	message?: string
+	error?: { [key: string]: string }
+	data: T
+}
