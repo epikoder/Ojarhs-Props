@@ -3,7 +3,7 @@ import FT from './FT'
 import { PhoneOutgoingIcon, LocationMarkerIcon, InboxIcon } from "@heroicons/react/outline"
 import Image from 'next/image'
 import Link from 'next/link'
-import { OjarhAddress, OjarhEmail } from '../constants'
+import { OjarhAddress, OjarhEmail, OjarhPhone } from '../constants'
 
 
 function Footer() {
@@ -12,7 +12,7 @@ function Footer() {
             {/* the red background with phone email and location  */}
             <div className='bg-red py-12 px-4 justify-evenly space-y-8  flex flex-col lg:flex-row mt-12'>
                 {/* no vex for the component name oh i no fit think of better name */}
-                {/* <FT icon={<PhoneOutgoingIcon/>} title="Phone Number" details="09074086235"  /> */}
+                <FT icon={<PhoneOutgoingIcon />} title="Phone Number" details={OjarhPhone} />
                 <FT icon={<LocationMarkerIcon />} title="Location" details={OjarhAddress} />
                 <FT icon={<InboxIcon />} title="Email Address" details={<Link href='#'>{OjarhEmail}</Link>} />
             </div>
@@ -27,7 +27,7 @@ function Footer() {
                         alt="logo"
                     />
                     <p>{OjarhAddress} </p>
-                    {/* <p>08056728846</p> */}
+                    <p>{OjarhPhone}</p>
                 </div>
                 <div className='space-y-3'>
                     <div className='bg-red w-40 h-1 mb-4'></div>
