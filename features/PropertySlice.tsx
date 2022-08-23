@@ -8,7 +8,7 @@ const getInitialValue = () => {
 	if (properties) {
 		return JSON.parse(properties);
 	}
-	window.localStorage.setItem("propertyList", JSON.stringify([1, 2, 3]));
+	window.localStorage.setItem("propertyList", JSON.stringify([]));
 	return [];
 };
 
@@ -41,7 +41,7 @@ const PropertySlice = createSlice({
 			if (property) {
 				const propertyArr = JSON.parse(property)
 				propertyArr.map((prop, index) => {
-					if (prop.Id === action.payload) {
+					if (prop.id === action.payload) {
 						propertyArr.splice(index, 1)
 						window.localStorage.setItem("propertyList", JSON.stringify(propertyArr))
 					}
@@ -55,7 +55,7 @@ const PropertySlice = createSlice({
 			if (property) {
 				const propertyListArr = JSON.parse(property);
 				propertyListArr.forEach((prop) => {
-					if (prop.Id === action.payload) {
+					if (prop.id === action.payload) {
 						state.getindividaulProperty = prop;
 						console.log(state.getindividaulProperty);
 					}
@@ -69,13 +69,13 @@ const PropertySlice = createSlice({
 			if (property) {
 				const propertyArr = JSON.parse(property)
 				propertyArr.forEach((prop) => {
-					if (prop.Id === action.payload.Id) {
-						prop.Name = action.payload.Name
-						prop.No = action.payload.No
-						prop.Type = action.payload.Type
+					if (prop.id === action.payload.id) {
+						prop.name = action.payload.name
+						prop.no = action.payload.no
+						prop.type = action.payload.type
 						// prop.Description = action.payload.Description
-						prop.Price = action.payload.Price
-						prop.Size = action.payload.Size
+						prop.amount = action.payload.amount
+						prop.size = action.payload.size
 					}
 				})
 				window.localStorage.setItem("propertyList", JSON.stringify(propertyArr))

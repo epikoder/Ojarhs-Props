@@ -5,6 +5,7 @@ import ToggleSideBar from './features/ToggleSideBar'
 import ToggleSubItem from './features/ToggleSubItem'
 import TenantsSlice from "./features/TenantsSlice"
 import PropertySlice from './features/PropertySlice'
+import StaffSlice from './features/StaffSlice'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     toggleSideBar: ToggleSideBar,
     tenantsSlice: TenantsSlice,
     propertySlice: PropertySlice,
+    staffSlice: StaffSlice,
   },
 })
 

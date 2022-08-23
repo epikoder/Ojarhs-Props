@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MenuIcon, XIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import SideBarItem from "./SideBarItem";
-import { MessageSubItem, TenantsSubItem } from "../Data";
+import { MessageSubItem, OfficeSubItem, TenantsSubItem } from "../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../features/ToggleSideBar";
 import { useRouter } from "next/router";
@@ -22,18 +22,18 @@ function SideBar() {
 		>
 			<div className='flex flex-col justify-between space-y-1'>
 				<div onClick={() => router.push("/Dashboard")}>
-					<SideBarItem name='Dashboard' subItem={""}/>{" "}
+					<SideBarItem name='Dashboard' subItem={""} type={""} />{" "}
 				</div>
-				<SideBarItem name='Tenants' subItem={TenantsSubItem} />
-				<SideBarItem name='Messages' subItem={""}/>
+				<SideBarItem name='Tenants' subItem={TenantsSubItem} type={""}/>
+				<SideBarItem name='Messages' subItem={""} type={""}/>
 				<div onClick={() => router.push("/Services")}>
-					<SideBarItem name='Services' subItem={""}/>
+					<SideBarItem name='Services' subItem={""} type={""}/>
 				</div>
-				<div onClick={()=> router.push("/Dash-Props")}><SideBarItem subItem={""} name='Properties' /></div>
-				<SideBarItem name='Records' subItem={""} />
-				<SideBarItem name='Dispute & Reports' subItem={""} />
-				<SideBarItem name='Adverts' subItem={""} />
-				<SideBarItem name='Ojarh Office' subItem={""}/>
+				<div onClick={()=> router.push("/Dash-Props")}><SideBarItem subItem={""} type={""} name='Properties' /></div>
+				<SideBarItem name='Records' subItem={""} type={""} />
+				<SideBarItem name='Dispute & Reports' subItem={""} type={""} />
+				<SideBarItem name='Adverts' subItem={""} type={""} />
+				<SideBarItem name='Ojarh Office' subItem={OfficeSubItem} type="office"/>
 			</div>
 		</div>
 	);

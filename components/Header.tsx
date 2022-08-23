@@ -15,7 +15,7 @@ function Header() {
 	return (
 		<div className=' bg-black lg:p-4 lg:px-24 md:p-2 md:px-12 p-2  fixed mb-10 top-0 w-full z-50'>
 			<div className='flex justify-between items-center '>
-				<a href='/'>
+				<Link href='/'>
 					<Image
 						src='/image/logo.png'
 						width={70}
@@ -23,7 +23,7 @@ function Header() {
 						layout='fixed'
 						alt='ojarh'
 					/>
-				</a>
+				</Link>
 				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden'>
 					<NavLink href='/'>
 						<li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov duration-300 transition-all ease-in-out'>

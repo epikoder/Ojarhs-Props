@@ -61,3 +61,30 @@
  [aria-current] {
     color:red
  }
+
+.one {
+    background: linear-gradient(to right, rgb(153, 13, 13), rgb(175, 36, 36) );
+}
+
+.two{
+    background: linear-gradient(to right, rgb(34, 57, 78), #4899a2 );
+}
+
+.three{
+    background: linear-gradient(to right, #694e1e, #9b8f44 );
+    
+}
+
+.four{
+    background: linear-gradient(to right, #225129, #4a9657 );
+
+}
+
+.five{
+    background: linear-gradient(to right, #1c5e5e, #388787 );
+
+}
+
+.six{
+    background: linear-gradient(to right, #5c414d, #342029 );
+}

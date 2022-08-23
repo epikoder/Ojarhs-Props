@@ -10,7 +10,11 @@ import {
 } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProperty, getProperty, updateProperty } from "../features/PropertySlice";
+import {
+	deleteProperty,
+	getProperty,
+	updateProperty,
+} from "../features/PropertySlice";
 
 type Props = {
 	Prop: Space;
@@ -23,14 +27,13 @@ function Property({ Prop, setOpen }: Props) {
 		dispatch(deleteProperty(Prop.id));
 	};
 	const handleEdit = () => {
-		dispatch(getProperty(Prop.id))
+		dispatch(getProperty(Prop.id));
 		setOpen(true);
 	};
 
-	const str = Prop.amount.toString()
+	const str = Prop.amount.toString();
 
-	const price = parseInt(str)
-
+	const price = parseInt(str);
 
 	return (
 		<div>
@@ -38,7 +41,9 @@ function Property({ Prop, setOpen }: Props) {
 				<td className='inline-block w-[50%] lg:w-[30%]'>
 					<span>{Prop.name}</span>
 				</td>
-				<td className='hidden lg:inline-block  w-[35%]'>{price.toLocaleString("en-US")}</td>
+				<td className='hidden lg:inline-block  w-[35%]'>
+					{price.toLocaleString("en-US")}
+				</td>
 				<td className='inline-block w-[30%] lg:w-[15%] '>
 					<span>{Prop.type}</span>
 				</td>
@@ -81,7 +86,9 @@ function Property({ Prop, setOpen }: Props) {
 							<span className='px-3 py-1 hov'>Details</span>
 							<span className='px-3 py-1 hov'>Mesaage</span>
 							<span className='px-3 py-1 hov'>Edit</span>
-							<span className='px-3 py-1 hov' onClick={handleDelete}>Delete</span>
+							<span className='px-3 py-1 hov' onClick={handleDelete}>
+								Delete
+							</span>
 						</div>
 					</div>
 				</td>

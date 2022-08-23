@@ -201,7 +201,28 @@ function SignUp() {
 						/>
 					</label>
 
-					<h2 className='red'>Next Of Kins</h2>
+					<div className='flex space-x-3'>
+						<h2 className='red'>Next Of Kins</h2>{" "}
+						<span className='flex space-x-3'>
+							<div className=' group w-6'>
+								<span className=' bg-red cursor-pointer px-1.5 py-0 w-full  text-white  text-center items-center justify-center  rounded-full '>
+									-{" "}
+								</span>
+								<div className='hidden group-hover:block absolute text-xs bg-red text-white p-4 rounded-md'>
+									Reduce Next Of Kins
+								</div>
+							</div>
+
+							<div className='group w-6'>
+								<span className='bg-red cursor-pointer px-1 py-0 w-full text-white  text-center items-center justify-center  rounded-full '>
+									+{" "}
+								</span>
+								<div className='hidden group-hover:block absolute text-xs bg-red text-white p-4 rounded-md'>
+									Increase Next Of Kins
+								</div>
+							</div>
+						</span>
+					</div>
 
 					<label
 						htmlFor=''
@@ -239,7 +260,6 @@ function SignUp() {
 						/>
 					</label>
 
-					
 					<label
 						htmlFor=''
 						className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'

@@ -699,3 +699,14 @@ export const DashProp = [
 ]
 
 
+export const OfficeSubItem = [
+	{
+		name: "Staffs",
+		link: "/Staff"
+	},
+
+	{
+		name:"Expences",
+		link:"/Expenses"
+	}
+]
