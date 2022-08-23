@@ -27,11 +27,11 @@ function NewProps({ setOpen, type }) {
 
 	useEffect(() => {
 		if (type === "update") {
-			setName(individualProp.Name);
-			setShopNo(individualProp.No);
-			setShopSize(individualProp.Size);
-			setPrice(individualProp.Price);
-			setStatus(individualProp.Type	);
+			setName(individualProp.name);
+			setShopNo(individualProp.no);
+			setShopSize(individualProp.size);
+			setPrice(individualProp.amount);
+			setStatus(individualProp.type	);
 		}
 	}, [type]);
 
@@ -58,13 +58,13 @@ function NewProps({ setOpen, type }) {
 			e.preventDefault();
 			dispatch(
 				addProperty({
-					Id: uniqid(),
-					Name: Name,
-					Size: Size,
-					No: No,
-					Type: status,
+					id: uniqid(),
+					name: Name,
+					size: Size,
+					no: No,
+					type: status,
+					amount: Price,
 					// Description: Description,
-					Price: Price,
 				}),
 			);
 
@@ -78,12 +78,12 @@ function NewProps({ setOpen, type }) {
 		dispatch(
 			updateProperty({
 				...individualProp,
-				Name: Name,
-				Size: Size,
-				No: No,
-				Type: status,
+				name: Name,
+				size: Size,
+				no: No,
+				type: status,
+				amount: Price,
 				// Description: Description,
-				Price: Price,
 			}),
 		);
 		setOpen(false);

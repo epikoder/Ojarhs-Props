@@ -25,7 +25,7 @@ function AllTenants() {
 					<SideBar />
 				</div>
 
-				<div className='w-full'>
+				<div className='w-full h-[100vh] overflow-scroll pb-24'>
 					<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
 						<h1 className='lg:text-3xl text-md red'>All tenants</h1>
 
