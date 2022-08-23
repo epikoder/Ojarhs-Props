@@ -13,7 +13,7 @@ function Header() {
 	const router = useRouter();
 
 	return (
-		<div className=' bg-black lg:p-4 lg:px-24 md:p-2 md:px-12 p-2  fixed mb-10 top-0 w-full z-50'>
+		<div className=' bg-black lg:p-4 lg:px-24 md:p-2 md:px-12 p-2 w-full sticky-top'>
 			<div className='flex justify-between items-center '>
 				<Link href='/'>
 					<Image
