@@ -53,8 +53,7 @@ function SignUp() {
 						</div>
 
 						<div>
-							<h2 className='red'>Next Of Kins</h2>
-
+							<h2 className='red'>Next Of Kin</h2>
 							<FormInput props={{ title: 'First Name', type: 'text' }} />
 							<FormInput props={{ title: 'Last Name', type: 'text' }} />
 							<FormInput props={{ title: 'Email', type: 'text' }} />
@@ -75,7 +74,7 @@ function SignUp() {
 
 					{secondNextofKin && <>
 						<div className="col-span-2 md:grid md:grid-cols-2 gap-4">
-							<h2 className='red col-span-2'>Next Of Kins</h2>
+							<h2 className='red col-span-2'>Next Of Kin</h2>
 							<div>
 								<FormInput props={{ title: 'First Name', type: 'text' }} />
 								<FormInput props={{ title: 'Last Name', type: 'text' }} />
