@@ -5,7 +5,7 @@ typeof window !== "undefined" ? import("tw-elements") : " ";
 function Slider({ images = [] }: { images?: string[] }) {
   return (
     <div id="carouselExampleSlidesOnly" className="carousel slide relative h-full w-full" data-bs-ride="carousel">
-      <div className="carousel-inner relative w-full overflow-hidden h-full">
+      <div className="carousel-inner relative w-full overflow-hidden h-full rounded-lg">
         <div className="carousel-item active relative float-left w-full h-full">
           <Image
             src="/image/041.webp"
