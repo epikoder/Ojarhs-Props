@@ -1,25 +1,58 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { type } from "os";
-import { Service, Space, Testimony } from "../Typing.d";
+import { AxiosResponse } from "axios";
+import { BASEURL } from "../constants";
+import { Api } from "../helpers/api";
+import { ApiResponse, Service, Space, Testimony } from "../Typing.d";
 
-type indexData = {
-    Shops: Space[],
-    Office: Space[],
-    Warehouse: Space[],
-    Services: Service[],
-    Testimonials: Testimony[]
+export type indexData = {
+    status: 'failed' | 'success'
+    shops: Space[],
+    office: Space[],
+    warehouse: Space[],
+    services: Service[],
+    testimonies: Testimony[]
 }
-const loadIndex = () => createAsyncThunk<Promise<indexData>, {}>("", async (payload: {}, { rejectWithValue }) => {
-    try {
-        const response = await fetch("")
-        return {
-            Shops: [],
-            Office: [],
-            Warehouse: [],
-            Services: [],
-            Testimonials: []
+export const loadIndex = createAsyncThunk<indexData | {
+    status: "failed"
+}, {}>
+    ("index/load", async (payload: {}, { rejectWithValue }) => {
+        try {
+            const api = Api()
+            const { status, data }: {
+                status: number, data: ApiResponse<{
+                    spaces: Space[]
+                    services: Service[]
+                    reviews: Testimony[]
+                }>
+            } = await api("/")
+            if (status !== 200) {
+                return {
+                    status: 'failed',
+                }
+            }
+            if (data.status === 'failed') return rejectWithValue({ status: 'failed' })
+
+            let shops: Space[] = []
+            let office: Space[] = []
+            let warehouse: Space[] = []
+            data.data.spaces.forEach(space => {
+                if (space.type == 'office') office = office.concat(space)
+                if (space.type == 'shop') shops = shops.concat(space)
+                if (space.type == 'warehouse') warehouse = warehouse.concat(space)
+            })
+            return {
+                status: 'success',
+                shops: shops,
+                office: office,
+                warehouse: warehouse,
+                services: data.data.services.map(s => {
+                    return { ...s, type: 'service' }
+                }),
+                testimonies: data.data.reviews
+            }
+        } catch (error) {
+            rejectWithValue({
+                status: "failed"
+            })
         }
-    } catch (error) {
-        rejectWithValue({})
-    }
-})
+    })

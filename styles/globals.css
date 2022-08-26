@@ -3,7 +3,7 @@
 @import "tailwindcss/components";
 
 @import "tailwindcss/utilities";
-
+@import "./shimmer.css";
 
 .bg-red {
     background-color: red;

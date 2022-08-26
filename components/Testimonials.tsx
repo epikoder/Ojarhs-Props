@@ -13,6 +13,7 @@ function Testimonials({ testimony }) {
                 <TestimonialSlide testimony={testimony} />
                 {/* Report  */}
                 <div className=" lg:w-5/12 flex flex-col space-y-2 bg-gray-100 border shadow-sm shadow-gray-400 p-4 rounded-lg">
+                    <h1>Review</h1>
                     <label htmlFor="" className="flex flex-col space-y-1" >
                         <span>Subject</span>
                         <input type="text" className=" border outline-none bg-gray-200 rounded-full px-4 text-gray-600 " />

@@ -45,27 +45,27 @@ export type Service = {
 	description: string
 	amount: number
 	manager: string
-	type: string
+	type: 'service'
 }
 
 export type Staff = {
-	id:string
-	name:string
-	description:string
-	fee:number
-	no:string
-	email:String	
+	id: string
+	name: string
+	description: string
+	fee: number
+	no: string
+	email: String
 }
 
 export type NextOfKin = {
-	fname: string
-	lname: string
-	email: string
-	phone: number
-	address: string
-	lga: string
-	state: string
-	country: string
+	kfname: string
+	klname: string
+	kemail: string
+	kphone: number
+	kaddress: string
+	klga: string
+	kstate: string
+	kcountry: string
 }
 
 export type SignUpForm = {
@@ -97,3 +97,12 @@ export type ApiResponse<T = any> = {
 	error?: { [key: string]: string }
 	data: T
 }
+
+export type loginResponse = {
+	access: string
+	refresh?: string
+	access_expires_at: Date
+	refresh_expires_at?: Date
+}
+
+export type LoadState = 'pending' | 'success' | 'failed'
