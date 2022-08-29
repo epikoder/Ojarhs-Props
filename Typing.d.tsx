@@ -1,3 +1,5 @@
+export type User = Tenants
+
 export type Space = {
 	id: string
 	name: string
@@ -8,6 +10,10 @@ export type Space = {
 	amount: number
 	status: 'open' | 'occupied'
 	address?: string
+	plan_name: string
+	duration: number
+	created_at: Date
+	updated_at: Date
 }
 
 export type Testimony = {
@@ -17,13 +23,16 @@ export type Testimony = {
 
 export type Tenants = {
 	id: string
-	firstName: string;
-	lastName: string;
+	fname: string;
+	lname: string;
 	address: string;
 	phone: string;
 	email: string;
-	picture: string;
-	states: string;
+	photo: string;
+	reference: string
+	lga: string;
+	state: string;
+	country: string;
 };
 
 export type Inputs = {
