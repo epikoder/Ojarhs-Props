@@ -6,6 +6,7 @@ import ToggleSubItem from './features/ToggleSubItem'
 import TenantsSlice from "./features/TenantsSlice"
 import PropertySlice from './features/PropertySlice'
 import StaffSlice from './features/StaffSlice'
+import ServiceSlice from './features/ServiceSlice'
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     tenantsSlice: TenantsSlice,
     propertySlice: PropertySlice,
     staffSlice: StaffSlice,
+    serviceSlice: ServiceSlice,
   },
 })
 

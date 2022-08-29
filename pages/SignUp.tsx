@@ -406,8 +406,9 @@ function SignUp() {
 									}
 								}} />
 							</div>
+							</div>
 						</>
-					)}
+					}
 
 					<div className="col-span-2">
 						<div className={`text-center text-md py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
@@ -430,10 +431,12 @@ function SignUp() {
 								<span className='hov cursor-pointer'>Login</span>
 							</Link>
 						</div>
-					</div>
-				</form>
+					</div>															
+					
+			</form>						
 			</div>
-		</Layout>
+			</Layout>		
+		
 	);
 }
 

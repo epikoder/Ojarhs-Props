@@ -46,6 +46,8 @@ export type Service = {
 	amount: number
 	manager: string
 	type: string
+	title?:string
+	duration?:string	
 }
 
 export type Staff = {
