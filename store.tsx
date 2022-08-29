@@ -24,7 +24,7 @@ export const store = configureStore({
     staffSlice: StaffSlice,
     indexSlice: IndexSlice,
     authSlice: authSlice,
-    accountSlice: accountSlice
+    accountSlice: accountSlice,
     serviceSlice: ServiceSlice,
   },
 })
