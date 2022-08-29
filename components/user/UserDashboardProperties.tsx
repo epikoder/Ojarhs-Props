@@ -5,7 +5,6 @@ import { addMonth } from "../../helpers/helpers"
 import { loadUserProperties } from "../../redux/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { Space } from "../../Typing.d"
-import Loader, { CardLoader } from "../Loader"
 
 const TableBody = ({ space, index }: { space: Space, index: number } & React.Attributes) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false)
@@ -33,6 +32,7 @@ export const UserDashboardProperties = () => {
 
     React.useEffect(() => {
         if (state === 'success') {
+            console.log(data)
             setSortedData(data ?? [])
         }
     }, [state])

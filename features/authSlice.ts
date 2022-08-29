@@ -102,7 +102,6 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(loginApi.fulfilled, (state, { payload }) => {
-            console.log(payload)
             if (payload === undefined) return
             if (payload.status === 'failed') {
                 state.status = 'failed'
