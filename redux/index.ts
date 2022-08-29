@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosResponse } from "axios";
 import { BASEURL } from "../constants";
 import { Api } from "../helpers/api";
 import { ApiResponse, Service, Space, Testimony } from "../Typing.d";
@@ -12,24 +11,18 @@ export type indexData = {
     services: Service[],
     testimonies: Testimony[]
 }
-export const loadIndex = createAsyncThunk<indexData | {
-    status: "failed"
-}, {}>
-    ("index/load", async (payload: {}, { rejectWithValue }) => {
+
+export const loadIndex =
+    createAsyncThunk<indexData | { status: "failed" }, {}>("index/load", async (payload: {}, { rejectWithValue }) => {
+        console.log("LOADING INDEXXXXXXXXXXXXX")
         try {
-            const api = Api()
-            const { status, data }: {
-                status: number, data: ApiResponse<{
-                    spaces: Space[]
-                    services: Service[]
-                    reviews: Testimony[]
-                }>
-            } = await api("/")
-            if (status !== 200) {
+            const response=  await fetch(BASEURL)
+            if (response.status !== 200) {
                 return {
                     status: 'failed',
                 }
             }
+            const data = await response.json()
             if (data.status === 'failed') return rejectWithValue({ status: 'failed' })
 
             let shops: Space[] = []

@@ -12,6 +12,7 @@ const IndexSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(loadIndex.fulfilled, (state, { payload }) => {
+            console.log(payload)
             if (payload === undefined) {
                 state.state = 'failed'
                 return
@@ -21,6 +22,7 @@ const IndexSlice = createSlice({
                 return
             }
             state.data = payload
+            console.log("INDEX DATAAAAAAAAAA", state.data)
             state.state = 'success'
         })
         builder.addCase(loadIndex.pending, (state) => {

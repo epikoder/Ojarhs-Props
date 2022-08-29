@@ -6,21 +6,21 @@ import { openMenu, closeMenu, openState } from "../features/HeaderMenu";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import NavLink from "./NavLink";
+import { RootState } from "../store";
 
 function Header() {
 	const dispatch = useDispatch();
 	const isOpen = useSelector(openState);
-	const router = useRouter();
+	const isAuthenticated = useSelector((store: RootState) => store.authSlice.authenticated)
 
 	return (
 		<div className=' bg-black lg:p-4 lg:px-24 md:p-2 md:px-12 p-2 w-full sticky-top'>
 			<div className='flex justify-between items-center '>
 				<Link href='/'>
-					<Image
+					<img
 						src='/image/logo.png'
 						width={70}
 						height={50}
-						layout='fixed'
 						alt='ojarh'
 					/>
 				</Link>
@@ -40,11 +40,22 @@ function Header() {
 							<a>About us</a>
 						</li>
 					</NavLink>
-					<NavLink href='/Login'>
-						<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
-							<a>Sign up/Login</a>
-						</li>
-					</NavLink>
+					{
+						isAuthenticated ? <>
+							<NavLink href='/user/Dashboard'>
+								<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
+									<a>Dashboard</a>
+								</li>
+							</NavLink>
+						</> :
+							<>
+								<NavLink href='/Login'>
+									<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
+										<a>Sign up/Login</a>
+									</li>
+								</NavLink>
+							</>
+					}
 				</ul>
 				{isOpen ? (
 					<XIcon
@@ -85,14 +96,28 @@ function Header() {
 								About us
 							</li>
 						</NavLink>
-						<NavLink href='/Login'>
-							<li
-								onClick={() => dispatch(closeMenu())}
-								className='text-white  uppercase hov cursor-pointer text-md'
-							>
-								Sign up/Login
-							</li>
-						</NavLink>
+						{
+							isAuthenticated ? <>
+								<NavLink href='/user/Dashboard'>
+									<li
+										onClick={() => dispatch(closeMenu())}
+										className='text-white  uppercase hov cursor-pointer text-md'
+									>
+										Dashboard
+									</li>
+								</NavLink>
+							</> :
+								<>
+									<NavLink href='/Login'>
+										<li
+											onClick={() => dispatch(closeMenu())}
+											className='text-white  uppercase hov cursor-pointer text-md'
+										>
+											Sign up/Login
+										</li>
+									</NavLink>
+								</>
+						}
 					</ul>
 				</div>
 			) : (

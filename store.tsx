@@ -8,6 +8,8 @@ import PropertySlice from './features/PropertySlice'
 import StaffSlice from './features/StaffSlice'
 import IndexSlice from './features/IndexSlice'
 import { useDispatch } from 'react-redux'
+import authSlice from './features/authSlice'
+import accountSlice from './features/user/accountSlice'
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +20,9 @@ export const store = configureStore({
     tenantsSlice: TenantsSlice,
     propertySlice: PropertySlice,
     staffSlice: StaffSlice,
-    indexSlice: IndexSlice
+    indexSlice: IndexSlice,
+    authSlice: authSlice,
+    accountSlice: accountSlice
   },
 })
 

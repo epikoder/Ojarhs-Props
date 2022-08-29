@@ -192,33 +192,57 @@ div.spinner div.bar12 {
 }
 
 [aria-current] {
-    color:red
- }
+    color: red
+}
 
 .one {
-    background: linear-gradient(to right, rgb(153, 13, 13), rgb(175, 36, 36) );
+    background: linear-gradient(to right, rgb(153, 13, 13), rgb(175, 36, 36));
 }
 
-.two{
-    background: linear-gradient(to right, rgb(34, 57, 78), #4899a2 );
+.two {
+    background: linear-gradient(to right, rgb(34, 57, 78), #4899a2);
 }
 
-.three{
-    background: linear-gradient(to right, #694e1e, #9b8f44 );
-    
-}
-
-.four{
-    background: linear-gradient(to right, #225129, #4a9657 );
+.three {
+    background: linear-gradient(to right, #694e1e, #9b8f44);
 
 }
 
-.five{
-    background: linear-gradient(to right, #1c5e5e, #388787 );
+.four {
+    background: linear-gradient(to right, #225129, #4a9657);
 
 }
 
-.six{
-    background: linear-gradient(to right, #5c414d, #342029 );
+.five {
+    background: linear-gradient(to right, #1c5e5e, #388787);
 
+}
+
+.six {
+    background: linear-gradient(to right, #5c414d, #342029);
+
+}
+
+.footer {
+    height: 70vh;
+}
+
+@media screen and (max-width: 760px) {
+    .footer {
+        height: unset;
+    }
+}
+
+.two-lines {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+}
+
+.three-lines {
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    white-space: normal;
 }

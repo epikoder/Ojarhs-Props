@@ -10,6 +10,7 @@ interface Shops {
 
 
 function Plaza({ name, store, prop }: Shops) {
+	console.log(name, store, prop)
 	return (
 		<div>
 			<h1 className='text-black text-center my-4 uppercase text-md lg:text-3xl'>

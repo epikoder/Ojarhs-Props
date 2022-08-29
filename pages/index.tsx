@@ -2,7 +2,6 @@ import Head from "next/head"
 import React from "react";
 import Plaza from "../components/Plaza";
 import HomeSignUp from "../components/HomeSignUp";
-import { offices, shops, warehouse, services, testimony } from "../Data";
 import TopSection from "../components/TopSection";
 import Notice from "../components/Notice";
 import Adverts from "../components/Adverts";
@@ -29,7 +28,7 @@ function Home() {
       </Head>
 
       <Layout>
-        <main className="space-y-4">
+        <div className="space-y-4">
           {/* <Link href="/Dashboard" className="mt-24 red"> Go to dashboard </Link> */}
           <TopSection />
           <HomeSignUp />
@@ -39,7 +38,7 @@ function Home() {
               <span className="text-red-500">ERROR</span> | Reload page
             </div>
           </div>}
-          {state === 'success' && <>
+          {(state === 'success' && typeof (data) === 'object') && <>
             <Plaza name="plaza shops" store={data.shops} prop="" />
             <Notice />
             <Plaza name="plaza office" store={data.office} prop="" />
@@ -48,7 +47,7 @@ function Home() {
             <Plaza name="Services" store={data.services} prop="" />
             <Testimonials testimony={data.testimonies} />
           </>}
-        </main>
+        </div>
       </Layout>
     </div>
   );
