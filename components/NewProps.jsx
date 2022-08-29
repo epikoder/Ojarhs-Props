@@ -33,7 +33,7 @@ function NewProps({ setOpen, type }) {
 			setPrice(individualProp.amount);
 			setStatus(individualProp.type	);
 		}
-	}, [type]);
+	}, [type, individualProp]);
 
 	const validationSchema = Yup.object().shape({
 		shopNo: Yup.string().required("ShopNo is required"),

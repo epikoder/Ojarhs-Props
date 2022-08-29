@@ -514,8 +514,13 @@ function SignUp() {
 									}
 								}} />
 							</div>
+<<<<<<< HEAD
+							</div>
+						</>
+=======
 						</div>
 					</>
+>>>>>>> 1230b7bf253181aa3d3ccec717e8c375350a789a
 					}
 
 					<div className="col-span-2">
@@ -539,10 +544,12 @@ function SignUp() {
 								<span className='hov cursor-pointer'>Login</span>
 							</Link>
 						</div>
-					</div>
-				</form>
+					</div>															
+					
+			</form>						
 			</div>
-		</Layout>
+			</Layout>		
+		
 	);
 }
 

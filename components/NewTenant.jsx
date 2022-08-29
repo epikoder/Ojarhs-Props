@@ -37,7 +37,7 @@ function NewTenant({ setOpen, type }) {
 			setPhone(individualTenant.phoneNo);
 			setStatus(individualTenant.states);
 		}
-	}, [type]);
+	}, [type, individualTenant]);
 
 	const validationSchema = Yup.object().shape({
 		phoneNo: Yup.string().required("PhoneNo is required"),

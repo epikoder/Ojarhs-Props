@@ -10,6 +10,8 @@ import IndexSlice from './features/IndexSlice'
 import { useDispatch } from 'react-redux'
 import authSlice from './features/authSlice'
 import accountSlice from './features/user/accountSlice'
+import ServiceSlice from './features/ServiceSlice'
+
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +25,7 @@ export const store = configureStore({
     indexSlice: IndexSlice,
     authSlice: authSlice,
     accountSlice: accountSlice
+    serviceSlice: ServiceSlice,
   },
 })
 

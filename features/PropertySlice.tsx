@@ -92,3 +92,4 @@ export const getIndividualProperty = (state: RootState) =>
 	state.propertySlice.getindividaulProperty;
 
 export default PropertySlice.reducer;
+

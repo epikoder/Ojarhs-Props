@@ -13,6 +13,7 @@ import DashTenant from "./DashTenant";
 import Property from "../../components/Property";
 import { PropertyList } from "../../features/PropertySlice";
 import DashProps from "../../components/DashProp";
+import axios from "axios";
 
 function Dashboard() {
 	const [open, setOpen] = useState(false);
@@ -20,6 +21,18 @@ function Dashboard() {
 	const sideBarState = useSelector(SideBarToggleState);
 	const tenantListArr = useSelector(tenantsList);
 	const Properties = useSelector(PropertyList)
+
+	const fn = ( async ()=> {
+		const res = fetch("https://sleepy-everglades-36547.herokuapp.com/admin/properties/all").then(()=> {
+		alert("worked")	
+		console.log(res);
+			
+		}).catch((error)=> {
+			alert("error")
+			console.log(error);
+			
+		})
+	})();
 
 
 	return (
@@ -135,8 +148,7 @@ function Dashboard() {
 									<th className='lg:hidden w-[20%]'></th>
 								</tr>
 
-								{Properties.map((prop, index) => {
-									console.log(prop);
+								{Properties.map((prop, index) => {									
 									
 									return (
 										<DashProps

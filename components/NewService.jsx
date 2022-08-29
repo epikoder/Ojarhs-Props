@@ -4,52 +4,55 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { TogglePasswordState } from "../features/TogglePassword";
+import { ShowPassword, HidePassword } from "../features/TogglePassword";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/outline";
-import { addStaff, deleteStaff, updateStaff, getIndividualStaff } from "../features/StaffSlice";
+import {
+	addService,
+	getIndividualService,
+	updateService,
+} from "../features/ServiceSlice";
 import uniqid from "uniqid";
 
-function NewStaff({ setOpen, type }) {
+function NewService({ setOpen, type }) {
 	const dispatch = useDispatch();	
-	const individualStaff = useSelector(getIndividualStaff);	
-	const [Name, setName] = useState("");		
-	const [email, setEmail] = useState("");
-	const [fee, setFee] = useState("");
-    const [description, setDescription] = useState("");
-	const [phone, setPhone] = useState("");
+	const individualService = useSelector(getIndividualService);
+	const [title, setTitle] = useState("");
+	const [description, setDescription] = useState("");
+	const [amount, setAmount] = useState("");
+	const [duration, setDuration] = useState("");
 
 	useEffect(() => {
 		if (type === "update") {
-			setName(individualStaff.name);			 	
-			setEmail(individualStaff.email);			
-			setPhone(individualStaff.no);
-			setFee(individualStaff.fee);
-            setDescription(individualStaff.description)
+			setTitle(individualService.title);
+			setAmount(individualService.amount)						
+			setDuration(individualService.duration)
+			setDescription(individualService.description)
 		}
-	}, [type, individualStaff]);
+	}, [type, individualService]);
 
 	const validationSchema = Yup.object().shape({
-		phoneNo: Yup.string().required("PhoneNo is required"),		
-		Name: Yup.string().required("Name is required"),	
-		fee: Yup.string().required("fee is required"),		
-		email: Yup.string().required("Email is required").email("Email is invalid"),				
-        description: Yup.string().required("Description is required")		
+		title: Yup.string().required("Service Title is Required"),
+		amount: Yup.string().required("Service Amount is Required"),
+		duration: Yup.string().required("Service Duration is required"),
+		description: Yup.string().required("Service Description is required"),
 	});
 	const formOptions = { resolver: yupResolver(validationSchema) };
 
 	// get functions to build form with useForm() hook
-	const { register,  formState } = useForm(formOptions);
+	const { register, handleSubmit, reset, formState } = useForm(formOptions);
 	const { errors } = formState;
 
-	function handleSubmit(e) {
+	function onSubmit(data) {
 		if (type === "new") {
 			dispatch(
-				addStaff({
+				addService({
 					id: uniqid(),
-					name: Name,					
-					email: email,
-					no: phone,					
-					description: description,
-                    fee: fee,					
+					title: data.title,
+					amount: data.amount,
+					duration: data.duration,
+					description: data.description,
 				}),
 			);
 
@@ -60,13 +63,12 @@ function NewStaff({ setOpen, type }) {
 	const handleUpdate = (e) => {
 		e.preventDefault();
 		dispatch(
-			updateStaff({
-				...individualStaff,
-				name: Name,											
-				no: phone,
-				email: email,	
-                fee: fee,
-                description: description,			
+			updateService({
+				...individualService,
+				title: title,
+				amount: amount,
+				duration: duration,
+				description: description,
 			}),
 		);
 		setOpen(false);
@@ -81,79 +83,32 @@ function NewStaff({ setOpen, type }) {
 				/>
 				<h1 className='red text-center text-3xl mt-4'>
 					{" "}
-					{type === "new" ? <p>Add New Staff</p> : <p>Update Staff</p>}
+					{type === "new" ? <p>Add New Service</p> : <p>Update Service</p>}
 				</h1>
-				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>					
-
+				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>
 					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>
-								Name
+								Title
 							</span>
 							<input
-								// ref={lnRef}
+								// ref={fnRef}
 								type='text'
-								placeholder='Name'
-								value={Name}
-								{...register("Name")}
-								onChange={(e) => setName(e.target.value)}
+								placeholder='Title'
+								value={title}
+								{...register("title", { required: true })}
+								onChange={(e) => setTitle(e.target.value)}
 								className={`${
-									errors.Name
+									errors.title
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
 								}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.Name?.message}</div>
-					</div>
-					
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Email</span>
-							<input
-								// ref={emailRef}
-								type='email'
-								placeholder='Email'
-								value={email}
-								{...register("email")}
-								onChange={(e) => setEmail(e.target.value)}
-								className={`${
-									errors.email
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.email?.message}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Phone No</span>
-							<input
-								// ref={phoneRef}
-								type='text'
-								placeholder='Phone No'
-								value={phone}
-								{...register("phoneNo")}
-								onChange={(e) => setPhone(e.target.value)}
-								className={`${
-									errors.phoneNo
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.phoneNo?.message}</div>
+						<div className='red text-xs ml-4'>{errors.title?.message}</div>
 					</div>
 
                     <div>
@@ -161,52 +116,81 @@ function NewStaff({ setOpen, type }) {
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
-							<span className='text-gray-600 mb-2 text-xs idden'>`fee`</span>
+							<span className='text-gray-600 mb-2 text-xs idden'>
+								Duration
+							</span>
 							<input
-								// ref={phoneRef}
+								// ref={fnRef}
 								type='text'
-								placeholder='`fee`'
-								value={fee}
-								{...register("fee")}
-								onChange={(e) => setFee(e.target.value)}
+								placeholder='duration'
+								value={duration}
+								{...register("duration", { required: true })}
+								onChange={(e) => setDuration(e.target.value)}
 								className={`${
-									errors.phoneNo
+									errors.duration
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
 								}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.fee?.message}</div>
+						<div className='red text-xs ml-4'>{errors.duration?.message}</div>
 					</div>
 
-
-					<div>
+                    <div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Description</span>
-							<textarea
-								// ref={shopNoRef}								
-								placeholder='Write a brief Description of what you do...'
-								value={description}
-								{...register("description")}
-								onChange={(e) => setDescription(e.target.value)}
+							<span className='text-gray-600 mb-2 text-xs idden'>
+								Amount
+							</span>
+							<input
+								// ref={fnRef}
+								type='number'
+								placeholder='amount'
+								value={amount}
+								{...register("amount", { required: true })}
+								onChange={(e) => setAmount(e.target.value)}
 								className={`${
-									errors.shopNo
+									errors.amount
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
 								}`}
-							></textarea>
+							/>
+						</label>
+						<div className='red text-xs ml-4'>{errors.amount?.message}</div>
+					</div>
+
+                    <div>
+						<label
+							htmlFor=''
+							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
+						>
+							<span className='text-gray-600 mb-2 text-xs idden'>
+								Description
+							</span>
+							<textarea
+								// ref={fnRef}								
+								placeholder='description'
+								value={description}
+								{...register("description", { required: true })}
+								onChange={(e) => setDescription(e.target.value)}
+								className={`${
+									errors.description
+										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+										: "text-gray-400 bg-transparent outline-none"
+								}`}
+							>
+                            </textarea>
 						</label>
 						<div className='red text-xs ml-4'>{errors.description?.message}</div>
 					</div>
-					
+
 					{type === "new" ? (
 						<button
 							type='submit'
 							className='w-full outline-none'
-							onClick={handleSubmit}
+							onClick={handleSubmit(onSubmit)}
 						>
 							<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer'>
 								Add New
@@ -225,4 +209,4 @@ function NewStaff({ setOpen, type }) {
 	);
 }
 
-export default NewStaff;
+export default NewService;
