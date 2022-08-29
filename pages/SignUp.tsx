@@ -406,8 +406,13 @@ function SignUp() {
 									}
 								}} />
 							</div>
+<<<<<<< HEAD
 							</div>
 						</>
+=======
+						</div>
+					</>
+>>>>>>> 1230b7bf253181aa3d3ccec717e8c375350a789a
 					}
 
 					<div className="col-span-2">
