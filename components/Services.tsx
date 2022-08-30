@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Service } from "../Typing.d";
-import {	
+import {
 	TrashIcon,
 	MailIcon,
 	PencilAltIcon,
@@ -9,11 +9,11 @@ import {
 } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import {	
+import {
 	deleteService,
 	getIndividualService,
 	getService,
-    ServiceList
+	ServiceList
 } from "../features/ServiceSlice";
 
 type Services = {
@@ -26,30 +26,30 @@ function Service({ Service, setOpen }: Services) {
 	const dispatch = useDispatch();
 	const individualService = useSelector(getIndividualService);
 
-    console.log(Service);
-    
+	console.log(Service);
+
 
 	const handleDelete = () => {
 		dispatch(deleteService(Service.id));
 	};
-	const handleEdit = () => {        
+	const handleEdit = () => {
 		dispatch(getService(Service.id));
 		console.log(individualService);
 		setOpen(true);
 	};
 
-        const pricestr = Service.amount.toString()
+	const pricestr = Service.amount.toString()
 
-        const Price = parseInt(pricestr).toLocaleString("en-US")
+	const Price = parseInt(pricestr).toLocaleString("en-US")
 
 	if (Service) {
 		return (
 			<div>
 				<tr className='w-full flex  py-2 px-1 items-center'>
 					<td className='inline-block w-[30%] capitalize '>
-						<span>{Service.title}</span>
+						<span>{Service.name}</span>
 					</td>
-					<td className='hidden lg:inline-block w-[30%] '>{Service.duration}</td> 
+					<td className='hidden lg:inline-block w-[30%] '>{Service.duration}</td>
 					<td className=' lg:inline-block w-[20%] '>{Price}</td>
 					<td className=' lg:inline-block hidden w-[20%] '>
 						<div className='flex space-x-3 '>

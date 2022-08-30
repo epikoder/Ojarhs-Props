@@ -1,28 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import SideBar from "../../components/SideBar";
 import SideBarHeader from "../../components/SideBarHeader";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
 
 function DR() {
 
-    const sideBarState = useSelector(SideBarToggleState );
-	return (
-		<div className='w-full'>
-			<div className=''>
-				<SideBarHeader />
-			</div>
-			<div className='flex fixed top-16 w-full'>
-				<div className={sideBarState ? "w-[40rem]] " : "w-2/12 hidden"}>
-					<SideBar />
-				</div>
-
-                <div className="w-full h-[100vh] overflow-scroll mt-8">
-                    Dispute and Reports
-                </div>
-			</div>
-		</div>
-	);
+	const sideBarState = useSelector(SideBarToggleState);
+	return <AdminDashboardLayout>
+		<h1 className="lg:text-3xl text-md red">
+			Dispute and Reports
+		</h1>
+	</AdminDashboardLayout>
 }
 
 export default DR;

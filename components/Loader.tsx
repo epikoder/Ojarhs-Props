@@ -21,3 +21,19 @@ export default function Loader() {
         </>
     );
 }
+
+export const CardLoader = ({ height = 200, width, count = 4 }: { height?: number, width?: number, count?: number }) => {
+    return <>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mx-2'>
+            {Array.from(Array(count).keys()).map((i) => <div key={i} className="flex flex-col items-center justify-center">
+                <div className="photo shimmer" style={{
+                    height: height,
+                    width: width ?? '100%'
+                }}></div>
+                <div className="lines shimmer"></div>
+                <div className="lines shimmer"></div>
+                <div className="lines shimmer"></div>
+            </div>)}
+        </div>
+    </>
+}

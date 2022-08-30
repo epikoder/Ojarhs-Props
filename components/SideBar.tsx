@@ -1,49 +1,39 @@
-import React, { useState } from "react";
-import { MenuIcon, XIcon, ChevronDownIcon } from "@heroicons/react/solid";
-import Image from "next/image";
+import React, { HTMLAttributes, useState } from "react";
 import SideBarItem from "./SideBarItem";
-import { MessageSubItem, OfficeSubItem, TenantsSubItem } from "../Data";
+import { OfficeSubItem, TenantsSubItem } from "../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../features/ToggleSideBar";
 import { useRouter } from "next/router";
 
-function SideBar() {
+function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 	const router = useRouter();
-
 	const sideBarState = useSelector(SideBarToggleState);
 	return (
-		<div
-			className={
-				sideBarState
-					? "w-[40vw] z-50 sm:w-[25vw] md:w-[20vw] lg:w-[15vw] bg-black h-[100vh] transition-all duration-700 ease-in-out   relative p-4 space-y-4"
-					: " 'w-2/12 bg-black h-[100vh] hidden lg:flex relative p-4 space-y-4'"
-			}
-			id='side'
-		>
-			<div className='flex flex-col justify-between space-y-1'>
+		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out ${props.className}`}>
+			<div className='px-4'>
 				<div onClick={() => router.push("/admin/Dashboard")}>
-					<SideBarItem name='Dashboard' subItem={""} type={""} />{" "}
+					<SideBarItem name='Dashboard' />
 				</div>
 				<div>
 					<SideBarItem name='Tenants' subItem={TenantsSubItem} type={""} />
 				</div>
 				<div onClick={() => router.push("/admin/Message")}>
-					<SideBarItem name='Messages' subItem={""} type={""} />
+					<SideBarItem name='Messages' />
 				</div>
 				<div onClick={() => router.push("/admin/Services")}>
-					<SideBarItem name='Services' subItem={""} type={""} />
+					<SideBarItem name='Services' />
 				</div>
 				<div onClick={() => router.push("/admin/Dash-Props")}>
-					<SideBarItem subItem={""} type={""} name='Properties' />
+					<SideBarItem name='Properties' />
 				</div>
 				<div onClick={() => router.push("/admin/Records")}>
-					<SideBarItem name='Records' subItem={""} type={""} />
+					<SideBarItem name='Records' />
 				</div>
 				<div onClick={() => router.push("/admin/D&R")}>
-					<SideBarItem name='Dispute & Reports' subItem={""} type={""} />
+					<SideBarItem name='Dispute & Reports' />
 				</div>
 				<div onClick={() => router.push("/admin/Adverts")}>
-					<SideBarItem name='Adverts' subItem={""} type={""} />
+					<SideBarItem name='Adverts' />
 				</div>
 				<div>
 					<SideBarItem

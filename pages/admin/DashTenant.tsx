@@ -14,18 +14,18 @@ function DashTenant({ Tenant }: Tenant) {
 				<tr className='w-full flex justify-between py-2 px-1 items-center space-x-3'>
 					<td className='inline-block '>
 						<span>
-							{Tenant.lastName} {Tenant.firstName}
+							{Tenant.lname} {Tenant.fname}
 						</span>
 					</td>					
 					<td className='inline-block'>
 						<span
 							className={
-								Tenant.states === "active"
+								Tenant.state === "active"
 									? "text-xs py-1 rounded-md bg-green-200 text-green-700 px-2 text-center uppercase"
 									: "text-xs py-1 rounded-md bg-red-200 text-red-700 px-2 text-center uppercase"
 							}
 						>
-							{Tenant.states}
+							{Tenant.state}
 						</span>
 					</td>
 					<td className=''>

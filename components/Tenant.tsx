@@ -40,19 +40,19 @@ function Tenant({ Tenant, setOpen }: Tenant) {
 				
 				<td className='inline-block w-[50%] lg:w-[30%]'>
 					<span>
-						{Tenant.lastName} {Tenant.firstName}
+						{Tenant.lname} {Tenant.fname}
 					</span>
 				</td>
 				<td className='hidden lg:inline-block  w-[35%]'>{Tenant.email}</td>
 				<td className='inline-block w-[30%] lg:w-[15%] '>
 					<span
 						className={
-							Tenant.states === "active"
+							Tenant.state === "active"
 								? "text-xs py-1 rounded-md bg-green-200 text-green-700 px-2 text-center uppercase"
 								: "text-xs py-1 rounded-md bg-red-200 text-red-700 px-2 text-center uppercase"
 						}
 					>
-						{Tenant.states}
+						{Tenant.state}
 					</span>
 				</td>
 				<td className='hidden lg:inline-block  w-[20%]'>

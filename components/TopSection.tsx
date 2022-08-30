@@ -1,4 +1,5 @@
 import React from 'react'
+import { HomeNotificationBox } from './HomeNotificationBox'
 import Slider from './Slider'
 
 function TopSection() {
@@ -10,9 +11,7 @@ function TopSection() {
         ]} />
       </div>
       <div className="bg-black text-center col-span-6 md:col-span-2 text-white lg:h-[50vh] md:h-[40vh] h-[35vh] rounded-lg">
-        <div className='w-full'>
-          Notification Box
-        </div>
+        <HomeNotificationBox />
       </div>
     </div>
   )

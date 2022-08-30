@@ -1,4 +1,5 @@
 import React from "react";
+import { money } from "../helpers/helpers";
 import { Service, Space } from "../Typing.d";
 import Button from "./Button";
 import Slider from "./Slider";
@@ -10,7 +11,7 @@ function Card({ data }: { data: Space | Service }) {
 		return (
 			<div className='w-70 relative h-[25vh] border rounded-lg overflow-hidden'>
 				<div className='text-xs z-20 absolute top-0 right-0 '>
-					<Button text={service.amount.toLocaleString("en-US")} />
+					<Button text={money(service.amount)} />
 				</div>
 
 				{/* sliders */}
@@ -49,7 +50,7 @@ function Card({ data }: { data: Space | Service }) {
 		<div className='w-70 relative h-[60vh] md:h-[40vh] border rounded-lg overflow-hidden'>
 			<div className='flex justify-between text-xs z-20 absolute top-0 w-full'>
 				<Button text={shop.status} />
-				<Button text={shop.amount.toLocaleString("en-US")} />
+				<Button text={money(shop.amount)} />
 			</div>
 
 			{/* sliders */}
@@ -70,6 +71,9 @@ function Card({ data }: { data: Space | Service }) {
 				</div>
 				<div className='text-black text-md'>
 					Shop Description: <span className='text-red-500 text-prop'>{shop.description}</span>
+				</div>
+				<div className='text-black text-md'>
+					Payment Plan: <span className='text-red-500 text-prop uppercase text-sm'>{shop.name}</span>
 				</div>
 			</div>
 

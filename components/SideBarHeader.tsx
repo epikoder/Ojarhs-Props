@@ -1,26 +1,48 @@
 import { MenuIcon } from "@heroicons/react/solid";
 import Image from "next/image";
-import React from "react";
+import React, { HTMLAttributes } from "react";
 import { useDispatch } from "react-redux";
 import { togleSideBar } from "../features/ToggleSideBar";
 
-function SideBarHeader() {
+const AdminMenu = () => {
+	return <>
+		<div className="flex items-center justify-end text-white">
+			<div className="hidden md:flex justify-around w-[50vw]">
+				{/* MENU */}
+			</div>
+			<div>
+				<Image
+					src='/image/logo.png'
+					width={50}
+					height={50}
+					layout='fixed'
+					alt='ME'
+					className="rounded-full"
+				/>
+			</div>
+		</div>
+	</>
+}
+function SideBarHeader(props: HTMLAttributes<HTMLDivElement>) {
 	const dispatch = useDispatch();
 
 	return (
-		<div className='w-full bg-black p-4 fixed top-0 z-20'>
-			<div className='flex space-x-7  items-center justify-between '>
-			<Image
+		<div className={`w-full bg-black p-4 sticky-top ${props.className}`}>
+			<div className='flex space-x-5 items-center justify-between'>
+				<div className="flex items-center">
+					<MenuIcon
+						className='w-6 h-6 text-white mx-2 md:hidden'
+						onClick={() => dispatch(togleSideBar())}
+					/>
+					<Image
 						src='/image/logo.png'
-						width={70}
-						height={50}
+						width={40}
+						height={40}
 						layout='fixed'
 						alt='ojarh'
 					/>
-				<MenuIcon
-					className='w-6 h-6 text-white mr-4 mt-4'
-					onClick={() => dispatch(togleSideBar())}
-				/>
+				</div>
+				<AdminMenu />
 			</div>
 		</div>
 	);

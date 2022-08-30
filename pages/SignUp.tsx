@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { TogglePasswordState } from "../features/TogglePassword";
@@ -6,11 +6,12 @@ import { ShowPassword, HidePassword } from "../features/TogglePassword";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import Layout from "../components/Layout";
-import { FormCountryInput, FormInput, FormPasswordInput } from "../components/FormInput";
+import { FormCountryInput, FormInput, FormPasswordInput, FormPhoneInput } from "../components/FormInput";
 import { ImageUpload } from "../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../Typing.d";
 import { BASEURL } from "../constants";
 import Loader from "../components/Loader";
+import { emailValidator } from "../helpers/validation";
 
 function SignUp() {
 	const dispatch = useDispatch();
@@ -20,6 +21,10 @@ function SignUp() {
 	const [secondNextofKin, setSecondNextofKin] = useState<boolean>(false)
 	const [form, setForm] = useState<SignUpForm>({} as SignUpForm)
 	const [nextOfKinForm, setNextOfKinForm] = useState<NextOfKin[]>([{} as NextOfKin])
+	const [errors, setErrors] = useState<SignUpForm>({} as SignUpForm)
+	const [cPassword, setCPassowrd] = useState('')
+	const [cPasswordState, setCPasswordState] = useState(false)
+	const formRef = useRef<HTMLFormElement>()
 
 	useEffect(() => {
 		if (secondNextofKin) {
@@ -38,12 +43,25 @@ function SignUp() {
 		setForm({ ...form, next_of_kins: nextOfKinForm, })
 	}, [nextOfKinForm])
 
+	const getError = (key: string): string | undefined => {
+		return errors[key]
+	}
+
 	const submit = async () => {
+		if (form.password !== cPassword) {
+			setMessage({ text: "password do not match" })
+			return
+		}
+		if (!formRef.current.checkValidity()) {
+			setMessage({ text: "fill all fields correctly" })
+			return
+		}
 		try {
 			setMessage({
 				text: ''
 			})
 			setLoading(true)
+			setErrors({} as SignUpForm)
 			var res = await fetch(BASEURL + "/auth/register", {
 				method: 'POST',
 				body: JSON.stringify(form)
@@ -53,23 +71,28 @@ function SignUp() {
 				case 400:
 					let r = await res.json() as ApiResponse
 					setMessage({ text: 'please fill the form correctly' })
-					if (r.error['email'] && r.error['email'].includes("exist")) {
-						setMessage({ text: 'User already exist with this email address' })
-					}
 					if (r.error['photo'] && Object.keys(r.error).length == 1) {
 						setMessage({ text: 'please upload your photo' })
 					}
-
-					if (r.error['phone'] && r.error['phone'].includes("exist")) {
-						setMessage({ text: 'User already exist with this phone number' })
+					let ee = {} as SignUpForm
+					for (let n in r.error) {
+						ee[n] = r.error[n]
 					}
+					setErrors(ee)
 					break
 				case 200:
 					let rr = await res.json() as ApiResponse
+					if (rr.status === 'failed') {
+						setMessage({
+							status: false,
+							text: rr.message
+						})
+						return
+					}
 					setMessage({ text: rr.message, status: true })
 					setTimeout(() => {
 						location.assign("/Login")
-					}, 3000)
+					}, 1500)
 					break
 				default:
 					console.log(res);
@@ -84,16 +107,21 @@ function SignUp() {
 		<Layout>
 			<div className='my-16 bg-gray-100 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 py-4'>
 				<h1 className='red text-center text-2xl my-2'> Sign Up</h1>
-				<div className={`text-center text-md font-sans text-${message.status ? 'blue' : 'red'}-500`}>
+				<div className={`text-center text-md font-sans text-red-500`}>
+					All fields are compulsory
+				</div>
+				<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 					{message.text !== undefined && message.text}
 				</div>
-				<form onSubmit={(e) => e.preventDefault()} action='' className='py-2 px-1 md:px-2 lg:px-4 md:grid md:grid-cols-2 gap-4'>
+				<form ref={formRef} onSubmit={(e) => e.preventDefault()} action='' className='py-2 px-1 md:px-2 lg:px-4 md:grid md:grid-cols-2 gap-4'>
 					<div>
 						<h2 className='red'>Personal Information</h2>
 						<FormInput props={{
 							title: 'First Name',
 							name: "fname",
 							type: 'text',
+							required: true,
+							message: getError("fname"),
 							handleChange: (s) => {
 								setForm({
 									...form, fname: s as unknown as string
@@ -104,6 +132,8 @@ function SignUp() {
 							title: 'Last Mame',
 							name: "lname",
 							type: 'text',
+							required: true,
+							message: getError("lname"),
 							handleChange: (s) => {
 								setForm({
 									...form, lname: s as unknown as string
@@ -114,6 +144,12 @@ function SignUp() {
 							title: 'Email',
 							name: "email",
 							type: 'text',
+							required: true,
+							message: ((): string => {
+								if (form.email === undefined) return undefined
+								if (getError("email") !== undefined && getError("email").includes("exist")) return getError("email")
+								return emailValidator(form.email)
+							})(),
 							handleChange: (s) => {
 								setForm({
 									...form, email: s as unknown as string
@@ -123,6 +159,8 @@ function SignUp() {
 						<FormPasswordInput props={{
 							title: 'Password',
 							name: "password",
+							requried: true,
+							message: getError("password"),
 							hidden: togglePasswordState,
 							handleChange: (s) => {
 								setForm({
@@ -130,10 +168,43 @@ function SignUp() {
 								})
 							}
 						}} />
+						<label
+							htmlFor=''
+							className='flex flex-col relative bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2 my-2'
+						>
+							<span className='text-gray-600 mb-2 text-xs flex justify-between'>
+								Confirm Password
+							</span>
+							<div className="flex items-center justify-between">
+								<input
+									type={cPasswordState ? "text" : "password"}
+									placeholder={"Confirm Password"}
+									className='text-gray-500 bg-transparent outline-none w-full'
+									onChange={(e) => setCPassowrd(e.target.value as unknown as string)}
+								/>
+
+								{cPasswordState ? (
+									<EyeOffIcon
+										onClick={() => setCPasswordState(!cPasswordState)}
+										className='w-4 h-4 bottom-3 right-3'
+									/>
+								) : (
+									<EyeIcon
+										onClick={() => setCPasswordState(!cPasswordState)}
+										className='w-4 h-4 bottom-3 right-2'
+									/>
+								)}
+							</div>
+							<span className='text-red-600 font-serif mb-2 text-xs text-center idden'>
+								{form.password !== "" && form.password !== undefined && form.password !== cPassword ? "password mismatch" : undefined}
+							</span>
+						</label>
 						<FormInput props={{
 							title: 'Address',
 							name: "address",
 							type: 'text',
+							required: true,
+							message: getError("address"),
 							handleChange: (s) => {
 								setForm({
 									...form, address: s as unknown as string
@@ -143,6 +214,8 @@ function SignUp() {
 						<FormInput props={{
 							title: 'LGA',
 							name: "lga",
+							required: true,
+							message: getError("lga"),
 							type: 'text', handleChange: (s) => {
 								setForm({
 									...form, lga: s as unknown as string
@@ -153,6 +226,8 @@ function SignUp() {
 							title: 'State',
 							name: "state",
 							type: 'text',
+							required: true,
+							message: getError("state"),
 							handleChange: (s) => {
 								setForm({
 									...form, state: s as unknown as string
@@ -161,16 +236,19 @@ function SignUp() {
 						}} />
 						<FormCountryInput props={{
 							title: 'Country',
+							required: true,
 							handleChange: (s) => {
 								setForm({
 									...form, country: s as unknown as string
 								})
 							}
 						}} />
-						<FormInput props={{
+						<FormPhoneInput props={{
 							title: 'Phone No.',
 							name: "phone",
 							type: 'number',
+							required: true,
+							message: getError("phone"),
 							handleChange: (s) => {
 								setForm({
 									...form, phone: s as unknown as number
@@ -184,7 +262,6 @@ function SignUp() {
 							<span className='text-gray-600 mb-2 text-md idden'>
 								Profile photo
 							</span>
-							{/* <input type='file' onChange={onChange} /> */}
 							<ImageUpload key={'photo'} handleUpload={(s) => setForm({
 								...form, photo: s as unknown as string
 							})} />
@@ -197,6 +274,8 @@ function SignUp() {
 								title: 'Name',
 								name: "gurantor_name",
 								type: 'text',
+								required: true,
+								message: getError("gurantor_name"),
 								handleChange: (s) => {
 									setForm({
 										...form, guarantor_name: s as unknown as string
@@ -207,15 +286,19 @@ function SignUp() {
 								title: 'Address',
 								name: "guarantor_address",
 								type: 'text',
+								required: true,
+								message: getError("gurantor_address"),
 								handleChange: (s) => {
 									setForm({
 										...form, guarantor_address: s as unknown as string
 									})
 								}
 							}} />
-							<FormInput props={{
+							<FormPhoneInput props={{
 								title: 'Phone No.',
 								type: 'number',
+								required: true,
+								message: getError("gurantor_phone"),
 								handleChange: (s) => {
 									setForm({
 										...form, guarantor_phone: s as unknown as number
@@ -229,8 +312,9 @@ function SignUp() {
 							<FormInput props={{
 								title: 'First Name',
 								type: 'text',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].fname = s as unknown as string
+									nextOfKinForm[0].kfname = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -239,8 +323,9 @@ function SignUp() {
 							<FormInput props={{
 								title: 'Last Name',
 								type: 'text',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].lname = s as unknown as string
+									nextOfKinForm[0].klname = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -249,8 +334,14 @@ function SignUp() {
 							<FormInput props={{
 								title: 'Email',
 								type: 'text',
+								required: true,
+								message: ((): string => {
+									if (nextOfKinForm.length === 0) return
+									if (nextOfKinForm[0].kemail === undefined) return undefined
+									return emailValidator(form.next_of_kins[0].kemail)
+								})(),
 								handleChange: (s) => {
-									nextOfKinForm[0].email = s as unknown as string
+									nextOfKinForm[0].kemail = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -259,8 +350,9 @@ function SignUp() {
 							<FormInput props={{
 								title: 'Address',
 								type: 'text',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].address = s as unknown as string
+									nextOfKinForm[0].kaddress = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -269,8 +361,9 @@ function SignUp() {
 							<FormInput props={{
 								title: 'LGA',
 								type: 'text',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].lga = s as unknown as string
+									nextOfKinForm[0].klga = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -279,8 +372,9 @@ function SignUp() {
 							<FormInput props={{
 								title: 'State',
 								type: 'text',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].state = s as unknown as string
+									nextOfKinForm[0].kstate = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -288,18 +382,20 @@ function SignUp() {
 							}} />
 							<FormCountryInput props={{
 								title: 'Country',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].country = s as unknown as string
+									nextOfKinForm[0].kcountry = s as unknown as string
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
 								}
 							}} />
-							<FormInput props={{
+							<FormPhoneInput props={{
 								title: 'Phone No.',
 								type: 'number',
+								required: true,
 								handleChange: (s) => {
-									nextOfKinForm[0].phone = s as unknown as number
+									nextOfKinForm[0].kphone = s as unknown as number
 									setNextOfKinForm([
 										...nextOfKinForm,
 									])
@@ -326,8 +422,9 @@ function SignUp() {
 								<FormInput props={{
 									title: 'First Name',
 									type: 'text',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].fname = s as unknown as string
+										nextOfKinForm[1].kfname = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -336,8 +433,9 @@ function SignUp() {
 								<FormInput props={{
 									title: 'Last Name',
 									type: 'text',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].lname = s as unknown as string
+										nextOfKinForm[1].klname = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -346,8 +444,13 @@ function SignUp() {
 								<FormInput props={{
 									title: 'Email',
 									type: 'text',
+									required: true,
+									message: ((): string => {
+										if (form.next_of_kins[1].kemail === undefined) return undefined
+										return emailValidator(form.next_of_kins[1].kemail)
+									})(),
 									handleChange: (s) => {
-										nextOfKinForm[1].email = s as unknown as string
+										nextOfKinForm[1].kemail = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -356,8 +459,9 @@ function SignUp() {
 								<FormInput props={{
 									title: 'Address',
 									type: 'text',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].address = s as unknown as string
+										nextOfKinForm[1].kaddress = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -369,8 +473,9 @@ function SignUp() {
 								<FormInput props={{
 									title: 'LGA',
 									type: 'text',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].lga = s as unknown as string
+										nextOfKinForm[1].klga = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -379,8 +484,9 @@ function SignUp() {
 								<FormInput props={{
 									title: 'State',
 									type: 'text',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].state = s as unknown as string
+										nextOfKinForm[1].kstate = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -388,8 +494,9 @@ function SignUp() {
 								}} />
 								<FormCountryInput props={{
 									title: 'Country',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].country = s as unknown as string
+										nextOfKinForm[1].kcountry = s as unknown as string
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
@@ -398,25 +505,22 @@ function SignUp() {
 								<FormInput props={{
 									title: 'Phone No.',
 									type: 'number',
+									required: true,
 									handleChange: (s) => {
-										nextOfKinForm[1].phone = s as unknown as number
+										nextOfKinForm[1].kphone = s as unknown as number
 										setNextOfKinForm([
 											...nextOfKinForm,
 										])
 									}
 								}} />
 							</div>
-<<<<<<< HEAD
-							</div>
-						</>
-=======
+
 						</div>
 					</>
->>>>>>> 1230b7bf253181aa3d3ccec717e8c375350a789a
 					}
 
 					<div className="col-span-2">
-						<div className={`text-center text-md py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
+						<div className={`text-center text-sm py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 							{message.text !== undefined && message.text}
 						</div>
 						<div className="w-full flex">
@@ -436,12 +540,12 @@ function SignUp() {
 								<span className='hov cursor-pointer'>Login</span>
 							</Link>
 						</div>
-					</div>															
-					
-			</form>						
+					</div>
+
+				</form>
 			</div>
-			</Layout>		
-		
+		</Layout>
+
 	);
 }
 
