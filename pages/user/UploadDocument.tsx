@@ -86,7 +86,7 @@ const UploadDocument = () => {
                 }
                 {
                     docUrl !== '' && <div className="m-4 flex justify-center">
-                        <PaystackConsumer email={user.email} amount={10000} publicKey={pk_key} onSuccess={(response) => proceed(response)} >
+                        <PaystackConsumer email={user.email} amount={10000} publicKey={pk_key} onSuccess={(response) => { proceed(response) }} >
                             {
                                 ({ initializePayment }) =>
                                     <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"

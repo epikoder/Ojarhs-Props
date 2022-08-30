@@ -228,7 +228,11 @@ export const services: Service[] = [
 		description: "Electrical Maintenance and repairs",
 		manager: "Emma Glory",
 		name: "Electrical Maintenance",
-		type: "service"
+		type: "service",
+		duration: 12,
+		plan_name: 'yearly',
+		created_at: null,
+		updated_at: null
 	},
 ];
 
@@ -497,7 +501,7 @@ export const OfficeSubItem = [
 	},
 
 	{
-		name:"Expences",
-		link:"/Expenses"
+		name: "Expences",
+		link: "/Expenses"
 	}
 ]
