@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { DocumentUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
-import { PaystackConsumer, usePaystackPayment } from "react-paystack"
+import { PaystackConsumer } from "react-paystack"
 import { BASEURL, pk_key } from "../../constants"
 import { useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "../../store"
