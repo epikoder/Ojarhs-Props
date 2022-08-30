@@ -8,11 +8,6 @@ function RecordCharts({active, free, activeVal, freeVal}) {
 	var series = [parseInt(activeVal), parseInt(freeVal)];
 	var chartOptions = {
 		labels: [active, free],
-		colors: ["blue", "yellow"],	
-		fill: {
-			colors:["red", "blue"],
-			type:"solid"
-		}
 	};
 
 	return (
