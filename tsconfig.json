@@ -27,7 +27,7 @@
     "components/NewTenant.jsx",
     "components/NewProps.jsx",
     "components/NewStaff.jsx"
-, "components/NewService.jsx"  ],
+, "components/NewService.jsx", "components/RecordCharts.jsx"  ],
   "exclude": [
     "node_modules"
   ]
