@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadUserProperties } from "../../redux/user/dashboard";
+import { RootState } from "../../store";
 import { LoadState, Service, Space } from "../../Typing.d";
 
 type AccountState = {
@@ -13,7 +14,7 @@ type AccountState = {
     }
 }
 const AccountSlice = createSlice({
-    name: 'DashboardSlice',
+    name: 'AccountSlice',
     initialState: {
         properties: {
             state: "success"
@@ -28,11 +29,13 @@ const AccountSlice = createSlice({
             state.properties.state = 'pending'
         })
         builder.addCase(loadUserProperties.fulfilled, (state, { payload }) => {
-            state.properties.data = payload as Space[]
+            if (payload.map === undefined) return
             state.properties.state = 'success'
+            state.properties.data = payload as Space[]
         })
         builder.addCase(loadUserProperties.rejected, (state, { payload }) => { })
     },
 })
 
+export const accountState = (store: RootState) => store.accountSlice
 export default AccountSlice.reducer

@@ -1,10 +1,11 @@
 import { DotsVerticalIcon } from "@heroicons/react/solid"
 import { useRouter } from "next/router"
-import React, { ReactPropTypes } from "react"
+import React, { } from "react"
 import { useSelector } from "react-redux"
+import { accountState } from "../../features/user/accountSlice"
 import { addMonth, money } from "../../helpers/helpers"
 import { loadUserProperties } from "../../redux/user/dashboard"
-import { RootState, useAppDispatch } from "../../store"
+import { useAppDispatch } from "../../store"
 import { Space } from "../../Typing.d"
 import { Table } from "../Table"
 
@@ -35,7 +36,7 @@ const TableBody = ({ space, index }: { space: Space, index: number } & React.Att
     </div>
 }
 export const UserDashboardProperties = () => {
-    const { state, data } = useSelector((store: RootState) => store.accountSlice.properties)
+    const { properties } = useSelector(accountState)
     const [sortedData, setSortedData] = React.useState<Space[]>([])
 
     const dispatch = useAppDispatch()
@@ -45,17 +46,17 @@ export const UserDashboardProperties = () => {
     }, [])
 
     React.useEffect(() => {
-        if (state === 'success') {
-            console.log(data)
-            setSortedData(data ?? [])
+        if (properties.state === 'success') {
+            console.log(properties.data)
+            setSortedData(properties.data ?? [])
         }
-    }, [state])
+    }, [properties.state])
 
     const body = (value: Space, index: number): JSX.Element => <TableBody space={value} index={index} key={index} />
 
     return <Table
-        state={state}
-        data={data ?? []}
+        state={properties.state}
+        data={properties.data ?? []}
         noData={<div className="text-center bg-black p-3 lg:p-8 my-1 rounded-lg text-white">
             <div>
                 <div className="p-2">

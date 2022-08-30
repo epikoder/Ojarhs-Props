@@ -57,7 +57,7 @@ export const UserSideBar = () => {
                     </div>
                 </div>}
             </div>
-            <div className="my-2 mx-2 bg-black w-[20vh] text-center rounded-md hidden md:block text-white">
+            <div className="my-2 mx-2 bg-black text-center rounded-md hidden md:block text-white">
                 <MenuItem title="Dashboard" href="/user/Dashboard" />
                 <MenuItem title="Profile" href="/user/Profile" />
                 <MenuItem title="Service" href="/user/Service" />
