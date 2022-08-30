@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowLeftIcon, MenuIcon, XIcon } from "@heroicons/react/solid"
+import { DotsVerticalIcon, XIcon } from "@heroicons/react/solid"
 import React from "react"
 import { RootState } from "../../store"
 import { useSelector } from "react-redux"
@@ -36,13 +36,13 @@ export const UserSideBar = () => {
         {user !== undefined && <div>
             <div className="md:hidden">
                 <div className="relative">
-                    <MenuIcon className="text-black w-8 absolute right-1" onClick={() => toggleOpen(!isOpen)} />
+                    <DotsVerticalIcon className="text-black w-6 my-2 absolute right-1" onClick={() => toggleOpen(!isOpen)} />
                 </div>
                 {isOpen && <div className="absolute z-10 text-center text-white w-full h-[100vh]" style={{
                     backgroundColor: '#000000de'
                 }}>
                     <div className="relative flex justify-end px-4">
-                        <XIcon className="text-white w-10" onClick={() => toggleOpen(!isOpen)} />
+                        <XIcon className="text-white w-8" onClick={() => toggleOpen(!isOpen)} />
                     </div>
                     <MenuItemMobile title="Dasboard" href="/user/Dashboard" />
                     <MenuItemMobile title="Profile" href="/user/Profile" />

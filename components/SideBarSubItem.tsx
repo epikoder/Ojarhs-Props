@@ -1,49 +1,21 @@
 import Link from "next/link";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { toggleState } from "../features/ToggleSubItem";
+import React from "react";
 
-function SideBarSubItem({ subItem, open, toggle, type }) {	
-	
-		if (type === "office" && open)	{
-			return (			
-				<div className=' text-white flex-col space-y- transition-all duration-1000 ease-in-out'>
-				{subItem
-					? subItem.map((item, index) => {
-							return (
-								<div
-									key={index}
-									className='text-gray-300 cursor-pointer hov hover:ml-2 transition-all duration-700 py-2 text-xs'
-								>
-									<span>-</span> <Link href={item.link}>{item.name}</Link>
-								</div>
-							);
-					  })
-					: ""}
-			</div>
-			 
-		)	
-		} 
-
-
-	if (toggle) {
+function SideBarSubItem({ subItem, toggle }: { subItem: { name: string, link: string }[], toggle: boolean }) {
 	return (
 		<div className=' text-white flex-col space-y- transition-all duration-1000 ease-in-out'>
-		{subItem
-			? subItem.map((item, index) => {
-					return (
-						<div
-							key={index}
-							className='text-gray-300 cursor-pointer hov hover:ml-2 transition-all duration-700 py-2 text-xs'
-						>
-							<span>-</span> <Link href={item.link}>{item.name}</Link>
-						</div>
-					);
-			  })
-			: ""}
-	</div>
+			{subItem.map((item, index) => {
+				return (
+					<div
+						key={index}
+						className={`text-gray-300 cursor-pointer hov hover:ml-2 transition-all duration-700 py-2 text-sm ${toggle ? '' : 'hidden'}`}
+					>
+						<span className="font-semibold">-</span> <Link href={item.link}>{item.name}</Link>
+					</div>
+				);
+			})}
+		</div>
 	)
-	}
 }
 
 export default SideBarSubItem;

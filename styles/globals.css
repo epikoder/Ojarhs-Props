@@ -5,6 +5,9 @@
 @import "tailwindcss/utilities";
 @import "./shimmer.css";
 
+body, html {
+    height: 100%;
+}
 .bg-red {
     background-color: red;
 }

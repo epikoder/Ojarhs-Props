@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit'
 import menuStore from "./features/HeaderMenu"
 import TogglePassword from './features/TogglePassword'
 import ToggleSideBar from './features/ToggleSideBar'
-import ToggleSubItem from './features/ToggleSubItem'
 import TenantsSlice from "./features/TenantsSlice"
 import PropertySlice from './features/PropertySlice'
 import StaffSlice from './features/StaffSlice'
@@ -17,7 +16,6 @@ export const store = configureStore({
   reducer: {
     menu: menuStore,
     togglePassword: TogglePassword,
-    toggleSubItem: ToggleSubItem,
     toggleSideBar: ToggleSideBar,
     tenantsSlice: TenantsSlice,
     propertySlice: PropertySlice,

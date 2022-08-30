@@ -1,3 +1,4 @@
+import { DotsVerticalIcon } from "@heroicons/react/solid"
 import { useRouter } from "next/router"
 import React, { ReactPropTypes } from "react"
 import { useSelector } from "react-redux"
@@ -14,7 +15,7 @@ const TableHead = () => <div className="py-4 mt-8 my-1 bg-black px-2 rounded-md 
         <div className="hidden lg:block col-span-3 font-semibold uppercase text-sm">address</div>
         <div className="hidden lg:block col-span-2 font-semibold uppercase text-sm">expires on</div>
         <div className="col-span-3 lg:col-span-2 font-semibold uppercase text-sm">amount</div>
-        <div className="col-span-2 lg:col-span-1 font-semibold uppercase text-sm">action</div>
+        <div className="col-span-2 lg:col-span-1 font-semibold uppercase text-sm">more</div>
     </div>
 </div>
 
@@ -22,14 +23,14 @@ const TableBody = ({ space, index }: { space: Space, index: number } & React.Att
     console.log(space)
     const [isOpen, setIsOpen] = React.useState<boolean>(false)
 
-    return <div className="py-4 my-1 bg-black px-2 rounded-md text-white text-sm" key={index}>
+    return <div className="py-2 my-1 bg-black px-2 rounded-md text-white text-sm" key={index}>
         <div className="grid grid-cols-9 text-center lg:grid-cols-12 gap-2">
             <div className="col-span-1 text-sm font-semibold">{index + 1}</div>
             <div className="col-span-3 uppercase text-sm">{space.type}</div>
             <div className="hidden lg:block col-span-3 text-sm">{space.address}</div>
             <div className="hidden lg:block col-span-2 text-sm">{addMonth(space.updated_at, space.duration)}</div>
             <div className="col-span-3 lg:col-span-2 text-sm">{money(space.amount)}</div>
-            <div className="col-span-2 lg:col-span-1 text-sm">Action</div>
+            <div className="col-span-2 lg:col-span-1 text-sm flex justify-center hover:cursor-pointer"><DotsVerticalIcon height={20} /> </div>
         </div>
     </div>
 }
