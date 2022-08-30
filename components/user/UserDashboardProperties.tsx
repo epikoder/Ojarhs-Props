@@ -52,8 +52,6 @@ export const UserDashboardProperties = () => {
         }
     }, [properties.state])
 
-    const body = (value: Space, index: number): JSX.Element => <TableBody space={value} index={index} key={index} />
-
     return <Table
         state={properties.state}
         data={properties.data ?? []}
@@ -64,13 +62,13 @@ export const UserDashboardProperties = () => {
                 </div>
                 <div className="flex justify-center">
                     <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
-                        onClick={() => router.push('/')}>
+                        onClick={() => router.push('/properties')}>
                         Rent Now
                     </div>
                 </div>
             </div>
         </div>}
         tableHead={<TableHead />}
-        tableBody={body}
+        tableBody={(value: Space, index: number): JSX.Element => <TableBody space={value} index={index} key={index} />}
     />
 }

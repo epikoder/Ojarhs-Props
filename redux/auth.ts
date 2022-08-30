@@ -57,7 +57,7 @@ export const loginApi =
             }
         } catch (error) {
             console.log(error)
-            rejectWithValue({
+            return rejectWithValue({
                 status: 'failed',
                 message: 'Error connecting to server'
             })

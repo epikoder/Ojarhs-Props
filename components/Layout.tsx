@@ -20,23 +20,17 @@ function Layout(props) {
     dispatch(checkIsAuthenticated())
   }, [])
 
-  useEffect(() => {
-    console.log(isAuthenticated);
-  }, [])
-
-  useEffect(() => {
-    console.log("WATCHING", indx);
-  }, [indx])
   return (
     <div>
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <div className='flex flex-col justify-between footer'>
-        {appState === 'completed' ? <main>{props.children}</main> : <div className='mt-4 relative h-40'>
-          <Loader />
-        </div>}
+      <div className='flex flex-col justify-between'>
+        {appState === 'completed' ? <main>{props.children}</main> :
+          <div className='mt-4 relative h-[40vh]'>
+            <Loader />
+          </div>}
         <Footer />
       </div>
     </div>

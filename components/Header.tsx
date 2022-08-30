@@ -24,7 +24,7 @@ function Header() {
 						alt='ojarh'
 					/>
 				</Link>
-				<ul className='lg:flex items-center justify-between text-uppercase w-6/12 hidden'>
+				<ul className='lg:flex items-center justify-between text-uppercase w-8/12 hidden'>
 					<NavLink href='/'>
 						<li className='active:text-red-600 a uppercase cursor-pointer text-md text-white hov duration-300 transition-all ease-in-out'>
 							<a>Home</a>
@@ -33,6 +33,11 @@ function Header() {
 					<NavLink href='/properties'>
 						<li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md duration-300 transition-all ease-in-out'>
 							<a>Properties</a>
+						</li>
+					</NavLink>
+					<NavLink href='/services'>
+						<li className='text-white active:text-red-600 a uppercase cursor-pointer hov text-md duration-300 transition-all ease-in-out'>
+							<a>Services</a>
 						</li>
 					</NavLink>
 					<NavLink href='/About'>
@@ -86,6 +91,14 @@ function Header() {
 								className='text-white  uppercase hov cursor-pointer text-md'
 							>
 								Properties
+							</li>
+						</NavLink>
+						<NavLink href='/services'>
+							<li
+								onClick={() => dispatch(closeMenu())}
+								className='text-white  uppercase hov cursor-pointer text-md'
+							>
+								Services
 							</li>
 						</NavLink>
 						<NavLink href='/About'>

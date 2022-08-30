@@ -36,6 +36,11 @@ export const Table = ({ tableBody, tableHead, state, data, noData }: {
                 }} />
             </>
             }
+            {(state === 'failed') && <div className="text-center my-1 bg-black text-white p-4 rounded-md">
+                <span>ERROR</span>
+                <span className="text-red-500 text-xl">{" | "}</span>
+                {"Try relaoding the page"}
+            </div>}
         </div>}
     </React.Fragment>
 }

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router"
-import React, { PropsWithChildren } from "react"
+import React, { HTMLAttributes, PropsWithChildren } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import Layout from "../Layout"
 import { UserSideBar } from "./UserSideBar"
 
-export const UserDashboardLayout = (props?: PropsWithChildren) => {
+export const UserDashboardLayout = (props?: PropsWithChildren & HTMLAttributes<HTMLDivElement>) => {
     return <>
         <Layout>
             <div className="flex justify-center">
@@ -13,7 +13,7 @@ export const UserDashboardLayout = (props?: PropsWithChildren) => {
                     <div className="md:w-[20%]">
                         <UserSideBar />
                     </div>
-                    <div className="md:w-[70%]">
+                    <div className={`md:w-[70%] ${props.className}`}>
                         {props.children}
                     </div>
                 </div>

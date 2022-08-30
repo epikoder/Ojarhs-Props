@@ -55,6 +55,10 @@ export type Service = {
 	amount: number
 	manager: string
 	type: 'service'
+	plan_name: string
+	duration: number
+	created_at: Date
+	updated_at: Date
 }
 
 export type Staff = {

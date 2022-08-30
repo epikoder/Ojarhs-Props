@@ -44,7 +44,7 @@ export const loadIndex =
                 testimonies: data.data.reviews
             }
         } catch (error) {
-            rejectWithValue({
+            return rejectWithValue({
                 status: "failed"
             })
         }

@@ -7,10 +7,16 @@ import { checkIsAuthenticated } from "../features/authSlice"
 import { RootState, useAppDispatch } from "../store"
 import Loader from "./Loader"
 
-export const ImageUpload = ({ handleUpload, required = false, disabled = false }: { handleUpload?: (s: string) => void, required?: boolean, disabled?: boolean }) => {
+export const ImageUpload = ({ value, handleUpload, required = false, disabled = false, }: {
+    handleUpload?: (s: string) => void,
+    required?: boolean,
+    disabled?: boolean,
+    value?: string
+}) => {
     const [url, setUrl] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     const ref = useRef<HTMLInputElement>()
+
     function onUpload() {
         setUrl('')
         var reader = new FileReader()
@@ -37,12 +43,17 @@ export const ImageUpload = ({ handleUpload, required = false, disabled = false }
                     setUrl('')
                     return
                 }
-                handleUpload(data.photo)
+                if (handleUpload !== undefined) {
+                    handleUpload(data.photo)
+                }
 
             } catch (error) {
                 console.log(error);
                 setUrl('')
                 setLoading(false)
+                if (handleUpload !== undefined) {
+                    handleUpload('')
+                }
             }
         }
         const uploader = ref.current;
@@ -56,6 +67,9 @@ export const ImageUpload = ({ handleUpload, required = false, disabled = false }
             if (loading || disabled) return
             if (!required && url !== '') {
                 setUrl('')
+                if (handleUpload !== undefined) {
+                    handleUpload('')
+                }
                 return
             }
             const uploader = ref.current;
@@ -64,18 +78,19 @@ export const ImageUpload = ({ handleUpload, required = false, disabled = false }
             }
         }}>
             {
-                url === '' ? (<div className="p-1">
-                    SELECT PHOTO
-                </div>) : loading ? <Loader /> : <>
-                    <div className="relative h-full w-full">
-                        <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
-                        <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                (value !== undefined && url === '') ? <img src={value} alt="" className="object-cover h-full w-full rounded-md" /> :
+                    (url === '' ? (<div className="p-1">
+                        SELECT PHOTO
+                    </div>) : loading ? <Loader /> : <>
+                        <div className="relative h-full w-full">
+                            <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
+                            <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                            </div>
+                            <div className="z-20 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                                REMOVE
+                            </div>
                         </div>
-                        <div className="z-20 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
-                            REMOVE
-                        </div>
-                    </div>
-                </>
+                    </>)
             }
         </div>
         <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} />

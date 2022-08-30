@@ -13,7 +13,7 @@ export const FormInput = ({ props }: {
         message?: string
         required?: boolean
         type?: React.HTMLInputTypeAttribute
-        handleChange?: <T>(s: T) => void
+        handleChange?: (s: any) => void
     }
 }) => {
     return <>
@@ -41,7 +41,7 @@ export const FormPhoneInput = ({ props }: {
         required?: boolean
         message?: string
         type?: React.HTMLInputTypeAttribute
-        handleChange?: <T>(s: T) => void
+        handleChange?: (s: any) => void
     }
 }) => {
     return <>
@@ -69,7 +69,7 @@ export const FormPasswordInput = ({ props }: {
         requried?: boolean
         message?: string
         hidden: boolean
-        handleChange?: <T>(s: T) => void
+        handleChange?: (s: any) => void
     }
 }) => {
     const dispatch = useDispatch();
