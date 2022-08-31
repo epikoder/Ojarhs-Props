@@ -11,11 +11,11 @@ import Loader from './Loader';
 function Layout(props) {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { authenticated: isAuthenticated, appState } = useSelector((store: RootState) => store.authSlice)
+  const { authenticated, appState } = useSelector((store: RootState) => store.authSlice)
   const indx = useSelector((store: RootState) => store.indexSlice)
 
   useEffect(() => {
-    if (isAuthenticated) return
+    if (authenticated) return
     localStorage.setItem('current', router.pathname)
     dispatch(checkIsAuthenticated())
   }, [])
