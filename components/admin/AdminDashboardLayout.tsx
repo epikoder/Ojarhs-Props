@@ -12,7 +12,7 @@ export const AdminDashboardLayout = (props: PropsWithChildren & HTMLAttributes<H
             <SideBarHeader className="row-span-1" />
             <div className='grid grid-cols-12 h-full duration-300 transition-all ease-in-out md:row-span-5'>
                 <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
-                <div className={`p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9`}>
+                <div className={`p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className}`}>
                     {props.children}
                 </div>
             </div>
