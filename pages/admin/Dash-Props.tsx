@@ -7,6 +7,7 @@ import { SideBarToggleState } from "../../features/ToggleSideBar";
 import Property from "../../components/Property";
 import NewProps from "../../components/NewProps";
 import { PropertyList } from "../../features/PropertySlice";
+import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
 function DashProps() {
 	const [open, setOpen] = useState(false);
@@ -19,17 +20,9 @@ function DashProps() {
 
 	
 	return (
-		<div className='w-full'>
-			<div className=''>
-				<SideBarHeader />
-			</div>
-			<div className='flex fixed top-16 w-full'>
-				<div className={sideBarState ? "w-[40rem]] " : "w-2/12 hidden"}>
-					<SideBar />
-				</div>
-
-				<div className='w-full'>
-					<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
+		
+		<AdminDashboardLayout>
+			<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
 						<h1 className='lg:text-3xl text-md red'>Properties</h1>
 
 						<button
@@ -40,8 +33,8 @@ function DashProps() {
 							Add new
 						</button>
 					</div>
-					{open ? <NewProps type='new' setOpen={setOpen} /> : ""}
-					{updateOpen ? <NewProps type='update' setOpen={setUpdateOpen} /> : ""}
+					{open ? <div className="w-full relative"><NewProps type='new' setOpen={setOpen} /></div> : ""}
+					{updateOpen ? <div className="w-full relative"><NewProps type='update' setOpen={setUpdateOpen} /></div> : ""}
 					{Properties.length !== 0 ? (
 						<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
 							<table id='customers'>
@@ -69,9 +62,7 @@ function DashProps() {
 					) : (
 						<div className='text-center uppercase mt-4 '>No New Property </div>
 					)}
-				</div>
-			</div>
-		</div>
+		</AdminDashboardLayout>
 	);
 }
 export default DashProps;

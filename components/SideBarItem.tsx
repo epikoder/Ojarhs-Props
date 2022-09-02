@@ -9,7 +9,7 @@ function SideBarItem({ name, subItem, type }: { name: string, subItem?: { name: 
 	if (subItem !== undefined) {
 		return (
 			<div className='hov text-white transition-all duration-200 ease-in-out my-2 p-2' onClick={() => setToggle(!toggle)}>
-				<div className='flex justify-between hov cursor-pointer transition duration-700 ease-in-out w-[80%] md:w-[18vw]'>
+				<div className='flex justify-between hov cursor-pointer transition duration-700 ease-in-out mr-4'>
 					<span>{name}</span>
 					<div className="relative">
 						<ChevronDownIcon className={`absolute hov h-6 w-6 ${toggle ? '' : 'hidden'}`} />

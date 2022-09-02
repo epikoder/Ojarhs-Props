@@ -274,17 +274,17 @@ export const MessageSubItem = [
 export const TenantsSubItem = [
 	{
 		name: "All Tenants",
-		link: "/AllTenants",
+		link: "/admin/AllTenants",
 	},
 
 	{
 		name: "Active Tenants",
-		link: "/ActiveTenants",
+		link: "/admin/ActiveTenants",
 	},
 
 	{
 		name: "Banned Tenants",
-		link: "/BannedTenants",
+		link: "/admin/BannedTenants",
 	},
 ];
 
@@ -497,11 +497,11 @@ export const DashProp = [
 export const OfficeSubItem = [
 	{
 		name: "Staffs",
-		link: "/Staff"
+		link: "/admin/Staff"
 	},
 
 	{
 		name: "Expences",
-		link: "/Expenses"
+		link: "/admin/Expenses"
 	}
 ]

@@ -62,13 +62,13 @@ function NewTenant({ setOpen, type }) {
 			dispatch(
 				addTenant({
 					id: uniqid(),
-					firstName: data.firstName,
-					lastName: data.lastName,
+					fname: data.firstName,
+					lname: data.lastName,
 					email: data.email,
 					phoneNo: data.phoneNo,
 					shopNo: data.shopNo,
 					address: data.address,
-					states: status,
+					state: status,
 				}),
 			);
 
@@ -94,7 +94,7 @@ function NewTenant({ setOpen, type }) {
 	};
 
 	return (
-		<div className='bg-gray-0  z-40 absolute w-full new  mx-auto pb-12 overflow-scroll h-[90vh] scrollbar-hide p-4'>
+		<div className=' z-40 absolute w-full bg mx-auto pb-12 overflow-scroll h-[90vh] scrollbar-hide p-4'>
 			<div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
 				<XIcon
 					className='w-6 h-6 absolute top-2 right-2 hov text-gray-600 '

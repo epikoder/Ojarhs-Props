@@ -13,7 +13,7 @@ export const UserDashboardLayout = (props?: PropsWithChildren & HTMLAttributes<H
                     <div className="md:w-[20%]">
                         <UserSideBar />
                     </div>
-                    <div className={`md:w-[70%] ${props.className}`}>
+                    <div className={`md:w-[70%] ${props.className} mt-12`}>
                         {props.children}
                     </div>
                 </div>

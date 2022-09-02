@@ -26,25 +26,25 @@ function Dashboard() {
 
 	return <AdminDashboardLayout>
 		<h1 className='text-2xl red'>Dashboard</h1>
-		<div className='flex flex-wrap gap-5 my-2'>
+		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 grid-cols-1 '>
 			{/* the numbers you are seeing as a class is for the linear gradient    */}
 
-			<div className=' one rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
+			<div className=' one rounded-2xl w-full  '>
 				<DashCards name='total properties' lengths='70' />
 			</div>
-			<div className=' six rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
+			<div className=' six rounded-2xl w-full  '>
 				<DashCards name='total Tenants' lengths='20' />
 			</div>{" "}
-			<div className=' three rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
+			<div className=' three rounded-2xl w-full  '>
 				<DashCards name='total Services' lengths='5' />
 			</div>{" "}
-			<div className=' four rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
+			<div className=' four rounded-2xl w-full  '>
 				<DashCards name='Payment pending' lengths='70' />
 			</div>{" "}
-			<div className=' five rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
+			<div className=' five rounded-2xl w-full  '>
 				<DashCards name='Payment processing' lengths='70' />
 			</div>
-			<div className=' two rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
+			<div className=' two rounded-2xl w-full  '>
 				<DashCards name='payment complete' lengths='70' />
 			</div>
 		</div>

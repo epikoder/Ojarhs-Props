@@ -249,3 +249,6 @@ div.spinner div.bar12 {
     -webkit-box-orient: vertical;
     white-space: normal;
 }
+.bg{
+    background-color: rgba(73, 71, 71, 0.524);
+}
