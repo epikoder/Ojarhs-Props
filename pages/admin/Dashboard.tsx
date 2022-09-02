@@ -14,7 +14,7 @@ function Dashboard() {
 
 	const fn = (async () => {
 		const res = fetch("https://sleepy-everglades-36547.herokuapp.com/admin/properties/all").then(() => {
-			alert("worked")
+			// alert("worked")
 			console.log(res);
 
 		}).catch((error) => {

@@ -1,30 +1,21 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react'
+import Script from 'next/script';
+import React, { PropsWithChildren } from 'react'
 import { useSelector } from 'react-redux';
-import { checkIsAuthenticated } from '../features/authSlice';
-import { RootState, useAppDispatch } from '../store';
+import { RootState } from '../store';
 import Footer from './Footer'
 import Header from './Header'
 import Loader from './Loader';
 
-function Layout(props) {
-  const dispatch = useAppDispatch()
-  const router = useRouter()
-  const { authenticated, appState } = useSelector((store: RootState) => store.authSlice)
-  const indx = useSelector((store: RootState) => store.indexSlice)
-
-  useEffect(() => {
-    if (authenticated) return
-    localStorage.setItem('current', router.pathname)
-    dispatch(checkIsAuthenticated())
-  }, [])
+function Layout(props: PropsWithChildren) {
+  const { appState } = useSelector((store: RootState) => store.authSlice)
 
   return (
     <div>
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
+      <Script src='/scripts/noimage.js'></Script>
       <Header />
       <div className='flex flex-col justify-between'>
         {appState === 'completed' ? <main>{props.children}</main> :

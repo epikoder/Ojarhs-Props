@@ -1,11 +1,27 @@
 import { useRouter } from "next/router"
-import React, { HTMLAttributes, PropsWithChildren } from "react"
+import React from "react"
 import { useSelector } from "react-redux"
-import { RootState } from "../../store"
+import { checkIsAuthenticated } from "../../features/authSlice"
+import { RootState, useAppDispatch } from "../../store"
 import Layout from "../Layout"
+import Loader from "../Loader"
 import { UserSideBar } from "./UserSideBar"
 
-export const UserDashboardLayout = (props?: PropsWithChildren & HTMLAttributes<HTMLDivElement>) => {
+export const UserDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string }) => {
+    const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
+    const dispatch = useAppDispatch()
+    const router = useRouter()
+
+    React.useEffect(() => {
+        if (authenticated) return
+        localStorage.setItem('current', router.pathname)
+        dispatch(checkIsAuthenticated())
+    }, [])
+
+    React.useEffect(() => {
+        if (!authenticated && appState === 'completed') router.push('/Login')
+    }, [authenticated])
+
     return <>
         <Layout>
             <div className="flex justify-center">
@@ -14,7 +30,9 @@ export const UserDashboardLayout = (props?: PropsWithChildren & HTMLAttributes<H
                         <UserSideBar />
                     </div>
                     <div className={`md:w-[70%] ${props.className}`}>
-                        {props.children}
+                        {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
+                            {authenticated && user !== undefined ? props.children({ authenticated, user }) : <Loader />}
+                        </React.Fragment>}
                     </div>
                 </div>
             </div>

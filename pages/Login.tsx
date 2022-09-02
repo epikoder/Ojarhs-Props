@@ -25,7 +25,7 @@ function Login() {
 	const [form, setForm] = useState<LoginForm>({} as LoginForm)
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
 	const formRef = useRef<HTMLFormElement>()
-	const { authenticated: isAuthenticated } = useSelector((store: RootState) => store.authSlice)
+	const { authenticated } = useSelector((store: RootState) => store.authSlice)
 
 	useEffect(() => {
 		localStorage.setItem('persist_auth', `${remember}`)
@@ -51,11 +51,11 @@ function Login() {
 	}, [authState])
 
 	useEffect(() => {
-		if (isAuthenticated) setTimeout(() => {
+		if (authenticated) setTimeout(() => {
 			const path = localStorage.getItem('current')
 			router.replace(path !== null && (path !== '/Login' && path !== '/Signup') ? path : '/user/Dashboard')
 		}, 200)
-	}, [isAuthenticated])
+	}, [authenticated])
 
 	const submit = async () => {
 		if (!formRef.current.checkValidity()) {
