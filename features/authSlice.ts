@@ -127,6 +127,7 @@ const authSlice = createSlice({
                 isAdmin?: boolean
             }
         }) => {
+            if (state.appState === 'pending') return
             console.log('CHECK AUTH CALLED')
             state.appState = 'pending'
             if (getUserToken() === undefined) {

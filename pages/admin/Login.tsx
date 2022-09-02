@@ -36,7 +36,7 @@ const AdminLogin = () => {
     const [form, setForm] = React.useState<LoginForm>({} as LoginForm)
     const [message, setMessage] = React.useState<{ text?: string, status?: boolean }>({});
     const [remember, setRemember] = React.useState<boolean>(false);
-    const { authenticated, user, status, message: errMessage } = useSelector((store: RootState) => store.authSlice)
+    const { authenticated, user, status, message: errMessage, appState } = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()
     const ref = React.useRef<HTMLFormElement>()
@@ -82,7 +82,7 @@ const AdminLogin = () => {
                         className="h-full w-full object-cover" />
                 </div>
                 <div className="h-full sm:h-[60vh] lg:h-full w-full sm:w-[40vw] lg:w-[40vw] flex flex-col items-center justify-center shadow-md">
-                    {status === 'pending' && <div className="absolute z-10 h-[100vh] inset-0 lg:left-[60vw]" style={{ backgroundColor: '#04040414' }}>
+                    {(status === 'pending' || appState === 'pending') && <div className="absolute z-10 h-[100vh] inset-0 lg:left-[60vw]" style={{ backgroundColor: '#04040414' }}>
                         <Loader />
                     </div>}
                     <div className="flex flex-col justify-between p-4">
