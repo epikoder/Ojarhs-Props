@@ -8,6 +8,7 @@ import Loader from "../components/Loader";
 import { RootState, useAppDispatch } from "../store";
 import { loginApi } from "../redux/auth";
 import { useRouter } from "next/router";
+import { checkIsAuthenticated } from "../features/authSlice";
 
 type LoginForm = {
 	email: string
@@ -16,46 +17,41 @@ type LoginForm = {
 
 function Login() {
 	const dispatch = useAppDispatch();
-	const authState = useSelector((store: RootState) => store.authSlice)
 	const router = useRouter()
 	const togglePasswordState = useSelector(TogglePasswordState);
-	const [loading, setLoading] = useState<boolean>(false);
 	const [remember, setRemember] = useState<boolean>(false);
-	const [errors, setErrors] = useState<LoginForm>({} as LoginForm)
 	const [form, setForm] = useState<LoginForm>({} as LoginForm)
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
 	const formRef = useRef<HTMLFormElement>()
-	const { authenticated } = useSelector((store: RootState) => store.authSlice)
+	const { authenticated, status, message: errMessage, user } = useSelector((store: RootState) => store.authSlice)
 
 	useEffect(() => {
 		localStorage.setItem('persist_auth', `${remember}`)
 	}, [remember])
 
-	const getError = (key: string): string | undefined => {
-		return errors[key]
-	}
-
-	useEffect(() => {
-		setLoading(authState.status === 'pending')
-		if (authState.error !== undefined) {
-			setErrors({
-				email: authState.error['email'],
-				password: authState.error['password']
-			})
-			return
-		}
-		setMessage({
-			text: authState.message,
-			status: authState.status === 'success'
-		})
-	}, [authState])
+	React.useEffect(() => {
+		if (authenticated) return
+		dispatch(checkIsAuthenticated({}))
+	}, [])
 
 	useEffect(() => {
 		if (authenticated) setTimeout(() => {
+			if (user !== undefined && user.is_admin) return router.replace("/admin/Dashboard")
 			const path = localStorage.getItem('current')
-			router.replace(path !== null && (path !== '/Login' && path !== '/Signup') ? path : '/user/Dashboard')
+			router.replace(path !== null && (path !== '/Login' && path !== '/Signup' && !path.includes('/admin/')) ? path : '/user/Dashboard')
 		}, 200)
 	}, [authenticated])
+
+	React.useEffect(() => {
+		if (errMessage !== undefined && errMessage.includes("admin login")) {
+			router.push("/admin/Login")
+			return
+		}
+		setMessage({
+			text: errMessage,
+			status: status === 'success'
+		})
+	}, [errMessage])
 
 	const submit = async () => {
 		if (!formRef.current.checkValidity()) {
@@ -66,8 +62,6 @@ function Login() {
 		})
 		dispatch(loginApi(form))
 	}
-
-
 
 	return (
 		<Layout>
@@ -85,7 +79,6 @@ function Login() {
 						name: "email",
 						type: 'email',
 						required: true,
-						message: getError("email"),
 						handleChange: (s) => {
 							setForm({
 								...form, email: s as unknown as string
@@ -96,7 +89,6 @@ function Login() {
 					<FormPasswordInput props={{
 						title: 'Password',
 						name: "password",
-						message: getError("email"),
 						requried: true,
 						hidden: togglePasswordState,
 						handleChange: (s) => {
@@ -118,7 +110,7 @@ function Login() {
 								id='flexCheckDefault'
 								onChange={(e) => setRemember(!remember)}
 							/>
-							<span>Remember Password</span>
+							<span>Remember Me</span>
 						</label>
 
 						<Link href='#'>
@@ -129,8 +121,9 @@ function Login() {
 					</div>
 
 					<div className="w-full flex">
-						{!loading ? <>
-							<button type='submit'
+						{status !== 'pending' ? <>
+							<button
+								type='submit'
 								className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out"
 								onClick={submit}>
 								Login

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
 import { getUserToken, setUserToken } from "../helpers/auth";
-import { loginApi, rejectValue } from "../redux/auth";
+import { loginAdminApi, loginApi, rejectValue } from "../redux/auth";
 import { ApiResponse, LoadState, loginResponse, User } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
@@ -62,6 +62,40 @@ const checkIsAuthenticatedAsync = async () => {
     }
 }
 
+const checkIsAuthenticatedAdminAsync = async () => {
+    try {
+        const { data } = await Api().get<ApiResponse>("/admin/user")
+        const auth = {} as {
+            authenticated: boolean
+            token?: loginResponse
+            user?: User
+        }
+        auth.authenticated = data.status === 'success'
+        if (data.data !== undefined && data.data !== null) {
+            auth.token = data.data as loginResponse
+            console.log("TOKEN", data)
+            var dec = jose.decodeJwt(auth.token.access)
+            auth.user = (dec as unknown as JWTCLAIMS).aud as User
+            setUserToken(auth.token)
+        } else {
+            var token = getUserToken()
+            if (token === undefined) {
+                console.log("NO AUHT", token)
+                store.dispatch(setAuthenticated({ authenticated: false }))
+                return
+            }
+            var dec = jose.decodeJwt(token.access)
+            auth.user = (dec as unknown as JWTCLAIMS).aud as User
+            auth.token = token
+        }
+        console.log(auth)
+        // if (auth.authenticated) setRefreshInterceptor()
+        store.dispatch(setAuthenticated(auth))
+    } catch (error) {
+        store.dispatch(setAuthenticated({ authenticated: false }))
+    }
+}
+
 const authSlice = createSlice({
     name: "authSlice",
     initialState: {
@@ -88,13 +122,21 @@ const authSlice = createSlice({
                 store.dispatch(setAppState("completed"))
             }, 1500)
         },
-        checkIsAuthenticated: (state) => {
+        checkIsAuthenticated: (state, { payload }: {
+            payload: {
+                isAdmin?: boolean
+            }
+        }) => {
             console.log('CHECK AUTH CALLED')
             state.appState = 'pending'
             if (getUserToken() === undefined) {
                 state.appState = 'completed'
                 state.authenticated = false
                 state.user = undefined
+                return
+            }
+            if (payload.isAdmin) {
+                checkIsAuthenticatedAdminAsync()
                 return
             }
             checkIsAuthenticatedAsync()
@@ -125,6 +167,34 @@ const authSlice = createSlice({
         })
 
         builder.addCase(loginApi.rejected, (state, { payload }: { payload }) => {
+            state.status = 'failed'
+            state.message = (payload as rejectValue).message
+        })
+
+        builder.addCase(loginAdminApi.fulfilled, (state, { payload }) => {
+            if (payload === undefined) return
+            if (payload.status === 'failed') {
+                state.status = 'failed'
+                state.message = payload.message
+                state.error = payload.error
+                return
+            }
+
+            setUserToken(payload.data)
+            state.token = payload.data
+            state.status = 'success'
+            state.message = payload.message
+            state.authenticated = true
+
+            const dec = jose.decodeJwt(payload.data.access)
+            state.user = (dec as unknown as JWTCLAIMS).aud as User
+        })
+
+        builder.addCase(loginAdminApi.pending, (state, { }) => {
+            state.status = 'pending'
+        })
+
+        builder.addCase(loginAdminApi.rejected, (state, { payload }: { payload }) => {
             state.status = 'failed'
             state.message = (payload as rejectValue).message
         })

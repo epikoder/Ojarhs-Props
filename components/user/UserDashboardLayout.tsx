@@ -15,11 +15,15 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
     React.useEffect(() => {
         if (authenticated) return
         localStorage.setItem('current', router.pathname)
-        dispatch(checkIsAuthenticated())
+        dispatch(checkIsAuthenticated({}))
     }, [])
 
     React.useEffect(() => {
-        if (!authenticated && appState === 'completed') router.push('/Login')
+        if (!authenticated && appState === 'completed') {
+            router.push('/Login')
+            return
+        }
+        if (user !== undefined && user.is_admin) router.replace("/admin/Dashboard")
     }, [authenticated])
 
     return <>
