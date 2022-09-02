@@ -21,13 +21,9 @@ export const loginApi =
                 case 400:
                     console.log(400)
                     let data = await response.json() as ApiResponse
-                    let ee = {} as { email: string, password: string }
-                    for (let n in data.error) {
-                        ee[n] = data.error[n]
-                    }
                     return rejectWithValue({
                         status: 'failed',
-                        error: ee
+                        message: 'invalid username or password'
                     })
                 case 401:
                     console.log(401)
@@ -64,11 +60,53 @@ export const loginApi =
         }
     })
 
-export const checkAuthApi = createAsyncThunk<Promise<ApiResponse<loginResponse>>, {}>("", async (payload: {}, { rejectWithValue }) => {
-    try {
-        const response = await fetch("")
-        return {} as ApiResponse<loginResponse>
-    } catch (error) {
-        rejectWithValue({})
-    }
-})
+export const loginAdminApi =
+    createAsyncThunk<ApiResponse<loginResponse> | rejectValue, { email: string, password: string }>("admin/login", async (payload, { rejectWithValue }) => {
+        try {
+            var response: Response = await fetch(BASEURL + "/admin", {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                credentials: 'include'
+            })
+            switch (response.status) {
+                case 400:
+                    console.log(400)
+                    let data = await response.json() as ApiResponse
+                    return rejectWithValue({
+                        status: 'failed',
+                        message: 'invalid username or password'
+                    })
+                case 401:
+                    console.log(401)
+                    let _data = await response.json()
+                    console.log(_data);
+
+                    return rejectWithValue({
+                        ..._data
+                    })
+                case 200:
+                    console.log(200)
+                    let __data = await response.json() as ApiResponse<loginResponse>
+                    if (__data.status === 'failed') return {
+                        status: 'failed',
+                        message: __data.message
+                    }
+                    return {
+                        status: 'success',
+                        data: __data.data as loginResponse,
+                        message: __data.message
+                    }
+                default:
+                    return rejectWithValue({
+                        status: 'failed',
+                        message: 'Error connecting to server'
+                    })
+            }
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue({
+                status: 'failed',
+                message: 'Error connecting to server'
+            })
+        }
+    })

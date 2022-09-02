@@ -9,9 +9,11 @@ function DR() {
 
 	const sideBarState = useSelector(SideBarToggleState);
 	return <AdminDashboardLayout>
-		<h1 className="lg:text-3xl text-md red">
-			Dispute and Reports
-		</h1>
+		{() => <>
+			<h1 className="lg:text-3xl text-md red">
+				Dispute and Reports
+			</h1>
+		</>}
 	</AdminDashboardLayout>
 }
 

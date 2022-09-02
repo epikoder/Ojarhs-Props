@@ -1,16 +1,13 @@
 import React from "react"
-import { useSelector } from "react-redux"
-import { FormInput, FormPhoneInput } from "../../components/FormInput"
+import { FormPhoneInput } from "../../components/FormInput"
 import { ImageUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { resolveImagePath } from "../../helpers/helpers"
-import { RootState } from "../../store"
 
 const Page = () => {
     const [phone, setPhone] = React.useState('')
-    const { user, authenticated } = useSelector((store: RootState) => store.authSlice)
     return <UserDashboardLayout>
-        {(authenticated && user !== undefined) &&
+        {({ user }) =>
             <React.Fragment>
                 <form className="p-4 max-w-sm">
                     <div>

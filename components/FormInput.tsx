@@ -7,7 +7,7 @@ import { HidePassword, ShowPassword } from "../features/TogglePassword"
 import { Country } from "../Typing.d"
 
 export const FormInput = ({ props }: {
-    props?: {
+    props: {
         title: string
         name?: string
         message?: string
