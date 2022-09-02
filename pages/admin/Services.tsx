@@ -29,8 +29,8 @@ function Services() {
 				Add new
 			</button>
 		</div>
-		{open ? <NewService type='new' setOpen={setOpen} /> : ""}
-		{updateOpen ? <NewService type='update' setOpen={setUpdateOpen} /> : ""}
+		{open ? <div className='w-full relative '><NewService type='new' setOpen={setOpen} /></div> : ""}
+		{updateOpen ? <div className='w-full relative'> <NewService type='update' setOpen={setUpdateOpen} /> </div> : ""}
 
 		{serviceArr.length !== 0 ? (
 			<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>

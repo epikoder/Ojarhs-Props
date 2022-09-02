@@ -27,24 +27,54 @@ function Dashboard() {
 	return <AdminDashboardLayout>
 		{
 			() => <React.Fragment>
-				<h1 className='text-2xl red'>Dashboard</h1>
-				<div className='flex flex-wrap gap-5 my-2'>
-					{/* the numbers you are seeing as a class is for the linear gradient    */}
+		<h1 className='text-2xl red'>Dashboard</h1>
+		<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 grid-cols-1 '>
+			{/* the numbers you are seeing as a class is for the linear gradient    */}
 
-					<div className=' one rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
-						<DashCards name='total properties' lengths='70' />
-					</div>
-					<div className=' six rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
-						<DashCards name='total Tenants' lengths='20' />
-					</div>{" "}
-					<div className=' three rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
-						<DashCards name='total Services' lengths='5' />
-					</div>{" "}
-					<div className=' four rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
-						<DashCards name='Payment pending' lengths='70' />
-					</div>{" "}
-					<div className=' five rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
-						<DashCards name='Payment processing' lengths='70' />
+			<div className=' one rounded-2xl w-full  '>
+				<DashCards name='total properties' lengths='70' />
+			</div>
+			<div className=' six rounded-2xl w-full  '>
+				<DashCards name='total Tenants' lengths='20' />
+			</div>{" "}
+			<div className=' three rounded-2xl w-full  '>
+				<DashCards name='total Services' lengths='5' />
+			</div>{" "}
+			<div className=' four rounded-2xl w-full  '>
+				<DashCards name='Payment pending' lengths='70' />
+			</div>{" "}
+			<div className=' five rounded-2xl w-full  '>
+				<DashCards name='Payment processing' lengths='70' />
+			</div>
+			<div className=' two rounded-2xl w-full  '>
+				<DashCards name='payment complete' lengths='70' />
+			</div>
+		</div>
+
+		<div className='flex space-x-3 w-full mt-8 flex-wrap flex-row justify-between'>
+			<div className='w-full lg:w-[48%]'>
+				<h1 className=' text-2xl red mb-2'>Recent Tenants</h1>
+				{tenantListArr.length !== 0 ? (
+					<div className='flex gap-3 lg:flex-row flex-wrap px-4 justify-center w-full scrollbar-hide overflow-scroll   shadow-gray-400 shadow-md'>
+						<table id='customers'>
+							<tr className=' w-full flex justify-between'>
+								<th className=''>Name</th>
+								<th className=''>Status</th>
+								<th className=''>
+									<span className='text-white cursor-none'>Options</span>
+								</th>
+							</tr>
+
+							{tenantListArr.map((tenant, index) => {
+								return (
+									<DashTenant
+										Tenant={tenant}
+										key={index}
+										setOpen={setUpdateOpen}
+									/>
+								);
+							})}
+						</table>
 					</div>
 					<div className=' two rounded-2xl w-full md:w-[48%] lg:w-[32%] '>
 						<DashCards name='payment complete' lengths='70' />

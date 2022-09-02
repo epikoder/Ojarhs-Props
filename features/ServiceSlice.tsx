@@ -70,7 +70,7 @@ const ServiceSlice = createSlice({
 				const serviceArr = JSON.parse(service)
 				serviceArr.forEach((service) => {
 					if (service.id === action.payload.id) {
-						service.title = action.payload.title						
+						service.name = action.payload.title						
                         service.description = action.payload.description
                         service.duration = action.payload.duration
                         service.amount = action.payload.amount

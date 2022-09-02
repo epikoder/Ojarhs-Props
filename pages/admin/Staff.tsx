@@ -9,6 +9,7 @@ import { tenantsList } from "../../features/TenantsSlice";
 import { staffList } from "../../features/StaffSlice";
 import NewStaff from "../../components/NewStaff";
 import Staff from "../../components/Staff";
+import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
 function Staffs() {
 	const [open, setOpen] = useState(false);
@@ -17,18 +18,9 @@ function Staffs() {
 	const staffArr = useSelector(staffList);
 
 	return (
-		<div className='w-full'>
-			<div className=''>
-				<SideBarHeader />
-			</div>
-			<div className='flex fixed top-16 w-full'>
-				<div className={sideBarState ? "w-[40rem]] " : "w-2/12 hidden"}>
-					<SideBar />
-				</div>
-
-				<div className='w-full h-[90vh] overflow-scroll pb-24'>
-					<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
-						<h1 className='lg:text-3xl text-md red'>All Staffs</h1>
+	<AdminDashboardLayout>
+		<div className="flex justify-between" >
+		<h1 className='lg:text-3xl text-md red'>All Staffs</h1>
 
 						<button
 							type='button'
@@ -38,8 +30,8 @@ function Staffs() {
 							Add new
 						</button>
 					</div>
-					{open ? <NewStaff type='new' setOpen={setOpen} /> : ""}
-					{updateOpen ? <NewStaff type='update' setOpen={setUpdateOpen} /> : ""}
+					{open ? <div className="w-full relative"><NewStaff type='new' setOpen={setOpen} /></div> : ""}
+					{updateOpen ? <div className="w-full relative"><NewStaff type='update' setOpen={setUpdateOpen} /></div> : ""}
 
 					{staffArr.length !== 0 ? (
 						<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
@@ -62,9 +54,7 @@ function Staffs() {
 					) : (
 						<div className='text-center uppercase mt-4 '>No New Staff </div>
 					)}
-				</div>
-			</div>
-		</div>
+	</AdminDashboardLayout>
 	);
 }
 

@@ -82,12 +82,12 @@ const TenantsSlice = createSlice({
 				const tenantListArr = JSON.parse(tenantList);
 				tenantListArr.forEach((tenant, index) => {
 					if (tenant.id === action.payload.id) {                            				
-						    tenant.firstName = action.payload.Fname;
-							tenant.lastName = action.payload.Lname;
+						    tenant.fname = action.payload.Fname;
+							tenant.lname = action.payload.Lname;
 							tenant.phoneNo = action.payload.Phone;
 							tenant.shopNo = action.payload.Shop;
 							tenant.address = action.payload.Address;
-							tenant.states = action.payload.State;
+							tenant.state = action.payload.State;
 							tenant.email = action.payload.Email;
 					}
 					window.localStorage.setItem(

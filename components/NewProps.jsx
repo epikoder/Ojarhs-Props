@@ -214,7 +214,7 @@ function NewProps({ setOpen, type }) {
 							className='w-full outline-none'
 							onClick={handuSubmit}
 						>
-							<div className='bg-red-100 mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer'>
+							<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer '>
 								Add New
 							</div>
 						</button>
