@@ -1,4 +1,8 @@
-export type User = Tenants
+export type User = Tenants & {
+	is_admin: boolean
+	is_disabled: boolean
+	is_locked: boolean
+}
 
 export type Space = {
 	id: string

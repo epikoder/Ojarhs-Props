@@ -1,28 +1,16 @@
-import { PencilIcon } from "@heroicons/react/outline"
-import Image from "next/image"
 import { useRouter } from "next/router"
 import React, { PropsWithChildren } from "react"
-import { useSelector } from "react-redux"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { UserDashboardProperties } from "../../components/user/UserDashboardProperties"
 import { UserInfo } from "../../components/user/UserInfo"
-import { money, resolveImagePath } from "../../helpers/helpers"
-import { RootState } from "../../store"
+import { applicationFee } from "../../constants"
+import { money } from "../../helpers/helpers"
+import { User } from "../../Typing.d"
 
 const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
-    const { authenticated, user } = useSelector((store: RootState) => store.authSlice)
     const router = useRouter()
-
-    React.useEffect(() => {
-        if (!authenticated) router.push('/Login')
-        console.log(user)
-    }, [authenticated])
-
-
-
-    const applicationFee = 10000
     return <UserDashboardLayout>
-        {(authenticated && user !== undefined) && <>
+        {({ user }: { user: User }) => <>
             <div className="p-2">
                 <UserInfo user={user} onEdit={() => router.push('/user/EditProfile')} />
                 {

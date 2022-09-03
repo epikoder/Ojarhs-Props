@@ -55,7 +55,7 @@ const UploadDocument = () => {
     }
 
     return <UserDashboardLayout>
-        <div className="flex felx-col justify-center items-center w-full h-full p-2 pt-8">
+        {() => <div className="flex felx-col justify-center items-center w-full h-full p-2 pt-8">
             <form onSubmit={(e) => e.preventDefault()} className="duration-300 ease-in-out transition-all" >
                 <div className="text-center font-semibold uppercase text-sm py-2">
                     UPLOAD A VALID DOCUMENT
@@ -98,7 +98,7 @@ const UploadDocument = () => {
                     </div>
                 }
             </form>
-        </div >
+        </div >}
     </UserDashboardLayout >
 }
 export default UploadDocument
