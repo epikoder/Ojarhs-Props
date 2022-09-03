@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import SideBar from "../../components/SideBar";
-import SideBarHeader from "../../components/SideBarHeader";
 import Tenant from "../../components/Tenant";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
@@ -9,15 +7,18 @@ import { tenantsList } from "../../features/TenantsSlice";
 import { AdjustmentsIcon } from "@heroicons/react/solid";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { GetStaticProps } from "next";
+import { Api } from "../../helpers/api";
 
 
-function AllTenants({data}) {
+ function AllTenants() {
 	const [open, setOpen] = useState(false);
-	const [updateOpen, setUpdateOpen] = useState(false);
-	const sideBarState = useSelector(SideBarToggleState);
+	const [updateOpen, setUpdateOpen] = useState(false);	
 	const tenantListArr = useSelector(tenantsList);
 
-	console.log(data + "fethc");
+	( async ()  => {
+		await Api().get("/admin/tenants/all?chunck=10").then((data)=> console.log(data)).catch((error)=> console.log(error))
+	})();
+	 				
 
 	return (
 		<AdminDashboardLayout>
@@ -64,14 +65,11 @@ export default AllTenants;
 
 
 export const getStaticProps: GetStaticProps = async () => {
-const res = fetch("https://sleepy-everglades-36547.herokuapp.com/api/admin/tenants/all?chunck=10")
-
-
-	const result = JSON.stringify(res)
+	await Api().get("/admin/tenants/all?chunck=10").then((data)=> console.log(data)).catch((error)=> console.log(error))
 
 	return {
 		props:{
-			data:result
+			// data:
 		}
 	}
 }
