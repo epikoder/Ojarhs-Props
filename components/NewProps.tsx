@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { XIcon } from "@heroicons/react/outline";
 import {
@@ -10,11 +8,19 @@ import {
 	updateProperty,
 } from "../features/admin/propertySlice";
 import { Api } from "../helpers/api";
+import { ApiResponse, Space } from "../Typing.d";
+import { ImageUpload } from "./ImageUpload";
+import { GalleryUploader } from "./admin/GalleryUploader";
 
-function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAction<boolean>>, type: 'new' | 'update' }) {
+function NewProps({ setOpen, type }: {
+	setOpen: React.Dispatch<React.SetStateAction<{
+		type?: 'new' | 'update';
+		state?: boolean;
+	}>>, type: 'new' | 'update'
+}) {
 	const dispatch = useDispatch();
 	// const individualProp = useSelector(getIndividualProperty);
-	const [status, setStatus] = useState("shop");
+	const [propType, setPropType] = useState('');
 	const [Name, setName] = useState("");
 	const [No, setShopNo] = useState("");
 	const [Size, setShopSize] = useState("");
@@ -32,17 +38,17 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 	// 	}
 	// }, [type, individualProp]);
 
-	const validationSchema = Yup.object().shape({
-		shopNo: Yup.string().required("ShopNo is required"),
-		Name: Yup.string().required("Name is required"),
-		description: Yup.string().required("Description is required"),
-		shopSize: Yup.string().required("Shop Size is required"),
-		price: Yup.string().required("Price is required"),
-	});
-	const formOptions = { resolver: yupResolver(validationSchema) };
+	// const validationSchema = Yup.object().shape({
+	// 	shopNo: Yup.string().required("ShopNo is required"),
+	// 	Name: Yup.string().required("Name is required"),
+	// 	description: Yup.string().required("Description is required"),
+	// 	shopSize: Yup.string().required("Shop Size is required"),
+	// 	price: Yup.string().required("Price is required"),
+	// });
+	// const formOptions = { resolver: yupResolver(validationSchema) };
 
 	// get functions to build form with useForm() hook
-	const { register, handleSubmit, reset, formState } = useForm(formOptions);
+	const { register, handleSubmit, reset, formState } = useForm();
 	const { errors } = formState;
 
 
@@ -58,38 +64,41 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 					name: Name,
 					size: Size,
 					no: No,
-					type: status,
+					type: propType,
 					amount: Price,
 					// Description: Description,
 				}),
 			);
 
-			setOpen(false);
+			setOpen({ state: false });
 		}
 	}
 
 	const handleUpdate = (e) => {
 		e.preventDefault();
-		setOpen(false);
+		setOpen({ state: false });
 		dispatch(
 			updateProperty({
 				// ...individualProp,
 				name: Name,
 				size: Size,
 				no: No,
-				type: status,
+				type: propType,
 				amount: Price,
 				// Description: Description,
 			}),
 		);
-		setOpen(false);
+		setOpen({ state: false });
 	};
+
+	const [propertyTypes, setPropertyTypes] = React.useState<{ name: string }[]>([] as { name: string }[])
+	const [form, setForm] = React.useState<Space>({} as Space)
 
 	React.useEffect(() => {
 		const req = async () => {
-			let res = await Api().get('/resources/document-types')
-			if (res.status !== 200) return
-			// setTypes((await res.json()).data)
+			let { data, status } = await Api().get<ApiResponse<{ name: string }[]>>('/resources/property-types')
+			if (status !== 200) return
+			setPropertyTypes(data.data)
 		}
 		req()
 	}, [])
@@ -97,15 +106,15 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 	return (
 		<div className="relative w-full">
 			<div className='z-10 inset-0 absolute h-[90vh] overflow-scroll scrollbar-hide bg-slate-100 py-4 lg:py-8'>
-				<div className='rounded-md bg-white border lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md space-y-2 pt-4 relative'>
+				<div className='rounded-md bg-white border lg:w-9/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md space-y-2 pt-4 relative'>
 					<XIcon
 						className='w-6 h-6 absolute top-2 right-2 hov text-gray-600 '
-						onClick={() => setOpen(false)}
+						onClick={() => setOpen({ state: false })}
 					/>
 					<h1 className='red text-center mt-4'>
 						{type === "new" ? <div className="uppercase text-sm">Add New Property</div> : <div className="uppercase text-sm">Update Property</div>}
 					</h1>
-					<form action='' className='space-y-4 py-8 px-4 md:px-2 lg:px-4'>
+					<form onSubmit={e => e.preventDefault()} action='' className='space-y-4 py-8 px-4 md:px-2 lg:px-4'>
 						<div>
 							<label
 								htmlFor=''
@@ -120,7 +129,7 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 									onChange={(e) => setName(e.target.value)}
 									className={`${errors.Name
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
+										: "text-gray-600 bg-transparent outline-none"
 										}`}
 								/>
 							</label>
@@ -135,7 +144,7 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 								<span className='text-gray-500 mb-2 text-xs idden'>Property Number</span>
 								<input
 									type='text'
-									placeholder='Prop No'
+									placeholder='XXXXX/XXX/XXX'
 									value={No}
 									{...register("shopNo")}
 									onChange={(e) => setShopNo(e.target.value)}
@@ -156,7 +165,7 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 								<span className='text-gray-500 mb-2 text-xs idden'>Property Size</span>
 								<input
 									type='text'
-									placeholder='PropSize'
+									placeholder='X by X'
 									value={Size}
 									{...register("shopSize")}
 									onChange={(e) => setShopSize(e.target.value)}
@@ -174,10 +183,10 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 								htmlFor=''
 								className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
 							>
-								<span className='text-gray-500 mb-2 text-xs idden'>Price</span>
+								<span className='text-gray-500 mb-2 text-xs idden'>Price in *Naira</span>
 								<input
 									type='number'
-									placeholder='Price'
+									placeholder='Amount'
 									value={Price}
 									{...register("Price")}
 									onChange={(e) => setPrice(e.target.value)}
@@ -194,21 +203,34 @@ function NewProps({ setOpen, type }: { setOpen: React.Dispatch<React.SetStateAct
 							htmlFor=''
 							className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
-							<span className='text-gray-500 mb-2 text-xs idden'>Type</span>
+							<span className='text-gray-500 mb-2 text-xs idden'>Property Type</span>
 							<select
 								name=''
 								id=''
 								className='bg-transparent outline-none text-gray-400'
 								required
-								value={status}
-								onChange={(e) => setStatus(e.target.value)}
+								value={propType}
+								onChange={(e) => setPropType(e.target.value)}
 							>
-								<option value='shop'>Shop</option>
-								<option value='office'>Office</option>
-								<option value='warehouse'>Warehouse</option>
+								<option>Choose property type</option>
+								{propertyTypes.map((p, i) => <option key={i} value={p.name} > {p.name} </option>)}
 							</select>
 						</label>
-
+						<ImageUpload
+							message={<div className="text-sm text-gray-500">{"FEATURED IMAGE"}</div>}
+							width={260} />
+						<label
+							htmlFor=''
+							className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
+						>
+							<GalleryUploader
+								title="Upload Gallery Images"
+								type="image"
+								width={260}
+								handleChange={(l) => setForm({
+									...form, galleries: l
+								})} />
+						</label>
 						{type === "new" ? (
 							<button
 								type='submit'

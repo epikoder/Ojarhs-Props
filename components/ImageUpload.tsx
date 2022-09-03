@@ -3,15 +3,18 @@ import { useRouter } from "next/router"
 import React, { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { BASEURL } from "../constants"
-import { checkIsAuthenticated } from "../features/authSlice"
 import { RootState, useAppDispatch } from "../store"
 import Loader from "./Loader"
 
-export const ImageUpload = ({ value, handleUpload, required = false, disabled = false, }: {
+export const ImageUpload = ({ value, handleUpload, handleRaw, required = false, disabled = false, message, width, height }: {
     handleUpload?: (s: string) => void,
+    handleRaw?: (s: string) => void,
     required?: boolean,
     disabled?: boolean,
     value?: string
+    message?: React.ReactNode
+    width?: string | number
+    height?: string | number
 }) => {
     const [url, setUrl] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
@@ -46,6 +49,9 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                 if (handleUpload !== undefined) {
                     handleUpload(data.photo)
                 }
+                if (handleRaw !== undefined) {
+                    handleRaw(e.target.result as string)
+                }
 
             } catch (error) {
                 console.log(error);
@@ -67,6 +73,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
             if (loading || disabled) return
             if (!required && url !== '') {
                 setUrl('')
+                // ref.current.re
                 if (handleUpload !== undefined) {
                     handleUpload('')
                 }
@@ -76,11 +83,14 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
             if (uploader !== undefined) {
                 uploader.click()
             }
+        }} style={{
+            width: width,
+            height: height
         }}>
             {
                 (value !== undefined && url === '') ? <img src={value} alt="" className="object-cover h-full w-full rounded-md" /> :
                     (url === '' ? (<div className="p-1">
-                        SELECT PHOTO
+                        {message ?? 'SELECT PHOTO'}
                     </div>) : loading ? <Loader /> : <>
                         <div className="relative h-full w-full">
                             <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
@@ -93,7 +103,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                     </>)
             }
         </div>
-        <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} />
+        <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='image/*' />
     </>
 }
 
@@ -150,7 +160,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
                     case 401:
                         setUrl('')
                         setMessage('SESSION EXPIRED')
-                        setTimeout(() => { dispatch(checkIsAuthenticated()) }, 800)
                         break
                     default:
                         setUrl('')
@@ -189,6 +198,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
                 </>
             }
         </div>
-        <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} />
+        <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='image/*' />
     </>
 }

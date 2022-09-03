@@ -12,12 +12,16 @@ export type Space = {
 	type: string
 	description: string
 	amount: number
-	status: 'open' | 'occupied'
+	photo: string
+	galleries?: string[]
+	video?: string
+	video_galleries?: string[]
+	status?: 'open' | 'occupied'
 	address?: string
 	plan_name: string
-	duration: number
-	created_at: Date
-	updated_at: Date
+	duration?: number
+	created_at?: Date
+	updated_at?: Date
 }
 
 export type Testimony = {
@@ -123,7 +127,7 @@ export type loginResponse = {
 }
 
 export type LoadState = 'pending' | 'success' | 'failed'
-
+export type Map<T = any> = { [key: string]: T }
 export type DashboardDataState<T> = {
 	data: T
 	status: LoadState
