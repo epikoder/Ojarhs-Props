@@ -4,9 +4,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { TogglePasswordState } from "../features/TogglePassword";
-import { ShowPassword, HidePassword } from "../features/TogglePassword";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/outline";
 import {
 	addService,
@@ -16,7 +13,7 @@ import {
 import uniqid from "uniqid";
 
 function NewService({ setOpen, type }) {
-	const dispatch = useDispatch();	
+	const dispatch = useDispatch();
 	const individualService = useSelector(getIndividualService);
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
@@ -25,10 +22,10 @@ function NewService({ setOpen, type }) {
 
 	useEffect(() => {
 		if (type === "update") {
-			setTitle(individualService.title);
-			setAmount(individualService.amount)						
-			setDuration(individualService.duration)
-			setDescription(individualService.description)
+			// setTitle(individualService.title);
+			// setAmount(individualService.amount)
+			// setDuration(individualService.duration)
+			// setDescription(individualService.description)
 		}
 	}, [type, individualService]);
 
@@ -101,17 +98,16 @@ function NewService({ setOpen, type }) {
 								value={title}
 								{...register("title", { required: true })}
 								onChange={(e) => setTitle(e.target.value)}
-								className={`${
-									errors.title
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.title
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.title?.message}</div>
+						<div className='red text-xs ml-4'>{errors.title?.message as string}</div>
 					</div>
 
-                    <div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
@@ -126,17 +122,16 @@ function NewService({ setOpen, type }) {
 								value={duration}
 								{...register("duration", { required: true })}
 								onChange={(e) => setDuration(e.target.value)}
-								className={`${
-									errors.duration
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.duration
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.duration?.message}</div>
+						<div className='red text-xs ml-4'>{errors.duration?.message as string}</div>
 					</div>
 
-                    <div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
@@ -151,17 +146,16 @@ function NewService({ setOpen, type }) {
 								value={amount}
 								{...register("amount", { required: true })}
 								onChange={(e) => setAmount(e.target.value)}
-								className={`${
-									errors.amount
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.amount
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.amount?.message}</div>
+						<div className='red text-xs ml-4'>{errors.amount?.message as string}</div>
 					</div>
 
-                    <div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
@@ -175,15 +169,14 @@ function NewService({ setOpen, type }) {
 								value={description}
 								{...register("description", { required: true })}
 								onChange={(e) => setDescription(e.target.value)}
-								className={`${
-									errors.description
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.description
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							>
-                            </textarea>
+							</textarea>
 						</label>
-						<div className='red text-xs ml-4'>{errors.description?.message}</div>
+						<div className='red text-xs ml-4'>{errors.description?.message as string}</div>
 					</div>
 
 					{type === "new" ? (

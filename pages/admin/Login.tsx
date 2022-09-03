@@ -43,7 +43,7 @@ const AdminLogin = () => {
 
     React.useEffect(() => {
         if (authenticated) return
-        dispatch(checkIsAuthenticated(true))
+        dispatch(checkIsAuthenticated({ isAdmin: true }))
     }, [])
 
     React.useEffect(() => {
@@ -82,12 +82,12 @@ const AdminLogin = () => {
                         className="h-full w-full object-cover" />
                 </div>
                 <div className="h-full sm:h-[60vh] lg:h-full w-full sm:w-[40vw] lg:w-[40vw] flex flex-col items-center justify-center shadow-md">
-                    {(status === 'pending' || appState === 'pending') && <div className="absolute z-10 h-[100vh] inset-0 lg:left-[60vw]" style={{ backgroundColor: '#04040414' }}>
+                    {(status === 'pending' || appState === 'pending') && <div className="absolute z-10 inset-0 lg:left-[60vw]" style={{ backgroundColor: '#04040414' }}>
                         <Loader />
                     </div>}
                     <div className="flex flex-col justify-between p-4">
                         <form action="" className="p-4" ref={ref}>
-                            <div className="flex justify-center">
+                            <div className="flex justify-center mb-4">
                                 <img
                                     src={"/image/logo.png"}
                                     className="w-10 lg:w-16 object-cover" />
@@ -135,7 +135,6 @@ const AdminLogin = () => {
                                     submit
                                 </div>
                             </div>
-
                         </form>
                         <CopyRight className="text-red-500 text-sm" />
                     </div>

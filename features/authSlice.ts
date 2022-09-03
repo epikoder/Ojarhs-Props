@@ -102,7 +102,13 @@ const authSlice = createSlice({
         appState: 'completed'
     } as AuthState,
     reducers: {
-        logout: (state) => { },
+        logout: (state) => {
+            state.authenticated = false
+            state.user = undefined
+            state.message = undefined
+            state.token = {} as loginResponse
+            state.error = {}
+        },
         setAppState: (state, { payload }: { payload: 'pending' | 'completed' }) => {
             state.appState = payload
         },
@@ -141,6 +147,11 @@ const authSlice = createSlice({
                 return
             }
             checkIsAuthenticatedAsync()
+        },
+        clearErr: (state) => {
+            state.appState = 'completed'
+            state.message = undefined
+            state.error = {}
         }
     },
     extraReducers: (builder) => {
@@ -202,6 +213,6 @@ const authSlice = createSlice({
     },
 })
 
-export const { logout, setAuthenticated, checkIsAuthenticated, setAppState } = authSlice.actions
+export const { logout, setAuthenticated, checkIsAuthenticated, clearErr, setAppState } = authSlice.actions
 
 export default authSlice.reducer

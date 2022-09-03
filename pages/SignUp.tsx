@@ -446,6 +446,7 @@ function SignUp() {
 									type: 'text',
 									required: true,
 									message: ((): string => {
+										if (form.next_of_kins.length !== 2) return
 										if (form.next_of_kins[1].kemail === undefined) return undefined
 										return emailValidator(form.next_of_kins[1].kemail)
 									})(),

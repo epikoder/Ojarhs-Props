@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { tenantsList } from "../../features/TenantsSlice";
 import DashCards from "../../components/DashCards";
 import DashTenant from "./DashTenant";
-import { PropertyList } from "../../features/PropertySlice";
+import { PropertyList } from "../../features/admin/propertySlice";
 import DashProps from "../../components/DashProp";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 

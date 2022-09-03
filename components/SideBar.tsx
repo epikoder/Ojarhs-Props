@@ -9,7 +9,7 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 	const router = useRouter();
 	const sideBarState = useSelector(SideBarToggleState);
 	return (
-		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out ${props.className}`}>
+		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out ${props.className ?? ''}`}>
 			<div className='px-4'>
 				<div onClick={() => router.push("/admin/Dashboard")}>
 					<SideBarItem name='Dashboard' />
@@ -23,7 +23,7 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				<div onClick={() => router.push("/admin/Services")}>
 					<SideBarItem name='Services' />
 				</div>
-				<div onClick={() => router.push("/admin/Dash-Props")}>
+				<div onClick={() => router.push("/admin/Properties")}>
 					<SideBarItem name='Properties' />
 				</div>
 				<div onClick={() => router.push("/admin/Records")}>

@@ -123,3 +123,8 @@ export type loginResponse = {
 }
 
 export type LoadState = 'pending' | 'success' | 'failed'
+
+export type DashboardDataState<T> = {
+	data: T
+	status: LoadState
+}

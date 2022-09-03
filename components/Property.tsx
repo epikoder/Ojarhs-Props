@@ -12,9 +12,7 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	deleteProperty,
-	getProperty,
-	updateProperty,
-} from "../features/PropertySlice";
+} from "../features/admin/propertySlice";
 
 type Props = {
 	Prop: Space;
@@ -27,11 +25,11 @@ function Property({ Prop, setOpen }: Props) {
 		dispatch(deleteProperty(Prop.id));
 	};
 	const handleEdit = () => {
-		dispatch(getProperty(Prop.id));
+		// dispatch(getProperty(Prop.id));
 		setOpen(true);
 	};
 
-	const str = Prop.amount.toString();
+	const str = "100";
 
 	const price = parseInt(str);
 

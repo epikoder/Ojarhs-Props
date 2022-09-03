@@ -8,7 +8,7 @@ import Loader from "../components/Loader";
 import { RootState, useAppDispatch } from "../store";
 import { loginApi } from "../redux/auth";
 import { useRouter } from "next/router";
-import { checkIsAuthenticated } from "../features/authSlice";
+import { checkIsAuthenticated, clearErr } from "../features/authSlice";
 
 type LoginForm = {
 	email: string
@@ -43,10 +43,6 @@ function Login() {
 	}, [authenticated])
 
 	React.useEffect(() => {
-		if (errMessage !== undefined && errMessage.includes("admin login")) {
-			router.push("/admin/Login")
-			return
-		}
 		setMessage({
 			text: errMessage,
 			status: status === 'success'

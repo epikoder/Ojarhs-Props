@@ -3,31 +3,30 @@ import Image from "next/image";
 import React, { HTMLAttributes } from "react";
 import { useDispatch } from "react-redux";
 import { togleSideBar } from "../features/ToggleSideBar";
+import { resolveImagePath } from "../helpers/helpers";
+import { User } from "../Typing.d";
 
-const AdminMenu = () => {
+const AdminMenu = ({ user }: { user: User }) => {
 	return <>
 		<div className="flex items-center justify-end text-white">
 			<div className="hidden md:flex justify-around w-[50vw]">
 				{/* MENU */}
 			</div>
 			<div>
-				<Image
-					src='/image/logo.png'
-					width={50}
-					height={50}
-					layout='fixed'
+				<img
+					src={resolveImagePath(user !== undefined ? user.photo : '')}	
 					alt='ME'
-					className="rounded-full"
+					className="rounded-full h-14 w-14"
 				/>
 			</div>
 		</div>
 	</>
 }
-function SideBarHeader(props: HTMLAttributes<HTMLDivElement>) {
+function SideBarHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
 	const dispatch = useDispatch();
 
 	return (
-		<div className={`w-full bg-black p-4 sticky-top ${props.className}`}>
+		<div className={`w-full bg-black p-4 sticky-top ${props.className ?? ''}`}>
 			<div className='flex space-x-5 items-center justify-between'>
 				<div className="flex items-center">
 					<MenuIcon
@@ -42,7 +41,7 @@ function SideBarHeader(props: HTMLAttributes<HTMLDivElement>) {
 						alt='ojarh'
 					/>
 				</div>
-				<AdminMenu />
+				<AdminMenu user={props.user} />
 			</div>
 		</div>
 	);

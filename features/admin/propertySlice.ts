@@ -1,28 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-const _getProperty = typeof window !== "undefined";
+import { DashboardDataState, Space } from "../../Typing.d";
 
-const getInitialValue = () => {
-	const properties = window.localStorage.getItem("propertyList");
-
-	if (properties) {
-		return JSON.parse(properties);
-	}
-	window.localStorage.setItem("propertyList", JSON.stringify([]));
-	return [];
-};
-
-const initialValue = {
-	propertyLists: _getProperty ? getInitialValue() : [],
-	getindividaulProperty: {},
-};
-
-const PropertySlice = createSlice({
-	name: "PropertySlice",
-	initialState: initialValue,
+const propertySlice = createSlice({
+	name: "propertySlice",
+	initialState: {
+		data: []
+	} as DashboardDataState<Space[]>,
 	reducers: {
 		addProperty: (state, action) => {
-			state.propertyLists.push(action.payload);
+			state.data.push(action.payload);
 			const property = window.localStorage.getItem("propertyList");
 			if (property) {
 				const propArr = JSON.parse(property);
@@ -45,23 +31,23 @@ const PropertySlice = createSlice({
 						propertyArr.splice(index, 1)
 						window.localStorage.setItem("propertyList", JSON.stringify(propertyArr))
 					}
-					state.propertyLists = propertyArr
+					state.data = propertyArr
 				})
 			}
 		},
 
-		getProperty: (state, action) => {
-			const property = window.localStorage.getItem("propertyList");
-			if (property) {
-				const propertyListArr = JSON.parse(property);
-				propertyListArr.forEach((prop) => {
-					if (prop.id === action.payload) {
-						state.getindividaulProperty = prop;
-						console.log(state.getindividaulProperty);
-					}
-				});
-			}
-		},
+		// getProperty: (state, action) => {
+		// 	const property = window.localStorage.getItem("propertyList");
+		// 	if (property) {
+		// 		const propertyListArr = JSON.parse(property);
+		// 		propertyListArr.forEach((prop) => {
+		// 			if (prop.id === action.payload) {
+		// 				state.getindividaulProperty = prop;
+		// 				console.log(state.getindividaulProperty);
+		// 			}
+		// 		});
+		// 	}
+		// },
 
 		updateProperty: (state, action) => {
 			const property = window.localStorage.getItem("propertyList");
@@ -79,17 +65,12 @@ const PropertySlice = createSlice({
 					}
 				})
 				window.localStorage.setItem("propertyList", JSON.stringify(propertyArr))
-				state.propertyLists = propertyArr
+				state.data = propertyArr
 			}
 		},
 	},
 });
 
-export const { addProperty, deleteProperty, updateProperty, getProperty } = PropertySlice.actions;
-export const PropertyList = (state: RootState) =>
-	state.propertySlice.propertyLists;
-export const getIndividualProperty = (state: RootState) =>
-	state.propertySlice.getindividaulProperty;
-
-export default PropertySlice.reducer;
+export const { addProperty, deleteProperty, updateProperty, /*{getProperty}*/ } = propertySlice.actions;
+export default propertySlice.reducer;
 

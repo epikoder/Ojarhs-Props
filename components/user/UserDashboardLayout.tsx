@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
-import { checkIsAuthenticated } from "../../features/authSlice"
+import { checkIsAuthenticated, logout } from "../../features/authSlice"
 import { RootState, useAppDispatch } from "../../store"
 import Layout from "../Layout"
 import Loader from "../Loader"
@@ -19,11 +19,16 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
     }, [])
 
     React.useEffect(() => {
-        if (!authenticated && appState === 'completed') {
+        if (authenticated === false && appState === 'completed') {
             router.push('/Login')
             return
         }
-        if (user !== undefined && user.is_admin) router.replace("/admin/Dashboard")
+        if (user !== undefined && user.is_admin) {
+            dispatch(logout())
+            console.log('OHHH SIT')
+            router.replace("/admin/Dashboard")
+            return
+        }
     }, [authenticated])
 
     return <>
@@ -33,7 +38,7 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
                     <div className="md:w-[20%]">
                         <UserSideBar />
                     </div>
-                    <div className={`md:w-[70%] ${props.className}`}>
+                    <div className={`md:w-[70%] ${props.className ?? ''}`}>
                         {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
                             {authenticated && user !== undefined ? props.children({ authenticated, user }) : <Loader />}
                         </React.Fragment>}

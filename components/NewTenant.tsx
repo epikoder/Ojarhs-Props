@@ -29,13 +29,13 @@ function NewTenant({ setOpen, type }) {
 
 	useEffect(() => {
 		if (type === "update") {
-			setName(individualTenant.firstName);
-			setLastName(individualTenant.lastName);
-			setAddress(individualTenant.address);
-			setEmail(individualTenant.email);
-			setShop(individualTenant.shopNo);
-			setPhone(individualTenant.phoneNo);
-			setStatus(individualTenant.states);
+			// setName(individualTenant.firstName);
+			// setLastName(individualTenant.lastName);
+			// setAddress(individualTenant.address);
+			// setEmail(individualTenant.email);
+			// setShop(individualTenant.shopNo);
+			// setPhone(individualTenant.phoneNo);
+			// setStatus(individualTenant.states);
 		}
 	}, [type, individualTenant]);
 
@@ -120,14 +120,13 @@ function NewTenant({ setOpen, type }) {
 								value={firstName}
 								{...register("firstName", { required: true })}
 								onChange={(e) => setName(e.target.value)}
-								className={`${
-									errors.firstName
+								className={`${errors.firstName
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.firstName?.message}</div>
+						<div className='red text-xs ml-4'>{errors.firstName?.message as string}</div>
 					</div>
 
 					<div>
@@ -145,14 +144,13 @@ function NewTenant({ setOpen, type }) {
 								value={lastName}
 								{...register("lastName")}
 								onChange={(e) => setLastName(e.target.value)}
-								className={`${
-									errors.lastName
+								className={`${errors.lastName
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.lastName?.message}</div>
+						<div className='red text-xs ml-4'>{errors.lastName?.message as string}</div>
 					</div>
 
 					<div>
@@ -168,14 +166,13 @@ function NewTenant({ setOpen, type }) {
 								value={address}
 								{...register("address")}
 								onChange={(e) => setAddress(e.target.value)}
-								className={`${
-									errors.address
+								className={`${errors.address
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.address?.message}</div>
+						<div className='red text-xs ml-4'>{errors.address?.message as string}</div>
 					</div>
 
 					<div>
@@ -191,14 +188,13 @@ function NewTenant({ setOpen, type }) {
 								value={email}
 								{...register("email")}
 								onChange={(e) => setEmail(e.target.value)}
-								className={`${
-									errors.email
+								className={`${errors.email
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.email?.message}</div>
+						<div className='red text-xs ml-4'>{errors.email?.message as string}</div>
 					</div>
 
 					<div>
@@ -214,14 +210,13 @@ function NewTenant({ setOpen, type }) {
 								value={phone}
 								{...register("phoneNo")}
 								onChange={(e) => setPhone(e.target.value)}
-								className={`${
-									errors.phoneNo
+								className={`${errors.phoneNo
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.phoneNo?.message}</div>
+						<div className='red text-xs ml-4'>{errors.phoneNo?.message as string}</div>
 					</div>
 
 					<div>
@@ -237,14 +232,13 @@ function NewTenant({ setOpen, type }) {
 								value={shop}
 								{...register("shopNo")}
 								onChange={(e) => setShop(e.target.value)}
-								className={`${
-									errors.shopNo
+								className={`${errors.shopNo
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.shopNo?.message}</div>
+						<div className='red text-xs ml-4'>{errors.shopNo?.message as string}</div>
 					</div>
 
 					<div>
@@ -259,15 +253,14 @@ function NewTenant({ setOpen, type }) {
 								type='number'
 								placeholder='Registeration code'
 								{...register("registerationCode")}
-								className={`${
-									errors.registerationCode
+								className={`${errors.registerationCode
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 						</label>
 						<div className='red text-xs ml-4'>
-							{errors.registerationCode?.message}
+							{errors.registerationCode?.message as string}
 						</div>
 					</div>
 
@@ -283,11 +276,10 @@ function NewTenant({ setOpen, type }) {
 								type={togglePasswordState ? "text" : "password"}
 								{...register("password")}
 								placeholder='password'
-								className={`${
-									errors.password
+								className={`${errors.password
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
-								}`}
+									}`}
 							/>
 
 							{togglePasswordState ? (
@@ -302,7 +294,7 @@ function NewTenant({ setOpen, type }) {
 								/>
 							)}
 						</label>
-						<div className='red text-xs ml-4'>{errors.password?.message}</div>
+						<div className='red text-xs ml-4'>{errors.password?.message as string}</div>
 					</div>
 
 					<label

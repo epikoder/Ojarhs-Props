@@ -12,9 +12,9 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	deleteProperty,
-	getProperty,
+	// getProperty,
 	updateProperty,
-} from "../features/PropertySlice";
+} from "../features/admin/propertySlice";
 
 type Props = {
 	Prop: Space;

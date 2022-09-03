@@ -5,39 +5,39 @@ import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { XIcon } from "@heroicons/react/outline";
-import { addStaff, deleteStaff, updateStaff, getIndividualStaff } from "../features/StaffSlice";
+import { addStaff, updateStaff, getIndividualStaff } from "../features/StaffSlice";
 import uniqid from "uniqid";
 
 function NewStaff({ setOpen, type }) {
-	const dispatch = useDispatch();	
-	const individualStaff = useSelector(getIndividualStaff);	
-	const [Name, setName] = useState("");		
+	const dispatch = useDispatch();
+	const individualStaff = useSelector(getIndividualStaff);
+	const [Name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [fee, setFee] = useState("");
-    const [description, setDescription] = useState("");
+	const [description, setDescription] = useState("");
 	const [phone, setPhone] = useState("");
 
 	useEffect(() => {
 		if (type === "update") {
-			setName(individualStaff.name);			 	
-			setEmail(individualStaff.email);			
-			setPhone(individualStaff.no);
-			setFee(individualStaff.fee);
-            setDescription(individualStaff.description)
+			// setName(individualStaff.name);			 	
+			// setEmail(individualStaff.email);			
+			// setPhone(individualStaff.no);
+			// setFee(individualStaff.fee);
+			// setDescription(individualStaff.description)
 		}
 	}, [type, individualStaff]);
 
 	const validationSchema = Yup.object().shape({
-		phoneNo: Yup.string().required("PhoneNo is required"),		
-		Name: Yup.string().required("Name is required"),	
-		fee: Yup.string().required("fee is required"),		
-		email: Yup.string().required("Email is required").email("Email is invalid"),				
-        description: Yup.string().required("Description is required")		
+		phoneNo: Yup.string().required("PhoneNo is required"),
+		Name: Yup.string().required("Name is required"),
+		fee: Yup.string().required("fee is required"),
+		email: Yup.string().required("Email is required").email("Email is invalid"),
+		description: Yup.string().required("Description is required")
 	});
 	const formOptions = { resolver: yupResolver(validationSchema) };
 
 	// get functions to build form with useForm() hook
-	const { register,  formState } = useForm(formOptions);
+	const { register, formState } = useForm(formOptions);
 	const { errors } = formState;
 
 	function handleSubmit(e) {
@@ -45,11 +45,11 @@ function NewStaff({ setOpen, type }) {
 			dispatch(
 				addStaff({
 					id: uniqid(),
-					name: Name,					
+					name: Name,
 					email: email,
-					no: phone,					
+					no: phone,
 					description: description,
-                    fee: fee,					
+					fee: fee,
 				}),
 			);
 
@@ -62,11 +62,11 @@ function NewStaff({ setOpen, type }) {
 		dispatch(
 			updateStaff({
 				...individualStaff,
-				name: Name,											
+				name: Name,
 				no: phone,
-				email: email,	
-                fee: fee,
-                description: description,			
+				email: email,
+				fee: fee,
+				description: description,
 			}),
 		);
 		setOpen(false);
@@ -83,7 +83,7 @@ function NewStaff({ setOpen, type }) {
 					{" "}
 					{type === "new" ? <p>Add New Staff</p> : <p>Update Staff</p>}
 				</h1>
-				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>					
+				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>
 
 					<div>
 						<label
@@ -100,16 +100,15 @@ function NewStaff({ setOpen, type }) {
 								value={Name}
 								{...register("Name")}
 								onChange={(e) => setName(e.target.value)}
-								className={`${
-									errors.Name
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.Name
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.Name?.message}</div>
+						<div className='red text-xs ml-4'>{errors.Name?.message as string}</div>
 					</div>
-					
+
 					<div>
 						<label
 							htmlFor=''
@@ -123,14 +122,13 @@ function NewStaff({ setOpen, type }) {
 								value={email}
 								{...register("email")}
 								onChange={(e) => setEmail(e.target.value)}
-								className={`${
-									errors.email
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.email
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.email?.message}</div>
+						<div className='red text-xs ml-4'>{errors.email?.message as string}</div>
 					</div>
 
 					<div>
@@ -146,17 +144,16 @@ function NewStaff({ setOpen, type }) {
 								value={phone}
 								{...register("phoneNo")}
 								onChange={(e) => setPhone(e.target.value)}
-								className={`${
-									errors.phoneNo
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.phoneNo
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.phoneNo?.message}</div>
+						<div className='red text-xs ml-4'>{errors.phoneNo?.message as string}</div>
 					</div>
 
-                    <div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
@@ -169,14 +166,13 @@ function NewStaff({ setOpen, type }) {
 								value={fee}
 								{...register("fee")}
 								onChange={(e) => setFee(e.target.value)}
-								className={`${
-									errors.phoneNo
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.phoneNo
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.fee?.message}</div>
+						<div className='red text-xs ml-4'>{errors.fee?.message as string}</div>
 					</div>
 
 
@@ -192,16 +188,15 @@ function NewStaff({ setOpen, type }) {
 								value={description}
 								{...register("description")}
 								onChange={(e) => setDescription(e.target.value)}
-								className={`${
-									errors.shopNo
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-								}`}
+								className={`${errors.shopNo
+									? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+									: "text-gray-400 bg-transparent outline-none"
+									}`}
 							></textarea>
 						</label>
-						<div className='red text-xs ml-4'>{errors.description?.message}</div>
+						<div className='red text-xs ml-4'>{errors.description?.message as string}</div>
 					</div>
-					
+
 					{type === "new" ? (
 						<button
 							type='submit'
