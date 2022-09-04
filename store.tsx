@@ -10,6 +10,7 @@ import authSlice from './features/authSlice'
 import accountSlice from './features/user/accountSlice'
 import ServiceSlice from './features/ServiceSlice'
 import propertySlice from './features/admin/propertySlice'
+import resourceSlice from './features/resourceSlice'
 
 
 export const store = configureStore({
@@ -23,6 +24,7 @@ export const store = configureStore({
     indexSlice: IndexSlice,
     authSlice: authSlice,
     accountSlice: accountSlice,
+    resourceSlice: resourceSlice,
     serviceSlice: ServiceSlice,
   },
 })
