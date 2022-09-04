@@ -34,7 +34,7 @@ function Card({ data }: { data: Space | Service }) {
 								Manger: <span className='text-white text-prop'>{service.manager}</span>
 							</div>
 							<div className='text-gray-300 text-md'>
-								Payment Plan: <span className='text-white text-prop'>{service.plan_name}</span>
+								Payment Plan: <span className='text-white text-prop'>{service.plan}</span>
 							</div>
 						</div>
 					</div>
@@ -76,7 +76,7 @@ function Card({ data }: { data: Space | Service }) {
 					Shop Description: <span className='text-red-500 text-prop'>{shop.description}</span>
 				</div>
 				<div className='text-black text-md'>
-					Payment Plan: <span className='text-red-500 text-prop uppercase text-sm'>{shop.plan_name}</span>
+					Payment Plan: <span className='text-red-500 text-prop uppercase text-sm'>{shop.plan}</span>
 				</div>
 			</div>
 

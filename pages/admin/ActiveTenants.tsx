@@ -6,7 +6,7 @@ import { TenantsDetails } from "../../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
 import Link from "next/link";
-import NewTenant from "../../components/NewTenant";
+import NewTenant from "./NewTenant";
 import { tenantsList } from "../../features/TenantsSlice";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
@@ -48,19 +48,20 @@ function Active() {
 								<th className='lg:hidden w-[20%]'></th>
 							</tr>
 
-							{tenantListArr.map((tenant, index) => {
-								if (tenant.states === "active") {
-									return (
-										<Tenant Tenant={tenant} key={index} setOpen={setUpdateOpen} />
-									);
-								}
-							})}
-						</table>
-					</div>
-				) : (
-					<div className='text-center uppercase mt-4 '>No Active Tenant </div>
-				)}
-			</React.Fragment>}
+						{tenantListArr.map((tenant, index) => {
+							if (tenant.states === "active") {
+								return (
+									<Tenant Tenant={tenant} key={index} setOpen={setUpdateOpen} />
+								);
+							}
+						})}
+					</table>
+				</div>
+			) : (
+				<div className='text-center uppercase mt-4 '>No Active Tenant </div>
+			)}
+				</React.Fragment>
+			}
 		</AdminDashboardLayout>
 	);
 }

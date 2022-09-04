@@ -7,13 +7,14 @@ import { SideBarToggleState } from "../../features/ToggleSideBar";
 
 function Message() {
     const sideBarState = useSelector(SideBarToggleState );
-	return (
-		<AdminDashboardLayout>
-			 <div className="w-full h-[100vh] overflow-scroll mt-8">
-                    Message
-                </div>
+	return <AdminDashboardLayout>			
+				{
+					() => <React.Fragment>
+						<div>hello world</div>
+					</React.Fragment>
+				}
 		</AdminDashboardLayout>
-	);
+	
 }
 
 export default Message;

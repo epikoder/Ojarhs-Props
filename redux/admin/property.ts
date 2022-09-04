@@ -11,7 +11,7 @@ export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
     ("properties/new", async (payload, { rejectWithValue }) => {
         try {
             console.log(payload)
-            const { data, status } = await Api().post<ApiResponse>("/admin/properties/create", JSON.stringify({ ...payload, amount: parseInt(payload.amount.toString()), plan: payload.plan_name }))
+            const { data, status } = await Api().post<ApiResponse>("/admin/properties/create", JSON.stringify({ ...payload, amount: parseInt(payload.amount.toString()) }))
             if (data.status === 'failed') {
                 return rejectWithValue({
                     message: data.message
@@ -27,10 +27,7 @@ export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
                 case 400:
                     return rejectWithValue({
                         message: data.message,
-                        error: {
-                            ...data.error,
-                            plan_name: data.error.plan,
-                        } as unknown as Space
+                        error: data.error as unknown as Space
                     })
                 default:
                     return rejectWithValue({

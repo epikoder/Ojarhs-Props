@@ -49,7 +49,7 @@ function Service({ Service, setOpen }: Services) {
 					<td className='inline-block w-[30%] capitalize '>
 						<span>{Service.name}</span>
 					</td>
-					<td className='hidden lg:inline-block w-[30%] '>{Service.duration}</td>
+					<td className='hidden lg:inline-block w-[30%] '>{Service.plan}</td>
 					<td className=' lg:inline-block w-[20%] '>{Price}</td>
 					<td className=' lg:inline-block hidden w-[20%] '>
 						<div className='flex space-x-3 '>

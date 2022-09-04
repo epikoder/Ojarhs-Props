@@ -230,7 +230,7 @@ export const services: Service[] = [
 		name: "Electrical Maintenance",
 		type: "service",
 		duration: 12,
-		plan_name: 'yearly',
+		plan: 'yearly',
 		created_at: null,
 		updated_at: null
 	},

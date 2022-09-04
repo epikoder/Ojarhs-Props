@@ -11,7 +11,8 @@ import {
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { tenantsList, deleteTenant,  getIndividualTenant, Gettenant } from "../features/TenantsSlice";
-import NewTenant from "./NewTenant";
+import NewTenant from "../pages/admin/NewTenant";
+import { useRouter } from "next/router";
 
 type Tenant = {
 	Tenant: Tenants;	
@@ -22,6 +23,7 @@ function Tenant({ Tenant, setOpen }: Tenant) {
 	const tenantList = useSelector(tenantsList);
 	const dispatch = useDispatch();
 	const individualTenant = useSelector(getIndividualTenant);
+	const router = useRouter()
 	
 	const handleDelete = () => {
 		dispatch(deleteTenant(Tenant.id))
@@ -29,7 +31,7 @@ function Tenant({ Tenant, setOpen }: Tenant) {
 	const handleEdit = () => {	
 		dispatch(Gettenant(Tenant))	
 		console.log(individualTenant);
-		setOpen(true);				
+		router.push("/admin/NewTenant")		
 	}	
 
 

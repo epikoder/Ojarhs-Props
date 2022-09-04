@@ -86,7 +86,7 @@ function NewService({ setOpen, type }) {
 					<div>
 						<label
 							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
+							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2 mb-4'
 						>
 							<span className='text-gray-600 mb-2 text-xs idden'>
 								Title

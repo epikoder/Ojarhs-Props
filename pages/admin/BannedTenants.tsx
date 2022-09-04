@@ -6,7 +6,6 @@ import { TenantsDetails } from "../../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
 import Link from "next/link";
-import NewTenant from "../../components/NewTenant";
 import { tenantsList } from "../../features/TenantsSlice";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
@@ -34,8 +33,6 @@ function BannedTenants() {
 						Add new
 					</button>
 				</div>
-				{open ? <div className="relative w-full"><NewTenant type='new' setOpen={setOpen} /></div> : ""}
-				{updateOpen ? <div className="relative w-full"><NewTenant type='update' setOpen={setUpdateOpen} /></div> : ""}
 				{tenantListArr.length !== 0 ? (
 					<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll \ pb-12 px-8'>
 						<table id='customers'>

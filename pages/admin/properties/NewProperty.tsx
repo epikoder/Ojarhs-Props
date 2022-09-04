@@ -30,7 +30,7 @@ function NewProps({ setOpen, type }: {
 		address: '',
 		size: '',
 		video: '',
-		plan_name: '',
+		plan: '',
 		galleries: [],
 		video_galleries: []
 	} as Space)
@@ -194,9 +194,9 @@ function NewProps({ setOpen, type }: {
 					>
 						<span className='text-gray-500 mb-2 text-xs idden'>Payment Plan</span>
 						<PaymentPlans
-							error={formError.plan_name !== undefined}
+							error={formError.plan !== undefined}
 							handleChange={(s) => setForm({
-								...form, plan_name: s
+								...form, plan: s
 							})} />
 					</label>
 					<ImageUpload

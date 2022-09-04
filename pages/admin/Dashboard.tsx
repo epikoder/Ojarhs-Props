@@ -88,7 +88,7 @@ function Dashboard() {
 							{/* {tenantListArr.length !== 0 ? (
 								<div className='flex gap-3 lg:flex-row flex-wrap px-4 justify-center w-full scrollbar-hide overflow-scroll   shadow-gray-400 shadow-md'>
 									<table id='customers'>
-										<tr className=' w-full flex justify-between'>
+									<tr className=' w-full flex justify-between'>
 											<th className=''>Name</th>
 											<th className=''>Status</th>
 											<th className=''>
@@ -146,7 +146,7 @@ function Dashboard() {
 						</div>
 					</div>
 
-					<div className="mt-8">
+					<div className="mt-8 w-full">
 						<h1 className="text-2xl red ">Recent Properties</h1>
 						<div>
 							{/* {Properties.length !== 0 ? (

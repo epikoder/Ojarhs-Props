@@ -18,7 +18,7 @@ export type Space = {
 	video_galleries?: string[]
 	status?: 'open' | 'occupied'
 	address?: string
-	plan_name: string
+	plan: string
 	duration?: number
 	created_at?: Date
 	updated_at?: Date
@@ -63,7 +63,7 @@ export type Service = {
 	amount: number
 	manager: string
 	type: 'service'
-	plan_name?: string
+	plan?: string
 	duration?: number
 	created_at?: Date
 	updated_at?: Date

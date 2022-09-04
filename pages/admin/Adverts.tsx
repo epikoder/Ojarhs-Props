@@ -1,20 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import SideBar from "../../components/SideBar";
 import SideBarHeader from "../../components/SideBarHeader";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
-import NewService from '../../components/NewService';
-import { ServiceList } from '../../features/ServiceSlice';
-import Service from '../../components/Services';
-import { AdminDashboardLayout } from '../../components/admin/AdminDashboardLayout';
-
-
+import NewService from "../../components/NewService";
+import { ServiceList } from "../../features/ServiceSlice";
+import Service from "../../components/Services";
+import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
 function Adverts() {
 	const sideBarState = useSelector(SideBarToggleState);
-	const serviceArr = useSelector(ServiceList)
-	const [open, setOpen] = useState<Boolean>(false)
-	const [updateOpen, setUpdateOpen] = useState<Boolean>(false)
+	const serviceArr = useSelector(ServiceList);
+	const [open, setOpen] = useState<Boolean>(false);
+	const [updateOpen, setUpdateOpen] = useState<Boolean>(false);
 
 
 	return <AdminDashboardLayout>
@@ -48,4 +46,4 @@ function Adverts() {
 	</AdminDashboardLayout>
 }
 
-export default Adverts
+export default Adverts;

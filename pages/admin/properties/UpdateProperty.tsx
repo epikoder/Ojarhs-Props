@@ -26,7 +26,7 @@ function UpdateProp({ setOpen, type }: {
 		address: '',
 		size: '',
 		video: '',
-		plan_name: '',
+		plan: '',
 		galleries: [],
 		video_galleries: []
 	} as Space)
@@ -184,7 +184,7 @@ function UpdateProp({ setOpen, type }: {
 						>
 							<span className='text-gray-500 mb-2 text-xs idden'>Payment Plan</span>
 							<PaymentPlans handleChange={(s) => setForm({
-								...form, plan_name: s
+								...form, plan: s
 							})} />
 						</label>
 						<ImageUpload

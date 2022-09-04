@@ -4,7 +4,7 @@ import SideBarHeader from "../../components/SideBarHeader";
 import Tenant from "../../components/Tenant";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
-import NewTenant from "../../components/NewTenant";
+import NewTenant from "./NewTenant";
 import { tenantsList } from "../../features/TenantsSlice";
 import { staffList } from "../../features/StaffSlice";
 import NewStaff from "../../components/NewStaff";
@@ -18,9 +18,11 @@ function Staffs() {
 	const staffArr = useSelector(staffList);
 
 	return (
-	<AdminDashboardLayout>
-		<div className="flex justify-between" >
-		<h1 className='lg:text-3xl text-md red'>All Staffs</h1>
+		<AdminDashboardLayout>
+			{() => (
+				<React.Fragment>
+					<div className='flex justify-between'>
+						<h1 className='lg:text-3xl text-md red'>All Staffs</h1>
 
 						<button
 							type='button'
@@ -30,17 +32,33 @@ function Staffs() {
 							Add new
 						</button>
 					</div>
-					{open ? <div className="w-full relative"><NewStaff type='new' setOpen={setOpen} /></div> : ""}
-					{updateOpen ? <div className="w-full relative"><NewStaff type='update' setOpen={setUpdateOpen} /></div> : ""}
+					{open ? (
+						<div className='w-full relative'>
+							<NewStaff type='new' setOpen={setOpen} />
+						</div>
+					) : (
+						""
+					)}
+					{updateOpen ? (
+						<div className='w-full relative'>
+							<NewStaff type='update' setOpen={setUpdateOpen} />
+						</div>
+					) : (
+						""
+					)}
 
 					{staffArr.length !== 0 ? (
 						<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
 							<table id='customers'>
 								<tr className='he w-full flex justi'>
 									<th className='inline-block w-[30%] text-left'>Name</th>
-									<th className='hidden lg:inline-block w-[30%] text-left '>Email</th>
+									<th className='hidden lg:inline-block w-[30%] text-left '>
+										Email
+									</th>
 									<th className='inline-block w-[20%] text-left'>Fee</th>
-									<th className='hidden lg:inline-block w-[20%] text-left'>Options</th>
+									<th className='hidden lg:inline-block w-[20%] text-left'>
+										Options
+									</th>
 									<th className='lg:hidden'></th>
 								</tr>
 
@@ -54,7 +72,9 @@ function Staffs() {
 					) : (
 						<div className='text-center uppercase mt-4 '>No New Staff </div>
 					)}
-	</AdminDashboardLayout>
+				</React.Fragment>
+			)}
+		</AdminDashboardLayout>
 	);
 }
 
