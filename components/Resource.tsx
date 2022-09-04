@@ -15,7 +15,7 @@ export const PaymentPlans = ({ value, handleChange, className, error }: {
         if (status === 'success' && data === undefined) {
             dispatch(loadPlans())
         }
-    }, [status, data])
+    }, [status, data, dispatch])
     return <React.Fragment>
         <select
             required
@@ -41,7 +41,7 @@ export const PropertyType = ({ value, handleChange, className, error }: {
         if (status === 'success' && data === undefined) {
             dispatch(loadPropertyTypes())
         }
-    }, [status, data])
+    }, [status, data, dispatch])
     return <React.Fragment>
         <select
             required

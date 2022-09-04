@@ -5,7 +5,6 @@ import { loginAdminApi, loginApi, rejectValue } from "../redux/auth";
 import { ApiResponse, LoadState, loginResponse, User } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
-import { boolean } from "yup";
 
 export type AuthState = {
     authenticated: boolean
@@ -99,7 +98,8 @@ const checkIsAuthenticatedAdminAsync = async () => {
 const authSlice = createSlice({
     name: "authSlice",
     initialState: {
-        appState: 'completed'
+        appState: 'completed',
+        token: {}
     } as AuthState,
     reducers: {
         logout: (state) => {

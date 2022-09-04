@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { money } from "../helpers/helpers";
 import { Service, Space } from "../Typing.d";
@@ -62,23 +63,25 @@ function Card({ data }: { data: Space | Service }) {
 			</div>
 
 			{/* cards description */}
-			<div className='flex flex-col absolute bottom-8 min-h-[8vh] bg-white text-gray-900 w-full space-y-3 text-xs p-2'>
-				<div className='text-black text-md'>
-					Shop No: <span className='text-red-500 text-prop'>{shop.no}</span>
+			<Link href={'/property/' + shop.slug}>
+				<div className='flex flex-col absolute bottom-8 min-h-[8vh] bg-white text-gray-900 w-full space-y-3 text-xs p-2'>
+					<div className='text-black text-md'>
+						Shop No: <span className='text-red-500 text-prop'>{shop.no}</span>
+					</div>
+					<div className='text-black text-md'>
+						Shop Address: <span className='text-red-500 text-prop'>{shop.address}</span>
+					</div>
+					<div className='text-black text-md'>
+						Shop Size: <span className='text-red-500 text-prop'>{shop.size}</span>
+					</div>
+					<div className='text-black text-md'>
+						Shop Description: <span className='text-red-500 text-prop'>{shop.description}</span>
+					</div>
+					<div className='text-black text-md'>
+						Payment Plan: <span className='text-red-500 text-prop uppercase text-sm'>{shop.plan}</span>
+					</div>
 				</div>
-				<div className='text-black text-md'>
-					Shop Address: <span className='text-red-500 text-prop'>{shop.address}</span>
-				</div>
-				<div className='text-black text-md'>
-					Shop Size: <span className='text-red-500 text-prop'>{shop.size}</span>
-				</div>
-				<div className='text-black text-md'>
-					Shop Description: <span className='text-red-500 text-prop'>{shop.description}</span>
-				</div>
-				<div className='text-black text-md'>
-					Payment Plan: <span className='text-red-500 text-prop uppercase text-sm'>{shop.plan}</span>
-				</div>
-			</div>
+			</Link>
 
 			{/* pay button */}
 			<div className='absolute bottom-0 text-center border w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>

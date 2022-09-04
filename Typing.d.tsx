@@ -5,7 +5,7 @@ export type User = Tenants & {
 }
 
 export type Space = {
-	id: string
+	slug: string
 	name: string
 	no: string
 	size: string

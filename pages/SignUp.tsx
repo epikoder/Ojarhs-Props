@@ -37,11 +37,11 @@ function SignUp() {
 			setNextOfKinForm([nextOfKinForm[0]])
 		}
 		setForm({ ...form, next_of_kins: nextOfKinForm, })
-	}, [secondNextofKin])
+	}, [secondNextofKin, form, nextOfKinForm])
 
 	useEffect(() => {
 		setForm({ ...form, next_of_kins: nextOfKinForm, })
-	}, [nextOfKinForm])
+	}, [nextOfKinForm, form])
 
 	const getError = (key: string): string | undefined => {
 		return errors[key]

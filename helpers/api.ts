@@ -21,7 +21,7 @@ const Api = (useInterceptor?: boolean) => {
         withCredentials: true,
     })
 
-    var refreshInterceptor
+    var refreshInterceptor: number
     const handleExpiredToken = async (error) => {
         try {
             let t = getUserToken()
@@ -46,7 +46,7 @@ const Api = (useInterceptor?: boolean) => {
         }
     }
     if (useInterceptor) {
-        refreshInterceptor = _api.interceptors.response.use(handleExpiredToken)
+        refreshInterceptor = _api.interceptors.response.use(null, handleExpiredToken)
     }
     return _api
 }

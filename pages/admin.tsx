@@ -1,12 +1,12 @@
 import { useRouter } from "next/router"
 import React from "react"
 
-const admin = () => {
+const Admin = () => {
     const router = useRouter()
 
     React.useEffect(() => {
         router.replace('/admin/Login')
-    }, [router.isReady])
+    }, [router])
     return <></>
 }
-export default admin
+export default Admin

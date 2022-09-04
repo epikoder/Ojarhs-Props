@@ -20,16 +20,15 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
         if (authenticated) return
         localStorage.setItem('current', router.pathname)
         dispatch(checkIsAuthenticated({ isAdmin: true }))
-    }, [])
+    }, [dispatch, authenticated, router.pathname])
 
     React.useEffect(() => {
-        console.log("AUTHENTICATED:", authenticated, "APPSTATE :", appState)
         if (authenticated === false && appState === 'completed') router.push('/admin/Login')
-    }, [authenticated])
+    }, [authenticated, appState, router])
 
     return <React.Fragment>
         <Script src='/scripts/noimage.js'></Script>
-        <div className='w-full grid-rows-6 gap-1 h-[88vh]'>
+        <div className='w-full grid-rows-6 gap-1 h-[100vh]'>
             {appState !== 'pending' ? <React.Fragment>
                 <SideBarHeader user={user} className="row-span-1" />
                 <PageLoader />

@@ -1,80 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { XIcon } from "@heroicons/react/outline";
-import { addStaff, updateStaff, getIndividualStaff } from "../features/StaffSlice";
-import uniqid from "uniqid";
 
 function NewStaff({ setOpen, type }) {
-	const dispatch = useDispatch();
-	const individualStaff = useSelector(getIndividualStaff);
-	const [Name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [fee, setFee] = useState("");
-	const [description, setDescription] = useState("");
-	const [phone, setPhone] = useState("");
-
-	useEffect(() => {
-		if (type === "update") {
-			// setName(individualStaff.name);			 	
-			// setEmail(individualStaff.email);			
-			// setPhone(individualStaff.no);
-			// setFee(individualStaff.fee);
-			// setDescription(individualStaff.description)
-		}
-	}, [type, individualStaff]);
-
-	const validationSchema = Yup.object().shape({
-		phoneNo: Yup.string().required("PhoneNo is required"),
-		Name: Yup.string().required("Name is required"),
-		fee: Yup.string().required("fee is required"),
-		email: Yup.string().required("Email is required").email("Email is invalid"),
-		description: Yup.string().required("Description is required")
-	});
-	const formOptions = { resolver: yupResolver(validationSchema) };
-
-	// get functions to build form with useForm() hook
-	const { register, formState } = useForm(formOptions);
-	const { errors } = formState;
-
-	function handleSubmit(e) {
-		if (type === "new") {
-			dispatch(
-				addStaff({
-					id: uniqid(),
-					name: Name,
-					email: email,
-					no: phone,
-					description: description,
-					fee: fee,
-				}),
-			);
-
-			setOpen(false);
-		}
-	}
-
-	const handleUpdate = (e) => {
-		e.preventDefault();
-		dispatch(
-			updateStaff({
-				...individualStaff,
-				name: Name,
-				no: phone,
-				email: email,
-				fee: fee,
-				description: description,
-			}),
-		);
-		setOpen(false);
-	};
-
 	return (
 		<div className='  z-40 absolute w-full new  mx-auto pb-12 overflow-scroll h-[90vh] scrollbar-hide p-4'>
-			<div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
+			{/* <div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
 				<XIcon
 					className='w-6 h-6 absolute top-2 right-2 hov text-gray-600 '
 					onClick={() => setOpen(false)}
@@ -215,7 +144,7 @@ function NewStaff({ setOpen, type }) {
 						</button>
 					)}
 				</form>
-			</div>
+			</div> */}
 		</div>
 	);
 }

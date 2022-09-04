@@ -14,9 +14,8 @@ export type indexData = {
 
 export const loadIndex =
     createAsyncThunk<indexData | { status: "failed" }, {}>("index/load", async (payload: {}, { rejectWithValue }) => {
-        console.log("LOADING INDEXXXXXXXXXXXXX")
         try {
-            const response=  await fetch(BASEURL)
+            const response = await fetch(BASEURL)
             if (response.status !== 200) {
                 return {
                     status: 'failed',

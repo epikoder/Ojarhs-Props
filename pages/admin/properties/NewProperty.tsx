@@ -50,7 +50,7 @@ function NewProps({ setOpen, type }: {
 			}, 800)
 		}
 
-	}, [status])
+	}, [status, router])
 
 	return (
 		<AdminDashboardLayout>

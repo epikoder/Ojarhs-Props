@@ -19,7 +19,7 @@ function Home() {
 
   React.useEffect(() => {
     dispatch(loadIndex({}))
-  }, [])
+  }, [dispatch])
 
   return (
     <div >

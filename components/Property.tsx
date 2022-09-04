@@ -22,7 +22,7 @@ type Props = {
 function Property({ Prop, setOpen }: Props) {
 	const dispatch = useDispatch();
 	const handleDelete = () => {
-		dispatch(deleteProperty(Prop.id));
+		dispatch(deleteProperty(Prop.slug));
 	};
 	const handleEdit = () => {
 		// dispatch(getProperty(Prop.id));
@@ -47,7 +47,7 @@ function Property({ Prop, setOpen }: Props) {
 				</td>
 				<td className='hidden lg:inline-block  w-[20%]'>
 					<div className='flex space-x-3 '>
-						<Link href={`/Details/${Prop.id}`}>
+						<Link href={`/Details/${Prop.slug}`}>
 							<div className='group cursor-pointer relative'>
 								<DocumentTextIcon className='h-6 w-6  cursor-pointer text-gray-500 ' />
 								<div className='absolute top-6 hov bg-gray-700 text-gray-200 p-2 z-30 rounded-md group-hover:block hidden cursor-pointer'>

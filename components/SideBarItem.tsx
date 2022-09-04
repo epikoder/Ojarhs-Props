@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import SideBarSubItem from "./SideBarSubItem";
 
-function SideBarItem({ name, subItem, type }: { name: string, subItem?: { name: string, link: string }[], type?: string }) {
+function SideBarItem({ name, subItem }: { name: string, subItem?: { name: string, link: string }[] }) {
 	const [toggle, setToggle] = useState(false)
 
 	if (subItem !== undefined) {

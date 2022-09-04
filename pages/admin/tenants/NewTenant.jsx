@@ -1,120 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { TogglePasswordState } from "../../features/TogglePassword";
-import { ShowPassword, HidePassword } from "../../features/TogglePassword";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import { XIcon } from "@heroicons/react/outline";
-import {
-	addTenant,
-	getIndividualTenant,
-	updateTenant,
-} from "../../features/TenantsSlice";
-import uniqid from "uniqid";
-import { useRouter } from "next/router";
+import React from "react";
 
 function NewTenant() {
-	const dispatch = useDispatch();
-	const togglePasswordState = useSelector(TogglePasswordState);
-	const individualTenant = useSelector(getIndividualTenant);
-	const [status, setStatus] = useState("active");
-	const [firstName, setName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [address, setAddress] = useState("");
-	const [email, setEmail] = useState("");
-	const [shop, setShop] = useState("");
-	const [phone, setPhone] = useState("");
-
-	const router = useRouter();
-	const {
-		query: { type },
-	} = router;
-
-	console.log(individualTenant);
-
-	useEffect(() => {
-<<<<<<<< HEAD:components/NewTenant.tsx
-		if (type === "update") {
-			// setName(individualTenant.firstName);
-			// setLastName(individualTenant.lastName);
-			// setAddress(individualTenant.address);
-			// setEmail(individualTenant.email);
-			// setShop(individualTenant.shopNo);
-			// setPhone(individualTenant.phoneNo);
-			// setStatus(individualTenant.states);
-========
-		if (type !== "New") {
-			setName(individualTenant.fname);
-			setLastName(individualTenant.lname);
-			setAddress(individualTenant.address);
-			setEmail(individualTenant.email);
-			setShop(individualTenant.shopNo);
-			setPhone(individualTenant.phoneNo);
-			setStatus(individualTenant.states);
->>>>>>>> f206835f1e8e5b1f033cb4eb88770ddd96d882d6:pages/admin/NewTenant.jsx
-		}
-	}, [type, individualTenant]);
-
-	const validationSchema = Yup.object().shape({
-		phoneNo: Yup.string().required("PhoneNo is required"),
-		shopNo: Yup.string().required("ShopNo is required"),
-		firstName: Yup.string().required("firstName is required"),
-		lastName: Yup.string().required("Last name is required"),
-		email: Yup.string().required("Email is required").email("Email is invalid"),
-		address: Yup.string().required("Address is required"),
-		registerationCode: Yup.string().required("Registeration Code is required"),
-		password: Yup.string()
-			.min(6, "Password must be at least 6 characters")
-			.required("Password is required"),
-	});
-	const formOptions = { resolver: yupResolver(validationSchema) };
-
-	// get functions to build form with useForm() hook
-	const { register, handleSubmit, reset, formState } = useForm(formOptions);
-	const { errors } = formState;
-
-	function onSubmit(data) {
-		if (type === "New") {
-			router.push("/admin/AllTenants");
-			dispatch(
-				addTenant({
-					id: uniqid(),
-					fname: data.firstName,
-					lname: data.lastName,
-					email: data.email,
-					phoneNo: data.phoneNo,
-					shopNo: data.shopNo,
-					address: data.address,
-					state: status,
-				}),
-			);
-			
-		}
-	}
-
-	const handleUpdate = (e) => {
-		router.push("/admin/AllTenants");
-		e.preventDefault();
-		dispatch(
-			updateTenant({
-				...individualTenant,
-				Fname: firstName,
-				Lname: lastName,
-				Adress: address,
-				Shop: shop,
-				Phone: phone,
-				Email: email,
-				State: status,
-			}),
-		);		
-	};
 
 	return (
 		<div className=' z-40 absolute w-full bg mx-auto pb-12 overflow-scroll h-full scrollbar-hide p-4'>
-			<div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
+			{/* <div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
 				<div onClick={()=> router.push("/admin/AllTenants")}>
 					<h1 className='hover:text-red-500  cursor-pointer'>
 						{" "}
@@ -361,7 +251,7 @@ function NewTenant() {
 						</button>
 					)}
 				</form>
-			</div>
+			</div> */}
 		</div>
 	);
 }

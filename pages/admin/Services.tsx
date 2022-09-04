@@ -1,26 +1,20 @@
 import React, { useState } from "react";
-import SideBar from "../../components/SideBar";
-import SideBarHeader from "../../components/SideBarHeader";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
 import NewService from "../../components/NewService";
-import { ServiceList } from "../../features/ServiceSlice";
-import Service from "../../components/Services";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { Api } from "../../helpers/api";
 import { GetStaticProps } from "next";
 
 
 function Services() {
-	const sideBarState = useSelector(SideBarToggleState);
-	const serviceArr = useSelector(ServiceList);
 	const [open, setOpen] = useState<Boolean>(false);
 	const [updateOpen, setUpdateOpen] = useState<Boolean>(false);
 
 	(async () => {
-		const {data, status} = await Api().get("/admin/services/all")
+		const { data, status } = await Api().get("/admin/services/all")
 		console.log(data.data);
-		
+
 
 	})();
 
@@ -56,7 +50,7 @@ function Services() {
 						""
 					)}
 
-					{serviceArr.length !== 0 ? (
+					{[1].length !== 0 ? (
 						<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
 							<table id='customers'>
 								<tr className='he w-full flex justi'>
@@ -70,16 +64,6 @@ function Services() {
 									</th>
 									<th className='lg:hidden'></th>
 								</tr>
-
-								{serviceArr.map((service, index) => {
-									return (
-										<Service
-											Service={service}
-											key={index}
-											setOpen={setUpdateOpen}
-										/>
-									);
-								})}
 							</table>
 						</div>
 					) : (
@@ -92,26 +76,3 @@ function Services() {
 }
 
 export default Services;
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-
-	// const data = await Api().get("/admin/services/all").then((data)=> console.log(data))
-	
-// 	return {
-// 		props:{
-// 			data: data
-// 		}
-// 	}	
-
-// }
-
-
-
-// export const getStaticProps: GetStaticProps = async () => {
-// 	const data = await Api().get("/admin/services/all").then((data)=> console.log(data))
-// 	return {
-// 		props: {
-// 			// data:
-// 		},
-// 	};
-// };

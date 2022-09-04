@@ -11,7 +11,6 @@ import { uploadDoc } from "../../redux/user/uploadDoc"
 const UploadDocument = () => {
     const [docType, setDocType] = React.useState<string>('0')
     const [docUrl, setDocUrl] = React.useState<string>('')
-    const [loading, setLoading] = React.useState<boolean>(false)
     const [types, setTypes] = React.useState<{ id: number, name: string }[]>(Array.from([]))
     const [completed, setCompleted] = React.useState<boolean>(false)
     const { authenticated, user } = useSelector((store: RootState) => store.authSlice)
@@ -22,9 +21,13 @@ const UploadDocument = () => {
 
     React.useEffect(() => {
         const req = async () => {
-            let res = await fetch(BASEURL + '/resources/document-types')
-            if (res.status !== 200) return
-            setTypes((await res.json()).data)
+            try {
+                let res = await fetch(BASEURL + '/resources/document-types')
+                if (res.status !== 200) return
+                setTypes((await res.json()).data)
+            } catch (error) {
+                console.log(error)
+            }
         }
         req()
     }, [])
@@ -37,7 +40,7 @@ const UploadDocument = () => {
 
     React.useEffect(() => {
         if (!authenticated) router.push('/Login')
-    }, [authenticated])
+    }, [authenticated, router])
 
     const proceed = async (response: {
         message: string

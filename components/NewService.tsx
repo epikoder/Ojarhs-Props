@@ -1,79 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { XIcon } from "@heroicons/react/outline";
-import {
-	addService,
-	getIndividualService,
-	updateService,
-} from "../features/ServiceSlice";
-import uniqid from "uniqid";
 
 function NewService({ setOpen, type }) {
-	const dispatch = useDispatch();
-	const individualService = useSelector(getIndividualService);
-	const [title, setTitle] = useState("");
-	const [description, setDescription] = useState("");
-	const [amount, setAmount] = useState("");
-	const [duration, setDuration] = useState("");
-
-	useEffect(() => {
-		if (type === "update") {
-			// setTitle(individualService.title);
-			// setAmount(individualService.amount)
-			// setDuration(individualService.duration)
-			// setDescription(individualService.description)
-		}
-	}, [type, individualService]);
-
-	const validationSchema = Yup.object().shape({
-		title: Yup.string().required("Service Title is Required"),
-		amount: Yup.string().required("Service Amount is Required"),
-		duration: Yup.string().required("Service Duration is required"),
-		description: Yup.string().required("Service Description is required"),
-	});
-	const formOptions = { resolver: yupResolver(validationSchema) };
-
-	// get functions to build form with useForm() hook
-	const { register, handleSubmit, reset, formState } = useForm(formOptions);
-	const { errors } = formState;
-
-	function onSubmit(data) {
-		if (type === "new") {
-			dispatch(
-				addService({
-					id: uniqid(),
-					title: data.title,
-					amount: data.amount,
-					duration: data.duration,
-					description: data.description,
-				}),
-			);
-
-			setOpen(false);
-		}
-	}
-
-	const handleUpdate = (e) => {
-		e.preventDefault();
-		dispatch(
-			updateService({
-				...individualService,
-				title: title,
-				amount: amount,
-				duration: duration,
-				description: description,
-			}),
-		);
-		setOpen(false);
-	};
-
 	return (
 		<div className='bg  z-40 absolute w-full mx-auto pb-12 overflow-scroll h-[90vh] scrollbar-hide p-4'>
-			<div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
+			{/* <div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
 				<XIcon
 					className='w-6 h-6 absolute top-2 right-2 hov text-gray-600 '
 					onClick={() => setOpen(false)}
@@ -197,7 +127,7 @@ function NewService({ setOpen, type }) {
 						</button>
 					)}
 				</form>
-			</div>
+			</div> */}
 		</div>
 	);
 }

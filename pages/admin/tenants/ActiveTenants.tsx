@@ -1,34 +1,18 @@
 import React, { useState } from "react";
-import SideBar from "../../components/SideBar";
-import SideBarHeader from "../../components/SideBarHeader";
-import Tenant from "../../components/Tenant";
-import { TenantsDetails } from "../../Data";
-import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../../features/ToggleSideBar";
-import Link from "next/link";
-import { tenantsList } from "../../features/TenantsSlice";
-import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
+import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 
-function BannedTenants() {
-	const [open, setOpen] = useState(false);
-	const [updateOpen, setUpdateOpen] = useState(false);
-	const sideBarState = useSelector(SideBarToggleState);
-	const tenantListArr = useSelector(tenantsList);
-
-	const Tenants = tenantListArr.map((tenant, index) => {
-		return tenant;
-	});
+function Active() {
+	const tenantListArr = [];
 
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
-				<div className="w-full flex justify-between">
-					<h1 className='lg:text-3xl text-md red'>Banned tenants</h1>
+				<div className='w-full flex justify-between'>
+					<h1 className='lg:text-3xl text-md red'>Active tenants</h1>
 
 					<button
 						type='button'
 						className='inline-block px-6 lg:px-12 py-3 mt-4 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
-						onClick={() => setOpen(true)}
 					>
 						Add new
 					</button>
@@ -44,20 +28,21 @@ function BannedTenants() {
 								<th className='lg:hidden w-[20%]'></th>
 							</tr>
 
-							{tenantListArr.map((tenant, index) => {
-								if (tenant.states === "banned") {
+							{/* {tenantListArr.map((tenant, index) => {
+								if (tenant.states === "active") {
 									return (
 										<Tenant Tenant={tenant} key={index} setOpen={setUpdateOpen} />
 									);
 								}
-							})}
+							})} */}
 						</table>
 					</div>
 				) : (
-					<div className='text-center uppercase mt-4 '>No Banned Tenant </div>
+					<div className='text-center uppercase mt-4 '>No Active Tenant </div>
 				)}
-			</React.Fragment>}
+			</React.Fragment>
+			}
 		</AdminDashboardLayout>
 	);
 }
-export default BannedTenants;
+export default Active;

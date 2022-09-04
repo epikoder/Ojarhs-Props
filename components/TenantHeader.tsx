@@ -1,13 +1,12 @@
 import React from "react";
-import { TenantsSubItem } from "../Data";
 
 function TenantHeader({ name }) {
 	return (
-		
 
-			<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2 h-20'>
 
-                
+		<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2 h-20'>
+
+
 			<h1 className='text-3xl red'>{name}</h1>
 
 			<div className='flex space-x-2 justify-center '>
@@ -18,8 +17,8 @@ function TenantHeader({ name }) {
 					Add new
 				</button>
 			</div>
-            </div>
-		
+		</div>
+
 	);
 }
 

@@ -45,27 +45,46 @@ export const CardLoader = ({ height = 200, width, count = 4 }: { height?: number
 export const PageLoader = ({ }: {
 
 }) => {
-    const [loading, setLoading] = React.useState(false)
-    const val = React.useRef<number>(0)
+    const ref = React.useRef<ReturnType<typeof setTimeout>>()
+    const [loading, setLoading] = React.useState<boolean>(false)
+    const [val, setVal] = React.useState<number>(0)
 
     Router.events.on('routeChangeStart', () => {
         setLoading(true)
     })
     Router.events.on('routeChangeComplete', () => {
-        setLoading(false)
+        // setLoading(false)
     })
 
     React.useEffect(() => {
-        console.log("PAGE LOADER", val.current, loading)
-        if (!loading) return
-        const i = setInterval(() => {
-            if (val.current >= 98) {
-                return clearInterval(i)
-            }
-            val.current++
-            console.log("INCRE", val.current)
-        })
+        if (!loading) {
+            setVal(100)
+            setTimeout(() => {
+                setVal(0)
+            }, 100)
+            return
+        }
+        ref.current = setInterval(() => {
+            setVal((current) => {
+                console.log(loading)
+                if (current >= 98 && loading) {
+                    clearInterval(ref.current)
+                    return current
+                }
+                return current + 1
+            })
+        }, 20)
+        return () => clearInterval(ref.current)
     }, [loading])
-    return <>
-    </>
+
+    return <div className={`h-1 bg-black relative`}>
+        <div className="bg-blue-500 h-full" style={{
+            width: `${val}%`
+        }}>
+        </div>
+        <div className="bg-blue-800 h-2 w-2" style={{
+            left: `${val}%`
+        }}>
+        </div>
+    </div>
 }

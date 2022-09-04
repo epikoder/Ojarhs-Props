@@ -1,6 +1,5 @@
 import React, { HTMLAttributes, useState } from "react";
 import SideBarItem from "./SideBarItem";
-import { OfficeSubItem, TenantsSubItem } from "../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../features/ToggleSideBar";
 import { useRouter } from "next/router";
@@ -15,7 +14,20 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 					<SideBarItem name='Dashboard' />
 				</div>
 				<div>
-					<SideBarItem name='Tenants' subItem={TenantsSubItem} type={""} />
+					<SideBarItem name='Tenants' subItem={[
+						{
+							link: '/admin/tenants/ActiveTenants',
+							name: 'All Tenants'
+						},
+						{
+							link: '/admin/tenants/AllTenants',
+							name: 'Active Tenants'
+						},
+						{
+							link: '/admin/tenants/BannedTenants',
+							name: 'Banned Tenants'
+						},
+					]} />
 				</div>
 				<div onClick={() => router.push("/admin/Message")}>
 					<SideBarItem name='Messages' />
@@ -38,8 +50,16 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				<div>
 					<SideBarItem
 						name='Ojarh Office'
-						subItem={OfficeSubItem}
-						type='office'
+						subItem={[
+							{
+								link: '/admin/office/Staffs',
+								name: 'Staffs'
+							},
+							{
+								link: '/admin/office/Expenses',
+								name: 'Expenses'
+							},
+						]}
 					/>
 				</div>
 			</div>

@@ -44,21 +44,21 @@ const AdminLogin = () => {
     React.useEffect(() => {
         if (authenticated) return
         dispatch(checkIsAuthenticated({ isAdmin: true }))
-    }, [])
+    }, [authenticated, dispatch])
 
     React.useEffect(() => {
         if (authenticated && user.is_admin) setTimeout(() => {
             const path = localStorage.getItem('current')
             router.replace(path !== null && (path !== '/admin/Login' && !path.includes('/user/')) ? path : '/admin/Dashboard')
         }, 200)
-    }, [authenticated])
+    }, [authenticated, router, user])
 
     React.useEffect(() => {
         setMessage({
             text: errMessage,
             status: status === 'success'
         })
-    }, [errMessage])
+    }, [errMessage, status])
 
     React.useEffect(() => {
         localStorage.setItem('persist_auth', `${remember}`)
@@ -81,8 +81,8 @@ const AdminLogin = () => {
                         src={"/image/tower.jpg"}
                         className="h-full w-full object-cover" />
                 </div>
-                <div className="h-full sm:h-[60vh] lg:h-full w-full sm:w-[40vw] lg:w-[40vw] flex flex-col items-center justify-center shadow-md">
-                    {(status === 'pending' || appState === 'pending') && <div className="absolute z-10 inset-0 lg:left-[60vw]" style={{ backgroundColor: '#04040414' }}>
+                <div className="h-full sm:h-[60vh] lg:h-full w-full sm:w-[40vw] lg:w-[40vw] flex flex-col items-center justify-center shadow-md relative">
+                    {(status === 'pending' || appState === 'pending') && <div className="absolute z-10 inset-0" style={{ backgroundColor: '#04040414' }}>
                         <Loader />
                     </div>}
                     <div className="flex flex-col justify-between p-4">

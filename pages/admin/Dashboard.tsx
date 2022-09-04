@@ -1,26 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import DashCards from "../../components/DashCards";
-import DashTenant from "./DashTenant";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
 function Dashboard() {
-	const [updateOpen, setUpdateOpen] = useState(false);
-	// const tenantListArr = useSelector(tenantsList);
-	// const Properties = useSelector(PropertyList)
-
-	const fn = (async () => {
-		const res = fetch("https://sleepy-everglades-36547.herokuapp.com/admin/properties/all").then(() => {
-			// alert("worked")
-			console.log(res);
-
-		}).catch((error) => {
-			// alert("error")
-			console.log(error);
-
-		})
-	})();
-
 	return <AdminDashboardLayout>
 		{
 			() => <React.Fragment>

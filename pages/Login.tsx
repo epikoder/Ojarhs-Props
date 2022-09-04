@@ -32,7 +32,7 @@ function Login() {
 	React.useEffect(() => {
 		if (authenticated) return
 		dispatch(checkIsAuthenticated({}))
-	}, [])
+	}, [authenticated, dispatch])
 
 	useEffect(() => {
 		if (authenticated) setTimeout(() => {
@@ -40,14 +40,14 @@ function Login() {
 			const path = localStorage.getItem('current')
 			router.replace(path !== null && (path !== '/Login' && path !== '/Signup' && !path.includes('/admin/')) ? path : '/user/Dashboard')
 		}, 200)
-	}, [authenticated])
+	}, [authenticated, router, user])
 
 	React.useEffect(() => {
 		setMessage({
 			text: errMessage,
 			status: status === 'success'
 		})
-	}, [errMessage])
+	}, [errMessage, status])
 
 	const submit = async () => {
 		if (!formRef.current.checkValidity()) {
