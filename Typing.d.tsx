@@ -53,6 +53,7 @@ export type Inputs = {
 
 
 export type Service = {
+	plan?:string,
 	id: string
 	name: string
 	description: string

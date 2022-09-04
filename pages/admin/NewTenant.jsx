@@ -4,18 +4,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { TogglePasswordState } from "../features/TogglePassword";
-import { ShowPassword, HidePassword } from "../features/TogglePassword";
+import { TogglePasswordState } from "../../features/TogglePassword";
+import { ShowPassword, HidePassword } from "../../features/TogglePassword";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/outline";
 import {
 	addTenant,
 	getIndividualTenant,
 	updateTenant,
-} from "../features/TenantsSlice";
+} from "../../features/TenantsSlice";
 import uniqid from "uniqid";
+import { useRouter } from "next/router";
 
-function NewTenant({ setOpen, type }) {
+function NewTenant() {
 	const dispatch = useDispatch();
 	const togglePasswordState = useSelector(TogglePasswordState);
 	const individualTenant = useSelector(getIndividualTenant);
@@ -27,10 +28,17 @@ function NewTenant({ setOpen, type }) {
 	const [shop, setShop] = useState("");
 	const [phone, setPhone] = useState("");
 
+	const router = useRouter();
+	const {
+		query: { type },
+	} = router;
+
+	console.log(individualTenant);
+
 	useEffect(() => {
-		if (type === "update") {
-			setName(individualTenant.firstName);
-			setLastName(individualTenant.lastName);
+		if (type !== "New") {
+			setName(individualTenant.fname);
+			setLastName(individualTenant.lname);
 			setAddress(individualTenant.address);
 			setEmail(individualTenant.email);
 			setShop(individualTenant.shopNo);
@@ -58,7 +66,8 @@ function NewTenant({ setOpen, type }) {
 	const { errors } = formState;
 
 	function onSubmit(data) {
-		if (type === "new") {
+		if (type === "New") {
+			router.push("/admin/AllTenants");
 			dispatch(
 				addTenant({
 					id: uniqid(),
@@ -71,12 +80,12 @@ function NewTenant({ setOpen, type }) {
 					state: status,
 				}),
 			);
-
-			setOpen(false);
+			
 		}
 	}
 
 	const handleUpdate = (e) => {
+		router.push("/admin/AllTenants");
 		e.preventDefault();
 		dispatch(
 			updateTenant({
@@ -89,20 +98,21 @@ function NewTenant({ setOpen, type }) {
 				Email: email,
 				State: status,
 			}),
-		);
-		setOpen(false);
+		);		
 	};
 
 	return (
-		<div className=' z-40 absolute w-full bg mx-auto pb-12 overflow-scroll h-[90vh] scrollbar-hide p-4'>
+		<div className=' z-40 absolute w-full bg mx-auto pb-12 overflow-scroll h-full scrollbar-hide p-4'>
 			<div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
-				<XIcon
-					className='w-6 h-6 absolute top-2 right-2 hov text-gray-600 '
-					onClick={() => setOpen(false)}
-				/>
+				<div onClick={()=> router.push("/admin/AllTenants")}>
+					<h1 className='hover:text-red-500  cursor-pointer'>
+						{" "}
+						&larr; Go back
+					</h1>
+				</div>
 				<h1 className='red text-center text-3xl mt-4'>
 					{" "}
-					{type === "new" ? <p>Add New Tenant</p> : <p>Update Tenant</p>}
+					{type === "New" ? <p>Add New Tenant</p> : <p>Update Tenant</p>}
 				</h1>
 				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>
 					<div>
@@ -323,7 +333,14 @@ function NewTenant({ setOpen, type }) {
 						</select>
 					</label>
 
-					{type === "new" ? (
+					<div className='flex items-center'>
+						<span className='text-sm px-4 text-gray-600'>
+							Pay for application
+						</span>
+						<input type='checkbox' />
+					</div>
+
+					{type === "New" ? (
 						<button
 							type='submit'
 							className='w-full outline-none'

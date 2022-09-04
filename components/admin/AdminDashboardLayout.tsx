@@ -31,8 +31,8 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
             {appState !== 'pending' ? <React.Fragment>
                 <SideBarHeader className="row-span-1" />
                 <div className='grid grid-cols-12 h-full duration-300 transition-all ease-in-out md:row-span-5'>
-                    <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
-                    <div className={`p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className}`}>
+                    <SideBar className="col-span-6 md:col-span-3 lg:col-span-2 h-full" />
+                    <div className={`p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-10 ${props.className}`}>
                         {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
                             {authenticated && user !== undefined && props.children({ authenticated, user })}
                         </React.Fragment>}

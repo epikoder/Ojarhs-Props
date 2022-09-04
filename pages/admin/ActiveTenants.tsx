@@ -6,7 +6,7 @@ import { TenantsDetails } from "../../Data";
 import { useSelector } from "react-redux";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
 import Link from "next/link";
-import NewTenant from "../../components/NewTenant";
+import NewTenant from "./NewTenant";
 import { tenantsList } from "../../features/TenantsSlice";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
@@ -22,19 +22,12 @@ function Active() {
 
 	return (
 		<AdminDashboardLayout>
-			<div className='w-full flex justify-between'>
+			{
+				() => <React.Fragment>
+					<div className='w-full flex justify-between'>
 				<h1 className='lg:text-3xl text-md red'>Active tenants</h1>
-
-				<button
-					type='button'
-					className='inline-block px-6 lg:px-12 py-3 mt-4 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
-					onClick={() => setOpen(true)}
-				>
-					Add new
-				</button>
-			</div>
-			{open ? <div className="relative w-full"><NewTenant type='new' setOpen={setOpen} /></div> : ""}
-			{updateOpen ? <div className="relative w-full"><NewTenant type='update' setOpen={setUpdateOpen} /></div> : ""}
+			
+			</div>			
 
 			{tenantListArr.length !== 0 ? (
 				<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll \ pb-12 px-8'>
@@ -59,6 +52,8 @@ function Active() {
 			) : (
 				<div className='text-center uppercase mt-4 '>No Active Tenant </div>
 			)}
+				</React.Fragment>
+			}
 		</AdminDashboardLayout>
 	);
 }

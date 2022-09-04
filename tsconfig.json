@@ -24,7 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "components/SideBarItem.tsx",
-    "components/NewTenant.jsx",
+    "pages/admin/NewTenant.jsx",
     "components/NewProps.jsx",
     "components/NewStaff.jsx",
     "components/NewService.jsx",

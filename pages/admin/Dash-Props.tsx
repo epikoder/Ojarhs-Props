@@ -19,10 +19,10 @@ function DashProps() {
 	
 
 	
-	return (
-		
-		<AdminDashboardLayout>
-			<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
+	return <AdminDashboardLayout>
+			{
+				() => <React.Fragment>
+					<div className='flex justify-between  w-full items-center shadow-gray-200 shadow-md px-2 mt-2'>
 						<h1 className='lg:text-3xl text-md red'>Properties</h1>
 
 						<button
@@ -62,7 +62,9 @@ function DashProps() {
 					) : (
 						<div className='text-center uppercase mt-4 '>No New Property </div>
 					)}
+				</React.Fragment>
+			}
 		</AdminDashboardLayout>
-	);
+	
 }
 export default DashProps;

@@ -14,28 +14,32 @@ import {
 	updateService,
 } from "../features/ServiceSlice";
 import uniqid from "uniqid";
+import { Api } from "../helpers/api";
 
 function NewService({ setOpen, type }) {
-	const dispatch = useDispatch();	
+	const dispatch = useDispatch();
 	const individualService = useSelector(getIndividualService);
-	const [title, setTitle] = useState("");
+	const [name, setname] = useState("");
 	const [description, setDescription] = useState("");
 	const [amount, setAmount] = useState("");
-	const [duration, setDuration] = useState("");
+	const [plan, setplan] = useState("");
+	const [manager, setManager] = useState("");
 
 	useEffect(() => {
 		if (type === "update") {
-			setTitle(individualService.title);
-			setAmount(individualService.amount)						
-			setDuration(individualService.duration)
-			setDescription(individualService.description)
+			setname(individualService.name);
+			setAmount(individualService.amount);
+			setplan(individualService.plan);
+			setDescription(individualService.description);
+			setManager(individualService.manager);
 		}
 	}, [type, individualService]);
 
 	const validationSchema = Yup.object().shape({
-		title: Yup.string().required("Service Title is Required"),
+		name: Yup.string().required("Service name is Required"),
 		amount: Yup.string().required("Service Amount is Required"),
-		duration: Yup.string().required("Service Duration is required"),
+		plan: Yup.string().required("Service plan is required"),
+		manager: Yup.string().required("Service manager is required"),
 		description: Yup.string().required("Service Description is required"),
 	});
 	const formOptions = { resolver: yupResolver(validationSchema) };
@@ -45,13 +49,14 @@ function NewService({ setOpen, type }) {
 	const { errors } = formState;
 
 	function onSubmit(data) {
-		if (type === "new") {
+		if (type === "new") {			
 			dispatch(
 				addService({
-					id: uniqid(),
-					title: data.title,
-					amount: data.amount,
-					duration: data.duration,
+					// id: uniqid(),
+					name: data.name,
+					amount: parseInt(data.amount),
+					plan: data.plan,
+					manager: data.manager,
 					description: data.description,
 				}),
 			);
@@ -65,10 +70,11 @@ function NewService({ setOpen, type }) {
 		dispatch(
 			updateService({
 				...individualService,
-				title: title,
+				name: name,
 				amount: amount,
-				duration: duration,
+				plan: plan,
 				description: description,
+				manager: manager,
 			}),
 		);
 		setOpen(false);
@@ -89,61 +95,75 @@ function NewService({ setOpen, type }) {
 					<div>
 						<label
 							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
+							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2 mb-4'
 						>
-							<span className='text-gray-600 mb-2 text-xs idden'>
-								Title
-							</span>
+							<span className='text-gray-600 mb-2 text-xs idden'>manager</span>
 							<input
 								// ref={fnRef}
 								type='text'
-								placeholder='Title'
-								value={title}
-								{...register("title", { required: true })}
-								onChange={(e) => setTitle(e.target.value)}
+								placeholder='manager'
+								value={manager}
+								{...register("manager", { required: true })}
+								onChange={(e) => setManager(e.target.value)}
 								className={`${
-									errors.title
+									errors.manager
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
 								}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.title?.message}</div>
-					</div>
 
-                    <div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
-							<span className='text-gray-600 mb-2 text-xs idden'>
-								Duration
-							</span>
+							<span className='text-gray-600 mb-2 text-xs idden'>name</span>
 							<input
 								// ref={fnRef}
 								type='text'
-								placeholder='duration'
-								value={duration}
-								{...register("duration", { required: true })}
-								onChange={(e) => setDuration(e.target.value)}
+								placeholder='name'
+								value={name}
+								{...register("name", { required: true })}
+								onChange={(e) => setname(e.target.value)}
 								className={`${
-									errors.duration
+									errors.name
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
 								}`}
 							/>
 						</label>
-						<div className='red text-xs ml-4'>{errors.duration?.message}</div>
+						<div className='red text-xs ml-4'>{errors.name?.message}</div>
 					</div>
 
-                    <div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
 						>
-							<span className='text-gray-600 mb-2 text-xs idden'>
-								Amount
-							</span>
+							<span className='text-gray-600 mb-2 text-xs idden'>Plan</span>
+							<input
+								// ref={fnRef}
+								type='text'
+								placeholder='plan'
+								value={plan}
+								{...register("plan", { required: true })}
+								onChange={(e) => setplan(e.target.value)}
+								className={`${
+									errors.plan
+										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
+										: "text-gray-400 bg-transparent outline-none"
+								}`}
+							/>
+						</label>
+						<div className='red text-xs ml-4'>{errors.plan?.message}</div>
+					</div>
+
+					<div>
+						<label
+							htmlFor=''
+							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
+						>
+							<span className='text-gray-600 mb-2 text-xs idden'>Amount</span>
 							<input
 								// ref={fnRef}
 								type='number'
@@ -161,7 +181,7 @@ function NewService({ setOpen, type }) {
 						<div className='red text-xs ml-4'>{errors.amount?.message}</div>
 					</div>
 
-                    <div>
+					<div>
 						<label
 							htmlFor=''
 							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
@@ -170,7 +190,7 @@ function NewService({ setOpen, type }) {
 								Description
 							</span>
 							<textarea
-								// ref={fnRef}								
+								// ref={fnRef}
 								placeholder='description'
 								value={description}
 								{...register("description", { required: true })}
@@ -180,10 +200,11 @@ function NewService({ setOpen, type }) {
 										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
 										: "text-gray-400 bg-transparent outline-none"
 								}`}
-							>
-                            </textarea>
+							></textarea>
 						</label>
-						<div className='red text-xs ml-4'>{errors.description?.message}</div>
+						<div className='red text-xs ml-4'>
+							{errors.description?.message}
+						</div>
 					</div>
 
 					{type === "new" ? (

@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import Condition from "yup/lib/Condition";
+import { Api } from "../helpers/api";
 import { RootState } from "../store";
 const _getService = typeof window !== "undefined";
 
@@ -23,7 +25,10 @@ const ServiceSlice = createSlice({
 	reducers: {
 		addService: (state, action) => {
 			state.ServiceList.push(action.payload);
-			const service = window.localStorage.getItem("serviceList");
+			const service = window.localStorage.getItem("serviceList");			
+			
+			Api().post("/admin/services/create", JSON.stringify(action.payload)).then((data)=> console.log(data.status)).catch((error)=> console.log(error))
+			
 			if (service) {
 				const serviceArr = JSON.parse(service);
 				serviceArr.push({ ...action.payload });
@@ -70,10 +75,11 @@ const ServiceSlice = createSlice({
 				const serviceArr = JSON.parse(service)
 				serviceArr.forEach((service) => {
 					if (service.id === action.payload.id) {
-						service.name = action.payload.title						
+						service.name = action.payload.name						
                         service.description = action.payload.description
-                        service.duration = action.payload.duration
+                        service.plan = action.payload.plan
                         service.amount = action.payload.amount
+                        service.manager = action.payload.manager
 					}
 				})
 				window.localStorage.setItem("serviceList", JSON.stringify(serviceArr))
