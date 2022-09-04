@@ -28,10 +28,9 @@ export const loginApi =
                 case 401:
                     console.log(401)
                     let _data = await response.json()
-                    console.log(_data);
-
                     return rejectWithValue({
-                        ..._data
+                        status: 'failed',
+                        message: _data.message
                     })
                 case 200:
                     console.log(200)
@@ -77,12 +76,10 @@ export const loginAdminApi =
                         message: 'invalid username or password'
                     })
                 case 401:
-                    console.log(401)
                     let _data = await response.json()
-                    console.log(_data);
-
                     return rejectWithValue({
-                        ..._data
+                        status: 'failed',
+                        message: _data.message
                     })
                 case 200:
                     console.log(200)

@@ -1,10 +1,13 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { XIcon } from "@heroicons/react/outline";
 import { Space } from "../Typing.d";
 import { ImageUpload, VideoUpload } from "./ImageUpload";
 import { GalleryUploader } from "./admin/GalleryUploader";
 import { PaymentPlans, PropertyType } from "./Resource";
+import { RootState, useAppDispatch } from "../store";
+import Loader from "./Loader";
+import { addNewPropertyThunck } from "../redux/admin/property";
 
 function NewProps({ setOpen, type }: {
 	setOpen: React.Dispatch<React.SetStateAction<{
@@ -12,21 +15,35 @@ function NewProps({ setOpen, type }: {
 		state?: boolean;
 	}>>, type: 'new' | 'update'
 }) {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const [form, setForm] = React.useState<Space>({
+		name: '',
+		amount: 0,
+		description: '',
+		no: '',
+		photo: '',
+		type: '',
+		address: '',
+		size: '',
+		video: '',
+		plan_name: '',
 		galleries: [],
 		video_galleries: []
 	} as Space)
 	const [formError, setFormError] = React.useState<Space>({} as Space)
+	const { status, err } = useSelector((store: RootState) => store.propertySlice)
 
+	React.useEffect(() => {
+		setFormError(err)
+	}, [err])
 	const submit = () => {
-		console.log(form)
+		dispatch(addNewPropertyThunck(form))
 	}
 
 	return (
 		<div className="relative w-full">
 			<div className='z-10 inset-0 absolute h-[90vh] overflow-scroll scrollbar-hide bg-slate-100 py-4 lg:py-8 my-2'>
-				<div className='rounded-md bg-white border lg:w-10/12 w-11/12 mx-auto overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md space-y-2 pt-4 relative'>
+				<div className='rounded-md bg-white border lg:w-10/12 w-11/12 mx-auto md:my-12 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md space-y-2 pt-4 relative'>
 					<XIcon
 						className='w-6 h-6 absolute top-2 right-2 hov text-gray-600 '
 						onClick={() => setOpen({ state: false })}
@@ -64,7 +81,7 @@ function NewProps({ setOpen, type }: {
 									type='text'
 									placeholder='XXXXX/XXX/XXX'
 									value={form.no}
-									className={`outline-none bg-transparent text-gray-600 ${formError.name && 'outline-red-500'}`}
+									className={`outline-none bg-transparent text-gray-600 ${formError.no && 'outline-red-500'}`}
 									onChange={(e) => setForm({
 										...form, no: e.target.value
 									})}
@@ -78,12 +95,12 @@ function NewProps({ setOpen, type }: {
 								htmlFor=''
 								className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
 							>
-								<span className='text-gray-500 mb-2 text-xs idden'>Property Size</span>
+								<span className='text-gray-500 mb-2 text-xs idden'>Size</span>
 								<input
 									type='text'
-									placeholder='X by X'
+									placeholder='Size'
 									value={form.size}
-									className={`outline-none bg-transparent text-gray-600 ${formError.name && 'outline-red-500'}`}
+									className={`outline-none bg-transparent text-gray-600 ${formError.size && 'outline-red-500'}`}
 									onChange={(e) => setForm({
 										...form, size: e.target.value
 									})}
@@ -97,12 +114,50 @@ function NewProps({ setOpen, type }: {
 								htmlFor=''
 								className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
 							>
+								<span className='text-gray-500 mb-2 text-xs idden'>Description</span>
+								<input
+									type='text'
+									placeholder='Description'
+									value={form.description}
+									className={`outline-none bg-transparent text-gray-600 ${formError.description && 'outline-red-500'}`}
+									onChange={(e) => setForm({
+										...form, description: e.target.value
+									})}
+								/>
+							</label>
+							<div className='red text-xs ml-4'>{formError.description}</div>
+						</div>
+
+						<div>
+							<label
+								htmlFor=''
+								className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
+							>
+								<span className='text-gray-500 mb-2 text-xs idden'>Address</span>
+								<input
+									type='text'
+									placeholder='Address'
+									value={form.address}
+									className={`outline-none bg-transparent text-gray-600 ${formError.address && 'outline-red-500'}`}
+									onChange={(e) => setForm({
+										...form, address: e.target.value
+									})}
+								/>
+							</label>
+							<div className='red text-xs ml-4'>{formError.address}</div>
+						</div>
+
+						<div>
+							<label
+								htmlFor=''
+								className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
+							>
 								<span className='text-gray-500 mb-2 text-xs idden'>Price in *Naira</span>
 								<input
 									type='number'
 									placeholder='Amount'
 									value={form.amount}
-									className={`outline-none bg-transparent text-gray-600 ${formError.name && 'outline-red-500'}`}
+									className={`outline-none bg-transparent text-gray-600 ${formError.amount && 'outline-red-500'}`}
 									onChange={(e) => setForm({
 										...form, amount: e.target.value as unknown as number
 									})}
@@ -167,23 +222,25 @@ function NewProps({ setOpen, type }: {
 									...form, video_galleries: l
 								})} />
 						</label>
-						{type === "new" ? (
+						{status === 'pending' && <Loader />}
+						{(type === "new" ? (
 							<button
 								type='submit'
 								className='w-full outline-none'
 								onClick={submit}
 							>
 								<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer '>
-									Add New
+									{status !== 'pending' ? 'Add New' : 'Please wait...'}
 								</div>
 							</button>
 						) : (
 							<button className='w-full outline-none' onClick={() => { }}>
 								<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer'>
-									Update
+									{status !== 'pending' ? 'Update' : 'Please wait...'}
 								</div>
 							</button>
-						)}
+						))}
+
 					</form>
 				</div>
 			</div>

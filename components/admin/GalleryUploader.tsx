@@ -19,7 +19,7 @@ export const GalleryUploader = ({ type, width, height, title, errMessage, handle
     const [files, setFiles] = React.useState<FilesType>([])
 
     return <React.Fragment>
-        <span className='text-gray-500 mb-2 p-2'>{title} - <span className="text-xs lg:text-sm font-serif">{`${Object.keys(files).length} uploaded`}</span></span>
+        <span className='text-gray-500 mb-2 p-2'>{title} - <span className="text-xs text-red-500 lg:text-sm font-serif">{`${Object.keys(files).length} selected`}</span></span>
 
         <div className="p-2">
             <div className="h-44 flex justify-left overflow-x-scroll overflow-y-hidden">

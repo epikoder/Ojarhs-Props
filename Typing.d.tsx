@@ -130,5 +130,6 @@ export type LoadState = 'pending' | 'success' | 'failed'
 export type Map<T = any> = { [key: string]: T }
 export type DashboardDataState<T> = {
 	data: T
+	err: Map<string>
 	status: LoadState
 }
