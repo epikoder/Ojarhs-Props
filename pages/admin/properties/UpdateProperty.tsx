@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { XIcon } from "@heroicons/react/outline";
-import { Space } from "../Typing.d";
-import { ImageUpload, VideoUpload } from "./ImageUpload";
-import { GalleryUploader } from "./admin/GalleryUploader";
-import { PaymentPlans, PropertyType } from "./Resource";
-import { RootState, useAppDispatch } from "../store";
-import Loader from "./Loader";
-import { addNewPropertyThunck } from "../redux/admin/property";
+import { Space } from "../../../Typing.d";
+import { ImageUpload, VideoUpload } from "../../../components/ImageUpload";
+import { GalleryUploader } from "../../../components/admin/GalleryUploader";
+import { PaymentPlans, PropertyType } from "../../../components/Resource";
+import { RootState, useAppDispatch } from "../../../store";
+import Loader from "../../../components/Loader";
+import { addNewPropertyThunck } from "../../../redux/admin/property";
 
-function NewProps({ setOpen, type }: {
+function UpdateProp({ setOpen, type }: {
 	setOpen: React.Dispatch<React.SetStateAction<{
 		type?: 'new' | 'update';
 		state?: boolean;
@@ -34,7 +34,8 @@ function NewProps({ setOpen, type }: {
 	const { status, err } = useSelector((store: RootState) => store.propertySlice)
 
 	React.useEffect(() => {
-		setFormError(err)
+		if (err === undefined) return
+		setFormError(err as unknown as Space)
 	}, [err])
 	const submit = () => {
 		dispatch(addNewPropertyThunck(form))
@@ -248,4 +249,4 @@ function NewProps({ setOpen, type }: {
 	);
 }
 
-export default NewProps;
+export default UpdateProp;

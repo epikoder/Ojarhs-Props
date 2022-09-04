@@ -25,7 +25,7 @@ export const FormInput = ({ props }: {
             <input
                 type={props.type}
                 placeholder={props.title}
-                className='text-gray-500 bg-transparent outline-none'
+                className={`text-gray-500 bg-transparent outline-none ${props.message && 'outline-red-500 rounded-md'}`}
                 onChange={(e) => props.handleChange(e.target.value)}
                 required={props.required}
             />

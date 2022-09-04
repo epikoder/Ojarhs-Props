@@ -132,4 +132,5 @@ export type DashboardDataState<T> = {
 	data: T
 	err: Map<string>
 	status: LoadState
+	message?: string
 }

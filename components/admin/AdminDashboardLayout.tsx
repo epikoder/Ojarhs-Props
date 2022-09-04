@@ -6,7 +6,7 @@ import { checkIsAuthenticated } from "../../features/authSlice";
 import { SideBarToggleState } from "../../features/ToggleSideBar";
 import { RootState, useAppDispatch } from "../../store";
 import { CopyRight } from "../Copyright";
-import Loader from "../Loader";
+import Loader, { PageLoader } from "../Loader";
 import SideBar from "../SideBar"
 import SideBarHeader from "../SideBarHeader"
 
@@ -32,6 +32,7 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
         <div className='w-full grid-rows-6 gap-1 h-[88vh]'>
             {appState !== 'pending' ? <React.Fragment>
                 <SideBarHeader user={user} className="row-span-1" />
+                <PageLoader />
                 <div className='grid grid-cols-12 h-full duration-300 transition-all ease-in-out md:row-span-5'>
                     <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
                     <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className ?? ''}`}>

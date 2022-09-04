@@ -1,3 +1,4 @@
+import { XCircleIcon } from "@heroicons/react/outline"
 import React, { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { BASEURL } from "../constants"
@@ -102,7 +103,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
 }
 
 
-export const VideoUpload = ({ value, handleUpload, required = false, disabled = false, message, width, height, forceValue }: {
+export const VideoUpload = ({ value, handleUpload, required = false, disabled = false, message, width, height, forceValue, headless = true }: {
     handleUpload?: (s: string, raw?: Blob) => void,
     required?: boolean,
     disabled?: boolean,
@@ -111,6 +112,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
     message?: React.ReactNode
     width?: string | number
     height?: string | number
+    headless?: boolean
 }) => {
     const [blob, setBlob] = useState<Blob>()
     const { access } = useSelector((store: RootState) => store.authSlice.token)
@@ -169,6 +171,46 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
         }
         reader.readAsArrayBuffer(uploader.files[0])
     }
+
+    if (!headless) {
+        return <>
+            <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+                if (loading || disabled) return
+                const uploader = ref.current;
+                console.log(uploader, blob)
+                if (uploader !== undefined && blob === undefined) {
+                    uploader.click()
+                }
+            }} style={{
+                width: width,
+                height: height
+            }}>
+
+                <div className={blob === undefined ? 'hidden' : "absolute z-30 text-orange-500 cursor-pointer top-0"}
+                    onClick={() => setBlob(undefined)}>
+                    <XCircleIcon width={25} />
+                </div>
+                {
+                    (value !== undefined && (blob === undefined || forceValue)) ?
+                        (<video
+                            src={value !== undefined && URL.createObjectURL(value)}
+                            className="object-cover h-full w-full rounded-md"
+                            controls />) :
+                        (blob === undefined ? (<div className="p-1">
+                            {errMessage ?? message ?? 'SELECT VIDEO'}
+                        </div>) : loading ? <Loader /> : <>
+                            <div className="h-full w-full">
+                                <video
+                                    src={blob !== undefined && URL.createObjectURL(blob)}
+                                    className="object-cover h-full w-full rounded-md"
+                                    controls />
+                            </div>
+                        </>)
+                }
+            </div>
+            <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />
+        </>
+    }
     return <>
         <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
             if (loading || disabled) return
@@ -191,22 +233,16 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                     (blob === undefined ? (<div className="p-1">
                         {errMessage ?? message ?? 'SELECT VIDEO'}
                     </div>) : loading ? <Loader /> : <>
-                        <div className="relative h-full w-full">
+                        <div className="h-full w-full">
                             <video
                                 src={blob !== undefined && URL.createObjectURL(blob)}
                                 className="object-cover h-full w-full rounded-md"
                                 controls />
-                            <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
-                            </div>
-                            <div className="z-20 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
-                                REMOVE
-                            </div>
                         </div>
                     </>)
             }
         </div>
         <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />
-        {/* <video src={URL.createObjectURL(value)} className="object-cover h-full w-full rounded-md" autoPlay={true} /> */}
     </>
 }
 

@@ -3,9 +3,10 @@ import { useSelector } from "react-redux"
 import { loadPlans, loadPropertyTypes } from "../redux/resource"
 import { RootState, useAppDispatch } from "../store"
 
-export const PaymentPlans = ({ value, handleChange, className }: {
+export const PaymentPlans = ({ value, handleChange, className, error }: {
     value?: string
     handleChange: (s: string) => void
+    error?: boolean
 } & HTMLAttributes<HTMLDivElement>) => {
     const { status, data } = useSelector((store: RootState) => store.resourceSlice.plans)
     const dispatch = useAppDispatch()
@@ -19,18 +20,19 @@ export const PaymentPlans = ({ value, handleChange, className }: {
         <select
             required
             value={value}
-            className={className ?? "outline-none bg-transparent text-gray-600"}
+            className={`${className ?? "outline-none bg-transparent text-gray-600"} ${error && 'outline-red-500'}`}
             onChange={(e) => handleChange(e.target.value)}
         >
-            <option>Choose Payment type</option>
+            <option value={""}>Choose Payment type</option>
             {(status === 'success' && data !== undefined) && data.map((p, i) => <option key={i} value={p.name} > {p.name} </option>)}
         </select>
     </React.Fragment>
 }
 
-export const PropertyType = ({ value, handleChange, className }: {
+export const PropertyType = ({ value, handleChange, className, error }: {
     value?: string
     handleChange: (s: string) => void
+    error?: boolean
 } & HTMLAttributes<HTMLDivElement>) => {
     const { status, data } = useSelector((store: RootState) => store.resourceSlice.propertyTypes)
     const dispatch = useAppDispatch()
@@ -44,10 +46,10 @@ export const PropertyType = ({ value, handleChange, className }: {
         <select
             required
             value={value}
-            className={className ?? "outline-none bg-transparent text-gray-600"}
+            className={`${className ?? "outline-none bg-transparent text-gray-600"} ${error && 'outline-red-500'}`}
             onChange={(e) => handleChange(e.target.value)}
         >
-            <option>Choose property type</option>
+            <option value={""}>Choose property type</option>
             {(status === 'success' && data !== undefined) && data.map((p, i) => <option key={i} value={p.name} > {p.name} </option>)}
         </select>
     </React.Fragment>

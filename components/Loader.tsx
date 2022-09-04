@@ -1,8 +1,11 @@
+import { Router } from "next/router";
+import React from "react";
+
 export default function Loader() {
     return (
         <>
             <div className="absolute top-0 left-0 right-0 bottom-0 items-center flex flex-col justify-center cursor-wait"
-            style={{backgroundColor: '#00000021'}}
+                style={{ backgroundColor: '#00000021' }}
             >
                 <div className="spinner">
                     <div className="bar1"></div>
@@ -36,5 +39,33 @@ export const CardLoader = ({ height = 200, width, count = 4 }: { height?: number
                 <div className="lines shimmer"></div>
             </div>)}
         </div>
+    </>
+}
+
+export const PageLoader = ({ }: {
+
+}) => {
+    const [loading, setLoading] = React.useState(false)
+    const val = React.useRef<number>(0)
+
+    Router.events.on('routeChangeStart', () => {
+        setLoading(true)
+    })
+    Router.events.on('routeChangeComplete', () => {
+        setLoading(false)
+    })
+
+    React.useEffect(() => {
+        console.log("PAGE LOADER", val.current, loading)
+        if (!loading) return
+        const i = setInterval(() => {
+            if (val.current >= 98) {
+                return clearInterval(i)
+            }
+            val.current++
+            console.log("INCRE", val.current)
+        })
+    }, [loading])
+    return <>
     </>
 }
