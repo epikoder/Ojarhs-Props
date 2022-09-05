@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import Footer from './Footer'
 import Header from './Header'
-import Loader from './Loader';
+import Loader, { PageLoader } from './Loader';
 
 function Layout(props: PropsWithChildren) {
   const { appState } = useSelector((store: RootState) => store.authSlice)
@@ -17,6 +17,7 @@ function Layout(props: PropsWithChildren) {
       </Head>
       <Script src='/scripts/noimage.js'></Script>
       <Header />
+      <PageLoader />
       <div className='flex flex-col justify-between'>
         {appState === 'completed' ? <main>{props.children}</main> :
           <div className='mt-4 relative h-[40vh]'>

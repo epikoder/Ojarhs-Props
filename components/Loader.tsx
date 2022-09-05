@@ -80,9 +80,5 @@ export const PageLoader = () => {
             width: `${val}%`
         }}>
         </div>
-        <div className="bg-blue-800 h-2 w-2" style={{
-            left: `${val}%`
-        }}>
-        </div>
     </div>
 }
