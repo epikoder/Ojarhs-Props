@@ -13,13 +13,13 @@ import { loadAdminProperties } from "../../redux/admin/property";
 
 const TableHead = () => <div className="py-4 mt-4 my-1 bg-black px-2 rounded-md text-white text-xs sm:text-sm">
 	<div className="grid grid-cols-10 text-center lg:grid-cols-12 gap-2 font-semibold uppercase">
-		<div className="col-span-1text-red-500">id</div>
-		<div className="lg:block col-span-2">name</div>
-		<div className="col-span-3">property</div>
+		<div className="col-span-1 text-red-500">id</div>
+		<div className="col-span-2">name</div>
+		<div className="col-span-3 md:col-span-2">property</div>
 		<div className="hidden lg:block col-span-3">address</div>
-		<div className="col-span-3 lg:col-span-2">amount</div>
-		<div className="hidden md:block col-span-1 lg:col-span-1">status</div>
-		<div className="col-span-1 lg:col-span-1">:</div>
+		<div className="col-span-3 md:col-span-2 lg:col-span-2">amount</div>
+		<div className="hidden md:block col-span-2 lg:col-span-1">status</div>
+		<div className="col-span-1 lg:col-span-1 text-center">:</div>
 	</div>
 </div>
 
@@ -27,13 +27,13 @@ const TableBody = ({ space, index }: { space: Space, index: number } & React.Att
 	const [isOpen, setIsOpen] = React.useState<boolean>(false)
 	return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
 		<div className="grid grid-cols-10 text-center lg:grid-cols-12 gap-2">
-			<div className="col-span-1text-red-500">{index + 1}</div>
-			<div className="lg:block col-span-2">{space.name}</div>
-			<div className="col-span-3">{space.type}</div>
-			<div className="hidden lg:block col-span-3">{space.address}</div>
-			<div className="col-span-3 lg:col-span-2">{money(space.amount)}</div>
-			<div className="hidden md:block col-span-1 lg:col-span-1">{space.status}</div>
-			<div className="col-span-1 lg:col-span-1"><DotsVerticalIcon height={18} /> </div>
+			<div className="col-span-1 text-red-500">{index + 1}</div>
+			<div className="col-span-2 text-ellipsis">{space.name}</div>
+			<div className="col-span-3 md:col-span-2">{space.type}</div>
+			<div className="hidden lg:block col-span-3 text-ellipsis">{space.address}</div>
+			<div className="col-span-3 md:col-span-2 text-ellipsis">{money(space.amount)}</div>
+			<div className="hidden md:block col-span-2 lg:col-span-1 text-ellipsis">{space.status}</div>
+			<div className="col-span-1 lg:col-span-1 flex justify-center"><DotsVerticalIcon height={18} /> </div>
 		</div>
 	</div>
 }

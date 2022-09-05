@@ -61,7 +61,7 @@ function NewProps({ setOpen, type }: {
 					<div className="uppercase text-sm">Add New Property</div>
 				</h1>
 				<h1 className={`text-center my-1 text-${status === 'failed' ? 'red' : 'blue'}-500`}>
-					<div className="font-serif text-sm">{message}</div>
+					<div className="font-serif text-sm">{status !== 'nil' && message}</div>
 				</h1>
 				<form onSubmit={e => e.preventDefault()} action='' className='space-y-4 py-8 px-4 md:px-2 lg:px-4'>
 					<div>
