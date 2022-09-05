@@ -44,13 +44,13 @@ export const UserSideBar = () => {
                     <div className="relative flex justify-end px-4">
                         <XIcon className="text-white w-8" onClick={() => toggleOpen(!isOpen)} />
                     </div>
-                    <MenuItemMobile title="Dasboard" href="/user/Dashboard" />
-                    <MenuItemMobile title="Profile" href="/user/Profile" />
-                    <MenuItemMobile title="Service" href="/user/Service" />
-                    <MenuItemMobile title="Receipts" href="/user/Receipt" />
-                    <MenuItemMobile title="Disputes" href="/user/Dispute" />
-                    <MenuItemMobile title="Adverts" href="/user/Advert" />
-                    {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/Packout" />}
+                    <MenuItemMobile title="Dasboard" href="/user/dashboard" />
+                    <MenuItemMobile title="Profile" href="/user/profile" />
+                    <MenuItemMobile title="Service" href="/user/service" />
+                    <MenuItemMobile title="Receipts" href="/user/receipt" />
+                    <MenuItemMobile title="Disputes" href="/user/dispute" />
+                    <MenuItemMobile title="Adverts" href="/user/advert" />
+                    {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/packout" />}
                     <hr />
                     <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-gray-500 rounded-md uppercase font-sans">
                         Logout
@@ -58,13 +58,13 @@ export const UserSideBar = () => {
                 </div>}
             </div>
             <div className="my-2 mx-2 bg-black text-center rounded-md hidden md:block text-white">
-                <MenuItem title="Dashboard" href="/user/Dashboard" />
-                <MenuItem title="Profile" href="/user/Profile" />
-                <MenuItem title="Service" href="/user/Service" />
-                <MenuItem title="Receipts" href="/user/Receipt" />
-                <MenuItem title="Disputes" href="/user/Dispute" />
-                <MenuItem title="Adverts" href="/user/Advert" />
-                {user.reference !== "" && <MenuItem title="Request pack out" href="/user/Packout" />}
+                <MenuItem title="Dashboard" href="/user/dashboard" />
+                <MenuItem title="Profile" href="/user/profile" />
+                <MenuItem title="Service" href="/user/service" />
+                <MenuItem title="Receipts" href="/user/receipt" />
+                <MenuItem title="Disputes" href="/user/dispute" />
+                <MenuItem title="Adverts" href="/user/advert" />
+                {user.reference !== "" && <MenuItem title="Request pack out" href="/user/packout" />}
 
                 <hr />
                 <div className="hover:cursor-pointer p-4 hover:bg-red-800 duration-300 transition-all ease-in-out text-white hover:text-gray-300 rounded-md uppercase font-sans">

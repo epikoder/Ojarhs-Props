@@ -39,7 +39,7 @@ const UploadDocument = () => {
     }, [docType, docUrl])
 
     React.useEffect(() => {
-        if (!authenticated) router.push('/Login')
+        if (!authenticated) router.push('/login')
     }, [authenticated, router])
 
     const proceed = async (response: {

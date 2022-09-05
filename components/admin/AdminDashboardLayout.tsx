@@ -23,7 +23,7 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
     }, [dispatch, authenticated, router.pathname])
 
     React.useEffect(() => {
-        if (authenticated === false && appState === 'completed') router.push('/admin/Login')
+        if (authenticated === false && appState === 'completed') router.push('/admin/login')
     }, [authenticated, appState, router])
 
     return <React.Fragment>

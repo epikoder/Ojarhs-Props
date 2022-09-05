@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
+import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 
 function Staffs() {
 	return <AdminDashboardLayout>

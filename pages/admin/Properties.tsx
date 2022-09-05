@@ -17,7 +17,7 @@ function DashProps() {
 					<button
 						type='button'
 						className='inline-block px-6 lg:px-12 py-3 mt-4 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
-						onClick={() => { router.push('properties/NewProperty') }}
+						onClick={() => { router.push('properties/newproperty') }}
 					>
 						Add new
 					</button>
@@ -40,7 +40,7 @@ function DashProps() {
 									<Property
 										key={index}
 										Prop={prop}
-										setOpen={() => router.push('properties/UpdateProperty')}
+										setOpen={() => router.push('properties/updateproperty')}
 									/>
 								);
 							})}

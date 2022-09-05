@@ -10,41 +10,41 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 	return (
 		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out ${props.className ?? ''}`}>
 			<div className='px-4'>
-				<div onClick={() => router.push("/admin/Dashboard")}>
+				<div onClick={() => router.push("/admin/dashboard")}>
 					<SideBarItem name='Dashboard' />
 				</div>
 				<div>
 					<SideBarItem name='Tenants' subItem={[
 						{
-							link: '/admin/tenants/ActiveTenants',
+							link: '/admin/tenants/active-tenants',
 							name: 'All Tenants'
 						},
 						{
-							link: '/admin/tenants/AllTenants',
+							link: '/admin/tenants/all-tenants',
 							name: 'Active Tenants'
 						},
 						{
-							link: '/admin/tenants/BannedTenants',
+							link: '/admin/tenants/banned-tenants',
 							name: 'Banned Tenants'
 						},
 					]} />
 				</div>
-				<div onClick={() => router.push("/admin/Message")}>
+				<div onClick={() => router.push("/admin/message")}>
 					<SideBarItem name='Messages' />
 				</div>
-				<div onClick={() => router.push("/admin/Services")}>
+				<div onClick={() => router.push("/admin/services")}>
 					<SideBarItem name='Services' />
 				</div>
-				<div onClick={() => router.push("/admin/Properties")}>
+				<div onClick={() => router.push("/admin/properties")}>
 					<SideBarItem name='Properties' />
 				</div>
-				<div onClick={() => router.push("/admin/Records")}>
+				<div onClick={() => router.push("/admin/records")}>
 					<SideBarItem name='Records' />
 				</div>
-				<div onClick={() => router.push("/admin/D&R")}>
+				<div onClick={() => router.push("/admin/d&r")}>
 					<SideBarItem name='Dispute & Reports' />
 				</div>
-				<div onClick={() => router.push("/admin/Adverts")}>
+				<div onClick={() => router.push("/admin/adverts")}>
 					<SideBarItem name='Adverts' />
 				</div>
 				<div>
@@ -52,11 +52,11 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 						name='Ojarh Office'
 						subItem={[
 							{
-								link: '/admin/office/Staffs',
+								link: '/admin/office/staffs',
 								name: 'Staffs'
 							},
 							{
-								link: '/admin/office/Expenses',
+								link: '/admin/office/expenses',
 								name: 'Expenses'
 							},
 						]}

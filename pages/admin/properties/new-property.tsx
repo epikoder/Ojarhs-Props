@@ -46,7 +46,7 @@ function NewProps({ setOpen, type }: {
 		console.log(status)
 		if (status === 'success') {
 			setTimeout(() => {
-				router.push("/admin/Properties")
+				router.push("/admin/properties")
 			}, 800)
 		}
 

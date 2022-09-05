@@ -20,7 +20,7 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
 
     React.useEffect(() => {
         if (authenticated === false && appState === 'completed') {
-            router.push('/Login')
+            router.push('/login')
             return
         }
         if (user !== undefined && user.is_admin) {

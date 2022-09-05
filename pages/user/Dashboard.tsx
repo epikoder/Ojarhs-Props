@@ -12,7 +12,7 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
     return <UserDashboardLayout>
         {({ user }: { user: User }) => <>
             <div className="p-2">
-                <UserInfo user={user} onEdit={() => router.push('/user/EditProfile')} />
+                <UserInfo user={user} />
                 {
                     user.reference !== "" ? <UserDashboardProperties /> :
                         <>
@@ -26,7 +26,7 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
 
                             <div className="m-4 flex justify-center">
                                 <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
-                                    onClick={() => router.push('/user/UploadDocument')}>
+                                    onClick={() => router.push('/user/upload-document')}>
                                     BEGIN PROCCESS
                                 </div>
                             </div>
