@@ -42,7 +42,7 @@ function DashProps({ Prop, setOpen }: Props) {
 				</td>
 				<td className='inline-block  w-[20%]'>
 					<div className='flex space-x-3 '>
-						<Link href={`/Details/${Prop.slug}`}>
+						<Link href={`/details/${Prop.slug}`}>
 															
 								<div className=' hov bg-gray-700 text-gray-200 p-2 z-30 rounded-md cursor-pointer'>
 									Details								

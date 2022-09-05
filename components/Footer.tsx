@@ -43,13 +43,13 @@ function Footer() {
 
                 <div className='space-y-3'>
                     <div className='bg-red w-40 h-1 mb-4'></div>
-                    <Link href="/About" className=' font-mono text-lg'><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> About </h3></Link>
+                    <Link href="/about" className=' font-mono text-lg'><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> About </h3></Link>
 
                     <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Ojarh.com </h3></Link>
 
                     <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '>  Ojarhlogistics </h3></Link>
 
-                    <Link href="/T&C" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Terms and conditions </h3></Link>
+                    <Link href="/t&c" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Terms and conditions </h3></Link>
 
                 </div>
             </div>

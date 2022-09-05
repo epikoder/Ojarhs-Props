@@ -42,9 +42,7 @@ export const CardLoader = ({ height = 200, width, count = 4 }: { height?: number
     </>
 }
 
-export const PageLoader = ({ }: {
-
-}) => {
+export const PageLoader = () => {
     const ref = React.useRef<ReturnType<typeof setTimeout>>()
     const [loading, setLoading] = React.useState<boolean>(false)
     const [val, setVal] = React.useState<number>(0)
@@ -53,7 +51,7 @@ export const PageLoader = ({ }: {
         setLoading(true)
     })
     Router.events.on('routeChangeComplete', () => {
-        // setLoading(false)
+        setLoading(false)
     })
 
     React.useEffect(() => {
@@ -77,7 +75,7 @@ export const PageLoader = ({ }: {
         return () => clearInterval(ref.current)
     }, [loading])
 
-    return <div className={`h-1 bg-black relative`}>
+    return <div className={`h-1 bg-black relative duration-75 ease-linear transition-all`}>
         <div className="bg-blue-500 h-full" style={{
             width: `${val}%`
         }}>

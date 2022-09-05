@@ -40,23 +40,23 @@ function Header() {
 							<a>Services</a>
 						</li>
 					</NavLink>
-					<NavLink href='/About'>
+					<NavLink href='/about'>
 						<li className='text-white uppercase hov active:text-red-600 a cursor-pointer text-md duration-300 transition-all ease-in-out'>
 							<a>About us</a>
 						</li>
 					</NavLink>
 					{
 						isAuthenticated ? <>
-							<NavLink href='/user/Dashboard'>
+							<NavLink href='/user/dashboard'>
 								<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
 									<a>Dashboard</a>
 								</li>
 							</NavLink>
 						</> :
 							<>
-								<NavLink href='/Login'>
+								<NavLink href='/login'>
 									<li className='text-white uppercase hov cursor-pointer active:text-red-600 a text-mdduration-300 transition-all ease-in-out'>
-										<a>Sign up/Login</a>
+										<a>Sign up/login</a>
 									</li>
 								</NavLink>
 							</>
@@ -101,7 +101,7 @@ function Header() {
 								Services
 							</li>
 						</NavLink>
-						<NavLink href='/About'>
+						<NavLink href='/about'>
 							<li
 								onClick={() => dispatch(closeMenu())}
 								className='text-white  uppercase hov cursor-pointer text-md'
@@ -111,7 +111,7 @@ function Header() {
 						</NavLink>
 						{
 							isAuthenticated ? <>
-								<NavLink href='/user/Dashboard'>
+								<NavLink href='/user/dashboard'>
 									<li
 										onClick={() => dispatch(closeMenu())}
 										className='text-white  uppercase hov cursor-pointer text-md'
@@ -121,12 +121,12 @@ function Header() {
 								</NavLink>
 							</> :
 								<>
-									<NavLink href='/Login'>
+									<NavLink href='/login'>
 										<li
 											onClick={() => dispatch(closeMenu())}
 											className='text-white  uppercase hov cursor-pointer text-md'
 										>
-											Sign up/Login
+											Sign up/login
 										</li>
 									</NavLink>
 								</>

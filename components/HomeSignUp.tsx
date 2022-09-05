@@ -14,7 +14,7 @@ function HomeSignUp() {
 					<p className='text-sm lg:text-xl text-white text-center sm:text-md my-4'>
 						Sign up here to pick up your keys or login to message us
 					</p>
-					<Link href='/Login'>
+					<Link href='/login'>
 						<button className=' bg-red text-white px-3 py-1 rounded-full md:px-6 md:py-2 my-4 lg:my-6 hover:scale-110 active:scale-95'>
 							Sign Up / Login
 						</button>

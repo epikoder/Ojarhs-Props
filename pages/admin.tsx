@@ -5,7 +5,7 @@ const Admin = () => {
     const router = useRouter()
 
     React.useEffect(() => {
-        router.replace('/admin/Login')
+        router.replace('/admin/login')
     }, [router])
     return <></>
 }

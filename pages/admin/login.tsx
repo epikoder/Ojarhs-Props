@@ -49,7 +49,7 @@ const AdminLogin = () => {
     React.useEffect(() => {
         if (authenticated && user.is_admin) setTimeout(() => {
             const path = localStorage.getItem('current')
-            router.replace(path !== null && (path !== '/admin/Login' && !path.includes('/user/')) ? path : '/admin/Dashboard')
+            router.replace(path !== null && (path !== '/admin/login' && !path.includes('/user/')) ? path : '/admin/Dashboard')
         }, 200)
     }, [authenticated, router, user])
 

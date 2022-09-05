@@ -36,9 +36,9 @@ function Login() {
 
 	useEffect(() => {
 		if (authenticated) setTimeout(() => {
-			if (user !== undefined && user.is_admin) return router.replace("/admin/Dashboard")
+			if (user !== undefined && user.is_admin) return router.replace("/admin/dashboard")
 			const path = localStorage.getItem('current')
-			router.replace(path !== null && (path !== '/Login' && path !== '/Signup' && !path.includes('/admin/')) ? path : '/user/Dashboard')
+			router.replace(path !== null && (path !== '/login' && path !== '/sign-up' && !path.includes('/admin/')) ? path : '/user/Dashboard')
 		}, 200)
 	}, [authenticated, router, user])
 
@@ -131,7 +131,7 @@ function Login() {
 
 					<div className='space-x-4 mx-auto text-sm text-center text-gray-400 '>
 						Dont have an account?{" "}
-						<Link href='/SignUp' className='ml-1'>
+						<Link href='/sign-up' className='ml-1'>
 							<span className='hov cursor-pointer'>Sign Up</span>
 						</Link>
 					</div>

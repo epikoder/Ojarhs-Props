@@ -91,7 +91,7 @@ function SignUp() {
 					}
 					setMessage({ text: rr.message, status: true })
 					setTimeout(() => {
-						location.assign("/Login")
+						location.assign("/login")
 					}, 1500)
 					break
 				default:
@@ -537,7 +537,7 @@ function SignUp() {
 
 						<div className='space-x-4 mx-auto text-sm text-center text-gray-400 '>
 							Already have an account?{" "}
-							<Link href='/Login' className='ml-1 cursor-pointer'>
+							<Link href='/login' className='ml-1 cursor-pointer'>
 								<span className='hov cursor-pointer'>Login</span>
 							</Link>
 						</div>
