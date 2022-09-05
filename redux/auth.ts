@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASEURL } from "../constants";
 import { Api } from "../helpers/api";
-import { loginResponse, ApiResponse } from "../Typing.d"
+import { loginResponse, ApiResponse, UserApplicationStatus } from "../Typing.d"
 
 export type rejectValue = {
     status: 'failed'
@@ -10,7 +10,7 @@ export type rejectValue = {
 }
 
 export const loginApi =
-    createAsyncThunk<ApiResponse<loginResponse> | rejectValue, { email: string, password: string }>("auth/login", async (payload, { rejectWithValue }) => {
+    createAsyncThunk<ApiResponse<loginResponse, { application: UserApplicationStatus }> | rejectValue, { email: string, password: string }>("auth/login", async (payload, { rejectWithValue }) => {
         try {
             var response: Response = await fetch(BASEURL + "/auth/login", {
                 method: 'POST',
@@ -42,7 +42,8 @@ export const loginApi =
                     return {
                         status: 'success',
                         data: __data.data as loginResponse,
-                        message: __data.message
+                        message: __data.message,
+                        extra: __data.extra
                     }
                 default:
                     return rejectWithValue({

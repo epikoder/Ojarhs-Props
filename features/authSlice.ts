@@ -2,9 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
 import { getUserToken, setUserToken } from "../helpers/auth";
 import { loginAdminApi, loginApi, rejectValue } from "../redux/auth";
-import { ApiResponse, LoadState, loginResponse, User } from "../Typing.d";
+import { ApiResponse, LoadState, loginResponse, User, UserApplicationStatus } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
+import { AxiosResponse } from "axios";
 
 export type AuthState = {
     authenticated: boolean
@@ -16,6 +17,7 @@ export type AuthState = {
         [key: string]: string
     }
     user?: User
+    application: UserApplicationStatus
 }
 
 export type JWTCLAIMS = {
@@ -29,13 +31,15 @@ export type JWTCLAIMS = {
 
 const checkIsAuthenticatedAsync = async () => {
     try {
-        const { data } = await Api().get<ApiResponse>("/user/user")
+        const { data } = await Api().get<ApiResponse<loginResponse, { application: UserApplicationStatus }>>("/user/user")
         const auth = {} as {
             authenticated: boolean
             token?: loginResponse
             user?: User
+            application: UserApplicationStatus
         }
         auth.authenticated = data.status === 'success'
+        auth.application = data.extra.application
         if (data.data !== undefined && data.data !== null) {
             auth.token = data.data as loginResponse
             console.log("TOKEN", data)
@@ -53,8 +57,6 @@ const checkIsAuthenticatedAsync = async () => {
             auth.user = (dec as unknown as JWTCLAIMS).aud as User
             auth.token = token
         }
-        console.log(auth)
-        // if (auth.authenticated) setRefreshInterceptor()
         store.dispatch(setAuthenticated(auth))
     } catch (error) {
         store.dispatch(setAuthenticated({ authenticated: false }))
@@ -117,12 +119,14 @@ const authSlice = createSlice({
                 authenticated: boolean
                 token?: loginResponse
                 user?: User
+                application?: UserApplicationStatus
             }
         }) => {
             console.log('SET AUTH CALLED')
             state.authenticated = payload.authenticated
             state.user = payload.user
             state.token = payload.token
+            state.application = payload.application
             console.log("SET AUTH", payload)
             setTimeout(() => {
                 store.dispatch(setAppState("completed"))
@@ -170,6 +174,7 @@ const authSlice = createSlice({
             state.message = payload.message
             state.authenticated = true
 
+            state.application = payload.extra.application
             const dec = jose.decodeJwt(payload.data.access)
             state.user = (dec as unknown as JWTCLAIMS).aud as User
         })

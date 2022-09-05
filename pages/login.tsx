@@ -37,8 +37,8 @@ function Login() {
 	useEffect(() => {
 		if (authenticated) setTimeout(() => {
 			if (user !== undefined && user.is_admin) return router.replace("/admin/dashboard")
-			const path = localStorage.getItem('current')
-			router.replace(path !== null && (path !== '/login' && path !== '/sign-up' && !path.includes('/admin/')) ? path : '/user/Dashboard')
+			const path = sessionStorage.getItem('current')
+			router.replace(path !== null && (path !== '/login' && path !== '/sign-up' && !path.includes('/admin/')) ? path : '/user/dashboard')
 		}, 200)
 	}, [authenticated, router, user])
 

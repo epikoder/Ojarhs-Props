@@ -8,7 +8,7 @@ import Loader from "../Loader"
 import { UserSideBar } from "./UserSideBar"
 
 export const UserDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string }) => {
-    const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
+    const { authenticated, user, appState, application } = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()
 
@@ -40,7 +40,7 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
                     </div>
                     <div className={`md:w-[70%] ${props.className ?? ''}`}>
                         {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
-                            {authenticated && user !== undefined ? props.children({ authenticated, user }) : <Loader />}
+                            {authenticated && user !== undefined ? props.children({ authenticated, user, application }) : <Loader />}
                         </React.Fragment>}
                     </div>
                 </div>

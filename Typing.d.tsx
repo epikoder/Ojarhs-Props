@@ -112,11 +112,12 @@ export type Country = {
 	code: string
 }
 
-export type ApiResponse<T = any> = {
+export type ApiResponse<T = any, TT = any> = {
 	status: 'success' | 'failed'
 	message?: string
 	error?: { [key: string]: string }
 	data: T
+	extra?: TT
 }
 
 export type loginResponse = {
@@ -134,3 +135,4 @@ export type DashboardDataState<T> = {
 	status: LoadState
 	message?: string
 }
+export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected'

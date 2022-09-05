@@ -53,6 +53,7 @@ export const PageLoader = () => {
     Router.events.on('routeChangeComplete', () => {
         setLoading(false)
     })
+    Router.events.on('hashChangeComplete', () => setLoading(false))
 
     React.useEffect(() => {
         if (!loading) {
