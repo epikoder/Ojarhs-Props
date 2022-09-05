@@ -1,4 +1,4 @@
-const IsRelease = false
+const IsRelease = true
 export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "https://sleepy-everglades-36547.herokuapp.com/api"
 export const OjarhEmail = "support@ojarproperties.com"
 export const OjarhAddress = "Ikeja, Lagos"
