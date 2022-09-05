@@ -14,7 +14,7 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
 
     React.useEffect(() => {
         if (authenticated) return
-        localStorage.setItem('current', router.pathname)
+        sessionStorage.setItem('current', router.pathname)
         dispatch(checkIsAuthenticated({}))
     }, [])
 
