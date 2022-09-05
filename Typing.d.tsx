@@ -127,7 +127,7 @@ export type loginResponse = {
 	refresh_expires_at?: Date
 }
 
-export type LoadState = 'pending' | 'success' | 'failed'
+export type LoadState = 'nil' | 'pending' | 'success' | 'failed'
 export type Map<T = any> = { [key: string]: T }
 export type DashboardDataState<T> = {
 	data: T

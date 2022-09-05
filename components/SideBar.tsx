@@ -1,16 +1,18 @@
 import React, { HTMLAttributes, useState } from "react";
 import SideBarItem from "./SideBarItem";
 import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../features/ToggleSideBar";
 import { useRouter } from "next/router";
+import { RootState, useAppDispatch } from "../store";
+import { toggleSideBar } from "../features/ToggleSideBar";
 
 function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 	const router = useRouter();
-	const sideBarState = useSelector(SideBarToggleState);
+	const dispatch = useAppDispatch()
+	const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
 	return (
 		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out ${props.className ?? ''}`}>
 			<div className='px-4'>
-				<div onClick={() => router.push("/admin/dashboard")}>
+				<div onClick={() => { router.push("/admin/dashboard"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Dashboard' />
 				</div>
 				<div>
@@ -29,22 +31,22 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 						},
 					]} />
 				</div>
-				<div onClick={() => router.push("/admin/message")}>
+				<div onClick={() => { router.push("/admin/message"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Messages' />
 				</div>
-				<div onClick={() => router.push("/admin/services")}>
+				<div onClick={() => { router.push("/admin/services"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Services' />
 				</div>
-				<div onClick={() => router.push("/admin/properties")}>
+				<div onClick={() => { router.push("/admin/properties"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Properties' />
 				</div>
-				<div onClick={() => router.push("/admin/records")}>
+				<div onClick={() => { router.push("/admin/records"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Records' />
 				</div>
-				<div onClick={() => router.push("/admin/d&r")}>
+				<div onClick={() => { router.push("/admin/d&r"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Dispute & Reports' />
 				</div>
-				<div onClick={() => router.push("/admin/adverts")}>
+				<div onClick={() => { router.push("/admin/adverts"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Adverts' />
 				</div>
 				<div>

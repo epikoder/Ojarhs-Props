@@ -11,8 +11,8 @@ export const Table = ({ tableBody, tableHead, state, data, noData }: {
     return <React.Fragment>
         {tableHead}
         {data !== undefined && <div>
-            {(state === 'success' && data.length !== 0) && data.map(tableBody)}
-            {(state === 'success' && data.length === 0) && (noData ?? <>
+            {((state === 'success' || state === 'nil') && data.length !== 0) && data.map(tableBody)}
+            {((state === 'success' || state === 'nil') && data.length === 0) && (noData ?? <>
                 <div className="text-center">
                     NO DATA
                 </div>

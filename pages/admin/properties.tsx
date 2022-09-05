@@ -2,53 +2,71 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Property from "../../components/Property";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
-import { RootState } from "../../store";
+import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
+import { Table } from "../../components/Table";
+import { resetPropertyStatus, updateProperty } from "../../features/admin/propertySlice";
+import { Space } from "../../Typing.d";
+import { money } from "../../helpers/helpers";
+import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { loadAdminProperties } from "../../redux/admin/property";
+
+const TableHead = () => <div className="py-4 mt-4 my-1 bg-black px-2 rounded-md text-white text-xs sm:text-sm">
+	<div className="grid grid-cols-10 text-center lg:grid-cols-12 gap-2 font-semibold uppercase">
+		<div className="col-span-1text-red-500">id</div>
+		<div className="lg:block col-span-2">name</div>
+		<div className="col-span-3">property</div>
+		<div className="hidden lg:block col-span-3">address</div>
+		<div className="col-span-3 lg:col-span-2">amount</div>
+		<div className="hidden md:block col-span-1 lg:col-span-1">status</div>
+		<div className="col-span-1 lg:col-span-1">:</div>
+	</div>
+</div>
+
+const TableBody = ({ space, index }: { space: Space, index: number } & React.Attributes) => {
+	const [isOpen, setIsOpen] = React.useState<boolean>(false)
+	return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
+		<div className="grid grid-cols-10 text-center lg:grid-cols-12 gap-2">
+			<div className="col-span-1text-red-500">{index + 1}</div>
+			<div className="lg:block col-span-2">{space.name}</div>
+			<div className="col-span-3">{space.type}</div>
+			<div className="hidden lg:block col-span-3">{space.address}</div>
+			<div className="col-span-3 lg:col-span-2">{money(space.amount)}</div>
+			<div className="hidden md:block col-span-1 lg:col-span-1">{space.status}</div>
+			<div className="col-span-1 lg:col-span-1"><DotsVerticalIcon height={18} /> </div>
+		</div>
+	</div>
+}
 
 function DashProps() {
-	const properties = useSelector((store: RootState) => store.propertySlice)
+	const dispatch = useAppDispatch()
 	const router = useRouter()
+	const { status, data } = useSelector((store: RootState) => store.propertySlice)
+
+	React.useEffect(() => {
+		dispatch(loadAdminProperties())
+	}, [])
+
+	React.useEffect(() => { dispatch(resetPropertyStatus()) }, [status])
 
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
 				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2'>
-					<h1 className='lg:text-2xl text-lg red'>Properties</h1>
+					<h1 className='lg:text-xl text-lg red'>Properties</h1>
 					<button
 						type='button'
-						className='inline-block px-6 lg:px-12 py-3 mt-4 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
+						className='inline-block px-6 lg:px-12 py-2 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
 						onClick={() => { router.push('properties/new-property') }}
 					>
 						Add new
 					</button>
 				</div>
-				{properties.data.length !== 0 ? (
-					<div className='flex gap-3 lg:flex-row flex-wrap h-[80vh] justify-center scrollbar-hide overflow-scroll  pb-12 px-8'>
-						<table id='customers'>
-							<tr className='he w-full flex justify-between'>
-								<th className='inline-block w-[50%] lg:w-[30%]'>Name</th>
-								<th className='hidden lg:inline-block w-[35%]'>Price</th>
-								<th className='inline-block w-[30%] lg:w-[15%]'>Type</th>
-								<th className='hidden lg:inline-block w-[20%]'>Options</th>
-								<th className='lg:hidden w-[20%]'></th>
-							</tr>
-
-							{properties.data.map((prop, index) => {
-								console.log(prop);
-
-								return (
-									<Property
-										key={index}
-										Prop={prop}
-										setOpen={() => router.push('properties/update-property')}
-									/>
-								);
-							})}
-						</table>
-					</div>
-				) : (
-					<div className='text-center uppercase mt-4 '>No New Property </div>
-				)}
+				<Table
+					tableHead={<TableHead />}
+					tableBody={(value: Space, index: number) => <TableBody space={value} key={index} index={index} />}
+					data={data}
+					state={status} />
 			</React.Fragment>}
 		</AdminDashboardLayout>
 	);

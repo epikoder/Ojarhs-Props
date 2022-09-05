@@ -3,7 +3,6 @@ import Script from "next/script";
 import React from "react"
 import { useSelector } from "react-redux";
 import { checkIsAuthenticated } from "../../features/authSlice";
-import { SideBarToggleState } from "../../features/ToggleSideBar";
 import { RootState, useAppDispatch } from "../../store";
 import { CopyRight } from "../Copyright";
 import Loader, { PageLoader } from "../Loader";
@@ -11,7 +10,7 @@ import SideBar from "../SideBar"
 import SideBarHeader from "../SideBarHeader"
 
 export const AdminDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string }) => {
-    const sideBarState = useSelector(SideBarToggleState);
+    const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
     const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()

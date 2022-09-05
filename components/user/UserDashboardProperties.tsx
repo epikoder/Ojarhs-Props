@@ -24,7 +24,7 @@ const TableBody = ({ space, index }: { space: Space, index: number } & React.Att
     console.log(space)
     const [isOpen, setIsOpen] = React.useState<boolean>(false)
 
-    return <div className="py-2 my-1 bg-black px-2 rounded-md text-white text-sm" key={index}>
+    return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
         <div className="grid grid-cols-9 text-center lg:grid-cols-12 gap-2">
             <div className="col-span-1 text-sm font-semibold">{index + 1}</div>
             <div className="col-span-3 uppercase text-sm">{space.type}</div>

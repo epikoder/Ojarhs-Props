@@ -10,6 +10,7 @@ import Loader from "../../../components/Loader";
 import { addNewPropertyThunck } from "../../../redux/admin/property";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
+import { resetPropertyStatus } from "../../../features/admin/propertySlice";
 
 function NewProps({ setOpen, type }: {
 	setOpen: React.Dispatch<React.SetStateAction<{
@@ -45,12 +46,13 @@ function NewProps({ setOpen, type }: {
 	React.useEffect(() => {
 		console.log(status)
 		if (status === 'success') {
-			setTimeout(() => {
-				router.push("/admin/properties")
+			setTimeout(async () => {
+				await router.push("/admin/properties")
 			}, 800)
 		}
-
 	}, [status, router])
+
+	React.useEffect(() => { dispatch(resetPropertyStatus()) }, [status])
 
 	return (
 		<AdminDashboardLayout>

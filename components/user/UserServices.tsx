@@ -26,7 +26,7 @@ const TableHead = () => <div className="py-4 my-1 bg-black px-2 rounded-md text-
 const TableBody = ({ service, index }: { service: Service, index: number } & React.Attributes) => {
     const [isOpen, setIsOpen] = React.useState<boolean>(false)
 
-    return <div className="py-2 my-1 bg-black px-2 rounded-md text-white text-sm" key={index}>
+    return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
         <div className="grid grid-cols-12 text-center lg:grid-cols-12 gap-2">
             <div className="col-span-1 text-sm font-semibold">{index + 1}</div>
             <div className="col-span-3 uppercase text-sm">{service.name}</div>

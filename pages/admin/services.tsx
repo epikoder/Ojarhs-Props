@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { SideBarToggleState } from "../../features/ToggleSideBar";
 import NewService from "../../components/NewService";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { Api } from "../../helpers/api";
-import { GetStaticProps } from "next";
 
 
 function Services() {

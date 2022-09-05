@@ -1,22 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit"
-import type { RootState } from "../store"
-
-const initialState = {
-    sidebarToggle:false
-}
-
 
 const SideBarToggle = createSlice({
-    name:"SideBarToggle",
-    initialState,
+    name: "SideBarToggle",
+    initialState: { status: false },
     reducers: {
-        togleSideBar: (state) => {
-            state.sidebarToggle = !state.sidebarToggle
+        toggleSideBar: (state) => {
+            state.status = !state.status
         }
     }
 })
 
 
-export const {togleSideBar} = SideBarToggle.actions
-export const SideBarToggleState = (state: RootState )=> state.toggleSideBar.sidebarToggle
+export const { toggleSideBar } = SideBarToggle.actions
 export default SideBarToggle.reducer

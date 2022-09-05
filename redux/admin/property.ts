@@ -35,3 +35,32 @@ export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
             }
         }
     })
+
+export const loadAdminProperties = createAsyncThunk<ApiResponse<Space[]>>
+    ("properties/all", async (payload, { rejectWithValue }) => {
+        try {
+            const { data, status } = await Api().get<ApiResponse>("/admin/properties/all")
+            if (data.status === 'failed') {
+                return rejectWithValue({
+                    message: data.message
+                })
+            }
+            return {
+                status: data.status,
+                data: data.data
+            } as ApiResponse
+        } catch (error) {
+            const { status, data } = (error as AxiosError<ApiResponse>).response
+            switch (status) {
+                case 400:
+                    return rejectWithValue({
+                        message: data.message,
+                        error: data.error as unknown as Space
+                    })
+                default:
+                    return rejectWithValue({
+                        message: 'Error connecting to server'
+                    })
+            }
+        }
+    })

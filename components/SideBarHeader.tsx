@@ -1,20 +1,29 @@
+import { ExternalLinkIcon, LinkIcon } from "@heroicons/react/outline";
 import { MenuIcon } from "@heroicons/react/solid";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { HTMLAttributes } from "react";
 import { useDispatch } from "react-redux";
-import { togleSideBar } from "../features/ToggleSideBar";
+import { toggleSideBar } from "../features/ToggleSideBar";
 import { resolveImagePath } from "../helpers/helpers";
 import { User } from "../Typing.d";
 
 const AdminMenu = ({ user }: { user: User }) => {
+	const router = useRouter()
 	return <>
 		<div className="flex items-center justify-end text-white">
 			<div className="hidden md:flex justify-around w-[50vw]">
 				{/* MENU */}
 			</div>
+			<div
+			className="mx-2 cursor-pointer hover:text-red-500 duration-300 ease-in-out transition-all text-sm flex items-center"
+				onClick={() => router.push('/')}>
+				<span>{'Home'}</span>
+				<ExternalLinkIcon height={10}/>
+			</div>
 			<div>
 				<img
-					src={resolveImagePath(user !== undefined ? user.photo : '')}	
+					src={resolveImagePath(user !== undefined ? user.photo : '')}
 					alt='ME'
 					className="rounded-full h-14 w-14"
 				/>
@@ -31,7 +40,7 @@ function SideBarHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
 				<div className="flex items-center">
 					<MenuIcon
 						className='w-6 h-6 text-white mx-2 md:hidden'
-						onClick={() => dispatch(togleSideBar())}
+						onClick={() => dispatch(toggleSideBar())}
 					/>
 					<Image
 						src='/image/logo.png'
