@@ -88,24 +88,24 @@ const TableBody = ({ space, index }: { space: Space, index: number } & React.Att
 				</div>
 			</div>
 		</div>
-		<div className={`${!isOpen && 'hidden'} px-2 my-2 py-1 w-8/12 lg:w-3/12`}>
+		<div className={`${!isOpen && 'hidden'} px-2 my-2 py-1 w-10/12 lg:w-6/12 bg-white text-black rounded-md mx-2`}>
 			<div className="text-red-500 ">
 				Details
 			</div>
 			<ul>
-				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap flex justify-between">
+				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap border-y py-1 flex justify-between">
 					<span>{'Slug:'}</span> <span>{space.slug}</span>
 				</li>
 				<li className="text-xs font-mono flex justify-between">
-					<span>{'Description:'}</span> <span className="text-ellipsis two-lines overflow-hidden whitespace-nowrap">{space.description}</span>
+					<span>{'Description:'}</span> <span className="text-ellipsis two-lines overflow-hidden border-y py-1 whitespace-nowrap">{space.description}</span>
 				</li>
-				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap flex justify-between">
+				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap border-y py-1 flex justify-between">
 					<span>{'Size:'}</span> <span>{space.size}</span>
 				</li>
-				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap flex justify-between">
+				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap border-y py-1 flex justify-between">
 					<span>{'Plan:'}</span> <span>{space.plan}</span>
 				</li>
-				{space.status === 'occupied' && <li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap flex justify-between">
+				{space.status === 'occupied' && <li className="text-xs font-mono text-ellipsis overflow-hidden border-y py-1 whitespace-nowrap flex justify-between">
 					<span>{'Tenant:'}</span> <span>{space.tenant}</span>
 				</li>}
 			</ul>
