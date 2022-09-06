@@ -59,7 +59,7 @@ function Card({ data }: { data: Space | Service }) {
 
 			{/* sliders */}
 			<div className='w-full h-[35vh] md:h-[25vh] absolute top-0'>
-				<Slider />
+				<Slider images={shop.galleries.concat(shop.photo)} />
 			</div>
 
 			{/* cards description */}

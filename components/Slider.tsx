@@ -1,44 +1,43 @@
 import Image from "next/image";
 import React from "react";
+import { resolveFilePath } from "../helpers/helpers";
 typeof window !== "undefined" ? import("tw-elements") : " ";
 
 function Slider({ images = [] }: { images?: string[] }) {
   return (
     <div id="carouselExampleSlidesOnly" className="carousel slide relative h-full w-full" data-bs-ride="carousel">
       <div className="carousel-inner relative w-full overflow-hidden h-full rounded-lg">
-        <div className="carousel-item active relative float-left w-full h-full">
-          <Image
-            src="/image/041.webp"
-            className="block w-full h-full"
-            alt="Wild Landscape"
-            layout="fill"
-          />
-        </div>
-        <div className="carousel-item relative float-left w-full h-full">
-          <Image
-            src="/image/042.webp"
-            className="block w-full h-full"
-            alt="Camera"
-            layout="fill"
-          />
-        </div>
-        <div className="carousel-item relative float-left w-full h-full">
-          <Image
-            src="/image/043.webp"
-            className="block w-full h-full"
-            alt="Exotic Fruits"
-            layout="fill"
-          />
-        </div>
-      </div>
-      <div className="absolute w-full flex flex-col items-center bottom-4 z-50">
-        <div className="flex">
-        {images.map((e, i) =>
-          <div key={i} className="mx-1 px-1 h-4 w-4 rounded-full bg-red-500">
-            
+        {images === undefined && <React.Fragment>
+          <div className="carousel-item active relative float-left w-full h-full">
+            <Image
+              src="/image/041.webp"
+              className="block w-full h-full"
+              alt="Wild Landscape"
+              layout="fill"
+            />
+          </div>
+          <div className="carousel-item relative float-left w-full h-full">
+            <Image
+              src="/image/042.webp"
+              className="block w-full h-full"
+              alt="Camera"
+              layout="fill"
+            />
+          </div>
+          <div className="carousel-item relative float-left w-full h-full">
+            <Image
+              src="/image/043.webp"
+              className="block w-full h-full"
+              alt="Exotic Fruits"
+              layout="fill"
+            />
+          </div>
+        </React.Fragment>}
+        {images.map((s, i) =>
+          <div className={`carousel-item ${i === 0 ? 'active' : ''} relative float-left w-full h-full`} key={i}>
+            <img src={resolveFilePath(s)} className="h-full w-full object-cover" />
           </div>
         )}
-        </div>
       </div>
     </div>
   );
