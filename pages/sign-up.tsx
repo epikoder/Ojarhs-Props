@@ -95,10 +95,8 @@ function SignUp() {
 					}, 1500)
 					break
 				default:
-					console.log(res);
 			}
 		} catch (error) {
-			console.log(error);
 			setLoading(false)
 		}
 	}

@@ -18,9 +18,11 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
     const [url, setUrl] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
     const ref = useRef<HTMLInputElement>()
+    const [errMessage, setErrMessage] = useState<string>(undefined)
 
     function onChange() {
         setUrl('')
+        setErrMessage(undefined)
         var reader = new FileReader()
         reader.onload = async function (e) {
             setUrl(e.target.result as string)
@@ -40,9 +42,11 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                 var data = await (res).json() as {
                     status: 'success' | 'failed'
                     photo?: string
+                    message?: string
                 }
                 if (data.status === 'failed') {
                     setUrl('')
+                    setErrMessage(data.message)
                     return
                 }
                 if (handleUpload !== undefined) {
@@ -50,7 +54,6 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                 }
 
             } catch (error) {
-                console.log(error);
                 setUrl('')
                 setLoading(false)
                 if (handleUpload !== undefined) {
@@ -84,8 +87,8 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
         }}>
             {
                 (value !== undefined && (url === '' || forceValue)) ? <img src={value} alt="" className="object-cover h-full w-full rounded-md" /> :
-                    (url === '' ? (<div className="p-1">
-                        {message ?? 'SELECT PHOTO'}
+                    (url === '' ? (<div className="p-1 text-sm text-gray-500">
+                        {errMessage ?? message ?? 'SELECT IMAGE'}
                     </div>) : loading ? <Loader /> : <>
                         <div className="relative h-full w-full">
                             <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
@@ -103,11 +106,12 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
 }
 
 
-export const VideoUpload = ({ value, handleUpload, required = false, disabled = false, message, width, height, forceValue, headless = true }: {
+export const VideoUpload = ({ value, handleUpload, required = false, disabled = false, message, width, height, forceValue, headless = true, src }: {
     handleUpload?: (s: string, raw?: Blob) => void,
     required?: boolean,
     disabled?: boolean,
     value?: Blob
+    src?: string
     forceValue?: boolean
     message?: React.ReactNode
     width?: string | number
@@ -157,7 +161,6 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                 }
 
             } catch (error) {
-                console.log(error);
                 setBlob(undefined)
                 setLoading(false)
                 if (handleUpload !== undefined) {
@@ -175,9 +178,8 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
     if (!headless) {
         return <>
             <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
-                if (loading || disabled) return
+                if (loading || disabled || !(blob === undefined && src === undefined)) return
                 const uploader = ref.current;
-                console.log(uploader, blob)
                 if (uploader !== undefined && blob === undefined) {
                     uploader.click()
                 }
@@ -186,17 +188,22 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                 height: height
             }}>
 
-                <div className={blob === undefined ? 'hidden' : "absolute z-30 text-orange-500 cursor-pointer top-0"}
-                    onClick={() => setBlob(undefined)}>
+                <div className={blob === undefined && src === undefined || disabled ? 'hidden' : "absolute z-30 text-orange-500 cursor-pointer top-0"}
+                    onClick={() => {
+                        setBlob(undefined)
+                        if (src !== undefined && handleUpload) {
+                            handleUpload('', blob)
+                        }
+                    }}>
                     <XCircleIcon width={25} />
                 </div>
                 {
-                    (value !== undefined && (blob === undefined || forceValue)) ?
+                    ((value !== undefined || src !== undefined) && (blob === undefined || forceValue)) ?
                         (<video
-                            src={value !== undefined && URL.createObjectURL(value)}
+                            src={value !== undefined ? URL.createObjectURL(value) : (src !== undefined && src)}
                             className="object-cover h-full w-full rounded-md"
                             controls />) :
-                        (blob === undefined ? (<div className="p-1">
+                        (blob === undefined ? (<div className="p-1 text-sm text-gray-500">
                             {errMessage ?? message ?? 'SELECT VIDEO'}
                         </div>) : loading ? <Loader /> : <>
                             <div className="h-full w-full">
@@ -211,11 +218,11 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
             <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />
         </>
     }
+
     return <>
         <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
             if (loading || disabled) return
             const uploader = ref.current;
-            console.log(uploader, blob)
             if (uploader !== undefined && blob === undefined) {
                 uploader.click()
             }
@@ -288,7 +295,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
                                 setUrl('')
                                 return
                             }
-                            console.log(data.photo)
                             handleUpload(data.photo)
                             break
                         }
@@ -306,7 +312,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
 
 
             } catch (error) {
-                console.log(error);
                 setUrl('')
                 setLoading(false)
             }

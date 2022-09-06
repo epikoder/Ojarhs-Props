@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASEURL } from "../constants";
 import { Api } from "../helpers/api";
+import { fixSpace } from "../helpers/helpers";
 import { ApiResponse, Service, Space, Testimony } from "../Typing.d";
 
 export type indexData = {
@@ -27,10 +28,10 @@ export const loadIndex =
             let shops: Space[] = []
             let office: Space[] = []
             let warehouse: Space[] = []
-            data.data.spaces.forEach(space => {
-                if (space.type == 'office') office = office.concat(space)
-                if (space.type == 'shop') shops = shops.concat(space)
-                if (space.type == 'warehouse') warehouse = warehouse.concat(space)
+            data.data.spaces.forEach((space: Space) => {
+                if (space.type == 'office') office = office.concat(fixSpace(space))
+                if (space.type == 'shop') shops = shops.concat(fixSpace(space))
+                if (space.type == 'warehouse') warehouse = warehouse.concat(fixSpace(space))
             })
             return {
                 status: 'success',

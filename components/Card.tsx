@@ -16,7 +16,7 @@ function Card({ data }: { data: Space | Service }) {
 				</div>
 
 				{/* sliders */}
-				<div className='w-full h-[21vh] relative top-0'>
+				<div className='w-full h-[21vh] relative top-0 cursor-pointer'>
 					<img
 						src="/image/041.webp"
 						className="block w-full h-full absolute"
@@ -53,7 +53,7 @@ function Card({ data }: { data: Space | Service }) {
 	return (
 		<div className='w-70 relative h-[60vh] md:h-[40vh] border rounded-lg overflow-hidden'>
 			<div className='flex justify-between text-xs z-20 absolute top-0 w-full'>
-				<Button text={shop.status} />
+				<Button text={shop.status} className={shop.status === 'occupied' ? 'bg-gray-500' : ''} />
 				<Button text={money(shop.amount)} />
 			</div>
 
@@ -64,7 +64,7 @@ function Card({ data }: { data: Space | Service }) {
 
 			{/* cards description */}
 			<Link href={'/property/' + shop.slug}>
-				<div className='flex flex-col absolute bottom-8 min-h-[8vh] bg-white text-gray-900 w-full space-y-3 text-xs p-2'>
+				<div className='flex flex-col absolute bottom-8 min-h-[8vh] bg-white text-gray-900 w-full space-y-3 text-xs p-2 cursor-pointer'>
 					<div className='text-black text-md'>
 						Shop No: <span className='text-red-500 text-prop'>{shop.no}</span>
 					</div>

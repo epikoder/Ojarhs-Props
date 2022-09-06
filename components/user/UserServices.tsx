@@ -48,7 +48,6 @@ export const UserServices = () => {
     }, [])
 
     React.useEffect(() => {
-        console.log(services.data)
         if (services.state === 'success') {
             setSortedData(services.data ?? [])
         }
@@ -70,7 +69,7 @@ export const UserServices = () => {
                 </div>
             </div>
         </div>}
-        tableHead={<TableHead />}
+        TableHead={() => <TableHead />}
         tableBody={(value: Service, index: number): JSX.Element => <TableBody service={value} index={index} key={index} />}
     />
 }

@@ -27,6 +27,5 @@ export const getUserToken = (): loginResponse | undefined => {
 }
 
 export const clearUserToken = (): void => {
-    console.log("CLEARING AUTH")
     getTokenStore().removeItem(_tokenKey)
 }

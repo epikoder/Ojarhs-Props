@@ -28,10 +28,6 @@ const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string })
 export const UserSideBar = () => {
     const [isOpen, toggleOpen] = React.useState<boolean>(false)
     const { user, authenticated } = useSelector((store: RootState) => store.authSlice)
-
-    React.useEffect(() => {
-        if (!authenticated) console.log("IM NOT SUPPOSED TO BE HERE")
-    })
     return <React.Fragment>
         {user !== undefined && <div>
             <div className="md:hidden">

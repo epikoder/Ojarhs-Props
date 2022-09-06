@@ -2,7 +2,7 @@ import React from "react"
 import { FormPhoneInput } from "../../components/FormInput"
 import { ImageUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
-import { resolveImagePath } from "../../helpers/helpers"
+import { resolveFilePath } from "../../helpers/helpers"
 
 const Page = () => {
     const [phone, setPhone] = React.useState('')
@@ -11,7 +11,7 @@ const Page = () => {
             <React.Fragment>
                 <form className="p-4 max-w-sm">
                     <div>
-                        <ImageUpload value={resolveImagePath(user.photo)} />
+                        <ImageUpload value={resolveFilePath(user.photo)} />
                         <span className="text-sm">PROPFILE PHOTO</span>
                     </div>
                     <FormPhoneInput props={{

@@ -42,14 +42,12 @@ const checkIsAuthenticatedAsync = async () => {
         auth.application = data.extra.application
         if (data.data !== undefined && data.data !== null) {
             auth.token = data.data as loginResponse
-            console.log("TOKEN", data)
             var dec = jose.decodeJwt(auth.token.access)
             auth.user = (dec as unknown as JWTCLAIMS).aud as User
             setUserToken(auth.token)
         } else {
             var token = getUserToken()
             if (token === undefined) {
-                console.log("NO AUHT", token)
                 store.dispatch(setAuthenticated({ authenticated: false }))
                 return
             }
@@ -74,14 +72,12 @@ const checkIsAuthenticatedAdminAsync = async () => {
         auth.authenticated = data.status === 'success'
         if (data.data !== undefined && data.data !== null) {
             auth.token = data.data as loginResponse
-            console.log("TOKEN", data)
             var dec = jose.decodeJwt(auth.token.access)
             auth.user = (dec as unknown as JWTCLAIMS).aud as User
             setUserToken(auth.token)
         } else {
             var token = getUserToken()
             if (token === undefined) {
-                console.log("NO AUHT", token)
                 store.dispatch(setAuthenticated({ authenticated: false }))
                 return
             }
@@ -89,8 +85,6 @@ const checkIsAuthenticatedAdminAsync = async () => {
             auth.user = (dec as unknown as JWTCLAIMS).aud as User
             auth.token = token
         }
-        console.log(auth)
-        // if (auth.authenticated) setRefreshInterceptor()
         store.dispatch(setAuthenticated(auth))
     } catch (error) {
         store.dispatch(setAuthenticated({ authenticated: false }))
@@ -122,12 +116,10 @@ const authSlice = createSlice({
                 application?: UserApplicationStatus
             }
         }) => {
-            console.log('SET AUTH CALLED')
             state.authenticated = payload.authenticated
             state.user = payload.user
             state.token = payload.token
             state.application = payload.application
-            console.log("SET AUTH", payload)
             setTimeout(() => {
                 store.dispatch(setAppState("completed"))
             }, 1500)
@@ -138,7 +130,6 @@ const authSlice = createSlice({
             }
         }) => {
             if (state.appState === 'pending') return
-            console.log('CHECK AUTH CALLED')
             state.appState = 'pending'
             if (getUserToken() === undefined) {
                 state.appState = 'completed'

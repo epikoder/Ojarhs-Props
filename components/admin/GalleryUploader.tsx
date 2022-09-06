@@ -8,13 +8,14 @@ type FilesType = {
     raw: string | Blob
 }[]
 
-export const GalleryUploader = ({ type, width, height, title, errMessage, handleChange }: {
+export const GalleryUploader = ({ type, width, height, title, errMessage, handleChange, pre }: {
     type: 'image' | 'video'
     width: number
     height?: number
     title: string
     errMessage?: string
     handleChange?: (links: string[]) => void
+    pre?: number
 }) => {
     const [files, setFiles] = React.useState<FilesType>([])
 
@@ -100,12 +101,12 @@ export const GalleryUploader = ({ type, width, height, title, errMessage, handle
                 })}
             </div>
             <div className="text-xs lg:text-sm text-center flex justify-center">
-                <button className={`px-6 py-2 ${Object.keys(files).length >= 20 ? 'bg-gray-500' : 'bg-red'} uppercase text-white rounded-xl`}
+                <button className={`px-6 py-2 ${pre + files.length >= 20 ? 'bg-gray-500' : 'bg-red'} uppercase text-white rounded-xl`}
                     onClick={() => {
                         setFiles([
                             ...files, { file: undefined, raw: undefined }
                         ])
-                    }} disabled={(files).length >= 20}>
+                    }} disabled={pre + (files).length >= 20}>
                     Add
                 </button>
             </div>

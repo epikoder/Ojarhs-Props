@@ -1,13 +1,13 @@
 import { PencilIcon } from "@heroicons/react/solid"
 import { useRouter } from "next/router"
-import { resolveImagePath } from "../../helpers/helpers"
+import { resolveFilePath } from "../../helpers/helpers"
 import { User } from "../../Typing.d"
 
 export const UserInfo = ({ user }: { user: User }) => {
     const router = useRouter()
     return <>
         <div className="flex flex-row">
-            <img src={resolveImagePath(user.photo)} className="rounded-full md:rounded-xl h-32 w-32 md:w-48 md:h-48 object-cover" />
+            <img src={resolveFilePath(user.photo)} className="rounded-full md:rounded-xl h-32 w-32 md:w-48 md:h-48 object-cover" />
             <div className="p-4 md:py-8">
                 <div className="flex mt-2">
                     <div className="font-semibold text-ellipsis overflow-hidden whitespace-nowrap w-36 md:w-48">

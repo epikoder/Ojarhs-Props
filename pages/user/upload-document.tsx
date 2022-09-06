@@ -26,7 +26,6 @@ const UploadDocument = () => {
                 if (res.status !== 200) return
                 setTypes((await res.json()).data)
             } catch (error) {
-                console.log(error)
             }
         }
         req()
@@ -49,7 +48,6 @@ const UploadDocument = () => {
     }) => {
         const { message, status, reference } = response
         if (message.toLowerCase() !== 'approved' || status.toLowerCase() !== 'success') {
-            console.log('fialed', response)
             return
         }
         dispatch(uploadDoc({

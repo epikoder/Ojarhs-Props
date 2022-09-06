@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { HTMLAttributes } from "react";
 import { useDispatch } from "react-redux";
 import { toggleSideBar } from "../features/ToggleSideBar";
-import { resolveImagePath } from "../helpers/helpers";
+import { resolveFilePath } from "../helpers/helpers";
 import { User } from "../Typing.d";
 
 const AdminMenu = ({ user }: { user: User }) => {
@@ -23,7 +23,7 @@ const AdminMenu = ({ user }: { user: User }) => {
 			</div>
 			<div>
 				<img
-					src={resolveImagePath(user !== undefined ? user.photo : '')}
+					src={resolveFilePath(user !== undefined ? user.photo : '')}
 					alt='ME'
 					className="rounded-full h-14 w-14"
 				/>

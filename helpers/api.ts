@@ -25,23 +25,17 @@ const Api = (useInterceptor?: boolean) => {
     const handleExpiredToken = async (error) => {
         try {
             let t = getUserToken()
-            console.log(t)
             if (t === undefined || t === null) {
                 return clearUserToken()
             }
             if ((error.response as AxiosResponse).status === 401) {
-                console.log("INTERCEPTOR", "GOT HERE")
-                console.log("EJECTING", _api.interceptors.response.eject(refreshInterceptor))
                 const res = await _api.post('/jwt/refresh')
-                console.log("FAILED REFRESHING", res)
                 if (res.status !== 200) {
-                    console.log("FAILED REFRESHING CLEAR")
                     _api.interceptors.response.eject(refreshInterceptor)
                     return clearUserToken()
                 }
             }
         } catch (error) {
-            console.log(error)
             _api.interceptors.response.eject(refreshInterceptor)
         }
     }

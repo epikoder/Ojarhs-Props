@@ -10,9 +10,6 @@ function Services() {
 
 	(async () => {
 		const { data, status } = await Api().get("/admin/services/all")
-		console.log(data.data);
-
-
 	})();
 
 

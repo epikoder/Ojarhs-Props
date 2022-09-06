@@ -20,7 +20,7 @@ function Plaza({ name, store, prop }: Shops) {
 
 			<div className='flex flex-row flex-wrap gap-8 items-center justify-center w-[90vw] mx-auto'>
 				{store.map((shop, index) => {
-					if (index + 1 === perPage) return <Card key={index} data={shop} />
+					if (index + 1 !== perPage) return <Card key={index} data={shop} />
 				})}
 			</div>
 

@@ -27,7 +27,7 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
 
     return <React.Fragment>
         <Script src='/scripts/noimage.js'></Script>
-        <div className='w-full grid-rows-6 gap-1 h-[100vh]'>
+        <div className='w-full grid-rows-6 gap-1 h-[90vh]'>
             {appState !== 'pending' ? <React.Fragment>
                 <SideBarHeader user={user} className="row-span-1" />
                 <PageLoader />

@@ -8,8 +8,6 @@ export const uploadDoc = createAsyncThunk("uploadDoc", async (payload: {
 }, { rejectWithValue }) => {
     try {
         let response = await Api().post("/user/pay", JSON.stringify(payload))
-        console.log(response)
     } catch (error) {
-        console.log(error)
     }
 })

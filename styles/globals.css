@@ -5,9 +5,11 @@
 @import "tailwindcss/utilities";
 @import "./shimmer.css";
 
-body, html {
+body,
+html {
     height: 100%;
 }
+
 .bg-red {
     background-color: red;
 }
@@ -63,6 +65,12 @@ body, html {
 
 [aria-current] {
     color: red
+}
+.szh-menu--state-open {
+    z-index: 10;
+}
+div.bg-force-white {
+    background-color: white !important;
 }
 
 div.spinner {
@@ -249,6 +257,7 @@ div.spinner div.bar12 {
     -webkit-box-orient: vertical;
     white-space: normal;
 }
-.bg{
+
+.bg {
     background-color: rgba(73, 71, 71, 0.524);
 }

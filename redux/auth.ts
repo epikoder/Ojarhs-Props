@@ -19,21 +19,18 @@ export const loginApi =
             })
             switch (response.status) {
                 case 400:
-                    console.log(400)
                     let data = await response.json() as ApiResponse
                     return rejectWithValue({
                         status: 'failed',
                         message: 'invalid username or password'
                     })
                 case 401:
-                    console.log(401)
                     let _data = await response.json()
                     return rejectWithValue({
                         status: 'failed',
                         message: _data.message
                     })
                 case 200:
-                    console.log(200)
                     let __data = await response.json() as ApiResponse<loginResponse>
                     if (__data.status === 'failed') return {
                         status: 'failed',
@@ -52,7 +49,6 @@ export const loginApi =
                     })
             }
         } catch (error) {
-            console.log(error)
             return rejectWithValue({
                 status: 'failed',
                 message: 'Error connecting to server'
@@ -70,7 +66,6 @@ export const loginAdminApi =
             })
             switch (response.status) {
                 case 400:
-                    console.log(400)
                     let data = await response.json() as ApiResponse
                     return rejectWithValue({
                         status: 'failed',
@@ -83,7 +78,6 @@ export const loginAdminApi =
                         message: _data.message
                     })
                 case 200:
-                    console.log(200)
                     let __data = await response.json() as ApiResponse<loginResponse>
                     if (__data.status === 'failed') return {
                         status: 'failed',
@@ -101,7 +95,6 @@ export const loginAdminApi =
                     })
             }
         } catch (error) {
-            console.log(error)
             return rejectWithValue({
                 status: 'failed',
                 message: 'Error connecting to server'

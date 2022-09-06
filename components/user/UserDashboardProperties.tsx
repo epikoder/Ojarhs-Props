@@ -21,7 +21,6 @@ const TableHead = () => <div className="py-4 mt-8 my-1 bg-black px-2 rounded-md 
 </div>
 
 const TableBody = ({ space, index }: { space: Space, index: number } & React.Attributes) => {
-    console.log(space)
     const [isOpen, setIsOpen] = React.useState<boolean>(false)
 
     return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
@@ -47,7 +46,6 @@ export const UserDashboardProperties = () => {
 
     React.useEffect(() => {
         if (properties.state === 'success') {
-            console.log(properties.data)
             setSortedData(properties.data ?? [])
         }
     }, [properties.state])
@@ -68,7 +66,7 @@ export const UserDashboardProperties = () => {
                 </div>
             </div>
         </div>}
-        tableHead={<TableHead />}
+        TableHead={() => <TableHead />}
         tableBody={(value: Space, index: number): JSX.Element => <TableBody space={value} index={index} key={index} />}
     />
 }

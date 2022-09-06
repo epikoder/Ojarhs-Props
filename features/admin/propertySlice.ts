@@ -3,11 +3,13 @@ import { addNewPropertyThunck, loadAdminProperties } from "../../redux/admin/pro
 import { store } from "../../store";
 import { DashboardDataState, Map, Space } from "../../Typing.d";
 
+const initialState: DashboardDataState<Space[]> = {
+	status: "nil",
+	data: [],
+}
 const propertySlice = createSlice({
 	name: "propertySlice",
-	initialState: {
-		data: []
-	} as DashboardDataState<Space[]>,
+	initialState: initialState,
 	reducers: {
 		addProperty: (state) => {
 		},
@@ -20,7 +22,23 @@ const propertySlice = createSlice({
 
 		updateProperty: (state) => {
 		},
-		resetPropertyStatus: (state) => { state.status = 'nil' }
+		toggleProperyStatus: (state, { payload, type }: {
+			payload: {
+				index: number
+				status: 'open' | 'occupied'
+			},
+			type: string
+		}) => {
+			return {
+				...state, data: state.data.slice(0, payload.index).concat({
+					...state.data[payload.index], status: payload.status
+				}).concat(state.data.slice(payload.index + 1, state.data.length))
+			}
+		},
+		resetPropertyStatus: (state) => {
+			state.status = 'nil'
+
+		}
 	},
 	extraReducers: (builder) => {
 		builder.addCase(addNewPropertyThunck.pending, (state, { payload }) => {
@@ -50,6 +68,6 @@ const propertySlice = createSlice({
 	}
 });
 
-export const { addProperty, deleteProperty, updateProperty, getProperty, resetPropertyStatus } = propertySlice.actions;
+export const { addProperty, deleteProperty, updateProperty, getProperty, resetPropertyStatus, toggleProperyStatus } = propertySlice.actions;
 export default propertySlice.reducer;
 

@@ -126,7 +126,6 @@ export const FormCountryInput = ({ props }: {
                 status: string
             }).data)
         } catch (error) {
-            console.log();
         }
     }
     useEffect(() => {

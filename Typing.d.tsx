@@ -20,6 +20,7 @@ export type Space = {
 	address?: string
 	plan: string
 	duration?: number
+	tenant?: string
 	created_at?: Date
 	updated_at?: Date
 }
@@ -131,7 +132,7 @@ export type LoadState = 'nil' | 'pending' | 'success' | 'failed'
 export type Map<T = any> = { [key: string]: T }
 export type DashboardDataState<T> = {
 	data: T
-	err: Map<string>
+	err?: Map<string>
 	status: LoadState
 	message?: string
 }
