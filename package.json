@@ -1,5 +1,5 @@
 {
-  "name": "ojars-props",
+  "name": "ojarh-properties",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -24,6 +24,7 @@
     "react-dom": "18.2.0",
     "react-paystack": "^4.0.0",
     "react-redux": "^8.0.2",
+    "react-responsive-carousel": "^3.2.23",
     "react-switch": "^7.0.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tw-elements": "^1.0.0-alpha12"
