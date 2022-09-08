@@ -46,7 +46,7 @@ function HomeSignUp() {
 								<span className="text-4xl" style={{
 									fontStyle: 'italic',
 									fontFamily: 'Space Grotesk'
-								}}>"</span>
+								}}>{'"'}</span>
 								<span className="text-lg" style={{
 									fontStyle: 'italic'
 								}}>
@@ -57,7 +57,7 @@ function HomeSignUp() {
 								<span className="text-4xl" style={{
 									fontStyle: 'italic',
 									fontFamily: 'Space Grotesk'
-								}}>"</span>
+								}}>{'"'}</span>
 							</div>
 						</div>
 					</div>
@@ -70,7 +70,7 @@ function HomeSignUp() {
 							<span className="text-4xl" style={{
 								fontStyle: 'italic',
 								fontFamily: 'Space Grotesk'
-							}}>"</span>
+							}}>{'"'}</span>
 							<span className="text-lg" style={{
 								fontStyle: 'italic'
 							}}>
@@ -81,7 +81,7 @@ function HomeSignUp() {
 							<span className="text-4xl" style={{
 								fontStyle: 'italic',
 								fontFamily: 'Space Grotesk'
-							}}>"</span>
+							}}>{'"'}</span>
 						</div>
 					</div>
 				</div>

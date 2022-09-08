@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { Head as HeadDoc } from "next/document"
 import Script from 'next/script';
 import React, { PropsWithChildren } from 'react'
 import { useSelector } from 'react-redux';
