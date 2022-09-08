@@ -44,7 +44,7 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Profile" href="/user/profile" />
                     <MenuItemMobile title="Service" href="/user/service" />
                     <MenuItemMobile title="Receipts" href="/user/receipt" />
-                    <MenuItemMobile title="Disputes" href="/user/dispute" />
+                    <MenuItemMobile title="Disputes" href="/user/disputes" />
                     <MenuItemMobile title="Adverts" href="/user/advert" />
                     {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/packout" />}
                     <hr />

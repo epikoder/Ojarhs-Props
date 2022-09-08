@@ -1,3 +1,5 @@
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
+import Head from "next/head"
 import React, { HTMLAttributes } from "react"
 import { useSelector } from "react-redux"
 import { loadPlans, loadPropertyTypes } from "../redux/resource"
@@ -17,15 +19,20 @@ export const PaymentPlans = ({ value, handleChange, className, error }: {
         }
     }, [status, data, dispatch])
     return <React.Fragment>
-        <select
-            required
-            value={value}
-            className={`${className ?? "outline-none bg-transparent text-gray-600"} ${error && 'outline-red-500'}`}
-            onChange={(e) => handleChange(e.target.value)}
-        >
-            <option value={""}>Choose Payment type</option>
-            {(status === 'success' && data !== undefined) && data.map((p, i) => <option key={i} value={p.name} > {p.name} </option>)}
-        </select>
+        <div className={className}>
+            <FormControl size="small" fullWidth>
+                <InputLabel>{'Payment Plan'}</InputLabel>
+                <Select
+                    value={value}
+                    label="Payment Plan"
+                    className="text-sm uppercase"
+                    size="small"
+                    onChange={(e) => handleChange(e.target.value)}
+                >
+                    {(status === 'success' && data !== undefined) && data.map((p, i) => <MenuItem className="uppercase text-sm" key={i} value={p.name} > {p.name} </MenuItem>)}
+                </Select>
+            </FormControl>
+        </div>
     </React.Fragment>
 }
 
@@ -43,14 +50,19 @@ export const PropertyType = ({ value, handleChange, className, error }: {
         }
     }, [status, data, dispatch])
     return <React.Fragment>
-        <select
-            required
-            value={value}
-            className={`${className ?? "outline-none bg-transparent text-gray-600"} ${error && 'outline-red-500'}`}
-            onChange={(e) => handleChange(e.target.value)}
-        >
-            <option value={""}>Choose property type</option>
-            {(status === 'success' && data !== undefined) && data.map((p, i) => <option key={i} value={p.name} > {p.name} </option>)}
-        </select>
+        <div className={className}>
+            <FormControl size="small" fullWidth>
+                <InputLabel>{'Property Type'}</InputLabel>
+                <Select
+                    value={value}
+                    label="Property Type"
+                    className="text-sm uppercase"
+                    size="small"
+                    onChange={(e) => handleChange(e.target.value as string)}
+                >
+                    {(status === 'success' && data !== undefined) && data.map((p, i) => <MenuItem className="uppercase text-sm" key={i} value={p.name} > {p.name} </MenuItem>)}
+                </Select>
+            </FormControl>
+        </div>
     </React.Fragment>
 }

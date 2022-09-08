@@ -11,26 +11,37 @@ import { loadIndex } from "../redux";
 import { RootState, useAppDispatch } from "../store";
 import { CardLoader } from "../components/Loader";
 import { useSelector } from "react-redux";
+import { Search } from "../components/Search";
+import { useRouter } from "next/router";
+import { checkIsAuthenticated } from "../features/authSlice";
 
 
 function Home() {
   const dispatch = useAppDispatch()
   const { data, state } = useSelector((store: RootState) => store.indexSlice)
+  const { authenticated } = useSelector((store: RootState) => store.authSlice)
+  const router = useRouter()
 
   React.useEffect(() => {
     dispatch(loadIndex({}))
   }, [dispatch])
 
+  React.useEffect(() => {
+    if (authenticated) return
+    sessionStorage.setItem('current', router.pathname)
+    dispatch(checkIsAuthenticated({}))
+  }, [])
+
   return (
     <div >
-      <Head>
-        <title>ojarh</title>
-      </Head>
-
       <Layout>
         <div className="space-y-4">
-          {/* <Link href="/Dashboard" className="mt-24 red"> Go to dashboard </Link> */}
           <TopSection />
+          <div className="justify-center hidden md:flex bg-white">
+            <div className='mx-4 max-w-xl lg:max-w-4xl my-2'>
+              <Search />
+            </div>
+          </div>
           <HomeSignUp />
           {state === 'pending' && <CardLoader />}
           {state === 'failed' && <div>

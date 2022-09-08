@@ -1,90 +1,121 @@
 import Link from "next/link";
 import React from "react";
-import { money } from "../helpers/helpers";
+import { Carousel } from "react-responsive-carousel";
+import { fixSpace, money, resolveFilePath } from "../helpers/helpers";
 import { Service, Space } from "../Typing.d";
 import Button from "./Button";
-import Slider from "./Slider";
+import PaymentIcon from '@mui/icons-material/Payment';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
+import PlaceIcon from '@mui/icons-material/Place';
+import { Parallax } from "react-parallax";
 
 
 function Card({ data }: { data: Space | Service }) {
 	if (data.type === "service") {
 		const service = data as Service
 		return (
-			<div className='w-70 relative h-[25vh] border rounded-lg overflow-hidden'>
-				<div className='text-xs z-20 absolute top-0 right-0 '>
-					<Button text={money(service.amount)} />
-				</div>
-
-				{/* sliders */}
-				<div className='w-full h-[21vh] relative top-0 cursor-pointer'>
-					<img
-						src="/image/041.webp"
-						className="block w-full h-full absolute"
-						alt="Wild Landscape"
-					/>
-					<div className='bg-black absolute opacity-40 z-10 h-full w-full'></div>
-					<div className='flex flex-col justify-center items-center absolute z-20 top-0 h-full text-white w-full space-y-3 text-xs px-4'>
-						<div>
-							<div className='text-gray-300 text-md'>
-								Name: <span className='text-white text-prop'>{service.name}</span>
-							</div>
-							<div className='text-gray-300 text-md'>
-								Description: <span className='text-white text-prop'>{service.description}</span>
-							</div>
-							<div className='text-gray-300 text-md'>
-								Manger: <span className='text-white text-prop'>{service.manager}</span>
-							</div>
-							<div className='text-gray-300 text-md'>
-								Payment Plan: <span className='text-white text-prop'>{service.plan}</span>
-							</div>
-						</div>
+			<div className='max-w-6xl w-70 border rounded-lg'>
+				<div className="relative">
+					<div className='text-xs z-20 absolute top-0 right-0 '>
+						<Button text={money(service.amount)} />
 					</div>
 				</div>
 
+				{/* sliders */}
+				<div className='w-full h-48 top-0 cursor-pointer'>
+					<Parallax blur={5} bgImage="/image/041.webp" bgImageAlt="" strength={300} className={'w-full h-full'} >
+						<div className='h-full py-8 text-white w-full space-y-3 text-xs px-4'
+							style={{
+								fontFamily: 'Roboto'
+							}}>
+							<div className='text-white text-lg uppercase'>{service.name}</div>
+							<div className='text-white text-md'>{service.manager}</div>
+							<div className='text-white uppercase text-md'>{service.plan}</div>
+							<div className='text-white three-lines ellipse text-md'>{service.description}</div>
+						</div>
+					</Parallax>
+				</div>
+
 				{/*pay button  */}
-				<div className='absolute bottom-0 z-20 text-center border bg-white w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>
+				<div className='text-center border bg-white w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>
 					PAY
 				</div>
 			</div>
 		);
 	}
 
-	const shop = data as Space
+	const space = data as Space
 	return (
-		<div className='w-70 relative h-[60vh] md:h-[40vh] border rounded-lg overflow-hidden'>
-			<div className='flex justify-between text-xs z-20 absolute top-0 w-full'>
-				<Button text={shop.status} className={shop.status === 'occupied' ? 'bg-gray-500' : ''} />
-				<Button text={money(shop.amount)} />
-			</div>
-
-			{/* sliders */}
-			<div className='w-full h-[35vh] md:h-[25vh] absolute top-0'>
-				<Slider images={shop.galleries.concat(shop.photo)} />
+		<div className='my-2 md:w-70 border overflow-hidden bg-white max-w-lg'>
+			<div className="relative">
+				<div className='flex justify-between text-xs z-10 absolute top-0 w-full'>
+					<Button text={space.status === 'open' ? 'For Rent' : 'Not Available'} className={space.status === 'occupied' ? 'bg-gray-500 text-white' : ''} />
+					<Button text={money(space.amount)} />
+				</div>
 			</div>
 
 			{/* cards description */}
-			<Link href={'/property/' + shop.slug}>
-				<div className='flex flex-col absolute bottom-8 min-h-[8vh] bg-white text-gray-900 w-full space-y-3 text-xs p-2 cursor-pointer'>
-					<div className='text-black text-md'>
-						Shop No: <span className='text-red-500 text-prop'>{shop.no}</span>
-					</div>
-					<div className='text-black text-md'>
-						Shop Address: <span className='text-red-500 text-prop'>{shop.address}</span>
-					</div>
-					<div className='text-black text-md'>
-						Shop Size: <span className='text-red-500 text-prop'>{shop.size}</span>
-					</div>
-					<div className='text-black text-md'>
-						Shop Description: <span className='text-red-500 text-prop'>{shop.description}</span>
-					</div>
-					<div className='text-black text-md'>
-						Payment Plan: <span className='text-red-500 text-prop uppercase text-sm'>{shop.plan}</span>
+			<div>
+				<div className="h-56 relative">
+					{/* <div className="absolute z-10 cursor-pointer hover:transform-cpu bg-slate-400">
+
+					</div> */}
+					<div className="h-full">
+						<Carousel
+							className={'h-full'}
+							autoPlay={true}
+							showIndicators={true}
+							showStatus={false}
+							showThumbs={false}
+							infiniteLoop={true}
+							transitionTime={1000}
+							emulateTouch={true}
+						>
+							{space.galleries.concat(space.photo).map((s, i) =>
+								<div key={i} className="h-full w-full hover:scale-125 duration-300 transition-all ease-in-out">
+									<img src={resolveFilePath(s)} className={'h-full w-full object-cover'} />
+								</div>
+							)}
+						</Carousel>
 					</div>
 				</div>
-			</Link>
+				<div className="flex justify-around items-center bg-red-600">
+					<div className="text-xs text-white">
+						<FullscreenIcon />
+						<span className="uppercase mx-1">
+							{space.size}
+						</span>
+					</div>
+					<div className="text-xs uppercase text-white">
+						{space.type}
+					</div>
+					<div className="text-xs text-white">
+						<PaymentIcon />
+						<span className="uppercase mx-1">
+							{space.plan}
+						</span>
+					</div>
+				</div>
+				<Link href={'/property/' + space.slug}>
+					<div className='bg-white text-gray-900 w-full space-y-3 text-xs p-2 cursor-pointer px-8'>
+						<div className="text-lg" style={{
+							fontFamily: 'Space Grotesk'
+						}}>
+							{space.name}
+						</div>
+						<div className="text-gray-500">
+							<PlaceIcon fontSize="small" />
+							{space.address}
+						</div>
+						<div className="ellipse three-lines">
+							{space.description} {'sjdadn sjdhaj dha shdsjldhskjdhsa dsjhdajdhsjdh adhajsdhsajkdhajd ashd sdhjkdhjd alajdhjahldkasdj asdjha'}
+						</div>
+					</div>
+				</Link>
+			</div>
 
 			{/* pay button */}
-			<div className='absolute bottom-0 text-center border w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>
+			<div className='text-center border w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>
 				PAY
 			</div>
 		</div>

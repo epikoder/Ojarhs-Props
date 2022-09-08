@@ -8,6 +8,7 @@
 body,
 html {
     height: 100%;
+    font-family: 'roboto';
 }
 
 .bg-red {
@@ -66,9 +67,11 @@ html {
 [aria-current] {
     color: red
 }
+
 .szh-menu--state-open {
     z-index: 10;
 }
+
 div.bg-force-white {
     background-color: white !important;
 }
@@ -244,6 +247,13 @@ div.spinner div.bar12 {
     }
 }
 
+.ellipse {
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .two-lines {
     -webkit-line-clamp: 2;
     display: -webkit-box;
@@ -261,3 +271,22 @@ div.spinner div.bar12 {
 .bg {
     background-color: rgba(73, 71, 71, 0.524);
 }
+
+/* carousel */
+.carousel-root {
+    height: 100%;
+}
+
+.carousel.carousel-slider {
+    height: 100%;
+}
+
+.carousel .slider-wrapper {
+    height: 100%;
+}
+
+.carousel .slider-wrapper.axis-horizontal .slider {
+    height: 100%;
+}
+
+/* carousel end */

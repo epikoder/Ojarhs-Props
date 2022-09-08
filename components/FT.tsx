@@ -1,12 +1,18 @@
 import React from 'react'
 
 
-function FT({icon, title, details}) {
+function FT({ icon, title, details }: {
+  icon: JSX.Element
+  title: string
+  details: JSX.Element
+}) {
   return (
-    <div className='text-white flex-col flex gap-2 text-center items-center justify-center font-body'>
-        <div className='w-10 '>{icon}</div>
-        <h1 className='font-thin'>{title}</h1>
-        <p className='text-sm font-thin font-serif'>{details}</p>
+    <div className='text-white text-center'>
+      <div className='flex justify-center'>{icon}</div>
+      <div className='font-thin text-sm'>{title}</div>
+      <div className='text-sm font-thin font-serif' style={{
+        overflowWrap: 'anywhere'
+      }}>{details}</div>
     </div>
   )
 }

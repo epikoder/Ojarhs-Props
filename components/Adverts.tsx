@@ -1,8 +1,15 @@
+import Image from 'next/image'
 import React from 'react'
 
 function Adverts() {
   return (
-    <div className='bg-black text-white h-[30vh] mx-4 rounded-md'>Adverts</div>
+    <div className='flex justify-center mx-4'>
+      <img
+        src='/image/041.webp'
+        alt=''
+        className='md:max-w-[90%] rounded-md lg:rounded-l-none'
+      />
+    </div>
   )
 }
 
