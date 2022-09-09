@@ -19,7 +19,10 @@ function SignUp() {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
 	const [secondNextofKin, setSecondNextofKin] = useState<boolean>(false)
-	const [form, setForm] = useState<SignUpForm>({} as SignUpForm)
+	const [form, setForm] = useState<SignUpForm>({
+		country: '',
+		next_of_kins: [{ kcountry: '' }]
+	} as SignUpForm)
 	const [nextOfKinForm, setNextOfKinForm] = useState<NextOfKin[]>([{} as NextOfKin])
 	const [errors, setErrors] = useState<SignUpForm>({} as SignUpForm)
 	const [cPassword, setCPassowrd] = useState('')
@@ -27,28 +30,25 @@ function SignUp() {
 	const formRef = useRef<HTMLFormElement>()
 
 	useEffect(() => {
+		console.log(2)
 		if (secondNextofKin) {
 			if (nextOfKinForm.length === 2) {
 				setNextOfKinForm(nextOfKinForm)
 			} else {
-				setNextOfKinForm([nextOfKinForm[0], {} as NextOfKin])
+				setNextOfKinForm([nextOfKinForm[0], { kcountry: '' } as NextOfKin])
 			}
 		} else {
 			setNextOfKinForm([nextOfKinForm[0]])
 		}
-		setForm({ ...form, next_of_kins: nextOfKinForm, })
-	}, [secondNextofKin, form, nextOfKinForm])
-
-	useEffect(() => {
-		setForm({ ...form, next_of_kins: nextOfKinForm, })
-	}, [nextOfKinForm, form])
+	}, [secondNextofKin])
 
 	const getError = (key: string): string | undefined => {
 		return errors[key]
 	}
 
 	const submit = async () => {
-		if (form.password !== cPassword) {
+		let _form = { ...form, next_of_kins: nextOfKinForm, }
+		if (_form.password !== cPassword) {
 			setMessage({ text: "password do not match" })
 			return
 		}
@@ -64,7 +64,7 @@ function SignUp() {
 			setErrors({} as SignUpForm)
 			var res = await fetch(BASEURL + "/auth/register", {
 				method: 'POST',
-				body: JSON.stringify(form)
+				body: JSON.stringify(_form)
 			})
 			setLoading(false)
 			switch (res.status) {
@@ -235,6 +235,7 @@ function SignUp() {
 						<FormCountryInput props={{
 							title: 'Country',
 							required: true,
+							value: form.country,
 							handleChange: (s) => {
 								setForm({
 									...form, country: s as unknown as string
@@ -336,7 +337,7 @@ function SignUp() {
 								message: ((): string => {
 									if (nextOfKinForm.length === 0) return
 									if (nextOfKinForm[0].kemail === undefined) return undefined
-									return emailValidator(form.next_of_kins[0].kemail)
+									return emailValidator(nextOfKinForm[0].kemail)
 								})(),
 								handleChange: (s) => {
 									nextOfKinForm[0].kemail = s as unknown as string
@@ -381,6 +382,7 @@ function SignUp() {
 							<FormCountryInput props={{
 								title: 'Country',
 								required: true,
+								value: nextOfKinForm[0].kcountry,
 								handleChange: (s) => {
 									nextOfKinForm[0].kcountry = s as unknown as string
 									setNextOfKinForm([
@@ -444,9 +446,9 @@ function SignUp() {
 									type: 'text',
 									required: true,
 									message: ((): string => {
-										if (form.next_of_kins.length !== 2) return
-										if (form.next_of_kins[1].kemail === undefined) return undefined
-										return emailValidator(form.next_of_kins[1].kemail)
+										if (nextOfKinForm.length !== 2) return
+										if (nextOfKinForm[1].kemail === undefined) return undefined
+										return emailValidator(nextOfKinForm[1].kemail)
 									})(),
 									handleChange: (s) => {
 										nextOfKinForm[1].kemail = s as unknown as string
@@ -493,6 +495,7 @@ function SignUp() {
 								}} />
 								<FormCountryInput props={{
 									title: 'Country',
+									value: nextOfKinForm[1].kcountry,
 									required: true,
 									handleChange: (s) => {
 										nextOfKinForm[1].kcountry = s as unknown as string

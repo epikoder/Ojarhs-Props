@@ -9,6 +9,8 @@ import { RootState, useAppDispatch } from "../store";
 import { loginApi } from "../redux/auth";
 import { useRouter } from "next/router";
 import { checkIsAuthenticated, clearErr } from "../features/authSlice";
+import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type LoginForm = {
 	email: string
@@ -18,7 +20,7 @@ type LoginForm = {
 function Login() {
 	const dispatch = useAppDispatch();
 	const router = useRouter()
-	const togglePasswordState = useSelector(TogglePasswordState);
+	const [isHidden, setIsHidden] = React.useState(true)
 	const [remember, setRemember] = useState<boolean>(false);
 	const [form, setForm] = useState<LoginForm>({} as LoginForm)
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
@@ -38,7 +40,7 @@ function Login() {
 		if (authenticated) setTimeout(() => {
 			if (user !== undefined && user.is_admin) return router.replace("/admin/dashboard")
 			const path = sessionStorage.getItem('current')
-			router.replace(path !== null && (path !== '/login' && path !== '/sign-up' && !path.includes('/admin/')) ? path : '/user/dashboard')
+			router.replace(path !== null && (path !== '/login' && path !== '/sign-up' && !path.includes('/admin/') && path !== '/') ? path : '/user/dashboard')
 		}, 200)
 	}, [authenticated, router, user])
 
@@ -70,30 +72,43 @@ function Login() {
 					{message.text !== undefined && message.text}
 				</div>
 				<form ref={formRef} onSubmit={e => e.preventDefault()} className="space-y-4 py-2 p-4 items-center justify-center">
-					<FormInput props={{
-						title: 'Email',
-						name: "email",
-						type: 'email',
-						required: true,
-						handleChange: (s) => {
+					<TextField
+						label='Email'
+						variant="outlined"
+						size="small"
+						type={'email'}
+						className="w-full text-sm"
+						placeholder="Email"
+						onChange={(s) => {
 							setForm({
-								...form, email: s as unknown as string
+								...form, email: s.target.value as unknown as string
 							})
-						}
-					}} />
-
-					<FormPasswordInput props={{
-						title: 'Password',
-						name: "password",
-						requried: true,
-						hidden: togglePasswordState,
-						handleChange: (s) => {
-							setForm({
-								...form, password: s as unknown as string
-							})
-						}
-					}} />
-
+						}} />
+					<FormControl className="m-0" sx={{ m: 1, width: '100%' }} variant="outlined" size="small">
+						<InputLabel>Password</InputLabel>
+						<OutlinedInput
+							type={!isHidden ? 'text' : 'password'}
+							value={form.password}
+							onChange={(s) => {
+								setForm({
+									...form, password: s.target.value as unknown as string
+								})
+							}}
+							endAdornment={
+								<InputAdornment position="end">
+									<IconButton
+										aria-label="toggle password visibility"
+										onClick={() => setIsHidden(!isHidden)}
+										onMouseDown={() => setIsHidden(!isHidden)}
+										edge="end"
+									>
+										{!isHidden ? <VisibilityOff /> : <Visibility />}
+									</IconButton>
+								</InputAdornment>
+							}
+							label="Password"
+						/>
+					</FormControl>
 					<div className='form-check flex justify-between md:items-center flex-col md:flex-row space-y-2 items-start'>
 						<label
 							className='form-check-label inline-block text-gray-500 text-sm items-center'

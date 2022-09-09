@@ -79,7 +79,7 @@ function Card({ data }: { data: Space | Service }) {
 						</Carousel>
 					</div>
 				</div>
-				<div className="flex justify-around items-center bg-red-600">
+				<div className="grid grid-cols-3 text-center items-center bg-red-600">
 					<div className="text-xs text-white">
 						<FullscreenIcon />
 						<span className="uppercase mx-1">
@@ -108,7 +108,7 @@ function Card({ data }: { data: Space | Service }) {
 							{space.address}
 						</div>
 						<div className="ellipse three-lines">
-							{space.description} {'sjdadn sjdhaj dha shdsjldhskjdhsa dsjhdajdhsjdh adhajsdhsajkdhajd ashd sdhjkdhjd alajdhjahldkasdj asdjha'}
+							{space.description}
 						</div>
 					</div>
 				</Link>

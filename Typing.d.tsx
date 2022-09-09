@@ -27,6 +27,7 @@ export type Space = {
 
 export type Testimony = {
 	name: string;
+	photo?: string
 	testimony: string;
 };
 

@@ -45,7 +45,7 @@ export const Search = () => {
                             <PaymentPlans handleChange={() => { }} className={'w-full md:w-44 md:mx-2'} />
                         </div>
                     </div>
-                    <div className="my-2 w-full px-2">
+                    <div className="my-2 w-full px-4">
                         <div className="flex justify-end">
                             <div className="text-gray-500 text-xs mx-2">
                                 {money(calValue(minMax[0]))}

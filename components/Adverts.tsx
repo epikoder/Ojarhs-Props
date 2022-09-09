@@ -3,11 +3,16 @@ import React from 'react'
 
 function Adverts() {
   return (
-    <div className='flex justify-center mx-4'>
+    <div className='md:flex flex-row justify-center'>
       <img
-        src='/image/041.webp'
+        src='/image/ads1.jpg'
         alt=''
-        className='md:max-w-[90%] rounded-md lg:rounded-l-none'
+        className='max-w-[99%] md:max-w-[50%] object-cover'
+      />
+      <img
+        src='/image/ads2.jpg'
+        alt=''
+        className='max-w-[99%] md:max-w-[50%] object-cover'
       />
     </div>
   )

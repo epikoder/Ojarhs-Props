@@ -1,11 +1,12 @@
+import { TextField } from "@mui/material";
 import React from "react";
 import { Testimony } from "../Typing.d";
-import Button from "./Button";
+import Button, { OjarhButton } from "./Button";
 import TestimonialSlide from "./TestimonialSlide";
 
 
 
-function Testimonials({ testimony }) {
+function Testimonials({ testimony }: { testimony: Testimony[] }) {
     return (
         <div>
             {/* Testimonies */}
@@ -14,15 +15,19 @@ function Testimonials({ testimony }) {
                 {/* Report  */}
                 <div className=" lg:w-5/12 flex flex-col space-y-2 bg-gray-100 border shadow-sm shadow-gray-400 p-4 rounded-lg">
                     <h1>Review</h1>
-                    <label htmlFor="" className="flex flex-col space-y-1" >
-                        <span>Subject</span>
-                        <input type="text" className=" border outline-none bg-gray-200 rounded-full px-4 text-gray-600 " />
-                    </label>
-                    <label htmlFor="" className="flex flex-col space-y-1 ">
-                        <span> Message </span>
-                        <textarea name="" id="" className="  outline-none bg-gray-200 text-gray-600 px-4"></textarea>
-                    </label>
-                    <button className="bg-hov text-gray-600 w-4/12 mx-auto rounded-full px-2 py-1 hover:scale-110 active:scale-95" >Submit</button>
+                    <TextField
+                        label='Subject'
+                        variant="outlined"
+                        size="small"
+                        className="w-4/5 text-sm"
+                        placeholder="Subject" />
+                    <TextField
+                        label='Review'
+                        variant="outlined"
+                        size="small"
+                        className="w-4/5 text-sm"
+                        placeholder="Review" />
+                    <OjarhButton text="Submit" className="hover:bg-transparent hover:text-red-500" />
                 </div>
             </div>
         </div>

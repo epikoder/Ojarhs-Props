@@ -4,7 +4,7 @@ import { Carousel } from "react-responsive-carousel";
 import { resolveFilePath } from "../helpers/helpers";
 typeof window !== "undefined" ? import("tw-elements") : " ";
 
-function Slider({ images = [], className }: { images?: string[], className?: string }) {
+function Slider({ images = [], className, demo = false }: { images?: string[], className?: string, demo?: boolean }) {
   return (
     <Carousel
       className={'h-full'}
@@ -16,9 +16,15 @@ function Slider({ images = [], className }: { images?: string[], className?: str
       transitionTime={1000}
       emulateTouch={true}
     >
-      {images.map((s, i) =>
-        <img key={i} src={resolveFilePath(s)} className={'rounded-md h-full w-full object-cover'} />
-      )}
+      {demo === false ?
+        images.map((s, i) =>
+          <img key={i} src={resolveFilePath(s)} className={`h-full w-full object-cover ${className}`} />
+        )
+        :
+        ['ads1.jpg', 'ads2.jpg', 'ads3.jpg'].map((s, i) =>
+          <img key={i} src={'image/' + s} className={`h-full w-full object-cover ${className}`} />
+        )
+      }
     </Carousel>
   );
 }

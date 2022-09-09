@@ -1,5 +1,6 @@
 import { EyeOffIcon } from "@heroicons/react/outline"
 import { EyeIcon } from "@heroicons/react/solid"
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { BASEURL } from "../constants"
@@ -112,6 +113,7 @@ export const FormCountryInput = ({ props }: {
         title: string
         required?: boolean
         handleChange?: <T>(s: T) => void
+        value?: string
     }
 }) => {
     const [countries, setCountries] = useState<Country[]>([])
@@ -138,13 +140,20 @@ export const FormCountryInput = ({ props }: {
             htmlFor=''
             className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg px-4 py-2 my-2'
         >
-            <span className='text-gray-600 mb-2 text-sm idden'>{props.title}</span>
-            <select key={"se"} onChange={(e) => { props.handleChange(e.target.value) }} className='my-2' required={props.required} >
-                <option key={"unique"} value={"Select country"}>Select Country</option>
-                {countries !== undefined && countries.map((c, i) => <>
-                    <option key={i} value={c.code}>{c.name}</option>
-                </>)}
-            </select>
+            <FormControl size="small" fullWidth>
+                <InputLabel>{'Country'}</InputLabel>
+                <Select
+                    value={props.value !== undefined ? props.value : ''}
+                    label="Country"
+                    className="text-sm uppercase"
+                    size="small"
+                    onChange={(e) => props.handleChange(e.target.value as string)}
+                >
+                    {countries !== undefined && countries.map((c, i) =>
+                        <MenuItem className="uppercase text-sm" key={i} value={c.code} > {c.name} </MenuItem>
+                    )}
+                </Select>
+            </FormControl>
         </label>
     </>
 }
