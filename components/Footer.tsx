@@ -10,7 +10,7 @@ function Footer() {
     return (
         <div>
             {/* the red background with phone email and location  */}
-            <div className='bg-red py-12 px-4 gap-2 grid grid-cols-3 mt-12'>
+            <div className='bg-red py-12 px-4 gap-2 grid grid-cols-3'>
                 {/* no vex for the component name oh i no fit think of better name */}
                 <FT icon={<PhoneOutgoingIcon className='w-8' />} title="Phone Number" details={<span>{OjarhPhone}</span>} />
                 <FT icon={<LocationMarkerIcon className='w-8' />} title="Location" details={<span className='text-sm'>{OjarhAddress}</span>} />

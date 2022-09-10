@@ -63,10 +63,10 @@ function Login() {
 
 	return (
 		<Layout>
-			<div className='lg:w-5/12 sm:w-8/12 w-11/12 mt-24 space-y-4 py-8 bg-gray-100 mx-auto shadow-md shadow-gray-500  p-4'>
-				<h1 className='red text-center lg:text-3xl md:text-2xl text-2xl '>
+			<div className='lg:w-5/12 sm:w-8/12 w-11/12 space-y-4 py-8 bg-gray-100 mx-auto shadow-md shadow-gray-500  p-4 my-4'>
+				<div className='red text-center lg:text-2xl md:text-xl text-lg '>
 					Login
-				</h1>
+				</div>
 
 				<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 					{message.text !== undefined && message.text}
@@ -84,7 +84,7 @@ function Login() {
 								...form, email: s.target.value as unknown as string
 							})
 						}} />
-					<FormControl className="m-0" sx={{ m: 1, width: '100%' }} variant="outlined" size="small">
+					<FormControl sx={{ m: 1, width: '100%', margin: 0 }} variant="outlined" size="small">
 						<InputLabel>Password</InputLabel>
 						<OutlinedInput
 							type={!isHidden ? 'text' : 'password'}
@@ -124,7 +124,7 @@ function Login() {
 							<span>Remember Me</span>
 						</label>
 
-						<Link href='#'>
+						<Link href='/forgot-password'>
 							<div className='text-sm text-gray-500 cursor-pointer hover:text-red-600'>
 								Forgot Password ?
 							</div>

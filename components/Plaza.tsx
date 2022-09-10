@@ -6,10 +6,10 @@ interface Shops {
 	store: Space[] | Service[];
 	name: string
 	prop: string
+	perPage?: number
 }
 
-const perPage = 12
-function Plaza({ name, store, prop }: Shops) {
+function Plaza({ name, store, prop, perPage = 12 }: Shops) {
 	return (
 		<div>
 			<h1 className='text-black text-center my-4 uppercase text-md lg:text-3xl'>

@@ -104,7 +104,7 @@ function SignUp() {
 	return (
 		<Layout>
 			<div className='my-16 bg-gray-100 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 py-4'>
-				<h1 className='red text-center text-2xl my-2'> Sign Up</h1>
+				<div className='red text-center lg:text-2xl md:text-xl text-lg '> Sign Up</div>
 				<div className={`text-center text-md font-sans text-red-500`}>
 					All fields are compulsory
 				</div>

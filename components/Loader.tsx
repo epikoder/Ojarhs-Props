@@ -1,3 +1,4 @@
+import { style } from "@mui/system";
 import { Router } from "next/router";
 import React from "react";
 
@@ -73,6 +74,7 @@ export const PageLoader = () => {
     Router.events.on('routeChangeStart', () => {
         setLoading(true)
     })
+    Router.events.on('hashChangeStart', () => console.log('HASH CHANGE'))
     Router.events.on('routeChangeComplete', () => {
         setLoading(false)
     })
@@ -98,7 +100,7 @@ export const PageLoader = () => {
         return () => clearInterval(ref.current)
     }, [loading])
 
-    return <div className={`h-1 bg-black relative duration-75 ease-linear transition-all`}>
+    return <div className={`bg-black duration-75 ease-linear absolute top-0 left-0 right-0 transition-all`} style={{ zIndex: 10000000, height: 2 }}>
         <div className="bg-blue-500 h-full" style={{
             width: `${val}%`
         }}>

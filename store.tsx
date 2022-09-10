@@ -11,6 +11,8 @@ import accountSlice from './features/user/accountSlice'
 import ServiceSlice from './features/ServiceSlice'
 import propertySlice from './features/admin/propertySlice'
 import resourceSlice from './features/resourceSlice'
+import propertyDetailSlice from './features/propertyDetailSlice'
+import searchSlice from './features/searchSlice'
 
 
 export const store = configureStore({
@@ -26,6 +28,8 @@ export const store = configureStore({
     accountSlice: accountSlice,
     resourceSlice: resourceSlice,
     serviceSlice: ServiceSlice,
+    propertDetailSlice: propertyDetailSlice,
+    searchSlice: searchSlice
   },
 })
 

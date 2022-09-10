@@ -4,19 +4,8 @@ import Image from "next/image";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import { openMenu, closeMenu, openState } from "../features/HeaderMenu";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import NavLink from "./NavLink";
 import { RootState } from "../store";
-
-if (typeof window !== 'undefined') {
-	window.document.onscroll = (e) => {
-		if (window.scrollY >= 100) {
-			window.document.getElementById('fixedTop').style.position = 'fixed'
-		} else {
-			window.document.getElementById('fixedTop').style.position = 'unset'
-		}
-	}
-}
 
 function Header() {
 	const dispatch = useDispatch();
@@ -24,6 +13,33 @@ function Header() {
 	const isAuthenticated = useSelector((store: RootState) => store.authSlice.authenticated)
 	const [fixed, setFixed] = React.useState(false)
 
+	let lsc = 0
+	if (typeof window !== 'undefined') {
+		const el = window.document.getElementById('fixedTop')
+		lsc = window.scrollY || window.document.documentElement.scrollTop
+		let sc = 0
+		window.document.onscroll = (e) => {
+			const csc = window.scrollY || window.document.documentElement.scrollTop
+			if (csc > lsc) {
+				sc = sc < -105 && window.scrollY <= 150 ? sc : sc - 5
+				if (window.scrollY >= 150) sc = -100
+				if (window.scrollY > 200) {
+					el.style.transition = 'all 0.8s linear'
+					el.style.transform = 'translateY(100px)'
+					el.style.position = 'fixed'
+					el.style.top = `${sc}px`
+				} else {
+					// el.style.top = `${sc}px`
+					el.style.position = 'fixed'
+				}
+			} else {
+				sc = sc > 0 ? sc : sc + 5
+				el.style.position = sc >= 0 && window.scrollY <= 100 ? 'unset' : 'fixed'
+				el.style.transform = ''
+			}
+			lsc = csc <= 0 ? 0 : csc
+		}
+	}
 
 	return (
 		<div id="fixedTop" style={{
@@ -38,7 +54,7 @@ function Header() {
 							<Link href='/'>
 								<img
 									src='/image/logo.png'
-									className="h-16 w-24"
+									className="h-16 w-24 cursor-pointer"
 									alt='ojarh'
 								/>
 							</Link>

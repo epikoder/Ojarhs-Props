@@ -1,3 +1,4 @@
+import { Button as MUIButton } from '@mui/material'
 import React, { HTMLAttributes } from 'react'
 
 export const OjarhButton = ({ text, position = 'center', rounded = false, onClick, fullWidth = false, className = 'hover:bg-red-600' }: {
@@ -12,7 +13,7 @@ export const OjarhButton = ({ text, position = 'center', rounded = false, onClic
     <div className={`${fullWidth ? '' : 'flex'} justify-${position} items-center`}>
       <div
         onClick={onClick}
-        className={`text-white uppercase bg-red-700 ${className} hover:text-white border px-2 py-1 duration-300 transition-all ease-in-out cursor-pointer ${rounded ? 'rounded-md' : ''}`}>
+        className={`text-white uppercase bg-red-600 ${className} border px-2 py-1 duration-300 transition-all ease-in-out cursor-pointer ${rounded ? 'rounded-md' : ''}`}>
         {text}
       </div>
     </div>

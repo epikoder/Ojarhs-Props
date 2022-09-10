@@ -1,20 +1,22 @@
 import Link from "next/link";
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
-import { fixSpace, money, resolveFilePath } from "../helpers/helpers";
+import { money, resolveFilePath } from "../helpers/helpers";
 import { Service, Space } from "../Typing.d";
 import Button from "./Button";
 import PaymentIcon from '@mui/icons-material/Payment';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import PlaceIcon from '@mui/icons-material/Place';
-import { Parallax } from "react-parallax";
+import { UserIcon } from "@heroicons/react/outline";
+import { Button as MuiButton } from "@mui/material"
+import { PayButton } from "./PayButton";
 
 
-function Card({ data }: { data: Space | Service }) {
+function Card({ data, className }: { data: Space | Service, className?: string }) {
 	if (data.type === "service") {
 		const service = data as Service
 		return (
-			<div className='max-w-6xl w-70 border rounded-lg'>
+			<div className={`max-w-6xl ${className || 'w-[90vw] md:w-70 lg:w-70'} border rounded-lg`}>
 				<div className="relative">
 					<div className='text-xs z-20 absolute top-0 right-0 '>
 						<Button text={money(service.amount)} />
@@ -23,30 +25,38 @@ function Card({ data }: { data: Space | Service }) {
 
 				{/* sliders */}
 				<div className='w-full h-48 top-0 cursor-pointer'>
-					<Parallax blur={5} bgImage="/image/041.webp" bgImageAlt="" strength={300} className={'w-full h-full'} >
-						<div className='h-full py-8 text-white w-full space-y-3 text-xs px-4'
-							style={{
-								fontFamily: 'Roboto'
-							}}>
-							<div className='text-white text-lg uppercase'>{service.name}</div>
-							<div className='text-white text-md'>{service.manager}</div>
-							<div className='text-white uppercase text-md'>{service.plan}</div>
-							<div className='text-white three-lines ellipse text-md'>{service.description}</div>
+					<img src={"image/ads1.jpg"} className='w-full h-full' />
+				</div>
+				<div className="bg-white">
+					<div className="text-xs text-white text-center bg-red-500">
+						<PaymentIcon />
+						<span className="uppercase mx-1">
+							{service.plan}
+						</span>
+					</div>
+					<div className='text-gray-900 w-full space-y-3 text-xs p-2 cursor-pointer px-8'>
+						<div className="text-lg" style={{
+							fontFamily: 'Space Grotesk'
+						}}>
+							{service.name}
 						</div>
-					</Parallax>
+						<div className="text-gray-500 flex items-center">
+							<UserIcon className="w-5" />
+							<span className="px-2 text-md">{service.manager}</span>
+						</div>
+						<div className="ellipse three-lines">
+							{service.description}
+						</div>
+					</div>
+					<PayButton slug={service.slug} />
 				</div>
-
-				{/*pay button  */}
-				<div className='text-center border bg-white w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>
-					PAY
-				</div>
-			</div>
+			</div >
 		);
 	}
 
 	const space = data as Space
 	return (
-		<div className='my-2 md:w-70 border overflow-hidden bg-white max-w-lg'>
+		<div className={`my-2 ${className || 'w-[90vw] sm:w-[60vw] md:w-70'} border overflow-hidden bg-white max-w-lg`}>
 			<div className="relative">
 				<div className='flex justify-between text-xs z-10 absolute top-0 w-full'>
 					<Button text={space.status === 'open' ? 'For Rent' : 'Not Available'} className={space.status === 'occupied' ? 'bg-gray-500 text-white' : ''} />
@@ -97,7 +107,7 @@ function Card({ data }: { data: Space | Service }) {
 					</div>
 				</div>
 				<Link href={'/property/' + space.slug}>
-					<div className='bg-white text-gray-900 w-full space-y-3 text-xs p-2 cursor-pointer px-8'>
+					<div className='bg-white text-gray-900 w-full text-left space-y-3 text-xs p-2 cursor-pointer px-8'>
 						<div className="text-lg" style={{
 							fontFamily: 'Space Grotesk'
 						}}>
@@ -113,11 +123,7 @@ function Card({ data }: { data: Space | Service }) {
 					</div>
 				</Link>
 			</div>
-
-			{/* pay button */}
-			<div className='text-center border w-full hov py-1.5 px-3 cursor-pointer bg-hov rounded transition-all duration-300 ease-in-out'>
-				PAY
-			</div>
+			<PayButton slug={space.slug} />
 		</div>
 	);
 }
