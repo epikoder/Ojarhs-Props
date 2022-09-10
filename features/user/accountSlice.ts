@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadUserProperties, loadUserServices } from "../../redux/user/dashboard";
-import { RootState } from "../../store";
+import { uploadDoc } from "../../redux/user/uploadDoc";
+import { RootState, store } from "../../store";
 import { LoadState, Service, Space } from "../../Typing.d";
+import { checkIsAuthenticated } from "../authSlice";
 
 type AccountState = {
     properties: {
@@ -11,6 +13,10 @@ type AccountState = {
     services: {
         state: LoadState
         data: Service[]
+    },
+    documentUpload: {
+        state: LoadState
+        message: string
     }
 }
 const AccountSlice = createSlice({
@@ -21,6 +27,9 @@ const AccountSlice = createSlice({
         },
         services: {
             state: "success"
+        },
+        documentUpload: {
+            state: 'nil'
         }
     } as AccountState,
     reducers: {},
@@ -46,6 +55,19 @@ const AccountSlice = createSlice({
             state.services.data = payload as Service[]
         })
         builder.addCase(loadUserServices.rejected, (state, { payload }) => { state.services.state = 'failed' })
+
+        {/*Document Upload */ }
+        builder.addCase(uploadDoc.pending, (state) => {
+            state.documentUpload.state = 'pending'
+        })
+        builder.addCase(uploadDoc.fulfilled, (state, { payload }) => {
+            state.documentUpload.state = 'success'
+            state.documentUpload.message = payload.message
+        })
+        builder.addCase(uploadDoc.rejected, (state) => {
+            state.documentUpload.state = 'failed'
+            state.documentUpload.message = 'Error processing your application'
+        })
     },
 })
 

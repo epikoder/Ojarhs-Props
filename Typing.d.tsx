@@ -137,4 +137,4 @@ export type DashboardDataState<T> = {
 	status: LoadState
 	message?: string
 }
-export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected'
+export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected' | 'document-required'

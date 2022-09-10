@@ -2,21 +2,24 @@ import React, { useRef } from "react"
 import { DocumentUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { PaystackConsumer } from "react-paystack"
-import { BASEURL, pk_key } from "../../constants"
+import { applicationFee, BASEURL, pk_key } from "../../constants"
 import { useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "../../store"
 import { useRouter } from "next/router"
 import { uploadDoc } from "../../redux/user/uploadDoc"
+import { Button, CircularProgress } from "@mui/material"
+import { money } from "../../helpers/helpers"
+import { User, UserApplicationStatus } from "../../Typing.d"
+import { checkIsAuthenticated } from "../../features/authSlice"
 
 const UploadDocument = () => {
     const [docType, setDocType] = React.useState<string>('0')
     const [docUrl, setDocUrl] = React.useState<string>('')
     const [types, setTypes] = React.useState<{ id: number, name: string }[]>(Array.from([]))
     const [completed, setCompleted] = React.useState<boolean>(false)
-    const { authenticated, user } = useSelector((store: RootState) => store.authSlice)
+    const { state, message } = useSelector((store: RootState) => store.accountSlice.documentUpload)
     const ref = useRef<HTMLSelectElement>()
     const router = useRouter()
-
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
@@ -37,10 +40,6 @@ const UploadDocument = () => {
         }
     }, [docType, docUrl])
 
-    React.useEffect(() => {
-        if (!authenticated) router.push('/login')
-    }, [authenticated, router])
-
     const proceed = async (response: {
         message: string
         status: 'success' | 'failed',
@@ -56,50 +55,97 @@ const UploadDocument = () => {
     }
 
     return <UserDashboardLayout>
-        {() => <div className="flex felx-col justify-center items-center w-full h-full p-2 pt-8">
-            <form onSubmit={(e) => e.preventDefault()} className="duration-300 ease-in-out transition-all" >
-                <div className="text-center font-semibold uppercase text-sm py-2">
-                    UPLOAD A VALID DOCUMENT
-                </div>
-                <div className="flex justify-center">
-                    <select ref={ref} name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value)} disabled={completed} >
-                        <option value="0">CHOOSE DOCUMENT TYPE</option>
-                        {types.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
-                    </select>
-                </div>
+        {({ user, application }: {
+            user: User,
+            application: UserApplicationStatus
+        }) => <div className="flex felx-col justify-center items-center w-full h-full p-2 pt-8">
+                {application as UserApplicationStatus === 'nil' && <form onSubmit={(e) => e.preventDefault()} className="duration-300 ease-in-out transition-all" >
+                    <div className="my-2">
+                        <div className={`${state === 'failed' ? 'text-red-500' : 'text-blue-500'} text-center`}>{message} </div>
+                    </div>
+                    <div className="text-center font-semibold uppercase text-sm py-2">
+                        UPLOAD A VALID DOCUMENT
+                    </div>
+                    <div className="flex justify-center">
+                        <select ref={ref} name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value)} disabled={completed} >
+                            <option value="0">CHOOSE DOCUMENT TYPE</option>
+                            {types.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
+                        </select>
+                    </div>
 
-                {docType !== '0' && <DocumentUpload documentType={docType} handleUpload={(url) => { setDocUrl(url); setCompleted(true) }} disabled={completed} />}
-                {
-                    docUrl !== '' && <div className="m-4 flex justify-center">
-                        <div className="px-2 py-1 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
-                            onClick={() => {
-                                setDocType('0')
-                                setDocUrl('')
-                                setCompleted(false)
-                                const select = ref.current
-                                if (select !== undefined) {
-                                    select.value = '0'
-                                }
-                            }}>
-                            CHANGE
+                    {docType !== '0' && <DocumentUpload
+                        documentType={docType}
+                        handleUpload={(url) => { setDocUrl(url); setCompleted(true) }}
+                        disabled={completed} />}
+                    {
+                        docUrl !== '' && <div className="m-4 flex justify-center">
+                            <Button
+                                variant="outlined"
+                                size='small'
+                                sx={{
+                                    color: 'red',
+                                    borderColor: 'red'
+                                }}
+                                disabled={state === 'pending' || state === 'success'}
+                                onClick={() => {
+                                    setDocType('0')
+                                    setDocUrl('')
+                                    setCompleted(false)
+                                    const select = ref.current
+                                    if (select !== undefined) {
+                                        select.value = '0'
+                                    }
+                                }}>
+                                Change
+                            </Button>
                         </div>
+                    }
+                    {
+                        docUrl !== '' && <div className="m-4 flex justify-center">
+                            <PaystackConsumer
+                                email={user.email}
+                                amount={1000000}
+                                firstname={user.fname}
+                                lastname={user.lname}
+                                publicKey={pk_key}
+                                onSuccess={(response) => { proceed(response) }} >
+                                {
+                                    ({ initializePayment }) =>
+                                        <Button
+                                            variant="outlined"
+                                            size='small'
+                                            onClick={() => initializePayment()}
+                                            disabled={state === 'pending' || state === 'success'}
+                                            startIcon={state === 'pending' && <CircularProgress size={14} />}
+                                        >
+                                            Pay {money(applicationFee)}
+                                        </Button>
+                                }
+                            </PaystackConsumer>
+                        </div>
+                    }
+                    <div className={`${state === 'success' ? 'flex' : 'hidden'} justify-center my-2`}>
+                        <Button
+                            variant="outlined"
+                            size='small'
+                            onClick={() => {
+                                dispatch(checkIsAuthenticated({}))
+                                router.push('/user/dashboard')
+                            }}
+                        >
+                            DASHBOARD
+                        </Button>
                     </div>
-                }
-                {
-                    docUrl !== '' && <div className="m-4 flex justify-center">
-                        <PaystackConsumer email={user.email} amount={10000} publicKey={pk_key} onSuccess={(response) => { proceed(response) }} >
-                            {
-                                ({ initializePayment }) =>
-                                    <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
-                                        onClick={() => initializePayment()}>
-                                        PROCEED TO PAYMENT
-                                    </div>
-                            }
-                        </PaystackConsumer>
+                </form>}
+                {application as UserApplicationStatus !== 'nil' && <div className="text-gray-500">
+                    <div className="uppercase text-sm border-b text-center border-gray-400">
+                        No action required
                     </div>
-                }
-            </form>
-        </div >}
+                    <div>
+                        Your application status is <span className="py-1  px-2 text-xs bg-slate-200 rounded-md" >{application}</span>
+                    </div>
+                </div>}
+            </div >}
     </UserDashboardLayout >
 }
 export default UploadDocument

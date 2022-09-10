@@ -1,13 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Api } from "../../helpers/api";
+import { ApiResponse } from "../../Typing.d";
 
-export const uploadDoc = createAsyncThunk("uploadDoc", async (payload: {
+export const uploadDoc = createAsyncThunk<ApiResponse, {
     reference: string
     document: string
     provider?: string
-}, { rejectWithValue }) => {
-    try {
-        let response = await Api().post("/user/pay", JSON.stringify(payload))
-    } catch (error) {
-    }
-})
+}>
+    ("uploadDoc", async (payload, { rejectWithValue }) => {
+        try {
+            const { status, data } = await Api().post<ApiResponse>("/user/pay", JSON.stringify(payload))
+            return data
+        } catch (error) {
+            rejectWithValue({})
+        }
+    })
