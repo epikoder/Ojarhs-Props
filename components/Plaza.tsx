@@ -19,7 +19,7 @@ function Plaza({ name, store, prop, perPage = 12 }: Shops) {
 			</h1>
 
 			<div className="flex justify-center">
-				<div className='md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto max-w-[90vw]'>
+				<div className='md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[50vw] xl:max-w-[70vw] max-w-[90vw]'>
 					{store.map((shop: any, index: number) => {
 						if (index + 1 !== perPage) return <Card key={index} data={shop} />
 					})}

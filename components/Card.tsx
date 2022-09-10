@@ -56,7 +56,7 @@ function Card({ data, className }: { data: Space | Service, className?: string }
 
 	const space = data as Space
 	return (
-		<div className={`my-2 ${className || 'w-[90vw] sm:w-[60vw] md:w-70'} border overflow-hidden bg-white max-w-lg`}>
+		<div className={`my-2 ${className} border overflow-hidden bg-white max-w-lg`}>
 			<div className="relative">
 				<div className='flex justify-between text-xs z-10 absolute top-0 w-full'>
 					<Button text={space.status === 'open' ? 'For Rent' : 'Not Available'} className={space.status === 'occupied' ? 'bg-gray-500 text-white' : ''} />

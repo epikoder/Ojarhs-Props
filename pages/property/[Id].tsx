@@ -166,7 +166,7 @@ const Details = () => {
 									.concat(indexData.warehouse.slice(0, 4))
 									.map((s, i) =>
 										<div className="mx-2" key={i}>
-											<Card data={s} />
+											<Card className="w-[90vw] sm:w-[60vw] md:w-70" data={s} />
 										</div>)}
 							</div>
 						}
@@ -179,7 +179,7 @@ const Details = () => {
 									.concat(indexData.warehouse.slice(0, 4))
 									.map((s, i) =>
 										<div className="mx-2" key={i}>
-											<Card className="lg:w-70" data={s} />
+											<Card className="lg:w-70 xl:w-80" data={s} />
 										</div>)}
 							</div>
 						}
