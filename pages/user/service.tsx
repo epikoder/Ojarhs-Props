@@ -17,7 +17,7 @@ const Page = () => {
                 <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
                     <h6 className="text-red-500">NOTICE</h6>
                     <div className="lg:mx-12">
-                        {'There\'s an error with your Application'}
+                        {'There\'s an issue with your Application'}
                     </div>
                 </div>
 

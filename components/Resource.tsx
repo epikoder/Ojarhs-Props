@@ -23,7 +23,7 @@ export const PaymentPlans = ({ value, handleChange, className, error }: {
             <FormControl size="small" fullWidth>
                 <InputLabel className="text-xs uppercase">{'Payment Plan'}</InputLabel>
                 <Select
-                    value={value}
+                    value={value || ''}
                     label={<span className="text-xs uppercase">{"Payment Plan"}</span>}
                     className="text-sm uppercase"
                     size="small"
@@ -55,7 +55,7 @@ export const PropertyType = ({ value, handleChange, className, error }: {
             <FormControl size="small" fullWidth>
                 <InputLabel className="text-xs uppercase">{'Property Type'}</InputLabel>
                 <Select
-                    value={value}
+                    value={value || ''}
                     label={<span className="text-xs uppercase">{"PROPERTY TYPE"}</span>}
                     className="text-sm uppercase"
                     size="small"

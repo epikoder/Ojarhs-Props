@@ -6,6 +6,7 @@ import { openMenu, closeMenu, openState } from "../features/HeaderMenu";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import { RootState } from "../store";
+import { checkIsAuthenticated } from "../features/authSlice";
 
 function Header() {
 	const dispatch = useDispatch();
@@ -40,6 +41,10 @@ function Header() {
 			lsc = csc <= 0 ? 0 : csc
 		}
 	}
+
+	React.useEffect(() => {
+		if (!isAuthenticated) dispatch(checkIsAuthenticated({}))
+	}, [isAuthenticated])
 
 	return (
 		<div id="fixedTop" style={{

@@ -10,6 +10,10 @@ const max = 1000000
 const calValue = (number): number => {
     return (number / 100) * max
 }
+const revertCalc = (number): number => {
+    if (number === 0 || number === 100) return number
+    return (number * 100) / max
+}
 export const Search = () => {
     const router = useRouter()
     const [minMax, setMinMax] = React.useState([0, 100])
@@ -64,7 +68,7 @@ export const Search = () => {
                         <Slider
                             size="small"
                             max={100}
-                            defaultValue={[calValue(minMax[0]), calValue(minMax[1])]}
+                            value={minMax}
                             getAriaLabel={() => "Range"}
                             valueLabelDisplay="off"
                             onChange={(_, v) => setMinMax(v as number[])}
@@ -102,7 +106,8 @@ export const SearchProperties = () => {
             type: q.type as string || '',
             plan: q.plan as string || ''
         })
-        setMinMax([q.min as string !== '' ? parseInt(q.min as string) : 0, q.max as string !== '' ? parseInt(q.max as string) : 100])
+        let mM = [q.min as string !== '' && q.min as string !== undefined ? parseInt(q.min as string) : 0, q.max as string !== '' && q.max as string !== undefined ? parseInt(q.max as string) : 100]
+        setMinMax([revertCalc(mM[0]), revertCalc(mM[1])])
         const qs = `search=${q.search as string || ''}&type=${q.type as string || ''}&plan=${q.plan as string || ''}&min=${q.min as string || ''}&max=${q.max as string || ''}`
         dispatch(searchProperty(qs))
     }, [router.asPath, router.query])
@@ -112,7 +117,6 @@ export const SearchProperties = () => {
         const qs = `search=${q.search as string || ''}&type=${q.type as string || ''}&plan=${q.plan as string || ''}&min=${minMax[0] === 0 ? '' : calValue(minMax[0])}&max=${minMax[1] === 100 ? '' : calValue(minMax[1])}`
         dispatch(searchProperty(qs))
     }
-
 
     return <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="lg:flex justify-center">
@@ -145,7 +149,7 @@ export const SearchProperties = () => {
                 <Slider
                     size="small"
                     max={100}
-                    defaultValue={[calValue(minMax[0]), calValue(minMax[1])]}
+                    value={minMax}
                     getAriaLabel={() => "Range"}
                     valueLabelDisplay="off"
                     onChange={(_, v) => setMinMax(v as number[])}
@@ -209,7 +213,7 @@ export const SearchServices = () => {
                 <Slider
                     size="small"
                     max={100}
-                    defaultValue={[calValue(minMax[0]), calValue(minMax[1])]}
+                    value={minMax}
                     getAriaLabel={() => "Range"}
                     valueLabelDisplay="off"
                     onChange={(_, v) => setMinMax(v as number[])}

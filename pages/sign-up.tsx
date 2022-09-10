@@ -12,6 +12,9 @@ import { ApiResponse, NextOfKin, SignUpForm } from "../Typing.d";
 import { BASEURL } from "../constants";
 import Loader from "../components/Loader";
 import { emailValidator } from "../helpers/validation";
+import { RootState, useAppDispatch } from "../store";
+import { checkIsAuthenticated } from "../features/authSlice";
+import { useRouter } from "next/router";
 
 function SignUp() {
 	const dispatch = useDispatch();
@@ -28,6 +31,13 @@ function SignUp() {
 	const [cPassword, setCPassowrd] = useState('')
 	const [cPasswordState, setCPasswordState] = useState(false)
 	const formRef = useRef<HTMLFormElement>()
+	const router = useRouter()
+	const { authenticated } = useSelector((store: RootState) => store.authSlice)
+
+	React.useEffect(() => {
+		if (authenticated) return
+		router.replace('/user/dashboard')
+	}, [])
 
 	useEffect(() => {
 		console.log(2)
@@ -91,7 +101,7 @@ function SignUp() {
 					}
 					setMessage({ text: rr.message, status: true })
 					setTimeout(() => {
-						location.assign("/login")
+						router.replace("/login")
 					}, 1500)
 					break
 				default:

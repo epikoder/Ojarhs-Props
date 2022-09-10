@@ -17,9 +17,9 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
 
     React.useEffect(() => {
         if (authenticated) return
-        sessionStorage.setItem('current', router.pathname)
+        sessionStorage.setItem('current', router.asPath)
         dispatch(checkIsAuthenticated({ isAdmin: true }))
-    }, [dispatch, authenticated, router.pathname])
+    }, [dispatch, authenticated, router.asPath])
 
     React.useEffect(() => {
         if (authenticated === false && appState === 'completed') router.push('/admin/login')
