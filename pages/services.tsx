@@ -26,7 +26,7 @@ function Page() {
 					</div>
 				</div>
 				<div className="my-2">
-					{(state === 'success' && data !== undefined && data.length > 0) && <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[50vw] xl:max-w-[70vw] max-w-[90vw]">
+					{(state === 'success' && data !== undefined && data.length > 0) && <div className="sm:grid grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[50vw] xl:max-w-[70vw] max-w-[90vw]">
 						{data
 							.slice(page * perPage, page === 0 ? perPage : (page + 1) * perPage)
 							.map((s, i) => <div key={i}>

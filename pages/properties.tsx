@@ -6,13 +6,11 @@ import { useSelector } from "react-redux";
 import Card from "../components/Card";
 import Layout from "../components/Layout";
 import { SearchProperties } from "../components/Search";
-import { RootState, useAppDispatch } from "../store";
+import { RootState } from "../store";
 
 const perPage = 18
 function Page() {
 	const { data, state } = useSelector((store: RootState) => store.searchSlice.property)
-	const router = useRouter()
-	const dispatch = useAppDispatch()
 	const [page, setPage] = React.useState(0)
 	const [showFilter, setShowFilter] = React.useState(true)
 
@@ -28,7 +26,7 @@ function Page() {
 					</div>
 				</div>
 				<div className="my-2">
-					{(state === 'success' && data !== undefined && data.length > 0) && <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[50vw] xl:max-w-[70vw] max-w-[90vw]">
+					{(state === 'success' && data !== undefined && data.length > 0) && <div className=" sm:grid grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[50vw] xl:max-w-[70vw] max-w-[90vw]">
 						{data
 							.slice(page * perPage, page === 0 ? perPage : (page + 1) * perPage)
 							.map((s, i) => <div key={i}>

@@ -8,15 +8,14 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import PlaceIcon from '@mui/icons-material/Place';
 import { UserIcon } from "@heroicons/react/outline";
-import { Button as MuiButton } from "@mui/material"
 import { PayButton } from "./PayButton";
-
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function Card({ data, className }: { data: Space | Service, className?: string }) {
 	if (data.type === "service") {
 		const service = data as Service
 		return (
-			<div className={`max-w-6xl ${className || 'w-[90vw] md:w-70 lg:w-70'} border rounded-lg`}>
+			<div className={`max-w-6xl ${className} border rounded-lg`}>
 				<div className="relative">
 					<div className='text-xs z-20 absolute top-0 right-0 '>
 						<Button text={money(service.amount)} />
@@ -82,7 +81,7 @@ function Card({ data, className }: { data: Space | Service, className?: string }
 							emulateTouch={true}
 						>
 							{space.galleries.concat(space.photo).map((s, i) =>
-								<div key={i} className="h-full w-full hover:scale-125 duration-300 transition-all ease-in-out">
+								<div key={i} className="h-full w-full hover:scale-110 duration-300 transition-all ease-in-out">
 									<img src={resolveFilePath(s)} className={'h-full w-full object-cover'} />
 								</div>
 							)}

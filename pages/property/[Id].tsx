@@ -1,6 +1,5 @@
 import { useRouter } from "next/router"
 import React from "react"
-import { Parallax } from "react-parallax"
 import { useSelector } from "react-redux"
 import Layout from "../../components/Layout"
 import Loader from "../../components/Loader"
@@ -11,8 +10,6 @@ import { RootState, useAppDispatch } from "../../store"
 import PlaceIcon from '@mui/icons-material/Place';
 import PaymentIcon from '@mui/icons-material/Payment';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import { Button } from "@mui/material"
-import Plaza from "../../components/Plaza"
 import { loadIndex } from "../../redux"
 import Card from "../../components/Card"
 import { PayButton } from "../../components/PayButton"

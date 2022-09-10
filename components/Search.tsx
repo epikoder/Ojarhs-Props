@@ -43,16 +43,23 @@ export const Search = () => {
                                 size="small"
                                 className="w-full md:w-4/5 lg:w-44 text-sm"
                                 placeholder="Search"
+                                value={form.search}
                                 onChange={(e) => setForm({
                                     ...form, search: e.target.value as string
                                 })}
                             />
                         </div>
                         <div className="my-2">
-                            <PropertyType handleChange={(s) => setForm({ ...form, type: s })} className={'w-full md:w-44 md:mx-2'} />
+                            <PropertyType
+                                value={form.type}
+                                handleChange={(s) => setForm({ ...form, type: s })}
+                                className={'w-full md:w-44 md:mx-2'} />
                         </div>
                         <div className="my-2">
-                            <PaymentPlans handleChange={(s) => setForm({ ...form, plan: s })} className={'w-full md:w-44 md:mx-2'} />
+                            <PaymentPlans
+                                value={form.plan}
+                                handleChange={(s) => setForm({ ...form, plan: s })}
+                                className={'w-full md:w-44 md:mx-2'} />
                         </div>
                     </div>
                     <div className="my-2 w-full px-4">
@@ -107,6 +114,12 @@ export const SearchProperties = () => {
             plan: q.plan as string || ''
         })
         let mM = [q.min as string !== '' && q.min as string !== undefined ? parseInt(q.min as string) : 0, q.max as string !== '' && q.max as string !== undefined ? parseInt(q.max as string) : 100]
+        if (isNaN(mM[0])) {
+            mM[0] = 0
+        }
+        if (isNaN(mM[1])) {
+            mM[1] = max
+        }
         setMinMax([revertCalc(mM[0]), revertCalc(mM[1])])
         const qs = `search=${q.search as string || ''}&type=${q.type as string || ''}&plan=${q.plan as string || ''}&min=${q.min as string || ''}&max=${q.max as string || ''}`
         dispatch(searchProperty(qs))
@@ -122,8 +135,14 @@ export const SearchProperties = () => {
         <div className="lg:flex justify-center">
             <div className="md:flex">
                 <div className="flex justify-around">
-                    <PropertyType handleChange={(s) => setForm({ ...form, type: s })} value={form.type} className={'w-32 sm:w-40 mr-2 py-1'} />
-                    <PaymentPlans handleChange={(s) => setForm({ ...form, plan: s })} value={form.plan} className={'w-32 sm:w-40 ml-2 py-1'} />
+                    <PropertyType
+                        handleChange={(s) => setForm({ ...form, type: s })}
+                        value={form.type}
+                        className={'w-32 sm:w-40 mr-2 py-1'} />
+                    <PaymentPlans
+                        handleChange={(s) => setForm({ ...form, plan: s })}
+                        value={form.plan}
+                        className={'w-32 sm:w-40 ml-2 py-1'} />
                 </div>
                 <div className="lg:mx-2 text-xs">
                     <TextField
@@ -188,7 +207,10 @@ export const SearchServices = () => {
     return <div className="flex flex-col lg:flex-row items-center justify-center">
         <div className="lg:flex justify-center">
             <div className="flex">
-                <PaymentPlans handleChange={(s) => setForm({ ...form, plan: s })} value={form.plan} className={'w-32 sm:w-40 mr-2 py-1'} />
+                <PaymentPlans
+                    handleChange={(s) => setForm({ ...form, plan: s })}
+                    value={form.plan}
+                    className={'w-32 sm:w-40 mr-2 py-1'} />
                 <div className="lg:mx-2 text-xs">
                     <TextField
                         label='Search'

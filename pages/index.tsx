@@ -19,18 +19,12 @@ import { checkIsAuthenticated } from "../features/authSlice";
 function Home() {
   const dispatch = useAppDispatch()
   const { data, state } = useSelector((store: RootState) => store.indexSlice)
-  const { authenticated } = useSelector((store: RootState) => store.authSlice)
   const router = useRouter()
 
   React.useEffect(() => {
     dispatch(loadIndex({}))
   }, [dispatch])
 
-  React.useEffect(() => {
-    if (authenticated) return
-    sessionStorage.setItem('current', router.pathname)
-    dispatch(checkIsAuthenticated({}))
-  }, [])
 
   return (
     <div >
