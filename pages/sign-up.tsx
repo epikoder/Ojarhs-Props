@@ -2,19 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { TogglePasswordState } from "../features/TogglePassword";
-import { ShowPassword, HidePassword } from "../features/TogglePassword";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import Layout from "../components/Layout";
-import { FormCountryInput, FormInput, FormPasswordInput, FormPhoneInput } from "../components/FormInput";
+import { FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordInput, FormPhoneInput } from "../components/FormInput";
 import { ImageUpload } from "../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../Typing.d";
 import { BASEURL } from "../constants";
 import Loader from "../components/Loader";
 import { emailValidator } from "../helpers/validation";
-import { RootState, useAppDispatch } from "../store";
-import { checkIsAuthenticated } from "../features/authSlice";
+import { RootState } from "../store";
 import { useRouter } from "next/router";
+import LaunchIcon from '@mui/icons-material/Launch';
+import { Switch } from "@mui/material";
 
 function SignUp() {
 	const dispatch = useDispatch();
@@ -35,12 +34,12 @@ function SignUp() {
 	const { authenticated } = useSelector((store: RootState) => store.authSlice)
 
 	React.useEffect(() => {
-		if (authenticated) return
-		router.replace('/user/dashboard')
+		if (authenticated) {
+			router.replace('/user/dashboard')
+		}
 	}, [])
 
 	useEffect(() => {
-		console.log(2)
 		if (secondNextofKin) {
 			if (nextOfKinForm.length === 2) {
 				setNextOfKinForm(nextOfKinForm)
@@ -168,7 +167,7 @@ function SignUp() {
 							title: 'Password',
 							name: "password",
 							requried: true,
-							message: getError("password"),
+							message: getError("password") || form.password !== '' && form.password !== undefined && form.password.length < 8 ? ' ' : undefined,
 							hidden: togglePasswordState,
 							handleChange: (s) => {
 								setForm({
@@ -176,37 +175,14 @@ function SignUp() {
 								})
 							}
 						}} />
-						<label
-							htmlFor=''
-							className='flex flex-col relative bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2 my-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs flex justify-between'>
-								Confirm Password
-							</span>
-							<div className="flex items-center justify-between">
-								<input
-									type={cPasswordState ? "text" : "password"}
-									placeholder={"Confirm Password"}
-									className='text-gray-500 bg-transparent outline-none w-full'
-									onChange={(e) => setCPassowrd(e.target.value as unknown as string)}
-								/>
-
-								{cPasswordState ? (
-									<EyeOffIcon
-										onClick={() => setCPasswordState(!cPasswordState)}
-										className='w-4 h-4 bottom-3 right-3'
-									/>
-								) : (
-									<EyeIcon
-										onClick={() => setCPasswordState(!cPasswordState)}
-										className='w-4 h-4 bottom-3 right-2'
-									/>
-								)}
-							</div>
-							<span className='text-red-600 font-serif mb-2 text-xs text-center idden'>
-								{form.password !== "" && form.password !== undefined && form.password !== cPassword ? "password mismatch" : undefined}
-							</span>
-						</label>
+						<FormConfirmPasswordInput
+							props={{
+								title: 'Confirm Password',
+								name: "c_password",
+								requried: true,
+								password: form.password
+							}}
+						/>
 						<FormInput props={{
 							title: 'Address',
 							name: "address",
@@ -414,10 +390,9 @@ function SignUp() {
 
 							<div className="flex items-center">
 								<span className="text-sm px-4 text-gray-600">
-									Add Next of Kin
+									Second Next of Kin
 								</span>
-								<input
-									type='checkbox'
+								<Switch
 									checked={secondNextofKin}
 									onChange={() => setSecondNextofKin(!secondNextofKin)}
 								/>
@@ -425,7 +400,7 @@ function SignUp() {
 						</div>
 					</div>
 
-					{secondNextofKin && <>
+					{(secondNextofKin && nextOfKinForm.length === 2) && <>
 						<div className="col-span-2 md:grid md:grid-cols-2 gap-4">
 							<h2 className='red col-span-2'>Next Of Kin</h2>
 							<div>
@@ -526,7 +501,6 @@ function SignUp() {
 									}
 								}} />
 							</div>
-
 						</div>
 					</>
 					}
@@ -535,6 +509,12 @@ function SignUp() {
 						<div className={`text-center text-sm py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 							{message.text !== undefined && message.text}
 						</div>
+						<Link href={'/page/terms'}>
+							<div className="cursor-pointer">
+								<span className="text-gray-500 text-xs">By creating an account you agree to our terms and conditions</span>
+								<LaunchIcon fontSize='inherit' />
+							</div>
+						</Link>
 						<div className="w-full flex">
 							{!loading ? <>
 								<button type='submit' className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out" onClick={submit}>
@@ -556,7 +536,7 @@ function SignUp() {
 
 				</form>
 			</div>
-		</Layout>
+		</Layout >
 
 	);
 }

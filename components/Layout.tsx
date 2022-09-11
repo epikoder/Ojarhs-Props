@@ -25,14 +25,14 @@ function Layout(props: PropsWithChildren) {
       <Script src='/scripts/noimage.js'></Script>
       <Header />
       <PageLoader />
-      <div className='flex flex-col justify-between'>
+      <div className='flex flex-col justify-between min-h-[100vh]'>
         {appState === 'completed' ? <main>{props.children}</main> :
           <div className='mt-4 relative h-[40vh]'>
             <Loader />
           </div>}
         <Footer />
-        <CopyRight className='bg-red text-white' />
       </div>
+      <CopyRight className='bg-red text-white' />
     </div>
   )
 }

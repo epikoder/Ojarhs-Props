@@ -1,6 +1,5 @@
-import { EyeOffIcon } from "@heroicons/react/outline"
-import { EyeIcon } from "@heroicons/react/solid"
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
+import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { BASEURL } from "../constants"
@@ -18,20 +17,20 @@ export const FormInput = ({ props }: {
     }
 }) => {
     return <>
-        <label
-            htmlFor=''
-            className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg px-4 py-2 my-2'
-        >
-            <span className='text-gray-600 mb-2 text-sm idden'>{props.title}</span>
-            <input
+        <div className="my-2">
+            <TextField
+                label={props.title}
+                variant="outlined"
+                size="small"
                 type={props.type}
-                placeholder={props.title}
-                className={`text-gray-500 bg-transparent outline-none ${props.message && 'outline-red-500 rounded-md'}`}
-                onChange={(e) => props.handleChange(e.target.value)}
+                className={`w-full text-sm`}
                 required={props.required}
-            />
-            <span className='text-red-600 font-serif mb-2 text-xs text-center idden'>{props.message}</span>
-        </label>
+                placeholder={props.title}
+                error={props.message !== '' && props.message !== undefined}
+                onChange={(e) => {
+                    props.handleChange(e.target.value)
+                }} />
+        </div>
     </>
 }
 
@@ -46,20 +45,20 @@ export const FormPhoneInput = ({ props }: {
     }
 }) => {
     return <>
-        <label
-            htmlFor=''
-            className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg px-4 py-2 my-2'
-        >
-            <span className='text-gray-600 mb-2 text-sm idden'>{props.title}</span>
-            <input
+        <div className="my-2">
+            <TextField
+                label={props.title}
+                variant="outlined"
+                size="small"
                 type={props.type}
-                placeholder={"090XXXXXXXX"}
-                className='text-gray-500 bg-transparent outline-none'
-                onChange={(e) => props.handleChange(e.target.value)}
+                className="w-full text-sm"
                 required={props.required}
-            />
-            <span className='text-red-600 font-serif mb-2 text-xs text-center idden'>{props.message}</span>
-        </label>
+                placeholder={"090XXXXXXXX"}
+                error={props.message !== '' && props.message !== undefined}
+                onChange={(e) => {
+                    props.handleChange(e.target.value)
+                }} />
+        </div>
     </>
 }
 
@@ -75,36 +74,70 @@ export const FormPasswordInput = ({ props }: {
 }) => {
     const dispatch = useDispatch();
     return <>
-        <label
-            htmlFor=''
-            className='flex flex-col relative bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2 my-2'
-        >
-            <span className='text-gray-600 mb-2 text-xs flex justify-between'>
-                {props.title}
-            </span>
-            <div className="flex items-center justify-between">
-                <input
-                    type={props.hidden ? "text" : "password"}
-                    placeholder={props.title}
-                    className='text-gray-500 bg-transparent outline-none w-full'
-                    onChange={(e) => props.handleChange(e.target.value)}
-                    required={props.requried}
+        <div className="my-2">
+            <FormControl sx={{ m: 1, width: '100%', margin: 0 }} variant="outlined" size="small">
+                <InputLabel>Password</InputLabel>
+                <OutlinedInput
+                    type={props.hidden ? 'text' : 'password'}
+                    onChange={(e) => {
+                        props.handleChange(e.target.value)
+                    }}
+                    error={props.message !== '' && props.message !== undefined}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => dispatch(ShowPassword())}
+                                onMouseDown={() => dispatch(HidePassword())}
+                                edge="end"
+                            >
+                                {props.hidden ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    label="Password"
                 />
+            </FormControl>
+        </div>
+    </>
+}
 
-                {props.hidden ? (
-                    <EyeOffIcon
-                        onClick={() => dispatch(ShowPassword())}
-                        className='w-4 h-4 bottom-3 right-3'
-                    />
-                ) : (
-                    <EyeIcon
-                        onClick={() => dispatch(HidePassword())}
-                        className='w-4 h-4 bottom-3 right-2'
-                    />
-                )}
-            </div>
-            <span className='text-red-600 font-serif mb-2 text-xs text-center idden'>{props.message}</span>
-        </label>
+export const FormConfirmPasswordInput = ({ props }: {
+    props?: {
+        title: string
+        name: string
+        requried?: boolean
+        password?: string
+    }
+}) => {
+    const [isHidden, setIsHidden] = React.useState(true)
+    const [value, setValue] = React.useState('')
+
+    return <>
+        <div className="my-2">
+            <FormControl sx={{ m: 1, width: '100%', margin: 0 }} variant="outlined" size="small">
+                <InputLabel>{props.title}</InputLabel>
+                <OutlinedInput
+                    type={!isHidden ? 'text' : 'password'}
+                    error={props.password !== "" && props.password !== undefined && props.password !== value}
+                    onChange={(e) => setValue(e.target.value)}
+                    value={value}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => setIsHidden(!isHidden)}
+                                onMouseDown={() => setIsHidden(!isHidden)}
+                                edge="end"
+                            >
+                                {isHidden ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    label={props.title}
+                />
+            </FormControl>
+        </div>
     </>
 }
 
@@ -136,10 +169,7 @@ export const FormCountryInput = ({ props }: {
 
 
     return <>
-        <label
-            htmlFor=''
-            className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg px-4 py-2 my-2'
-        >
+        <div className="my-2">
             <FormControl size="small" fullWidth>
                 <InputLabel>{'Country'}</InputLabel>
                 <Select
@@ -154,6 +184,6 @@ export const FormCountryInput = ({ props }: {
                     )}
                 </Select>
             </FormControl>
-        </label>
+        </div>
     </>
 }

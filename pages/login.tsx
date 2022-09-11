@@ -22,7 +22,10 @@ function Login() {
 	const router = useRouter()
 	const [isHidden, setIsHidden] = React.useState(true)
 	const [remember, setRemember] = useState<boolean>(false);
-	const [form, setForm] = useState<LoginForm>({} as LoginForm)
+	const [form, setForm] = useState<LoginForm>({
+		email: '',
+		password: ''
+	} as LoginForm)
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
 	const formRef = useRef<HTMLFormElement>()
 	const { authenticated, status, message: errMessage, user } = useSelector((store: RootState) => store.authSlice)

@@ -13,7 +13,7 @@ function TopSection() {
         <div className='md:hidden bg-white'>
           <Search />
         </div>
-        <div className="bg-black text-center col-span-6 md:col-span-2 text-white 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] sm:h-[60vh] h-[40vh]">
+        <div className="bg-black text-center col-span-6 md:col-span-2 text-white 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] h-[35vh]">
           <HomeNotificationBox />
         </div>
       </div>

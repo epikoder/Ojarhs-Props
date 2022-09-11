@@ -22,8 +22,8 @@ function Footer() {
                     <div className='my-3 flex flex-col items-center'>
                         <Image
                             src="/image/logo.png"
-                            width={140}
-                            height={100}
+                            width={120}
+                            height={80}
                             layout="fixed"
                             alt="logo"
                         />
@@ -32,26 +32,35 @@ function Footer() {
                     </div>
                     <div className='space-y-3 flex flex-col items-center'>
                         <div className='bg-red w-40 h-1 mb-4'></div>
-                        <Link href="" className=' cursor-pointer font-mono text-lg'><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> policy </h3></Link>
-
-                        <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Sales policy </h3></Link>
-
-                        <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '>  Tenants service fees </h3></Link>
-
-                        <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Tenants agreements </h3></Link>
+                        <Link href="/page/about" className=' font-mono text-lg'>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> About </h3>
+                        </Link>
+                        <Link href="/page/sales_policy" className=' cursor-pointer font-mono text-lg '>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Sales policy </h3>
+                        </Link>
+                        <Link href="/page/policy" className=' cursor-pointer font-mono text-lg'>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Policy </h3>
+                        </Link>
+                        <Link href="/page/tenancy_agreement" className=' cursor-pointer font-mono text-lg '>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Tenancy Agreement </h3>
+                        </Link>
 
                     </div>
-
                     <div className='space-y-3 flex flex-col items-center'>
                         <div className='bg-red w-40 h-1 mb-4'></div>
-                        <Link href="/about" className=' font-mono text-lg'><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> About </h3></Link>
+                        <Link href="/page/tenancy_service_fee" className=' cursor-pointer font-mono text-lg '>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Tenancy Service Fee </h3>
+                        </Link>
+                        <Link href="/page/terms" className=' cursor-pointer font-mono text-lg '>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Terms and conditions </h3>
+                        </Link>
+                        <Link href="ojarh.com" target={'_blank'} className=' cursor-pointer font-mono text-lg '>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Ojarh.com </h3>
+                        </Link>
 
-                        <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Ojarh.com </h3></Link>
-
-                        <Link href="" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '>  Ojarhlogistics </h3></Link>
-
-                        <Link href="/t&c" className=' cursor-pointer font-mono text-lg '><h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Terms and conditions </h3></Link>
-
+                        <Link href="" className=' cursor-pointer font-mono text-lg '>
+                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '>  Ojarhlogistics.com </h3>
+                        </Link>
                     </div>
                 </div>
             </div>

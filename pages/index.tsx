@@ -13,8 +13,6 @@ import { CardLoader } from "../components/Loader";
 import { useSelector } from "react-redux";
 import { Search } from "../components/Search";
 import { useRouter } from "next/router";
-import { checkIsAuthenticated } from "../features/authSlice";
-
 
 function Home() {
   const dispatch = useAppDispatch()
