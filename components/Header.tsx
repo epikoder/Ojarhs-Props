@@ -30,13 +30,15 @@ function Header() {
 					el.style.position = 'fixed'
 					el.style.top = `${sc}px`
 				} else {
-					// el.style.top = `${sc}px`
 					el.style.position = 'fixed'
 				}
 			} else {
 				sc = sc > 0 ? sc : sc + 5
 				el.style.position = sc >= 0 && window.scrollY <= 100 ? 'unset' : 'fixed'
 				el.style.transform = ''
+				if (window.scrollY < 10) {
+					el.style.position = 'unset'
+				}
 			}
 			lsc = csc <= 0 ? 0 : csc
 		}
@@ -79,7 +81,7 @@ function Header() {
 										<a>Services</a>
 									</li>
 								</NavLink>
-								<NavLink href='/about'>
+								<NavLink href='/page/about'>
 									<li className='text-white uppercase hov active:text-red-600 a cursor-pointer  duration-300 transition-all ease-in-out'>
 										<a>About us</a>
 									</li>
@@ -140,7 +142,7 @@ function Header() {
 											Services
 										</li>
 									</NavLink>
-									<NavLink href='/about'>
+									<NavLink href='/page/about'>
 										<li
 											onClick={() => dispatch(closeMenu())}
 											className='text-white  uppercase hov cursor-pointer '
