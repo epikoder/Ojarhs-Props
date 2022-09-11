@@ -1,9 +1,10 @@
 import Link from "next/link"
 import { DotsVerticalIcon, XIcon } from "@heroicons/react/solid"
 import React from "react"
-import { RootState } from "../../store"
+import { RootState, useAppDispatch } from "../../store"
 import { useSelector } from "react-redux"
 import NavLink from "../NavLink"
+import { logout } from "../../features/authSlice"
 
 const MenuItem = ({ title, href = '/' }: { title: string, href?: string }) => {
     return <>
@@ -28,6 +29,7 @@ const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string })
 export const UserSideBar = () => {
     const [isOpen, toggleOpen] = React.useState<boolean>(false)
     const { user, authenticated } = useSelector((store: RootState) => store.authSlice)
+    const dispatch = useAppDispatch()
     return <React.Fragment>
         {user !== undefined && <div>
             <div className="md:hidden">
@@ -48,7 +50,8 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Adverts" href="/user/advert" />
                     {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/packout" />}
                     <hr />
-                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-gray-500 rounded-md uppercase font-sans">
+                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-gray-500 rounded-md uppercase font-sans"
+                        onClick={() => dispatch(logout())}>
                         Logout
                     </div>
                 </div>}
@@ -63,7 +66,8 @@ export const UserSideBar = () => {
                 {user.reference !== "" && <MenuItem title="Request pack out" href="/user/packout" />}
 
                 <hr />
-                <div className="hover:cursor-pointer p-4 hover:bg-red-800 duration-300 transition-all ease-in-out text-white hover:text-gray-300 rounded-md uppercase font-sans">
+                <div className="hover:cursor-pointer p-4 hover:bg-red-800 duration-300 transition-all ease-in-out text-white hover:text-gray-300 rounded-md uppercase font-sans"
+                    onClick={() => dispatch(logout())}>
                     Logout
                 </div>
             </div>

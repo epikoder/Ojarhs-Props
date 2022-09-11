@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
-import { getUserToken, setUserToken } from "../helpers/auth";
+import { clearUserToken, getUserToken, setUserToken } from "../helpers/auth";
 import { loginAdminApi, loginApi, rejectValue } from "../redux/auth";
 import { ApiResponse, LoadState, loginResponse, User, UserApplicationStatus } from "../Typing.d";
 import * as jose from 'jose'
@@ -104,6 +104,8 @@ const authSlice = createSlice({
             state.message = undefined
             state.token = {} as loginResponse
             state.error = {}
+            clearUserToken()
+            // TODO: Clear token cache
         },
         setAppState: (state, { payload }: { payload: 'pending' | 'completed' }) => {
             state.appState = payload
