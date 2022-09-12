@@ -23,7 +23,7 @@ const Page = () => {
                 <div className="my-4 max-w-2xl" style={{ height: 400 }}>
                     {state === 'success' && data !== undefined &&
                         <Select className="w-full" size="small">
-                            {data.map((p, i) => <MenuItem value={p.slug}>
+                            {data.map((p, i) => <MenuItem key={i} value={p.slug}>
                                 {p.name} {'  -  '} {money(p.amount)} {'  -  '} {p.type}
                             </MenuItem>)}
                         </Select>}

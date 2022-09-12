@@ -78,18 +78,20 @@ const columns: GridColDef[] = [
         filterable: false,
         hideable: false,
         disableColumnMenu: true,
-        renderCell: ({ row }) => {
-            const router = useRouter()
-            return KMenu({
-                button: <MoreVert fontSize="small" />,
-                menu: [
-                    <span className="text-sm" onClick={() => router.push('/property/' + row.slug)} >VIEW</span>,
-                    <span className="text-sm" onClick={() => router.push('/user/packout/' + row.slug)} >REQUEST PACKOUT</span>
-                ]
-            })
-        }
+        renderCell: ({ row }) => <ActionCell row={row} />
     }
 ];
+
+const ActionCell = ({ row }: { row: any }) => {
+    const router = useRouter()
+    return KMenu({
+        button: <MoreVert fontSize="small" />,
+        menu: [
+            (<span className="text-sm" key={1} onClick={() => router.push('/property/' + row.slug)} >VIEW</span>),
+            (<span className="text-sm" key={2} onClick={() => router.push('/user/packout/' + row.slug)} >REQUEST PACKOUT</span>)
+        ]
+    })
+}
 
 export const UserDashboardProperties = () => {
     const { state, data } = useSelector((store: RootState) => store.accountSlice.properties)
