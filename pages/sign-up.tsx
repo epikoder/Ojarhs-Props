@@ -27,8 +27,6 @@ function SignUp() {
 	} as SignUpForm)
 	const [nextOfKinForm, setNextOfKinForm] = useState<NextOfKin[]>([{} as NextOfKin])
 	const [errors, setErrors] = useState<SignUpForm>({} as SignUpForm)
-	const [cPassword, setCPassowrd] = useState('')
-	const [cPasswordState, setCPasswordState] = useState(false)
 	const formRef = useRef<HTMLFormElement>()
 	const router = useRouter()
 	const { authenticated } = useSelector((store: RootState) => store.authSlice)
@@ -57,10 +55,6 @@ function SignUp() {
 
 	const submit = async () => {
 		let _form = { ...form, next_of_kins: nextOfKinForm, }
-		if (_form.password !== cPassword) {
-			setMessage({ text: "password do not match" })
-			return
-		}
 		if (!formRef.current.checkValidity()) {
 			setMessage({ text: "fill all fields correctly" })
 			return
@@ -114,8 +108,8 @@ function SignUp() {
 		<Layout>
 			<div className='my-16 bg-gray-100 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 py-4'>
 				<div className='red text-center lg:text-2xl md:text-xl text-lg '> Sign Up</div>
-				<div className={`text-center text-md font-sans text-red-500`}>
-					All fields are compulsory
+				<div className={`text-center text-sm font-sans text-red-500`}>
+					All fields are compulsory*
 				</div>
 				<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 					{message.text !== undefined && message.text}
@@ -260,7 +254,7 @@ function SignUp() {
 								name: "gurantor_name",
 								type: 'text',
 								required: true,
-								message: getError("gurantor_name"),
+								message: getError("guarantor_name"),
 								handleChange: (s) => {
 									setForm({
 										...form, guarantor_name: s as unknown as string
@@ -272,7 +266,7 @@ function SignUp() {
 								name: "guarantor_address",
 								type: 'text',
 								required: true,
-								message: getError("gurantor_address"),
+								message: getError("guarantor_address"),
 								handleChange: (s) => {
 									setForm({
 										...form, guarantor_address: s as unknown as string
@@ -283,7 +277,7 @@ function SignUp() {
 								title: 'Phone No.',
 								type: 'number',
 								required: true,
-								message: getError("gurantor_phone"),
+								message: getError("guarantor_phone"),
 								handleChange: (s) => {
 									setForm({
 										...form, guarantor_phone: s as unknown as number

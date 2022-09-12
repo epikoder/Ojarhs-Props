@@ -66,7 +66,7 @@ function Login() {
 
 	return (
 		<Layout>
-			<div className='lg:w-5/12 sm:w-8/12 w-11/12 space-y-4 py-8 bg-gray-100 mx-auto shadow-md shadow-gray-500  p-4 my-4'>
+			<div className='lg:w-4/12 sm:w-8/12 w-11/12 space-y-4 py-8 bg-gray-100 mx-auto shadow-md shadow-gray-500  p-4 my-4'>
 				<div className='red text-center lg:text-2xl md:text-xl text-lg '>
 					Login
 				</div>
@@ -74,7 +74,7 @@ function Login() {
 				<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 					{message.text !== undefined && message.text}
 				</div>
-				<form ref={formRef} onSubmit={e => e.preventDefault()} className="space-y-4 py-2 p-4 items-center justify-center">
+				<form ref={formRef} onSubmit={e => e.preventDefault()} className="space-y-2 py-2 p-4 items-center justify-center">
 					<TextField
 						label='Email'
 						variant="outlined"
@@ -147,10 +147,16 @@ function Login() {
 						</div>}
 					</div>
 
-					<div className='space-x-4 mx-auto text-sm text-center text-gray-400 '>
+					<div className='mx-auto text-sm text-center text-gray-400 '>
 						Dont have an account?{" "}
 						<Link href='/sign-up' className='ml-1'>
 							<span className='hov cursor-pointer'>Sign Up</span>
+						</Link>
+					</div>
+					<div className='mx-auto text-sm text-center text-gray-400 '>
+						Acccount Verification{" "}
+						<Link href='/verify-request' className='ml-1'>
+							<span className='hov cursor-pointer'>Verify Now</span>
 						</Link>
 					</div>
 				</form>

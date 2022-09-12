@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadUserProperties, loadUserServices } from "../../redux/user/dashboard";
+import { loadUserAdverts, loadUserProperties, loadUserServices } from "../../redux/user/dashboard";
 import { uploadDoc } from "../../redux/user/uploadDoc";
 import { RootState, store } from "../../store";
-import { LoadState, Service, Space } from "../../Typing.d";
+import { Advert, LoadState, Service, Space } from "../../Typing.d";
 import { checkIsAuthenticated } from "../authSlice";
 
 type AccountState = {
@@ -17,6 +17,10 @@ type AccountState = {
     documentUpload: {
         state: LoadState
         message: string
+    },
+    adverts: {
+        state: LoadState
+        data: Advert[]
     }
 }
 const AccountSlice = createSlice({
@@ -30,6 +34,9 @@ const AccountSlice = createSlice({
         },
         documentUpload: {
             state: 'nil'
+        },
+        adverts: {
+            state: 'nil'
         }
     } as AccountState,
     reducers: {},
@@ -40,8 +47,8 @@ const AccountSlice = createSlice({
         })
         builder.addCase(loadUserProperties.fulfilled, (state, { payload }) => {
             if (payload === undefined) return
-            state.properties.state = 'success'
             state.properties.data = payload as Space[]
+            state.properties.state = 'success'
         })
         builder.addCase(loadUserProperties.rejected, (state, { payload }) => { state.properties.state = 'failed' })
 
@@ -51,10 +58,21 @@ const AccountSlice = createSlice({
         })
         builder.addCase(loadUserServices.fulfilled, (state, { payload }) => {
             if (payload === undefined) return
-            state.services.state = 'success'
             state.services.data = payload as Service[]
+            state.services.state = 'success'
         })
         builder.addCase(loadUserServices.rejected, (state, { payload }) => { state.services.state = 'failed' })
+
+        {/* User Advert */ }
+        builder.addCase(loadUserAdverts.pending, (state, { payload }) => {
+            state.adverts.state = 'pending'
+        })
+        builder.addCase(loadUserAdverts.fulfilled, (state, { payload }) => {
+            if (payload === undefined) return
+            state.adverts.data = payload as Advert[]
+            state.adverts.state = 'success'
+        })
+        builder.addCase(loadUserAdverts.rejected, (state, { payload }) => { state.adverts.state = 'failed' })
 
         {/*Document Upload */ }
         builder.addCase(uploadDoc.pending, (state) => {
@@ -71,5 +89,4 @@ const AccountSlice = createSlice({
     },
 })
 
-export const accountState = (store: RootState) => store.accountSlice
 export default AccountSlice.reducer

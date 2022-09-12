@@ -50,7 +50,7 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Adverts" href="/user/advert" />
                     {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/packout" />}
                     <hr />
-                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-gray-500 rounded-md uppercase font-sans"
+                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-red-500 rounded-md uppercase font-sans"
                         onClick={() => dispatch(logout())}>
                         Logout
                     </div>

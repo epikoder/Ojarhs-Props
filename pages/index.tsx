@@ -13,6 +13,7 @@ import { CardLoader } from "../components/Loader";
 import { useSelector } from "react-redux";
 import { Search } from "../components/Search";
 import { useRouter } from "next/router";
+import { Card } from "@mui/material";
 
 function Home() {
   const dispatch = useAppDispatch()
@@ -45,6 +46,16 @@ function Home() {
             <Plaza name="plaza shops" store={data.shops} prop="" />
             <Notice />
             <Plaza name="plaza office" store={data.office} prop="" />
+            <Card className="p-2">
+              <div className="uppercase text-lg font-semibold px-4">
+                About Ojarh <span className="text-red-500">Properties</span>
+              </div>
+              <div className="p-4 max-w-md  lg:text-lg text-slate-500">
+                {`Ojarh Plaza is now open for you to rent and sell to your customers.
+					Our location remains the best and surely very accessible. Our
+					processes are automated for credibility and satisfaction`}
+              </div>
+            </Card>
             <Adverts />
             <Plaza name="plaza warehouse" store={data.warehouse} prop="" />
             <Plaza name="Services" store={data.services} prop="" />

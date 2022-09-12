@@ -1,72 +1,112 @@
-import { DotsVerticalIcon } from "@heroicons/react/solid"
 import { useRouter } from "next/router"
 import React, { } from "react"
 import { useSelector } from "react-redux"
-import { accountState } from "../../features/user/accountSlice"
 import { addMonth, money } from "../../helpers/helpers"
 import { loadUserProperties } from "../../redux/user/dashboard"
-import { useAppDispatch } from "../../store"
-import { Space } from "../../Typing.d"
-import { Table } from "../Table"
+import { RootState, useAppDispatch } from "../../store"
+import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { MoreVert } from "@mui/icons-material"
+import { KMenu } from "../Menu"
 
-const TableHead = () => <div className="py-4 mt-8 my-1 bg-black px-2 rounded-md text-white">
-    <div className="grid grid-cols-9 text-center lg:grid-cols-12 gap-2">
-        <div className="col-span-1 font-semibold uppercase text-sm">id</div>
-        <div className="col-span-3 font-semibold uppercase text-sm">property</div>
-        <div className="hidden lg:block col-span-3 font-semibold uppercase text-sm">address</div>
-        <div className="hidden lg:block col-span-2 font-semibold uppercase text-sm">expires on</div>
-        <div className="col-span-3 lg:col-span-2 font-semibold uppercase text-sm">amount</div>
-        <div className="col-span-2 lg:col-span-1 font-semibold uppercase text-sm">more</div>
-    </div>
-</div>
+const columns: GridColDef[] = [
+    {
+        field: 'id',
+        headerName: 'ID',
+        width: 50,
+    },
+    {
+        field: 'type',
+        headerName: 'Type',
+        width: 90,
+        align: 'center',
+        headerAlign: 'center',
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+    },
+    {
+        field: 'name',
+        headerName: 'Name',
+        width: 150,
+        align: 'center',
+        headerAlign: 'center',
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+    },
+    {
+        field: 'address',
+        headerName: 'Address',
+        headerAlign: 'center',
+        align: 'center',
+        sortable: false,
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+        width: 220
+    },
+    {
+        field: 'amount',
+        headerName: 'Amount',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+        type: 'number',
+        renderCell: ({ value }) => <div>{money(value)}</div>
+    },
+    {
+        field: 'created_at',
+        headerName: 'Expires On',
+        headerAlign: 'center',
+        align: 'center',
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+        width: 120,
+        renderCell: ({ value, row }) => <div>{addMonth(value, row.duration)}</div>
+    },
+    {
+        field: 'action',
+        headerName: ':',
+        headerAlign: 'center',
+        align: 'center',
+        width: 20,
+        sortable: false,
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+        renderCell: ({ row }) => {
+            const router = useRouter()
+            return KMenu({
+                button: <MoreVert fontSize="small" />,
+                menu: [
+                    <span className="text-sm" onClick={() => router.push('/property/' + row.slug)} >VIEW</span>,
+                    <span className="text-sm" onClick={() => router.push('/user/packout/' + row.slug)} >REQUEST PACKOUT</span>
+                ]
+            })
+        }
+    }
+];
 
-const TableBody = ({ space, index }: { space: Space, index: number } & React.Attributes) => {
-    const [isOpen, setIsOpen] = React.useState<boolean>(false)
-
-    return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
-        <div className="grid grid-cols-9 text-center lg:grid-cols-12 gap-2">
-            <div className="col-span-1 text-sm font-semibold">{index + 1}</div>
-            <div className="col-span-3 uppercase text-sm">{space.type}</div>
-            <div className="hidden lg:block col-span-3 text-sm">{space.address}</div>
-            <div className="hidden lg:block col-span-2 text-sm">{addMonth(space.updated_at, space.duration)}</div>
-            <div className="col-span-3 lg:col-span-2 text-sm">{money(space.amount)}</div>
-            <div className="col-span-2 lg:col-span-1 text-sm flex justify-center hover:cursor-pointer"><DotsVerticalIcon height={20} /> </div>
-        </div>
-    </div>
-}
 export const UserDashboardProperties = () => {
-    const { properties } = useSelector(accountState)
-    const [sortedData, setSortedData] = React.useState<Space[]>([])
+    const { state, data } = useSelector((store: RootState) => store.accountSlice.properties)
 
     const dispatch = useAppDispatch()
-    const router = useRouter()
     React.useEffect(() => {
         dispatch(loadUserProperties({}))
     }, [])
 
-    React.useEffect(() => {
-        if (properties.state === 'success') {
-            setSortedData(properties.data ?? [])
-        }
-    }, [properties.state])
-
-    return <Table
-        state={properties.state}
-        data={properties.data ?? []}
-        noData={<div className="text-center bg-black p-3 lg:p-8 my-1 rounded-lg text-white">
-            <div>
-                <div className="p-2">
-                    {'You don\'t have any property, Rented property will appears here'}
-                </div>
-                <div className="flex justify-center">
-                    <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
-                        onClick={() => router.push('/properties')}>
-                        Rent Now
-                    </div>
-                </div>
-            </div>
-        </div>}
-        TableHead={() => <TableHead />}
-        tableBody={(value: Space, index: number): JSX.Element => <TableBody space={value} index={index} key={index} />}
-    />
+    return (
+        <div className="my-4 max-w-2xl" style={{ height: 400 }}>
+            {state === 'success' && data !== undefined && <DataGrid
+                rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
+                columns={columns}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+            />}
+        </div>
+    )
 }

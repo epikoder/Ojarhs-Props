@@ -1,10 +1,14 @@
+import Head from "next/head"
 import { useRouter } from "next/router"
+import Script from "next/script"
 import React from "react"
 import { useSelector } from "react-redux"
 import { checkIsAuthenticated, logout } from "../../features/authSlice"
 import { RootState, useAppDispatch } from "../../store"
-import Layout from "../Layout"
-import Loader from "../Loader"
+import { CopyRight } from "../Copyright"
+import Footer from "../Footer"
+import Header from "../Header"
+import Loader, { PageLoader } from "../Loader"
 import { UserSideBar } from "./UserSideBar"
 
 export const UserDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string }) => {
@@ -25,25 +29,48 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
         }
         if (user !== undefined && user.is_admin) {
             dispatch(logout())
-            router.replace("/admin/dashboard")
+            router.replace("/admin/login")
             return
         }
     }, [authenticated])
 
     return <>
-        <Layout>
-            <div className="flex justify-center">
-                <div className="max-w-7xl md:flex justify-between w-full">
-                    <div className="md:w-[20%]">
-                        <UserSideBar />
-                    </div>
-                    <div className={`md:w-[70%] ${props.className ?? ''}`}>
-                        {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
-                            {authenticated && user !== undefined ? props.children({ authenticated, user, application }) : <Loader />}
-                        </React.Fragment>}
-                    </div>
+        <div className='duration-300 ease-in-out transition-all' style={{
+            backgroundColor: '#edf3f8'
+        }}>
+            <Head>
+                <title>Ojarh Properties</title>
+                <link rel="shortcut icon" href="/favicon.ico" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
+                <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet" />
+            </Head>
+            <Script src='/scripts/noimage.js'></Script>
+            <Header />
+            <PageLoader />
+            <div className='min-h-[100vh]'>
+                <div>
+                    {appState === 'completed' ? <main className='min-h-[60vh]'>
+                        <div className="lg:max-w-7xl md:flex justify-between w-full">
+                            <div className="md:w-[20%]">
+                                <UserSideBar />
+                            </div>
+                            <div className={`md:w-[70%] ${props.className ?? ''}`}>
+                                {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
+                                    {authenticated && user !== undefined ? props.children({ authenticated, user, application }) : <div className="min-h-[40vh] relative">
+                                        <Loader />
+                                    </div>}
+                                </React.Fragment>}
+                            </div>
+                        </div>
+                    </main> :
+                        <div className='mt-4 relative h-[40vh]'>
+                            <Loader />
+                        </div>}
                 </div>
+                <Footer />
             </div>
-        </Layout>
+            <CopyRight className='bg-red text-white' />
+        </div>
     </>
 }

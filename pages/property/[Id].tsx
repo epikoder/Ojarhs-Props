@@ -92,7 +92,7 @@ const Details = () => {
 									</div>
 								</div>
 								<div>
-									<PayButton slug={data.slug} />
+									<PayButton disabled={data.status === 'occupied'} slug={data.slug} type='space' />
 								</div>
 							</div>
 						</div>
@@ -151,7 +151,7 @@ const Details = () => {
 								</div>
 							</div>
 							<div>
-								<PayButton slug={data.slug} />
+								<PayButton disabled={data.status === 'occupied'} slug={data.slug} type='space' />
 							</div>
 						</div>
 					</div>

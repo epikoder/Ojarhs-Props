@@ -12,48 +12,44 @@ function Header() {
 	const dispatch = useDispatch();
 	const isOpen = useSelector(openState);
 	const isAuthenticated = useSelector((store: RootState) => store.authSlice.authenticated)
-	const [fixed, setFixed] = React.useState(false)
+	// const [fixed, setFixed] = React.useState(false)
 
-	let lsc = 0
-	if (typeof window !== 'undefined') {
-		const el = window.document.getElementById('fixedTop')
-		lsc = window.scrollY || window.document.documentElement.scrollTop
-		let sc = 0
-		window.document.onscroll = (e) => {
-			const csc = window.scrollY || window.document.documentElement.scrollTop
-			if (csc > lsc) {
-				sc = sc < -105 && window.scrollY <= 150 ? sc : sc - 5
-				if (window.scrollY >= 150) sc = -100
-				if (window.scrollY > 200) {
-					el.style.transition = 'all 0.8s linear'
-					el.style.transform = 'translateY(100px)'
-					el.style.position = 'fixed'
-					el.style.top = `${sc}px`
-				} else {
-					el.style.position = 'fixed'
-				}
-			} else {
-				sc = sc > 0 ? sc : sc + 5
-				el.style.position = sc >= 0 && window.scrollY <= 100 ? 'unset' : 'fixed'
-				el.style.transform = ''
-				if (window.scrollY < 10) {
-					el.style.position = 'unset'
-				}
-			}
-			lsc = csc <= 0 ? 0 : csc
-		}
-	}
+	// let lsc = 0
+	// if (typeof window !== 'undefined') {
+	// 	const el = window.document.getElementById('fixedTop')
+	// 	lsc = window.scrollY || window.document.documentElement.scrollTop
+	// 	let sc = 0
+	// 	window.document.onscroll = (e) => {
+	// 		const csc = window.scrollY || window.document.documentElement.scrollTop
+	// 		if (csc > lsc) {
+	// 			sc = sc < -105 && window.scrollY <= 150 ? sc : sc - 5
+	// 			if (window.scrollY >= 150) sc = -100
+	// 			if (window.scrollY > 200) {
+	// 				el.style.transition = 'all 0.8s linear'
+	// 				el.style.transform = 'translateY(100px)'
+	// 				el.style.position = 'fixed'
+	// 				el.style.top = `${sc}px`
+	// 			} else {
+	// 				el.style.position = 'fixed'
+	// 			}
+	// 		} else {
+	// 			sc = sc > 0 ? sc : sc + 5
+	// 			el.style.position = sc >= 0 && window.scrollY < 10 ? 'unset' : 'fixed'
+	// 			el.style.transform = ''
+	// 			if (window.scrollY <= 10) {
+	// 				el.style.position = 'unset'
+	// 			}
+	// 		}
+	// 		lsc = csc <= 0 ? 0 : csc
+	// 	}
+	// }
 
 	React.useEffect(() => {
 		if (!isAuthenticated) dispatch(checkIsAuthenticated({}))
 	}, [isAuthenticated])
 
 	return (
-		<div id="fixedTop" style={{
-			// top: 0,
-			width: '100%',
-			zIndex: 10000,
-		}}>
+		<div className="sticky-top">
 			<div className="flex justify-center bg-black" >
 				<div className='lg:p-4 lg:px-24 md:p-2 md:px-12 p-2 w-full sticky-top max-w-7xl' >
 					<div>
@@ -84,6 +80,11 @@ function Header() {
 								<NavLink href='/page/about'>
 									<li className='text-white uppercase hov active:text-red-600 a cursor-pointer  duration-300 transition-all ease-in-out'>
 										<a>About us</a>
+									</li>
+								</NavLink>
+								<NavLink href='/page/contact'>
+									<li className='text-white uppercase hov active:text-red-600 a cursor-pointer  duration-300 transition-all ease-in-out'>
+										<a>Contact Us</a>
 									</li>
 								</NavLink>
 								{
@@ -148,6 +149,14 @@ function Header() {
 											className='text-white  uppercase hov cursor-pointer '
 										>
 											About us
+										</li>
+									</NavLink>
+									<NavLink href='/page/contact'>
+										<li
+											onClick={() => dispatch(closeMenu())}
+											className='text-white  uppercase hov cursor-pointer '
+										>
+											Contact Us
 										</li>
 									</NavLink>
 									{

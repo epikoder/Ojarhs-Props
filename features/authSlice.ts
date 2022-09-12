@@ -160,6 +160,9 @@ const authSlice = createSlice({
                 state.error = payload.error
                 return
             }
+            state.application = payload.extra.application
+            const dec = jose.decodeJwt(payload.data.access)
+            state.user = (dec as unknown as JWTCLAIMS).aud as User
 
             setUserToken(payload.data)
             state.token = payload.data
@@ -167,9 +170,6 @@ const authSlice = createSlice({
             state.message = payload.message
             state.authenticated = true
 
-            state.application = payload.extra.application
-            const dec = jose.decodeJwt(payload.data.access)
-            state.user = (dec as unknown as JWTCLAIMS).aud as User
         })
 
         builder.addCase(loginApi.pending, (state, { }) => {
@@ -189,6 +189,8 @@ const authSlice = createSlice({
                 state.error = payload.error
                 return
             }
+            const dec = jose.decodeJwt(payload.data.access)
+            state.user = (dec as unknown as JWTCLAIMS).aud as User
 
             setUserToken(payload.data)
             state.token = payload.data
@@ -196,8 +198,6 @@ const authSlice = createSlice({
             state.message = payload.message
             state.authenticated = true
 
-            const dec = jose.decodeJwt(payload.data.access)
-            state.user = (dec as unknown as JWTCLAIMS).aud as User
         })
 
         builder.addCase(loginAdminApi.pending, (state, { }) => {

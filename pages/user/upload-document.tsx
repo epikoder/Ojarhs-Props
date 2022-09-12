@@ -108,6 +108,12 @@ const UploadDocument = () => {
                                 firstname={user.fname}
                                 lastname={user.lname}
                                 publicKey={pk_key}
+                                metadata={{
+                                    tranx: {
+                                        type: 'application'
+                                    },
+                                    custom_fields: []
+                                }}
                                 onSuccess={(response) => { proceed(response) }} >
                                 {
                                     ({ initializePayment }) =>

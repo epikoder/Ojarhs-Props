@@ -25,11 +25,13 @@ function Layout(props: PropsWithChildren) {
       <Script src='/scripts/noimage.js'></Script>
       <Header />
       <PageLoader />
-      <div className='flex flex-col justify-between min-h-[100vh]'>
-        {appState === 'completed' ? <main>{props.children}</main> :
-          <div className='mt-4 relative h-[40vh]'>
-            <Loader />
-          </div>}
+      <div className='flex flex-col items-stretch flex-1 justify-between min-h-[100vh]'>
+        <div>
+          {appState === 'completed' ? <main className='min-h-[60vh] flex flex-col justify-center items-center'>{props.children}</main> :
+            <div className='mt-4 relative h-[40vh]'>
+              <Loader />
+            </div>}
+        </div>
         <Footer />
       </div>
       <CopyRight className='bg-red text-white' />

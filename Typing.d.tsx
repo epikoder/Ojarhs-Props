@@ -2,6 +2,7 @@ export type User = Tenants & {
 	is_admin: boolean
 	is_disabled: boolean
 	is_locked: boolean
+	email_verified: boolean
 }
 
 export type Space = {
@@ -43,6 +44,9 @@ export type Tenants = {
 	lga: string;
 	state: string;
 	country: string;
+	guarantor_name: string
+	guarantor_phone: string
+	guarantor_address: string
 };
 
 export type Inputs = {
@@ -138,3 +142,5 @@ export type DashboardDataState<T> = {
 	message?: string
 }
 export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected' | 'document-required'
+
+export type Advert = {}

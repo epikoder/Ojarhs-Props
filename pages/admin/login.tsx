@@ -3,29 +3,12 @@ import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
 import { CopyRight } from "../../components/Copyright"
+import { FormInput, FormPasswordInput } from "../../components/FormInput"
 import Loader from "../../components/Loader"
 import { checkIsAuthenticated } from "../../features/authSlice"
 import { loginAdminApi } from "../../redux/auth"
 import { RootState, useAppDispatch } from "../../store"
 
-const PasswordInput = ({ onChange }: { onChange?: (s: string) => void }) => {
-    const [visible, setVisible] = React.useState<boolean>(false)
-
-    return <div className="p-1 m-1">
-        <div className="text-sm text-slate-600">
-            Password
-        </div>
-        <div className=" w-full flex px-3 py-1 rounded-md bg-slate-200">
-            <input type={visible ? "text" : "password"} className="outline-none text-black bg-transparent rounded-md w-[95%]"
-                required={true}
-                placeholder="**********" onChange={(e) => onChange(e.target.value)} />
-            <div className="w-5 relative" onClick={() => setVisible(!visible)}>
-                <EyeIcon className={`absolute ${visible ? 'hidden' : ''}`} />
-                <EyeOffIcon className={`absolute ${visible ? '' : 'hidden'}`} />
-            </div>
-        </div>
-    </div>
-}
 
 type LoginForm = {
     email: string
@@ -40,6 +23,7 @@ const AdminLogin = () => {
     const dispatch = useAppDispatch()
     const router = useRouter()
     const ref = React.useRef<HTMLFormElement>()
+    const { show } = useSelector((store: RootState) => store.togglePassword)
 
     React.useEffect(() => {
         if (authenticated) return
@@ -49,7 +33,7 @@ const AdminLogin = () => {
     React.useEffect(() => {
         if (authenticated && user.is_admin) setTimeout(() => {
             const path = sessionStorage.getItem('current')
-            router.replace(path !== null && (path !== '/admin/login' && !path.includes('/user/')) ? path : '/admin/dashboard')
+            router.replace(path !== null && (path !== '/admin/login' && !path.includes('/user/') && path !== '/') ? path : '/admin/dashboard')
         }, 200)
     }, [authenticated, router, user])
 
@@ -90,7 +74,7 @@ const AdminLogin = () => {
                             <div className="flex justify-center mb-4">
                                 <img
                                     src={"/image/logo.png"}
-                                    className="w-10 lg:w-16 object-cover" />
+                                    className="w-10 lg:w-16 h-10 " />
                             </div>
                             <h1 className="text-center text-lg text-slate-800 font-semibold my-4">
                                 Login
@@ -98,20 +82,22 @@ const AdminLogin = () => {
                             <div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
                                 {message.text !== undefined && message.text}
                             </div>
-                            <div className="p-1 m-1">
-                                <div className="text-sm text-slate-600">
-                                    Email Address
-                                </div>
-                                <input type="email" className="outline-none bg-slate-200 text-black px-3 py-1 rounded-md w-full"
-                                    placeholder="johndoe@mail.com"
-                                    required={true}
-                                    onChange={(e) => setForm({
-                                        ...form, email: e.target.value
-                                    })} />
-                            </div>
-                            <PasswordInput onChange={(s) => setForm({
-                                ...form, password: s
-                            })} />
+                            <FormInput props={{
+                                title: "Email",
+                                name: "email",
+                                required: true,
+                                handleChange: function (s: any): void {
+                                    setForm({ ...form, email: s })
+                                }
+                            }} />
+                            <FormPasswordInput
+                                props={{
+                                    title: 'Password',
+                                    hidden: show,
+                                    name: 'password',
+                                    handleChange: (s) => setForm({ ...form, password: s })
+                                }}
+                            />
                             <label
                                 className='form-check-label inline-block text-gray-500 text-sm items-center p-1'
                                 htmlFor='flexCheckDefault'

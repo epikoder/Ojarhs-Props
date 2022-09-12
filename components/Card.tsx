@@ -47,7 +47,7 @@ function Card({ data, className }: { data: Space | Service, className?: string }
 							{service.description}
 						</div>
 					</div>
-					<PayButton slug={service.slug} />
+					<PayButton slug={service.slug} type='service' />
 				</div>
 			</div >
 		);
@@ -122,7 +122,7 @@ function Card({ data, className }: { data: Space | Service, className?: string }
 					</div>
 				</Link>
 			</div>
-			<PayButton slug={space.slug} />
+			<PayButton disabled={space.status === 'occupied'} slug={space.slug} type='space' />
 		</div>
 	);
 }
