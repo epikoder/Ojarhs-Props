@@ -15,7 +15,7 @@ const columns: GridColDef[] = [
 	{
 		field: 'id',
 		headerName: 'ID',
-		width: 50,
+		width: 100,
 	},
 	{
 		field: 'name',
@@ -36,7 +36,7 @@ const columns: GridColDef[] = [
 		filterable: false,
 		hideable: false,
 		disableColumnMenu: true,
-		width: 220
+		maxWidth: 400,
 	},
 	{
 		field: 'amount',
@@ -68,26 +68,34 @@ const columns: GridColDef[] = [
 		filterable: false,
 		hideable: false,
 		disableColumnMenu: true,
-		width: 20,
+		maxWidth: 500,
+		minWidth: 50,
 		renderCell: ({ value, row }) => <ActionCell row={row} />
 	},
 ];
 
 const ActionCell = ({ row }: { row: any }) => {
 	const router = useRouter()
-	return <div className="absolute mx-1">
-		<Menu menuButton={<MoreVert fontSize="small" />}>
-			<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-				<Edit onClick={() => router.push(`/admin/services/update-service/${row.slug}`)} className="text-black" height={20} />
-			</MenuItem>
-			<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-				<Visibility onClick={() => router.push(`/services?search=${row.slug}`)} className="text-black" height={20} />
-			</MenuItem>
-			<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-				<Delete className="text-black" height={20} />
-			</MenuItem>
-		</Menu>
-	</div>
+	return <>
+		<div className="md:hidden absolute mx-1">
+			<Menu menuButton={<MoreVert fontSize="small" />}>
+				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
+					<Edit onClick={() => router.push(`/admin/services/update-service/${row.slug}`)} className="text-black cursor-pointer" height={20} />
+				</MenuItem>
+				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
+					<Visibility onClick={() => router.push(`/services?search=${row.slug}`)} className="text-black cursor-pointer" height={20} />
+				</MenuItem>
+				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
+					<Delete className="text-black cursor-pointer" height={20} />
+				</MenuItem>
+			</Menu>
+		</div>
+		<div className="hidden md:flex justify-evenly w-60">
+			<Edit onClick={() => router.push(`/admin/services/update-service/${row.slug}`)} className="text-black cursor-pointer" height={20} />
+			<Visibility onClick={() => router.push(`/services?search=${row.slug}`)} className="text-black cursor-pointer" height={20} />
+			<Delete className="text-black cursor-pointer" height={20} />
+		</div>
+	</>
 }
 
 function Page() {
@@ -116,7 +124,7 @@ function Page() {
 					</button>
 				</div>
 
-				<div className="max-w-7xl w-full h-full">
+				<div className="lg:max-w-[50vw] w-full h-full">
 					<DataGrid
 						columns={columns}
 						rows={data.map((s, i) => ({ ...s, id: i + 1 }))}

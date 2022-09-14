@@ -169,6 +169,7 @@ export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected' 
 export type Advert = {
 	id: number
 	link: string
+	photo: string
 	position: 'slider' | 'middle' | 'property'
 	approved: boolean
 	expires_at: Date

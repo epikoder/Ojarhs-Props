@@ -5,6 +5,7 @@ import ToggleSideBar from './features/ToggleSideBar'
 import TenantsSlice from "./features/TenantsSlice"
 import StaffSlice from './features/StaffSlice'
 import IndexSlice from './features/IndexSlice'
+import indexAdvertSlice from './features/indexAdvertSlice'
 import { useDispatch } from 'react-redux'
 import authSlice from './features/authSlice'
 import accountSlice from './features/user/accountSlice'
@@ -33,7 +34,8 @@ export const store = configureStore({
     propertDetailSlice: propertyDetailSlice,
     searchSlice: searchSlice,
     advertSlice: advertSlice,
-    applicationSlice:applicationsSlice
+    applicationSlice: applicationsSlice,
+    indexAdvertSlice: indexAdvertSlice,
   },
 })
 

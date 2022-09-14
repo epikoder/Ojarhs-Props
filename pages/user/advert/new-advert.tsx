@@ -46,10 +46,9 @@ const Page = () => {
                 text: data.message
             })
             setLoading(false)
-            const i = setTimeout(() => {
-                router.replace('/user/adverts')
+            setTimeout(() => {
+                router.replace('/user/advert')
             }, 800)
-            return () => clearTimeout(i)
         } catch (error) {
             setLoading(false)
             setMessage({
@@ -87,13 +86,13 @@ const Page = () => {
                             </div>
                             <div>
                                 <Select
-                                    className="w-full uppercase"
+                                    className="w-full uppercase text-xs"
                                     size="small"
                                     value={form.position}
                                     required
                                     onChange={(e) => setForm({ ...form, position: e.target.value as string })}>
                                     {(advertPrices).map((a, i) =>
-                                        <MenuItem value={a.position} className='uppercase' key={i}> {a.position} - {money(a.amount)} </MenuItem>)}
+                                        <MenuItem value={a.position} className='uppercase text-xs' key={i}> {a.position} - {money(a.amount)} - {'1 Week'} </MenuItem>)}
                                 </Select>
                             </div>
                             <div>

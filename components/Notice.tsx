@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import MiddleAdvert from "./Adverts";
 import Slider from "./Slider";
 
 function Notice() {
@@ -10,12 +11,7 @@ function Notice() {
 			</div>
 
 			<div className='md:w-8/12 w-[100%] h-full relative'>
-				<Image
-					src='/image/ads1.jpg'
-					alt=''
-					className='w-full h-full rounded-md lg:rounded-l-none'
-					layout="fill"
-				/>
+				<MiddleAdvert />
 			</div>
 		</div>
 	);

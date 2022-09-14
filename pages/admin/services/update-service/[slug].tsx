@@ -22,7 +22,7 @@ function UpdateService() {
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    const [form, setForm] = React.useState<Service>({} as Service)
+    const [form, setForm] = React.useState<Service>(undefined as Service)
     const [formError, setFormError] = React.useState<Service>({} as Service)
     const [errMessage, setErrMessage] = React.useState<{ status?: boolean, text: string }>({} as { status?: boolean, text: string })
 
@@ -101,67 +101,69 @@ function UpdateService() {
                             <h1 className={`text-center my-1 text-${!errMessage.status ? 'red' : 'blue'}-500`}>
                                 <div className="font-serif text-sm">{errMessage.text}</div>
                             </h1>
-                            <form onSubmit={e => e.preventDefault()} action='' className='space-y-4 py-8 px-4 md:px-2 lg:px-4'>
-                                <div>
-                                    <FormInput props={{
-                                        title: 'Name',
-                                        value: form.name,
-                                        message: formError.name,
-                                        required: true,
-                                        name: 'name',
-                                        handleChange: (s) => setForm({ ...form, name: s })
-                                    }} />
-                                </div>
-                                <div>
-                                    <PaymentPlans
-                                        value={form.plan}
-                                        handleChange={(s) => setForm({ ...form, plan: s })} />
-                                </div>
-                                <div>
-                                    <textarea
-                                        defaultValue={form.description}
-                                        onChange={(e) => setForm({ ...form, description: e.target.value })}
-                                        className='w-full border border-gray-300 p-2'
-                                        placeholder="Decription"
-                                    />
-                                </div>
-                                <div>
-                                    <FormInput props={{
-                                        title: 'Amount',
-                                        value: form.amount,
-                                        message: formError.amount as unknown as string,
-                                        required: true,
-                                        name: 'amount',
-                                        type: 'number',
-                                        handleChange: (s) => setForm({ ...form, amount: s })
-                                    }} />
-                                </div>
-                                <div>
-                                    <FormInput props={{
-                                        title: 'Manager',
-                                        message: formError.manager,
-                                        required: true,
-                                        value: form.manager,
-                                        name: 'manager',
-                                        handleChange: (s) => setForm({ ...form, manager: s })
-                                    }} />
-                                </div>
-                                <div>
-                                    <ImageUpload
-                                        value={resolveFilePath(form.photo)}
-                                        handleUpload={(s) => setForm({ ...form, photo: s })}
-                                    />
-                                </div>
-                                <div className="flex justify-center">
-                                    <Button
-                                        variant='outlined'
-                                        disabled={loading}
-                                        onClick={() => update()}
-                                    >
-                                        {!loading ? 'UPDATE' : 'Please wait...'}
-                                    </Button>
-                                </div>
-                            </form>
+                            {
+                                form !== undefined && <form onSubmit={e => e.preventDefault()} action='' className='space-y-4 py-8 px-4 md:px-2 lg:px-4'>
+                                    <div>
+                                        <FormInput props={{
+                                            title: 'Name',
+                                            defaultValue: form.name,
+                                            message: formError.name,
+                                            required: true,
+                                            name: 'name',
+                                            handleChange: (s) => setForm({ ...form, name: s })
+                                        }} />
+                                    </div>
+                                    <div>
+                                        <PaymentPlans
+                                            value={form.plan}
+                                            handleChange={(s) => setForm({ ...form, plan: s })} />
+                                    </div>
+                                    <div>
+                                        <textarea
+                                            defaultValue={form.description}
+                                            onChange={(e) => setForm({ ...form, description: e.target.value })}
+                                            className='w-full border border-gray-300 p-2'
+                                            placeholder="Decription"
+                                        />
+                                    </div>
+                                    <div>
+                                        <FormInput props={{
+                                            title: 'Amount',
+                                            defaultValue: form.amount,
+                                            message: formError.amount as unknown as string,
+                                            required: true,
+                                            name: 'amount',
+                                            type: 'number',
+                                            handleChange: (s) => setForm({ ...form, amount: s })
+                                        }} />
+                                    </div>
+                                    <div>
+                                        <FormInput props={{
+                                            title: 'Manager',
+                                            message: formError.manager,
+                                            required: true,
+                                            defaultValue: form.manager,
+                                            name: 'manager',
+                                            handleChange: (s) => setForm({ ...form, manager: s })
+                                        }} />
+                                    </div>
+                                    <div>
+                                        <ImageUpload
+                                            value={resolveFilePath(form.photo)}
+                                            handleUpload={(s) => setForm({ ...form, photo: s })}
+                                        />
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <Button
+                                            variant='outlined'
+                                            disabled={loading}
+                                            onClick={() => update()}
+                                        >
+                                            {!loading ? 'UPDATE' : 'Please wait...'}
+                                        </Button>
+                                    </div>
+                                </form>
+                            }
                         </div>
                     </div>
                 </React.Fragment>}

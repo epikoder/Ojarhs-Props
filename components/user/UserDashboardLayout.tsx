@@ -29,7 +29,6 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
             return
         }
         if (user !== undefined && user.is_admin) {
-            dispatch(logout())
             router.replace("/admin/login")
             return
         }

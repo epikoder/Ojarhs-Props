@@ -21,7 +21,7 @@ const columns: GridColDef[] = [
 		width: 50,
 	},
 	{
-		field: 'postion',
+		field: 'position',
 		headerName: 'Position',
 		width: 150,
 		align: 'center',
