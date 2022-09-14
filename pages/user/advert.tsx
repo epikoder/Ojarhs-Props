@@ -44,7 +44,7 @@ const columns: GridColDef[] = [
         hideable: false,
         disableColumnMenu: true,
         width: 120,
-        renderCell: ({ value, row }) => <Status active={(new Date(row.expires_at).getTime() > (new Date()).getTime())} />
+        renderCell: ({ value, row }) => <Status active={(new Date(row.expires_at).getTime() > (new Date()).getTime()) && row.approved} />
     },
 ];
 
