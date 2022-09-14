@@ -42,12 +42,11 @@ const Page = () => {
 				</Parallax>
 
 				<div className='grid grid-cols-1 md:grid-cols-2  justify-center my-4'>
-					<div className='relative md:w-[60%] rounded-lg overflow-hidden w-[70%] h-[30vh] md:h-full mx-auto quality' style={{
+					<div className='relative md:w-[60%] rounded-lg overflow-hidden w-[70%] h-[30vh] xl:h-[40vh] md:h-full mx-auto quality' style={{
                         backgroundImage:"url('/image/sign.jpg')",
                         backgroundRepeat:"no-repeat",
-                        objectFit:"contain",
+                        objectFit:"cover",
                         backgroundSize:"cover",
-
                     }}>						
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
@@ -96,11 +95,11 @@ const Page = () => {
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2  justify-center my-4'>
 					<div className='relative md:w-full w-[70%] h-[30vh] md:h-full mx-auto quality '>
-						<Image
+						<img
 							src='/image/quality-removebg-preview.png'
 							alt='quality'
-							layout='fill'
-						/>{" "}
+							className="w-full max-h-[50vh] h-full object-cover"
+						/>
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
 						{`We take pride in our work, performing to the highest possible standard team work: over values are not
@@ -151,7 +150,7 @@ const Page = () => {
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center my-4'>
 					<div className='pl-4 overflow-hidden relative rounded-lg md:w-[80%] w-[70%] h-[30vh] md:h-[45vh] mx-auto quality '>
-						<Image src='/image/tower.jpg' alt='quality' layout='fill' />{" "}
+						<img src='/image/tower.jpg' alt='quality' className="w-full max-h-[50vh] h-full object-cover" />
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
 						{`Ojarh global properties are specialist in residential, commercial and block management as well as many
@@ -247,7 +246,7 @@ const Page = () => {
 						</div>
 					</div>
 				</div>
-				<div className='grid grid-cols-1 md:grid-cols-2 justify-center my-4'>
+				<div className='flex flex-col-reverse md:grid md:grid-cols-2 justify-center my-4'>
 					<div className='p-4 max-w-md  lg:text-lg text-slate-500 mx-auto'>
 						<div className='font-semibold'>AMENITIES AVAILABLE</div>
 						<div className='space-y-1'>
@@ -280,13 +279,12 @@ const Page = () => {
 						</div>
 					</div>
 					<div
-						className='relative rounded-lg overflow-hidden md:rounded-none w-[60%] mx-auto md:w-full h-[30vh] md:h-full offer '
+						className='relative rounded-lg overflow-hidden md:rounded-none w-[80%] mx-auto md:w-full h-[30vh] md:h-full '
 						style={{
                             backgroundImage:"url('/image/offer.jpg')",
                             backgroundRepeat:"no-repeat",
                             objectFit:"contain",
                             backgroundSize:"cover",
-    
                         }}
 					>						
 					</div>
