@@ -46,6 +46,17 @@ const columns: GridColDef[] = [
         width: 120,
         renderCell: ({ value, row }) => <Status active={(new Date(row.expires_at).getTime() > (new Date()).getTime()) && row.approved} />
     },
+    {
+        field: 'approved',
+        headerName: 'Approved',
+        headerAlign: 'center',
+        align: 'center',
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+        width: 120,
+        renderCell: ({ value, row }) => <div className={`px-2 py-1 bg-${row.approved ? 'blue' : 'red'}-500 text-white rounded-md`}> {row.approved ? 'Yes' : 'No'} </div>
+    },
 ];
 
 const Status = ({ active }: { active: boolean }) => {

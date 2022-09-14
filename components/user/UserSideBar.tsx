@@ -62,7 +62,7 @@ export const UserSideBar = () => {
                 <MenuItem title="Profile" href="/user/profile" />
                 <MenuItem title="Service" href="/user/service" />
                 <MenuItem title="Receipts" href="/user/receipt" />
-                <MenuItem title="Disputes" href="/user/dispute" />
+                <MenuItem title="Disputes" href="/user/disputes" />
                 <MenuItem title="Adverts" href="/user/advert" />
                 <MenuItem title="Report" href="/user/report" />
                 {user.reference !== "" && <MenuItem title="Request pack out" href="/user/packout" />}
