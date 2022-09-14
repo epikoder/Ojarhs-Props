@@ -68,7 +68,7 @@ const columns: GridColDef[] = [
         hideable: false,
         disableColumnMenu: true,
         width: 20,
-        renderCell: ({ value, row }) => actionCell(row)
+        renderCell: ({ value, row }) => <ActionCell row={row} />
     },
 ];
 
@@ -81,7 +81,7 @@ const Status = ({ active, status }: { active: boolean, status: UserApplicationSt
     </>
 }
 
-const actionCell = (row: any) => {
+const ActionCell = ({ row }: { row: any }) => {
     const router = useRouter()
     return <Visibility onClick={() => router.push(`/admin/applications/view/${row.user_id}?doctype=${row.type}`)} className="text-black cursor-pointer" height={20} />
 }

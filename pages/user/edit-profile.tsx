@@ -102,7 +102,7 @@ const Page = () => {
                             title: 'Country',
                             value: form.country,
                             handleChange: (s) => {
-                                setForm({ ...form, country: s as string })
+                                setForm({ ...form, country: s as unknown as string })
                             },
                         }} />
                         <div className="text-center max-w-lg w-full">

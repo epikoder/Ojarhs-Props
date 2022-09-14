@@ -67,11 +67,11 @@ const columns: GridColDef[] = [
         hideable: false,
         disableColumnMenu: true,
         width: 20,
-        renderCell: ({ value, row }) => actionCell(row)
+        renderCell: ({ value, row }) => <ActionCell row={row} />
     },
 ];
 
-const actionCell = (row: any) => {
+const ActionCell = ({ row }: { row: any }) => {
     const router = useRouter()
     return <div className="absolute mx-1">
         <Menu menuButton={<MoreVert fontSize="small" />}>
