@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { TogglePasswordState } from "../features/TogglePassword";
 import Link from "next/link";
 import Layout from "../components/Layout";
-import { FormInput, FormPasswordInput } from "../components/FormInput";
 import Loader from "../components/Loader";
 import { RootState, useAppDispatch } from "../store";
 import { loginApi } from "../redux/auth";
 import { useRouter } from "next/router";
-import { checkIsAuthenticated, clearErr } from "../features/authSlice";
+import { checkIsAuthenticated } from "../features/authSlice";
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -41,9 +39,8 @@ function Login() {
 
 	useEffect(() => {
 		if (authenticated) setTimeout(() => {
-			if (user !== undefined && user.is_admin) return router.replace("/admin/dashboard")
-			const path = sessionStorage.getItem('current')
-			router.replace(path !== null && (path !== '/login' && path !== '/sign-up' && !path.includes('/admin/') && path !== '/') ? path : '/user/dashboard')
+			if (user !== undefined && user.is_admin) return router.replace("/admin")
+			router.replace('/user/dashboard')
 		}, 200)
 	}, [authenticated, router, user])
 

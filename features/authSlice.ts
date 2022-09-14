@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
 import { clearUserToken, getUserToken, setUserToken } from "../helpers/auth";
-import { loginAdminApi, loginApi, rejectValue } from "../redux/auth";
-import { ApiResponse, LoadState, loginResponse, User, UserApplicationStatus } from "../Typing.d";
+import { loadNextOfKin, loginAdminApi, loginApi, rejectValue } from "../redux/auth";
+import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplicationStatus } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
 import { AxiosResponse } from "axios";
+import { updateUserProfile } from "../redux/user/dashboard";
+import { typography } from "@mui/system";
 
 export type AuthState = {
     authenticated: boolean
@@ -17,6 +19,14 @@ export type AuthState = {
         [key: string]: string
     }
     user?: User
+    nextOfKin?: {
+        state: LoadState
+        data: NextOfKin[]
+    },
+    profileUpdate: {
+        state: LoadState
+        message: string
+    }
     application: UserApplicationStatus
 }
 
@@ -30,8 +40,10 @@ export type JWTCLAIMS = {
 }
 
 const checkIsAuthenticatedAsync = async () => {
+    console.log("CHEEEEEEKKIII")
     try {
         const { data } = await Api().get<ApiResponse<loginResponse, { application: UserApplicationStatus }>>("/user/user")
+        console.log("CHEEEEEEKKIII", "SI")
         const auth = {} as {
             authenticated: boolean
             token?: loginResponse
@@ -57,6 +69,7 @@ const checkIsAuthenticatedAsync = async () => {
         }
         store.dispatch(setAuthenticated(auth))
     } catch (error) {
+        console.log("CHEEEEEEKKIII", "FA")
         store.dispatch(setAuthenticated({ authenticated: false }))
     }
 }
@@ -95,10 +108,15 @@ const authSlice = createSlice({
     name: "authSlice",
     initialState: {
         appState: 'completed',
-        token: {}
+        token: {},
+        nextOfKin: {},
+        profileUpdate: {},
+        user: undefined
     } as AuthState,
     reducers: {
         logout: (state) => {
+            console.log('LOGGGING OUT')
+            state.appState = 'completed'
             state.authenticated = false
             state.user = undefined
             state.message = undefined
@@ -118,6 +136,7 @@ const authSlice = createSlice({
                 application?: UserApplicationStatus
             }
         }) => {
+            state.appState = 'completed'
             state.authenticated = payload.authenticated
             state.user = payload.user
             state.token = payload.token
@@ -207,6 +226,40 @@ const authSlice = createSlice({
         builder.addCase(loginAdminApi.rejected, (state, { payload }: { payload }) => {
             state.status = 'failed'
             state.message = (payload as rejectValue).message
+        })
+
+        {/* User profile: NEXT OF KIN */ }
+        builder.addCase(loadNextOfKin.pending, (state) => {
+            state.nextOfKin.state = 'pending'
+        })
+        builder.addCase(loadNextOfKin.fulfilled, (state, { payload }) => {
+            state.nextOfKin.data = payload
+            state.nextOfKin.state = 'success'
+        })
+        builder.addCase(loadNextOfKin.rejected, (state) => {
+            state.nextOfKin.state = 'failed'
+        })
+
+        {/* User profile: Update Profile */ }
+        builder.addCase(updateUserProfile.pending, (state) => {
+            state.profileUpdate.state = 'pending'
+        })
+        builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+            console.log(payload.status, payload.data)
+            if (payload.status === 'failed') {
+                state.profileUpdate.state = 'failed'
+                state.profileUpdate.message = payload.message
+                return
+            }
+            setUserToken(Object.assign(payload.data))
+            state.profileUpdate.message = payload.message
+            state.profileUpdate.state = 'success'
+            state.token = payload.data
+        })
+        builder.addCase(updateUserProfile.rejected, (state, { payload }) => {
+            console.log(payload)
+            state.profileUpdate.state = 'failed'
+            state.profileUpdate.message = 'Failed to update profile'
         })
     },
 })

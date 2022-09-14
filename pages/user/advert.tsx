@@ -36,21 +36,30 @@ const columns: GridColDef[] = [
         width: 180
     },
     {
-        field: 'created_at',
-        headerName: 'Expires On',
+        field: 'expires_at',
+        headerName: 'Status',
         headerAlign: 'center',
         align: 'center',
         filterable: false,
         hideable: false,
         disableColumnMenu: true,
         width: 120,
-        renderCell: ({ value, row }) => <div>{addWeek(value, row.duration)}</div>
+        renderCell: ({ value, row }) => <Status active={(new Date(row.expires_at).getTime() > (new Date()).getTime())} />
     },
 ];
+
+const Status = ({ active }: { active: boolean }) => {
+    return <>
+        <div className={`bg-${active ? 'blue' : 'red'}-500 px-2 py-1 rounded-md text-white `}>
+            {active ? 'Active' : 'Inactive'}
+        </div>
+    </>
+}
 
 const Page = () => {
     const { state, data } = useSelector((store: RootState) => store.accountSlice.adverts)
     const dispatch = useAppDispatch()
+    const router = useRouter()
 
     React.useEffect(() => {
         dispatch(loadUserAdverts({}))
@@ -64,12 +73,13 @@ const Page = () => {
                 </div>
                 <div className="flex justify-end max-w-2xl px-4">
                     <Button
-                    variant="contained"
-                    size="small"
-                    className="text-sm"
-                    sx={{
-                        backgroundColor: 'red'
-                    }}
+                        variant="contained"
+                        size="small"
+                        className="text-sm"
+                        onClick={() => router.push('/user/advert/new-advert')}
+                        sx={{
+                            backgroundColor: 'red'
+                        }}
                     >
                         NEW ADVERT
                     </Button>
@@ -80,7 +90,7 @@ const Page = () => {
                             rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
                             columns={columns}
                             pageSize={10}
-                            rowsPerPageOptions={[10]}
+
                         />}
                     </div>
                 </div>

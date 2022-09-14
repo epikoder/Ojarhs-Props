@@ -8,11 +8,13 @@ import IndexSlice from './features/IndexSlice'
 import { useDispatch } from 'react-redux'
 import authSlice from './features/authSlice'
 import accountSlice from './features/user/accountSlice'
-import ServiceSlice from './features/ServiceSlice'
 import propertySlice from './features/admin/propertySlice'
 import resourceSlice from './features/resourceSlice'
 import propertyDetailSlice from './features/propertyDetailSlice'
 import searchSlice from './features/searchSlice'
+import serviceSlice from './features/admin/serviceSlice'
+import advertSlice from './features/admin/advertSlice'
+import applicationsSlice from './features/admin/applicationsSlice'
 
 
 export const store = configureStore({
@@ -27,9 +29,11 @@ export const store = configureStore({
     authSlice: authSlice,
     accountSlice: accountSlice,
     resourceSlice: resourceSlice,
-    serviceSlice: ServiceSlice,
+    serviceSlice: serviceSlice,
     propertDetailSlice: propertyDetailSlice,
-    searchSlice: searchSlice
+    searchSlice: searchSlice,
+    advertSlice: advertSlice,
+    applicationSlice:applicationsSlice
   },
 })
 

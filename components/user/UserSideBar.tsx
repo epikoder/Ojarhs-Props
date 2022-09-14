@@ -48,6 +48,7 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Receipts" href="/user/receipt" />
                     <MenuItemMobile title="Disputes" href="/user/disputes" />
                     <MenuItemMobile title="Adverts" href="/user/advert" />
+                    <MenuItemMobile title="Report" href="/user/report" />
                     {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/packout" />}
                     <hr />
                     <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-red-500 rounded-md uppercase font-sans"
@@ -63,6 +64,7 @@ export const UserSideBar = () => {
                 <MenuItem title="Receipts" href="/user/receipt" />
                 <MenuItem title="Disputes" href="/user/dispute" />
                 <MenuItem title="Adverts" href="/user/advert" />
+                <MenuItem title="Report" href="/user/report" />
                 {user.reference !== "" && <MenuItem title="Request pack out" href="/user/packout" />}
 
                 <hr />

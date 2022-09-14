@@ -6,7 +6,7 @@ function Staffs() {
 		{() => (
 			<React.Fragment>
 				<div className='flex justify-between'>
-					<h1 className='lg:text-3xl text-md red'>All Staffs</h1>
+					<h1 className='lg:text-2xl text-md red'>All Staffs</h1>
 
 					<button
 						type='button'

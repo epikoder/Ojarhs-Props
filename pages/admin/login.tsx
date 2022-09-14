@@ -86,6 +86,7 @@ const AdminLogin = () => {
                                 title: "Email",
                                 name: "email",
                                 required: true,
+                                value: form.email,
                                 handleChange: function (s: any): void {
                                     setForm({ ...form, email: s })
                                 }

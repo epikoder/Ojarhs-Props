@@ -12,6 +12,6 @@ export const uploadDoc = createAsyncThunk<ApiResponse, {
             const { status, data } = await Api().post<ApiResponse>("/user/pay", JSON.stringify(payload))
             return data
         } catch (error) {
-            rejectWithValue({})
+            return rejectWithValue({})
         }
     })

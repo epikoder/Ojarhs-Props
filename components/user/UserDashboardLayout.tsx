@@ -23,6 +23,7 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
     }, [])
 
     React.useEffect(() => {
+        console.log("CHECKING", authenticated, appState)
         if (authenticated === false && appState === 'completed') {
             router.push('/login')
             return
@@ -49,22 +50,22 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
             <Header />
             <PageLoader />
             <div className='min-h-[100vh]'>
-                <div>
-                    {appState === 'completed' ? <main className='min-h-[60vh]'>
-                        <div className="lg:max-w-7xl md:flex justify-between w-full">
-                            <div className="md:w-[20%]">
-                                <UserSideBar />
+                <div className='min-h-[50vh]'>
+                    {(appState === 'completed' && authenticated && user !== undefined) &&
+                        <main className='min-h-[60vh] lg:flex justify-center'>
+                            <div className="lg:max-w-7xl md:flex justify-between w-full">
+                                <div className="md:w-[20%]">
+                                    <UserSideBar />
+                                </div>
+                                <div className={`md:w-[70%] ${props.className ?? ''}`}>
+                                    {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
+                                        {props.children({ authenticated, user, application })}
+                                    </React.Fragment>}
+                                </div>
                             </div>
-                            <div className={`md:w-[70%] ${props.className ?? ''}`}>
-                                {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
-                                    {authenticated && user !== undefined ? props.children({ authenticated, user, application }) : <div className="min-h-[40vh] relative">
-                                        <Loader />
-                                    </div>}
-                                </React.Fragment>}
-                            </div>
-                        </div>
-                    </main> :
-                        <div className='mt-4 relative h-[40vh]'>
+                        </main>}
+                    {(appState === 'pending') &&
+                        <div className='p-4 relative h-[50vh]'>
                             <Loader />
                         </div>}
                 </div>

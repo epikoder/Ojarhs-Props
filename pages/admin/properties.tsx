@@ -4,11 +4,11 @@ import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayou
 import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
 import { Table } from "../../components/Table";
-import { resetPropertyStatus, toggleProperyStatus, updateProperty } from "../../features/admin/propertySlice";
+import { resetPropertyState, toggleProperyStatus, updateProperty } from "../../features/admin/propertySlice";
 import { ApiResponse, Space } from "../../Typing.d";
 import { money } from "../../helpers/helpers";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
-import { loadAdminProperties } from "../../redux/admin/property";
+import { loadAdminProperties } from "../../redux/admin/admin";
 import ReactSwitch from "react-switch";
 import { LoaderWhite } from "../../components/Loader";
 import { Api } from "../../helpers/api";
@@ -73,7 +73,7 @@ const TableBody = ({ space, index }: { space: Space, index: number } & React.Att
 							<PencilIcon onClick={() => router.push(`/admin/properties/update-property/${space.slug}`)} className="text-black" height={20} />
 						</MenuItem>
 						<MenuItem className={'p-2 my-2 bg-white rounded-full  hover:scale-110'} >
-							<EyeIcon className="text-black" height={20} />
+							<EyeIcon onClick={() => router.push(`/property/${space.slug}`)} className="text-black" height={20} />
 						</MenuItem>
 						<MenuItem className={'p-2 my-2 bg-white rounded-full  hover:scale-110'} >
 							<UserAddIcon className="text-black" height={20} />
@@ -122,7 +122,7 @@ function DashProps() {
 		dispatch(loadAdminProperties())
 	}, [])
 
-	React.useEffect(() => { dispatch(resetPropertyStatus()) }, [status])
+	React.useEffect(() => { dispatch(resetPropertyState()) }, [status])
 
 	return (
 		<AdminDashboardLayout>

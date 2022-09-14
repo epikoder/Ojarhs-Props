@@ -51,6 +51,21 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				</div>
 				<div>
 					<SideBarItem
+						name='User Applications'
+						subItem={[
+							{
+								link: '/admin/applications/all',
+								name: 'Applications'
+							},
+							{
+								link: '/admin/applications/rejected',
+								name: 'Rejected'
+							},
+						]}
+					/>
+				</div>
+				<div>
+					<SideBarItem
 						name='Ojarh Office'
 						subItem={[
 							{

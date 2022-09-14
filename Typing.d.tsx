@@ -68,8 +68,9 @@ export type Service = {
 	description: string
 	amount: number
 	manager: string
-	type: 'service'
+	type?: 'service'
 	plan?: string
+	photo?: string
 	duration?: number
 	created_at?: Date
 	updated_at?: Date
@@ -95,6 +96,17 @@ export type NextOfKin = {
 	kcountry: string
 }
 
+export type NextOfKinApi = {
+	fname: string
+	lname: string
+	email: string
+	phone: number
+	address: string
+	lga: string
+	state: string
+	country: string
+}
+
 export type SignUpForm = {
 	fname: string
 	lname: string
@@ -110,6 +122,17 @@ export type SignUpForm = {
 	guarantor_address: string
 	guarantor_phone: number
 	next_of_kins: NextOfKin[]
+}
+
+export type UserUpdateForm = {
+	fname: string
+	lname: string
+	phone: string
+	photo: string
+	address: string
+	lga: string
+	state: string
+	country: string
 }
 
 export type Country = {
@@ -143,4 +166,16 @@ export type DashboardDataState<T> = {
 }
 export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected' | 'document-required'
 
-export type Advert = {}
+export type Advert = {
+	id: number
+	link: string
+	position: 'slider' | 'middle' | 'property'
+	approved: boolean
+	expires_at: Date
+}
+
+export type UserApplication = {
+	status: UserApplicationStatus
+	document: string
+	type: string
+}

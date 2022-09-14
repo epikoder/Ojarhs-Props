@@ -5,7 +5,7 @@ import { GalleryUploader } from "../../../../components/admin/GalleryUploader";
 import { PaymentPlans, PropertyType } from "../../../../components/Resource";
 import { useAppDispatch } from "../../../../store";
 import Loader from "../../../../components/Loader";
-import { addNewPropertyThunck } from "../../../../redux/admin/property";
+import { addNewPropertyThunck } from "../../../../redux/admin/admin";
 import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
 import { Api } from "../../../../helpers/api";
@@ -20,20 +20,6 @@ function UpdateProp() {
     const router = useRouter();
     const [errMessage, setErrMessage] = React.useState<{ status?: boolean, text: string }>({} as { status?: boolean, text: string })
     const [form, setForm] = React.useState<Space>({
-        name: '',
-        amount: 0,
-        description: '',
-        no: '',
-        photo: '',
-        type: '',
-        address: '',
-        size: '',
-        video: '',
-        plan: '',
-        galleries: [],
-        video_galleries: []
-    } as Space)
-    const [newForm, setNewForm] = React.useState<Space>({
         name: '',
         amount: 0,
         description: '',
@@ -376,7 +362,7 @@ function UpdateProp() {
                             <button
                                 type='submit'
                                 className='w-full outline-none'
-                                onClick={() => dispatch(update)}
+                                onClick={() => update()}
                             >
                                 <div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer '>
                                     {status !== 'pending' ? 'Update Property' : 'Please wait...'}

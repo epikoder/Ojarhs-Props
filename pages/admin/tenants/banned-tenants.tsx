@@ -8,7 +8,7 @@ function BannedTenants() {
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
 				<div className="w-full flex justify-between">
-					<h1 className='lg:text-3xl text-md red'>Banned tenants</h1>
+					<h1 className='lg:text-2xl text-md red'>Banned tenants</h1>
 
 					<button
 						type='button'

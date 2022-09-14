@@ -10,6 +10,8 @@ export const FormInput = ({ props }: {
     props: {
         title: string
         name?: string
+        value?: string | number
+        defaultValue?: string | number
         message?: string
         required?: boolean
         type?: React.HTMLInputTypeAttribute
@@ -26,6 +28,8 @@ export const FormInput = ({ props }: {
                 className={`w-full text-sm`}
                 required={props.required}
                 placeholder={props.title}
+                defaultValue={props.defaultValue}
+                value={props.value !== undefined ? props.value : undefined}
                 error={props.message !== '' && props.message !== undefined}
                 onChange={(e) => {
                     props.handleChange(e.target.value)
@@ -168,12 +172,13 @@ export const FormCountryInput = ({ props }: {
     }, [])
 
 
+    let value = props.value !== undefined ? (countries.find((c) => c.code === props.value || c.name === props.value)) : undefined
     return <>
         <div className="my-2">
             <FormControl size="small" fullWidth>
                 <InputLabel>{'Country'}</InputLabel>
                 <Select
-                    value={props.value !== undefined ? props.value : ''}
+                    value={value !== undefined ? (value as Country).code : ''}
                     label="Country"
                     className="text-sm uppercase"
                     size="small"

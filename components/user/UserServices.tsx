@@ -36,6 +36,16 @@ const columns: GridColDef[] = [
         width: 220
     },
     {
+        field: 'manager',
+        headerName: 'Manger',
+        headerAlign: 'center',
+        align: 'center',
+        width: 150,
+        filterable: false,
+        hideable: false,
+        disableColumnMenu: true,
+    },
+    {
         field: 'amount',
         headerName: 'Amount',
         headerAlign: 'center',
@@ -58,23 +68,22 @@ const columns: GridColDef[] = [
         width: 120,
         renderCell: ({ value, row }) => <div>{addMonth(value, row.duration)}</div>
     },
-    {
-        field: 'action',
-        headerName: 'Action',
-        headerAlign: 'center',
-        align: 'center',
-        filterable: false,
-        hideable: false,
-        disableColumnMenu: true,
-        width: 20,
-        renderCell: ({ value, row }) => <div> <ArrowForward fontSize="small" /> </div>
-    },
+    // {
+    //     field: 'action',
+    //     headerName: 'Action',
+    //     headerAlign: 'center',
+    //     align: 'center',
+    //     filterable: false,
+    //     hideable: false,
+    //     disableColumnMenu: true,
+    //     width: 20,
+    //     renderCell: ({ value, row }) => <div> <ArrowForward fontSize="small" /> </div>
+    // },
 ];
 
 
 export const UserServices = () => {
     const { state, data } = useSelector((store: RootState) => store.accountSlice.services)
-    const [sortedData, setSortedData] = React.useState<Service[]>([])
 
     const dispatch = useAppDispatch()
     React.useEffect(() => {
@@ -87,7 +96,7 @@ export const UserServices = () => {
                 rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
                 columns={columns}
                 pageSize={10}
-                rowsPerPageOptions={[10]}
+                
             />}
         </div>)
 }

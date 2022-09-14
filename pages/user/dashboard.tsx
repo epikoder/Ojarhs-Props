@@ -1,3 +1,4 @@
+import { Button } from "@mui/material"
 import { useRouter } from "next/router"
 import React, { PropsWithChildren } from "react"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
@@ -66,16 +67,16 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
                     <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
                         <h6 className="text-red-500">NOTICE</h6>
                         <div className="lg:mx-12">
-                            {'Your application was not successful due to problem with document upload, please upload a new document,'}
+                            {'Your application was not successful due to problem with the document uploaded, please upload a new document to continue your application,'}
                             {' if you are having problems with your application please contact support as assistance'}
                         </div>
                     </div>
 
                     <div className="m-4 flex justify-center">
-                        <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
+                        <Button variant="outlined"
                             onClick={() => router.push('/user/application')}>
                             {'UPLOAD NEW DOCUMENT'}
-                        </div>
+                        </Button>
                     </div>
                 </React.Fragment>}
             </div>

@@ -1,4 +1,6 @@
+import { ArrowBackIos } from "@mui/icons-material"
 import { Button, CircularProgress, TextField } from "@mui/material"
+import { useRouter } from "next/router"
 import React from "react"
 import Layout from "../components/Layout"
 import { Api } from "../helpers/api"
@@ -8,6 +10,7 @@ const Page = () => {
     const [loading, setLoading] = React.useState(false)
     const [message, setMessage] = React.useState<{ text?: string, status?: boolean }>({});
     const [email, setEmail] = React.useState('')
+    const router = useRouter()
 
     const send = async () => {
         try {
@@ -52,7 +55,15 @@ const Page = () => {
                     onChange={(e) => setEmail(e.target.value)} />
 
 
-                <div className="flex justify-end">
+                <div className="flex justify-between">
+                    <Button
+                        variant="outlined"
+                        size="small"
+                        startIcon={<ArrowBackIos fontSize={'small'} />}
+                        onClick={() => router.push('/login')}
+                    >
+                        BACK TO LOGIN
+                    </Button>
                     <Button
                         variant="outlined"
                         size="small"

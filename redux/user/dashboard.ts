@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Advert, Service, Space } from "../../Typing.d";
+import { Advert, ApiResponse, loginResponse, Service, Space, UserUpdateForm } from "../../Typing.d";
 import { Api } from "../../helpers/api";
 
 export const loadUserProperties =
@@ -14,7 +14,7 @@ export const loadUserProperties =
             if (data.status === 'failed') return rejectWithValue({ status: 'failed' })
             return data.data as Space[]
         } catch (error) {
-            rejectWithValue({
+            return rejectWithValue({
                 status: "failed"
             })
         }
@@ -55,3 +55,13 @@ export const loadUserAdverts =
             })
         }
     })
+
+export const updateUserProfile = createAsyncThunk<ApiResponse<loginResponse>, UserUpdateForm>("user/profile-update", async (payload, { rejectWithValue }) => {
+    try {
+        const response = await Api().put<ApiResponse<loginResponse>>("/user/update-profile", JSON.stringify(payload))
+        return response.data
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue({})
+    }
+})
