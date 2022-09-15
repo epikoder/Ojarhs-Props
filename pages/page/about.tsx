@@ -20,9 +20,6 @@ const Page = () => {
 									<div className='font-medium text-3xl'>
 										ABOUT<span className='text-red-500'>{" US"}</span>
 									</div>
-									<div>
-										{new Date().getFullYear() - 2020} years of experience
-									</div>
 									<hr
 										className='w-4/5 my-px bg-red-500'
 										style={{ height: "2px" }}
@@ -43,7 +40,7 @@ const Page = () => {
 
 				<div className='grid grid-cols-1 md:grid-cols-2  justify-center my-4'>
 					<div className='relative md:w-[60%] rounded-lg overflow-hidden w-[70%] h-[30vh] xl:h-[40vh] md:h-full mx-auto quality' style={{
-                        backgroundImage:"url('/image/sign.jpg')",
+                        backgroundImage:"url('/image/aboutus.jpeg')",
                         backgroundRepeat:"no-repeat",
                         objectFit:"cover",
                         backgroundSize:"cover",
@@ -150,7 +147,7 @@ const Page = () => {
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center my-4'>
 					<div className='pl-4 overflow-hidden relative rounded-lg md:w-[80%] w-[70%] h-[30vh] md:h-[45vh] mx-auto quality '>
-						<img src='/image/tower.jpg' alt='quality' className="w-full max-h-[50vh] h-full object-cover" />
+						<img src='/image/ourvision.png' alt='quality' className="w-full max-h-[50vh] h-full object-cover" />
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
 						{`Ojarh global properties are specialist in residential, commercial and block management as well as many

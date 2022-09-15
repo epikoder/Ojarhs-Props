@@ -17,7 +17,7 @@ const Page = () => {
         type: string
     })
     const [form, setForm] = React.useState({
-        status: 'nil' as UserApplicationStatus,
+        status: 'pending' as UserApplicationStatus,
         message: '' as string
     })
 
@@ -26,6 +26,7 @@ const Page = () => {
         try {
             const { data, status } = await Api().get<ApiResponse<typeof user>>('/admin/applications/view/' + router.asPath.split('/').pop())
             setUser(data.data)
+            setForm({ ...form, status: data.data.application.status })
             setLoading(false)
         } catch (error) {
             console.log(error)

@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { useSelector } from 'react-redux'
-// import Carousel from "react-responsive-carousel/lib/js/components/Carousel/index";
-import { resolveFilePath } from '../helpers/helpers'
+import { IsLinkValid, resolveFilePath } from '../helpers/helpers'
 import { RootState } from '../store'
 import Slider from './Slider'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -23,10 +22,15 @@ export const SliderAdvert = () => {
         transitionTime={1000}
         emulateTouch={true}
         showThumbs={false}
+        onClickItem={(i) => IsLinkValid(slider[i].link) ? window.open(slider[i].link, '_blank') : null}
       >
-        {slider.map((a, i) => <a href={a.link} target='_blank' rel="noreferrer" key={i}>
-          <img src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />
-        </a>)}
+        {slider.length > 0 ?
+          slider.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
+          :
+          ['slider1.jpeg', 'slider2.jpeg',].map((s, i) =>
+            <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
+          )
+        }
       </Carousel>}
   </>
 }
@@ -39,7 +43,7 @@ export const PropertyAdvert = () => {
   return <>
     {state !== 'success' && <Slider slider />}
     {state === 'success' &&
-      <div className='md:grid grid-cols-2 w-full h-full gap-1'>
+      <div className='md:grid grid-cols-2 w-full h-full gap-1 md:gap-5 xl:gap-11 xl:px-24 md:px-12 px-2'>
         <Carousel
           className={'object-cover h-full w-full'}
           autoPlay={true}
@@ -53,7 +57,7 @@ export const PropertyAdvert = () => {
           showThumbs={false}
           animationHandler='fade'
           interval={5000}
-          onClickItem={(i) => console.log(i)}
+          onClickItem={(i) => IsLinkValid(f[i].link) ? window.open(f[i].link, '_blank') : null}
         >
           {f.length > 0 ? f.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
             :
@@ -75,7 +79,7 @@ export const PropertyAdvert = () => {
           showThumbs={false}
           animationHandler='fade'
           interval={5000}
-          onClickItem={(i) => console.log(i)}
+          onClickItem={(i) => IsLinkValid(s[i].link) ? window.open(s[i].link, '_blank') : null}
         >
           {s.length > 0 ? s.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
             :
@@ -109,7 +113,8 @@ function MiddleAdvert() {
           showThumbs={false}
           animationHandler='fade'
           interval={5000}
-          onClickItem={(i) => console.log(i)}
+          swipeable={false}
+          onClickItem={(i) => IsLinkValid(middle[i].link) ? window.open(middle[i].link, '_blank') : null}
         >
           {middle.length > 0 ? middle.map((a, i) => <div className='h-full w-full' key={i}>
             <img src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />

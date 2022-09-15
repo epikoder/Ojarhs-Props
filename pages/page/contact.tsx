@@ -22,9 +22,6 @@ const Page = () => {
 									<div className='font-medium text-3xl'>
 										CONTACT<span className='text-red-500'>{" US"}</span>
 									</div>
-									<div>
-										{new Date().getFullYear() - 2020} years of experience
-									</div>
 									<hr
 										className='w-4/5 my-px bg-red-500'
 										style={{ height: "2px" }}

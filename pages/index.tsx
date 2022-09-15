@@ -13,9 +13,74 @@ import { useSelector } from "react-redux";
 import { Search } from "../components/Search";
 import { useRouter } from "next/router";
 import { Card } from "@mui/material";
-import Image from "next/image"
-import Slider from "../components/Slider";
+import { Carousel } from "react-responsive-carousel";
+import { resolveFilePath } from "../helpers/helpers";
 
+type indexSliderType = {
+	postion: 'left' | 'right' | 'center'
+	gravity: 'start' | 'center' | 'end'
+	apiImage: boolean
+	image: string
+	text: string
+	textColor?: string|JSX.Element
+}
+const IndexSlider = () => {
+	const slides: indexSliderType[] = [
+		{
+			apiImage: false,
+			postion: 'left',
+			gravity: 'end',
+			image: 'slider1.jpeg',
+			text: 'Welcome to Ojarh plaza, pay for your office and warehouse'
+		},
+		{
+			apiImage: false,
+			postion: 'right',
+			gravity: 'center',
+			image: 'slider2.jpeg',
+			text: ' Office, Shop, and warehouse available for rent at the heart of Anambra'
+		},
+		{
+			apiImage: false,
+			postion: 'right',
+			gravity: 'center',
+			image: 'slider3.jpeg',
+			text: 'Signup and advertise your services'
+		},
+	]
+
+	return <Carousel
+		showThumbs={false}
+		showArrows={true}
+		showStatus={false}
+		autoPlay
+		emulateTouch
+		transitionTime={1000}
+		showIndicators
+		stopOnHover
+	>
+		{slides.map((s,i) =>
+			<div key={i} className="h-[40vh] md:h-[80vh] relative" style={{
+				backgroundImage: `url(${s.apiImage ? resolveFilePath(s.image) : '/image/' + s.image})`,
+				backgroundRepeat: 'no-repeat',
+				objectFit: 'cover',
+				backgroundSize: 'cover'
+			}}>
+				<div className={`${s.postion}-10 absolute flex flex-col justify-${s.gravity} h-full max-w-[40%]`} >
+					<div className={`p-2 m-4`} style={{
+						backgroundColor: '#ffffffa1'
+					}}>
+						<span className={`text-${s.textColor}-500 text-md md:text-md`}
+						style={{
+							fontFamily:'space grotesk'
+						}}>{s.text}</span>
+					</div>
+				</div>
+			</div>
+		)
+		}
+	</Carousel >
+}
 function Home() {
 	const dispatch = useAppDispatch();
 	const { data, state } = useSelector((store: RootState) => store.indexSlice);
@@ -31,7 +96,7 @@ function Home() {
 			<Layout>
 				<div className='space-y-4'>
 					<div >
-						<Slider className="max-h-[80vh]" slider={true} />
+						<IndexSlider />
 					</div>
 					<div className='justify-center md:flex bg-white'>
 						<div className='mx-4 max-w-xl lg:max-w-4xl my-2'>
@@ -54,7 +119,7 @@ function Home() {
 							<Notice />
 							<Plaza name='plaza office' store={data.office} prop='' />
 							<Card className='p-2 grid grid-cols-1 md:grid-cols-2'>
-								<div className="text-center flex flex-col justify-center items-center">
+								<div className="text-center flex flex-col justify-center items-center py-4 md:p-0">
 									<div className='uppercase text-lg font-semibold px-4'>
 										About Ojarh <span className='text-red-500'>Properties</span>
 									</div>
@@ -64,8 +129,12 @@ function Home() {
 					            processes are automated for credibility and satisfaction`}
 									</div>
 								</div>
-								<div className="relative overflow-hidden md:rounded-r-lg md:w-[100%] rounded-lg h-[30vh]">
-									<img src="/image/sign.jpg" className="object-cover w-full h-[30vh] md:h-full" />
+								<div className='relative md:w-[80%] rounded-lg overflow-hidden w-full h-[50vh] md:h-[50vh] mx-auto' style={{
+									backgroundImage: "url('/image/aboutus.jpeg')",
+									backgroundRepeat: "no-repeat",
+									objectFit: "cover",
+									backgroundSize: "cover",
+								}}>
 								</div>
 							</Card>
 							<PropertyAdvert />

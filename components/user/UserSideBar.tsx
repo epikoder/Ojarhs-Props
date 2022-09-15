@@ -49,7 +49,7 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Disputes" href="/user/disputes" />
                     <MenuItemMobile title="Adverts" href="/user/advert" />
                     <MenuItemMobile title="Report" href="/user/report" />
-                    {user.reference !== "" && <MenuItemMobile title="Request pack out" href="/user/packout" />}
+                    <MenuItemMobile title="Request pack out" href="/user/packout" />
                     <hr />
                     <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-red-500 rounded-md uppercase font-sans"
                         onClick={() => dispatch(logout())}>
@@ -65,7 +65,7 @@ export const UserSideBar = () => {
                 <MenuItem title="Disputes" href="/user/disputes" />
                 <MenuItem title="Adverts" href="/user/advert" />
                 <MenuItem title="Report" href="/user/report" />
-                {user.reference !== "" && <MenuItem title="Request pack out" href="/user/packout" />}
+                <MenuItem title="Request pack out" href="/user/packout" />
 
                 <hr />
                 <div className="hover:cursor-pointer p-4 hover:bg-red-800 duration-300 transition-all ease-in-out text-white hover:text-gray-300 rounded-md uppercase font-sans"

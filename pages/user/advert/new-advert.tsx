@@ -9,7 +9,7 @@ import { ImageUpload } from "../../../components/ImageUpload"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
 import { advertPrices, pk_key } from "../../../constants"
 import { Api } from "../../../helpers/api"
-import { money } from "../../../helpers/helpers"
+import { IsLinkValid, money } from "../../../helpers/helpers"
 import { ApiResponse, User } from "../../../Typing.d"
 
 const Page = () => {
@@ -80,7 +80,7 @@ const Page = () => {
                                     placeholder="https://ojarhproperties.com"
                                     size="small"
                                     className="w-full"
-                                    error={form.link === undefined || form.link === ''}
+                                    error={form.link === undefined || form.link === '' || IsLinkValid(form.link)}
                                     onChange={(e) => setForm({ ...form, link: e.target.value })}
                                 />
                             </div>

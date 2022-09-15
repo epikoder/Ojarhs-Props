@@ -14,4 +14,8 @@ export const addWeek = (date: Date, hours: number): string => {
 export const fixSpace = (space: Space): Space => ({
     ...space, galleries: space.galleries as unknown as string !== "" ? (space.galleries as unknown as string).split(",") : [],
     video_galleries: space.galleries as unknown as string !== "" ? (space.video_galleries as unknown as string).split(",") : []
-}) 
+})
+export const IsLinkValid = (url: string): boolean => {
+    const regExp = /^http/
+    return regExp.test(url)
+}
