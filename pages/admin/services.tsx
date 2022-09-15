@@ -124,7 +124,7 @@ function Page() {
 					</button>
 				</div>
 
-				<div className="lg:max-w-[50vw] w-full h-full">
+				<div className="lg:max-w-screen-xl w-full h-full">
 					<DataGrid
 						columns={columns}
 						rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
