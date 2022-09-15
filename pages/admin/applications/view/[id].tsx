@@ -125,6 +125,7 @@ const Page = () => {
                     </div>
                     <div className="flex justify-center my-1">
                         <Select
+                            disabled={user.application.status === 'verified'}
                             label={<span className="text-black">{'Application Status'}</span>}
                             placeholder="Application Status"
                             defaultValue={user.application.status}
@@ -149,7 +150,7 @@ const Page = () => {
                                 color: 'red',
                             }} />}
                             variant='outlined'
-                            disabled={loading}
+                            disabled={loading || user.application.status === 'verified'}
                             onClick={update}
                         >
                             Update

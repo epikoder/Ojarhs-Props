@@ -71,6 +71,16 @@ const columns: GridColDef[] = [
 		disableColumnMenu: true,
 	},
 	{
+		field: 'reference',
+		headerName: 'Reference No.',
+		headerAlign: 'center',
+		align: 'center',
+		width: 200,
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+	},
+	{
 		field: 'application.status',
 		headerName: 'Application',
 		headerAlign: 'center',

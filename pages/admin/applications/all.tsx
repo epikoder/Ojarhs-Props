@@ -1,6 +1,5 @@
-import { Delete, Edit, MoreVert, Visibility } from "@mui/icons-material"
+import { Visibility } from "@mui/icons-material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { Menu, MenuItem } from "@szhsin/react-menu"
 import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
@@ -46,7 +45,6 @@ const columns: GridColDef[] = [
         filterable: false,
         hideable: false,
         disableColumnMenu: true,
-        // renderCell: ({ value }) => <div>{money(value)}</div>
     },
     {
         field: 'status',
@@ -100,13 +98,11 @@ const Page = () => {
                 <h1 className='lg:text-2xl text-md red'>Applications</h1>
             </div>
             <div className="h-full">
-                {status === 'success' && data !== undefined &&
-                    <DataGrid
-                        rows={data.map((s, i) => ({ ...s, _id: i + 1 }))}
-                        columns={columns}
-                        pageSize={10}
-
-                    />}
+                <DataGrid
+                    rows={data.map((s, i) => ({ ...s, _id: i + 1 }))}
+                    columns={columns}
+                    pageSize={10}
+                />
             </div>
         </React.Fragment>}
     </AdminDashboardLayout>
