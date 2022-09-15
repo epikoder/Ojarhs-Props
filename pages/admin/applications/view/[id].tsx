@@ -58,104 +58,102 @@ const Page = () => {
     return <AdminDashboardLayout>
         {() => <>
             {user !== undefined &&
-                <div className="flex justify-center">
+                <div className="my-1 max-w-5xl">
                     <div className="my-1">
-                        <div className="my-1">
-                            <div className="text-center red uppercase">{'User Application'}</div>
+                        <div className="text-center red uppercase">{'Tenant Application'}</div>
+                    </div>
+                    <div className="sm:grid grid-cols-2 gap-1 ">
+                        <div className="p-1">
+                            <img src={resolveFilePath(user.photo)} className='max-h-[20vh] rounded-md' />
                         </div>
-                        <div className="sm:grid grid-cols-2 gap-1 max-w-4xl">
-                            <div className="p-1">
-                                <img src={resolveFilePath(user.photo)} className='min-w-[4rem] rounded-md' />
+                        <div className="py-1 space-y-2">
+                            <Info title="First Name" value={user.fname} />
+                            <Info title="Last Name" value={user.lname} />
+                            <Info title="Phone" value={user.phone} />
+                        </div>
+                    </div>
+                    <div className="sm:grid grid-cols-2 gap-1 ">
+                        <div className="py-1 space-y-2">
+                            <Info title="Email" value={user.email} />
+                            <Info title="Address" value={user.address} />
+                            <Info title="Lga" value={user.lga} />
+                        </div>
+                        <div className="py-1 space-y-2">
+                            <Info title="State" value={user.state} />
+                            <Info title="Country" value={user.country} />
+                        </div>
+                    </div>
+                    <div>
+                        <div className="text-gray-500">
+                            Guarantor Information
+                        </div>
+                        <div className="sm:grid grid-cols-2 gap-1 ">
+                            <div className="py-1 space-y-2">
+                                <Info title="Name" value={user.guarantor_name} />
+                                <Info title="Address" value={user.guarantor_address} />
                             </div>
                             <div className="py-1 space-y-2">
-                                <Info title="First Name" value={user.fname} />
-                                <Info title="Last Name" value={user.lname} />
-                                <Info title="Phone" value={user.phone} />
+                                <Info title="Phone" value={user.guarantor_phone} />
                             </div>
                         </div>
-                        <div className="sm:grid grid-cols-2 gap-1 max-w-4xl">
-                            <div className="py-1 space-y-2">
-                                <Info title="Email" value={user.email} />
-                                <Info title="Address" value={user.address} />
-                                <Info title="Lga" value={user.lga} />
-                            </div>
-                            <div className="py-1 space-y-2">
-                                <Info title="State" value={user.state} />
-                                <Info title="Country" value={user.country} />
-                            </div>
+                    </div>
+                    <div>
+                        <div className="text-gray-500">
+                            Next Of Kin Information
                         </div>
-                        <div>
-                            <div className="text-gray-500">
-                                Guarantor Information
-                            </div>
-                            <div className="sm:grid grid-cols-2 gap-1 max-w-4xl">
+                        {user.next_of_kins.map((kin, i) =>
+                            <div className="sm:grid grid-cols-2 gap-1 " key={i}>
                                 <div className="py-1 space-y-2">
-                                    <Info title="Name" value={user.guarantor_name} />
-                                    <Info title="Address" value={user.guarantor_address} />
+                                    <Info title="First Name" value={kin.fname} />
+                                    <Info title="Last Name" value={kin.lname} />
+                                    <Info title="Email" value={kin.email} />
+                                    <Info title="Phone" value={kin.phone} />
                                 </div>
                                 <div className="py-1 space-y-2">
-                                    <Info title="Phone" value={user.guarantor_phone} />
+                                    <Info title="Address" value={kin.address} />
+                                    <Info title="Lga" value={kin.lga} />
+                                    <Info title="State" value={kin.state} />
+                                    <Info title="Country" value={kin.country} />
                                 </div>
-                            </div>
+                            </div>)}
+                    </div>
+                    <div className="my-2">
+                        <div className="text-gray-500">
+                            DOCUMENT - <span className="text-red-500">{user.type}</span>
                         </div>
-                        <div>
-                            <div className="text-gray-500">
-                                Next Of Kin Information
-                            </div>
-                            {user.next_of_kins.map((kin, i) =>
-                                <div className="sm:grid grid-cols-2 gap-1 max-w-4xl" key={i}>
-                                    <div className="py-1 space-y-2">
-                                        <Info title="First Name" value={kin.fname} />
-                                        <Info title="Last Name" value={kin.lname} />
-                                        <Info title="Email" value={kin.email} />
-                                        <Info title="Phone" value={kin.phone} />
-                                    </div>
-                                    <div className="py-1 space-y-2">
-                                        <Info title="Address" value={kin.address} />
-                                        <Info title="Lga" value={kin.lga} />
-                                        <Info title="State" value={kin.state} />
-                                        <Info title="Country" value={kin.country} />
-                                    </div>
-                                </div>)}
-                        </div>
-                        <div className="my-2">
-                            <div className="text-gray-500">
-                                DOCUMENT - <span className="text-red-500">{user.type}</span>
-                            </div>
-                            <img src={resolveFilePath(user.application.document)} className='max-w-[768px] max-h-[360px] w-full h-full rounded-md' />
-                        </div>
-                        <div className="flex justify-center my-1">
-                            <Select
-                                label='Application Status'
-                                placeholder="Application Status"
-                                defaultValue={user.application.status}
-                                onChange={(e) => setForm({ ...form, status: e.target.value as UserApplicationStatus })}
-                                className="min-w-[360px]">
-                                <MenuItem value='pending' > {'Pending'} </MenuItem>
-                                <MenuItem value='document-required'> {'Document Required'} </MenuItem>
-                                <MenuItem value='verified'> {'Verified'} </MenuItem>
-                                <MenuItem value='rejected'>  {'Rejected'} </MenuItem>
-                            </Select>
-                        </div>
-                        {(form.status !== 'verified' && form.status !== 'pending' && form.status !== 'nil') && <div>
-                            <textarea
-                                onChange={(e) => setForm({ ...form, message: e.target.value })}
-                                placeholder="Message"
-                                className="border border-gray-300 w-full h-32 p-2"
-                            />
-                        </div>}
-                        <div className="my-10 flex justify-center">
-                            <Button
-                                startIcon={loading && <CircularProgress size={14} sx={{
-                                    color: 'red',
-                                }} />}
-                                variant='outlined'
-                                disabled={loading}
-                                onClick={update}
-                            >
-                                Update
-                            </Button>
-                        </div>
+                        <img src={resolveFilePath(user.application.document)} className='max-w-[768px] max-h-[360px] w-full h-full rounded-md' />
+                    </div>
+                    <div className="flex justify-center my-1">
+                        <Select
+                            label={<span className="text-black">{'Application Status'}</span>}
+                            placeholder="Application Status"
+                            defaultValue={user.application.status}
+                            onChange={(e) => setForm({ ...form, status: e.target.value as UserApplicationStatus })}
+                            className="min-w-[360px]">
+                            <MenuItem value='pending' > {'Pending'} </MenuItem>
+                            <MenuItem value='document-required'> {'Document Required'} </MenuItem>
+                            <MenuItem value='verified'> {'Verified'} </MenuItem>
+                            <MenuItem value='rejected'>  {'Rejected'} </MenuItem>
+                        </Select>
+                    </div>
+                    {(form.status !== 'verified' && form.status !== 'pending' && form.status !== 'nil') && <div>
+                        <textarea
+                            onChange={(e) => setForm({ ...form, message: e.target.value })}
+                            placeholder="Message"
+                            className="border border-gray-300 w-full h-32 p-2 my-2"
+                        />
+                    </div>}
+                    <div className="my-10 flex justify-center">
+                        <Button
+                            startIcon={loading && <CircularProgress size={14} sx={{
+                                color: 'red',
+                            }} />}
+                            variant='outlined'
+                            disabled={loading}
+                            onClick={update}
+                        >
+                            Update
+                        </Button>
                     </div>
                 </div>}
             {!loading && user === undefined &&
