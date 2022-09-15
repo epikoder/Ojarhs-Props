@@ -24,7 +24,7 @@ export const SliderAdvert = () => {
         emulateTouch={true}
         showThumbs={false}
       >
-        {slider.map((a, i) => <a href={a.link} target='_blank' key={i}>
+        {slider.map((a, i) => <a href={a.link} target='_blank' rel="noreferrer" key={i}>
           <img src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />
         </a>)}
       </Carousel>}

@@ -7,10 +7,10 @@ export const pk_key = 'pk_test_7974282ff9c7f73d5afc1a79fd11746cba653e28'
 export const applicationFee = 10000
 export const advertPrices = [{
     position: 'slider',
-    amount: 1500
+    amount: 3000
 }, {
     position: 'middle',
-    amount: 1500
+    amount: 2000
 }, {
     position: 'property',
     amount: 1500
