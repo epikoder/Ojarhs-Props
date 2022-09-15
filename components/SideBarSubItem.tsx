@@ -6,7 +6,7 @@ import { useAppDispatch } from "../store";
 function SideBarSubItem({ subItem, toggle }: { subItem: { name: string, link: string }[], toggle: boolean }) {
 	const dispatch = useAppDispatch()
 	return (
-		<div className=' text-white flex-col space-y- transition-all duration-1000 ease-in-out'>
+		<div className=' text-white flex-col space-y- transition-all duration-1000 ease-in-out my-2'>
 			{subItem.map((item, index) => {
 				return (
 					<div

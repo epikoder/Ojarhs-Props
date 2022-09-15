@@ -16,6 +16,6 @@ export const fixSpace = (space: Space): Space => ({
     video_galleries: space.galleries as unknown as string !== "" ? (space.video_galleries as unknown as string).split(",") : []
 })
 export const IsLinkValid = (url: string): boolean => {
-    const regExp = /^http/
+    const regExp = /^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/
     return regExp.test(url)
 }

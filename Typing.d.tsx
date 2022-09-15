@@ -1,4 +1,4 @@
-export type User = Tenants & {
+export type User = Tenant & {
 	is_admin: boolean
 	is_disabled: boolean
 	is_locked: boolean
@@ -32,7 +32,7 @@ export type Testimony = {
 	testimony: string;
 };
 
-export type Tenants = {
+export type Tenant = {
 	id: string
 	fname: string;
 	lname: string;
@@ -179,4 +179,10 @@ export type UserApplication = {
 	status: UserApplicationStatus
 	document: string
 	type: string
+}
+
+export type QueryParam = {
+	search?: string
+	chunck?: number
+	offset?: number
 }

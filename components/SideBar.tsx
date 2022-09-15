@@ -10,7 +10,7 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 	const dispatch = useAppDispatch()
 	const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
 	return (
-		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out ${props.className ?? ''}`}>
+		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out overflow-y-scroll pb-8 text-sm md:text-md ${props.className ?? ''}`}>
 			<div className='px-4'>
 				<div onClick={() => { router.push("/admin/dashboard"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Dashboard' />
@@ -18,12 +18,8 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				<div>
 					<SideBarItem name='Tenants' subItem={[
 						{
-							link: '/admin/tenants/active-tenants',
-							name: 'All Tenants'
-						},
-						{
 							link: '/admin/tenants/all-tenants',
-							name: 'Active Tenants'
+							name: 'All Tenants'
 						},
 						{
 							link: '/admin/tenants/banned-tenants',
@@ -51,11 +47,11 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				</div>
 				<div>
 					<SideBarItem
-						name='User Applications'
+						name='Tenants Application'
 						subItem={[
 							{
 								link: '/admin/applications/all',
-								name: 'Applications'
+								name: 'All Applications'
 							},
 							{
 								link: '/admin/applications/rejected',
@@ -63,6 +59,18 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 							},
 						]}
 					/>
+				</div>
+				<div onClick={() => {
+					// router.push("/admin/adverts");
+					dispatch(toggleSideBar())
+				}}>
+					<SideBarItem name='Ojarh Printing' />
+				</div>
+				<div onClick={() => {
+					// router.push("/admin/adverts");
+					dispatch(toggleSideBar())
+				}}>
+					<SideBarItem name='Reference Numbers' />
 				</div>
 				<div>
 					<SideBarItem

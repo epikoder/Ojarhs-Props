@@ -80,7 +80,7 @@ const Page = () => {
                                     placeholder="https://ojarhproperties.com"
                                     size="small"
                                     className="w-full"
-                                    error={form.link === undefined || form.link === '' || IsLinkValid(form.link)}
+                                    error={!IsLinkValid(form.link)}
                                     onChange={(e) => setForm({ ...form, link: e.target.value })}
                                 />
                             </div>
@@ -99,7 +99,7 @@ const Page = () => {
                                 <ImageUpload handleUpload={(s) => setForm({ ...form, photo: s })} width={320} />
                             </div>
                             <div className="flex justify-center">
-                                {form.position !== '' && form.link !== '' && form.photo !== '' &&
+                                {form.position !== '' && IsLinkValid(form.link) && form.photo !== '' &&
                                     <PaystackConsumer publicKey={pk_key} email={user.email} amount={advertPrices.find((a) => a.position === form.position, advertPrices[0]).amount * 100}
                                         onSuccess={onSuccess} >
                                         {({ initializePayment }) => <Button
