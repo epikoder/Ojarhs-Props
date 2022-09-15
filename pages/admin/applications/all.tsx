@@ -76,7 +76,7 @@ const columns: GridColDef[] = [
 const Status = ({ active, status }: { active: boolean, status: UserApplicationStatus }) => {
     return <>
         <div className={`bg-${active ? 'blue' : 'red'}-500 px-2 py-1 rounded-md text-white `}>
-            {status === 'document-required' ? 'invalid doc' : (status as string === "" ? '-' : status)}{status === 'document-required' ? 'invalid doc' : status}
+            {status === 'document-required' ? 'invalid doc' : (status as string === "" ? '-' : status)}
         </div>
     </>
 }
