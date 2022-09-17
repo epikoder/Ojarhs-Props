@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { Search } from "../components/Search";
 import { useRouter } from "next/router";
 import { Card } from "@mui/material";
-import Image from "next/image"
+import Image from "next/image";
 
 function Home() {
 	const dispatch = useAppDispatch();
@@ -60,9 +60,9 @@ function Home() {
 					            processes are automated for credibility and satisfaction`}
 									</div>
 								</div>
-								<div className = "relative overflow-hidden md:rounded-r-lg md:w-[100%] rounded-lg h-[30vh] md:h-full">
-                  <Image src="/image/sign.jpg" layout="fill" />
-                </div>
+								<div className='relative overflow-hidden md:rounded-r-lg md:w-[100%] rounded-lg h-[30vh] md:h-full' style={{backgroundImage:'url("/image/tower.jpg")', backgroundRepeat:"no-repeat", objectFit:"contain",backgroundSize:"cover"}}>
+									{/* <Image src='/image/sign.jpg' layout='fill' /> */}
+								</div>
 							</Card>
 							<Adverts />
 							<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
