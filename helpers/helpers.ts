@@ -19,3 +19,8 @@ export const IsLinkValid = (url: string): boolean => {
     const regExp = /^(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&=]*)/
     return regExp.test(url)
 }
+
+export const parseString = (s: string): string => {
+    // s.split(/^w/)
+    return s
+}

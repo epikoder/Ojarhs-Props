@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
 import { CopyRight } from "../../components/Copyright"
-import { FormInput, FormPasswordInput } from "../../components/FormInput"
+import { FormInput, FormPasswordControlledInput } from "../../components/FormInput"
 import Loader from "../../components/Loader"
 import { checkIsAuthenticated } from "../../features/authSlice"
 import { loginAdminApi } from "../../redux/auth"
@@ -91,7 +91,7 @@ const AdminLogin = () => {
                                     setForm({ ...form, email: s })
                                 }
                             }} />
-                            <FormPasswordInput
+                            <FormPasswordControlledInput
                                 props={{
                                     title: 'Password',
                                     hidden: show,

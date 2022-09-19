@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { Api } from "../../helpers/api";
-import { Advert, ApiResponse, Service, Space } from "../../Typing.d";
+import { parseString } from "../../helpers/helpers";
+import { Advert, ApiResponse, Message, MessageOwner, MesssageForm, Service, Space } from "../../Typing.d";
 
 export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
     status: 'failed'
@@ -203,6 +204,155 @@ export const loadApplications = createAsyncThunk<ApiResponse<Advert[]>>
                 status: data.status,
                 data: data.data
             } as ApiResponse
+        } catch (error) {
+            const { status, data } = (error as AxiosError<ApiResponse>).response
+            switch (status) {
+                case 400:
+                    return rejectWithValue({
+                        message: data.message,
+                        error: data.error as unknown as Service
+                    })
+                default:
+                    return rejectWithValue({
+                        message: 'Error connecting to server'
+                    })
+            }
+        }
+    })
+
+export const loadAdminConverstion = createAsyncThunk<MessageOwner[]>
+    ("messages/all", async (payload, { rejectWithValue }) => {
+        try {
+            const { data, status } = await Api().get<ApiResponse<MessageOwner[]>>("/admin/messages/all")
+            if (status !== 200) {
+                return rejectWithValue({
+                    message: 'Error connecting to server'
+                })
+            }
+
+            if (data.status === 'failed') {
+                return rejectWithValue({
+                    message: data.message
+                })
+            }
+            var m: MessageOwner[] = []
+            data.data.forEach((_m) => {
+                console.log(_m)
+                if (_m.messages.length > 0) {
+                    m = m.concat(_m)
+                }
+            })
+            return m
+        } catch (error) {
+            const { status, data } = (error as AxiosError<ApiResponse>).response
+            switch (status) {
+                case 400:
+                    return rejectWithValue({
+                        message: data.message,
+                        error: data.error as unknown as Service
+                    })
+                default:
+                    return rejectWithValue({
+                        message: 'Error connecting to server'
+                    })
+            }
+        }
+    })
+
+export const loadAdminDisputes = createAsyncThunk<MessageOwner[]>
+    ("disputes/all", async (payload, { rejectWithValue }) => {
+        try {
+            const { data, status } = await Api().get<ApiResponse<MessageOwner[]>>("/admin/messages/all?is_dispute=1")
+            if (status !== 200) {
+                return rejectWithValue({
+                    message: 'Error connecting to server'
+                })
+            }
+
+            if (data.status === 'failed') {
+                return rejectWithValue({
+                    message: data.message
+                })
+            }
+            var m: MessageOwner[] = []
+            data.data.forEach((_m) => {
+                if (_m.messages.length > 0) {
+                    m = m.concat(_m)
+                }
+            })
+            return m
+        } catch (error) {
+            console.log(error)
+            const { status, data } = (error as AxiosError<ApiResponse>).response
+            switch (status) {
+                case 400:
+                    return rejectWithValue({
+                        message: data.message,
+                        error: data.error as unknown as Service
+                    })
+                default:
+                    return rejectWithValue({
+                        message: 'Error connecting to server'
+                    })
+            }
+        }
+    })
+
+export const loadAdminReports = createAsyncThunk<MessageOwner[]>
+    ("reports/all", async (payload, { rejectWithValue }) => {
+        try {
+            const { data, status } = await Api().get<ApiResponse<MessageOwner[]>>("/admin/messages/all?is_report=1")
+            if (status !== 200) {
+                return rejectWithValue({
+                    message: 'Error connecting to server'
+                })
+            }
+
+            if (data.status === 'failed') {
+                return rejectWithValue({
+                    message: data.message
+                })
+            }
+            var m: MessageOwner[] = []
+            data.data.forEach((_m) => {
+                if (_m.messages.length > 0) {
+                    m = m.concat(_m)
+                }
+            })
+            return m
+        } catch (error) {
+            const { status, data } = (error as AxiosError<ApiResponse>).response
+            switch (status) {
+                case 400:
+                    return rejectWithValue({
+                        message: data.message,
+                        error: data.error as unknown as Service
+                    })
+                default:
+                    return rejectWithValue({
+                        message: 'Error connecting to server'
+                    })
+            }
+        }
+    })
+
+export const createAdminMessage = createAsyncThunk<Message, MesssageForm>
+    ("messages/create", async (payload, { rejectWithValue }) => {
+        try {
+            payload.content = parseString(payload.content)
+            const { data, status } = await Api().post<ApiResponse<Message>>("/admin/messages/create", JSON.stringify(payload))
+            if (status !== 200) {
+                return rejectWithValue({
+                    message: 'Error connecting to server'
+                })
+            }
+
+            if (data.status === 'failed') {
+                return rejectWithValue({
+                    message: data.message
+                })
+            }
+            return data.data
         } catch (error) {
             const { status, data } = (error as AxiosError<ApiResponse>).response
             switch (status) {

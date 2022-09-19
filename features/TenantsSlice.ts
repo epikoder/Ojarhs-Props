@@ -4,11 +4,12 @@ import { LoadState, Tenant } from "../Typing.d";
 
 type STATE = {
 	status: LoadState
-	data?: Tenant[]
+	data: Tenant[]
 }
 
 const initialState: STATE = {
-	status: 'nil'
+	status: 'nil',
+	data: []
 }
 
 const TenantsSlice = createSlice({

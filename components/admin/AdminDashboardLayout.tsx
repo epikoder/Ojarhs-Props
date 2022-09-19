@@ -9,7 +9,11 @@ import Loader, { PageLoader } from "../Loader";
 import SideBar from "../SideBar"
 import SideBarHeader from "../SideBarHeader"
 
-export const AdminDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string }) => {
+export const AdminDashboardLayout = (props?: {
+    children?: (props?: any) => React.ReactNode | undefined,
+    className?: string
+    style?: React.CSSProperties
+}) => {
     const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
     const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
@@ -29,19 +33,24 @@ export const AdminDashboardLayout = (props?: { children?: (props?: any) => React
     return <React.Fragment>
         <Script src='/scripts/noimage.js'></Script>
         <div className='w-full grid-rows-6 gap-1 h-[90vh]'>
-            {appState !== 'pending' && authenticated ? <React.Fragment>
-                <SideBarHeader user={user} className="row-span-1" />
-                <PageLoader />
-                <div className='grid grid-cols-12 h-full duration-300 transition-all ease-in-out md:row-span-5'>
-                    <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
-                    <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className ?? ''}`}>
-                        {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
-                            {authenticated && user !== undefined && props.children({ authenticated, user })}
-                        </React.Fragment>}
+            {appState !== 'pending' && authenticated
+                &&
+                <React.Fragment>
+                    <SideBarHeader user={user} className="row-span-1" />
+                    <PageLoader />
+                    <div className='grid grid-cols-12 h-full duration-300 transition-all ease-in-out md:row-span-5'>
+                        <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
+                        <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className ?? ''}`} style={props.style}>
+                            {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
+                                {authenticated && user !== undefined && props.children({ authenticated, user })}
+                            </React.Fragment>}
+                        </div>
                     </div>
-                </div>
-                <CopyRight className="bg-red text-white relative md:fixed w-full bottom-0 z-50 h-12 flex flex-col justify-center items-center" />
-            </React.Fragment> : <Loader />}
+                    <CopyRight className="bg-red text-white relative md:fixed w-full bottom-0 z-50 h-12 flex flex-col justify-center items-center" />
+                </React.Fragment>
+            }
+            {appState === 'pending' &&
+                <Loader />}
         </div >
     </React.Fragment>
 }

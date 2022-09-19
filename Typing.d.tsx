@@ -121,6 +121,9 @@ export type SignUpForm = {
 	guarantor_name: string
 	guarantor_address: string
 	guarantor_phone: number
+	business: string
+	appliances: string
+	interested_shop: string
 	next_of_kins: NextOfKin[]
 }
 
@@ -185,4 +188,56 @@ export type QueryParam = {
 	search?: string
 	chunck?: number
 	offset?: number
+}
+
+export interface MessageOwner {
+	id: number
+	title: string
+	messages: Message[]
+	is_resolve?: boolean
+	level?: DisputeLevel
+}
+
+export type MessageType = 'text' | 'image' | 'pdf'
+export type DisputeLevel = 0 | 1 | 2
+export type MessageForm = {
+	id?: number
+	content: string
+	type: MessageType
+	is_dispute?: boolean
+	is_report?: boolean
+	owner_id?: number
+	owner_type?: 'conversations' | 'disputes' | 'reports'
+	receiver?: string
+}
+
+export type Message = {
+	id?: number
+	content: string
+	type: MessageType
+	is_read?: boolean
+	is_dispute?: boolean
+	is_report?: boolean
+	is_resolved?: boolean
+	owner_id?: number
+	owner_type?: 'conversations' | 'disputes' | 'reports'
+	sender?: User
+	receiver?: User
+	created_at: Date
+}
+export type MesssageForm = {
+	id?: string
+	title: string
+	content: string
+	type: MessageType
+	is_read?: boolean
+	is_dispute?: boolean
+	is_report?: boolean
+	receiver?: string
+	dispute_level?: DisputeLevel
+}
+
+export type MessageState = {
+	state: LoadState
+	data: MessageOwner[]
 }

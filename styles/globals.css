@@ -269,6 +269,7 @@ div.spinner div.bar12 {
 .carousel li {
 	z-index: 1 !important;
 }
+
 .carousel-root {
 	height: 100%;
 }
@@ -294,33 +295,10 @@ div.spinner div.bar12 {
 	/* height: 500px;
 	width: 600px; */
 }
+
 .gmap_canvas {
 	overflow: hidden;
 	background: none !important;
 	/* height: 500px;
 	width: 600px; */
-}
-
-/* google map end */
-
-/* vision image */
-
-@media (max-width:600px) {
-	.vis{
-		width:70%;
-	}
-
-	.quality, .offer{
-		width:70%;
-	}
-}
-
-@media (max-width:400px) {
-	.vis{
-		width:90%;
-	}
-
-	.quality, .offer{
-		width:90%;
-	}
 }

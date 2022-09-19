@@ -1,36 +1,51 @@
 import React from "react"
-import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
+import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout"
 import { useSelector } from "react-redux";
-import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordControlledInput, FormPasswordInput, FormPhoneInput } from "../../../components/FormInput";
-import { DocumentUpload, ImageUpload } from "../../../components/ImageUpload";
-import { ApiResponse, NextOfKin, SignUpForm } from "../../../Typing.d";
-import Loader from "../../../components/Loader";
-import { emailValidator } from "../../../helpers/validation";
+import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordControlledInput, FormPasswordInput, FormPhoneInput } from "../../../../components/FormInput";
+import { DocumentUpload, ImageUpload } from "../../../../components/ImageUpload";
+import { ApiResponse, NextOfKin, NextOfKinApi } from "../../../../Typing.d";
+import Loader from "../../../../components/Loader";
+import { emailValidator } from "../../../../helpers/validation";
 import { useRouter } from "next/router";
 import { Switch } from "@mui/material";
-import List from "../../../helpers/list";
-import { BASEURL } from "../../../constants";
-import { RootState } from "../../../store";
+import List from "../../../../helpers/list";
+import { BASEURL } from "../../../../constants";
+import { RootState } from "../../../../store";
+import { Api } from "../../../../helpers/api";
 
-type createTenantForm = SignUpForm & {
-	upload: string
-	paid: boolean
+type updateTenantForm = {
+	fname: string
+	lname: string
+	email: string
+	phone: number
+	password: string
+	address: string
+	lga: string
+	state: string
+	country: string
+	photo: string
+	guarantor_name: string
+	guarantor_address: string
+	guarantor_phone: number
+	business: string
+	appliances: string
+	interested_shop: string
+	next_of_kins: NextOfKin[]
+
 }
 
 const Page = () => {
-	const [form, setForm] = React.useState<createTenantForm>({
+	const [form, setForm] = React.useState<updateTenantForm>({
 		country: '',
+		appliances: '',
+		phone: '' as unknown as number,
 		next_of_kins: [{ kcountry: '' }],
-		upload: '',
-		paid: false
-	} as createTenantForm)
-	const [types, setTypes] = React.useState<{ id: number, name: string }[]>(Array.from([]))
-	const [docType, setDocType] = React.useState<string>('0')
+	} as updateTenantForm)
 
 	const [loading, setLoading] = React.useState<boolean>(false);
 	const [nextOfKinForm, setNextOfKinForm] = React.useState<NextOfKin[]>([{} as NextOfKin])
 	const [secondNextofKin, setSecondNextofKin] = React.useState<boolean>(false)
-	const [errors, setErrors] = React.useState<SignUpForm>({} as SignUpForm)
+	const [errors, setErrors] = React.useState<updateTenantForm>({} as updateTenantForm)
 	const formRef = React.useRef<HTMLFormElement>()
 	const router = useRouter()
 	const [message, setMessage] = React.useState<{ text?: string, status?: boolean }>({});
@@ -53,16 +68,37 @@ const Page = () => {
 	}, [secondNextofKin])
 
 	React.useEffect(() => {
+		if (!router.isReady) return
 		const req = async () => {
 			try {
-				let res = await fetch(BASEURL + '/resources/document-types')
-				if (res.status !== 200) return
-				setTypes((await res.json()).data)
+				const { data, status } = await Api().get('/admin/tenants/find?id=' + router.asPath.split('/').pop())
+
+				const nk = (data.data.next_of_kins as NextOfKinApi[]).map(e => {
+					const kin: NextOfKin = {
+						kfname: e.fname,
+						klname: e.lname,
+						kemail: e.email,
+						kaddress: e.address,
+						kcountry: e.country,
+						klga: e.lga,
+						kphone: e.phone,
+						kstate: e.state
+					}
+					return kin
+				})
+				setForm({ ...data.data, business: data.data.nature_of_business, next_of_kins: [] })
+				setNextOfKinForm(nk)
+				if (nk.length == 2) {
+					setSecondNextofKin(true)
+				}
 			} catch (error) {
+				setMessage({
+					text: 'Could not load Tenant information'
+				})
 			}
 		}
 		req()
-	}, [])
+	}, [router.isReady])
 
 	const submit = async () => {
 		let _form = { ...form, next_of_kins: nextOfKinForm, }
@@ -75,9 +111,9 @@ const Page = () => {
 				text: ''
 			})
 			setLoading(true)
-			setErrors({} as SignUpForm)
-			var res = await fetch(BASEURL + "/admin/tenants/create", {
-				method: 'POST',
+			setErrors({} as updateTenantForm)
+			var res = await fetch(BASEURL + "/admin/tenants/update", {
+				method: 'PUT',
 				body: JSON.stringify(_form),
 				headers: {
 					authorization: ((): string => {
@@ -94,7 +130,7 @@ const Page = () => {
 					if (r.error['photo'] && Object.keys(r.error).length == 1) {
 						setMessage({ text: 'please upload your photo' })
 					}
-					let ee = {} as SignUpForm
+					let ee = {} as updateTenantForm
 					for (let n in r.error) {
 						ee[n] = r.error[n]
 					}
@@ -136,6 +172,7 @@ const Page = () => {
 						title: 'First Name',
 						name: "fname",
 						type: 'text',
+						value: form.fname,
 						required: true,
 						message: getError("fname"),
 						handleChange: (s) => {
@@ -148,6 +185,7 @@ const Page = () => {
 						title: 'Last Mame',
 						name: "lname",
 						type: 'text',
+						value: form.lname,
 						required: true,
 						message: getError("lname"),
 						handleChange: (s) => {
@@ -157,25 +195,10 @@ const Page = () => {
 						}
 					}} />
 					<FormInput props={{
-						title: 'Email',
-						name: "email",
-						type: 'text',
-						required: true,
-						message: ((): string => {
-							if (form.email === undefined) return undefined
-							if (getError("email") !== undefined && getError("email").includes("exist")) return getError("email")
-							return emailValidator(form.email)
-						})(),
-						handleChange: (s) => {
-							setForm({
-								...form, email: s as unknown as string
-							})
-						}
-					}} />
-					<FormInput props={{
 						title: 'Nature of Business',
 						name: "business",
 						required: true,
+						value: form.business,
 						message: getError("business"),
 						handleChange: (s) => {
 							setForm({
@@ -187,6 +210,7 @@ const Page = () => {
 						title: 'Interested Shop Name or No',
 						name: "interested_shop",
 						required: true,
+						value: form.interested_shop,
 						message: getError("interested_shop"),
 						handleChange: (s) => {
 							setForm({
@@ -195,33 +219,16 @@ const Page = () => {
 						}
 					}} />
 					<ApplianceInput
+						value={form.appliances.split(',')}
 						handleChange={(arr) => {
 							setForm({ ...form, appliances: List.toString(arr) })
 						}}
 					/>
-					{/* <FormPasswordInput props={{
-						title: 'Password',
-						name: "password",
-						requried: true,
-						message: getError("password") || form.password !== '' && form.password !== undefined && form.password.length < 8 ? ' ' : undefined,
-						handleChange: (s) => {
-							setForm({
-								...form, password: s as unknown as string
-							})
-						}
-					}} />
-					<FormConfirmPasswordInput
-						props={{
-							title: 'Confirm Password',
-							name: "c_password",
-							requried: true,
-							password: form.password
-						}}
-					/> */}
 					<FormInput props={{
 						title: 'Address',
 						name: "address",
 						type: 'text',
+						value: form.address,
 						required: true,
 						message: getError("address"),
 						handleChange: (s) => {
@@ -233,6 +240,7 @@ const Page = () => {
 					<FormInput props={{
 						title: 'LGA',
 						name: "lga",
+						value: form.lga,
 						required: true,
 						message: getError("lga"),
 						type: 'text', handleChange: (s) => {
@@ -245,6 +253,7 @@ const Page = () => {
 						title: 'State',
 						name: "state",
 						type: 'text',
+						value: form.state,
 						required: true,
 						message: getError("state"),
 						handleChange: (s) => {
@@ -267,6 +276,7 @@ const Page = () => {
 						title: 'Phone No.',
 						name: "phone",
 						type: 'number',
+						value: form.phone.toString(),
 						required: true,
 						message: getError("phone"),
 						handleChange: (s) => {
@@ -282,7 +292,7 @@ const Page = () => {
 						<span className='text-gray-600 mb-2 text-md idden'>
 							Profile photo
 						</span>
-						<ImageUpload key={'photo'} handleUpload={(s) => setForm({
+						<ImageUpload value={form.photo} key={'photo'} handleUpload={(s) => setForm({
 							...form, photo: s as unknown as string
 						})} />
 					</label>
@@ -294,6 +304,7 @@ const Page = () => {
 							title: 'Name',
 							name: "gurantor_name",
 							type: 'text',
+							value: form.guarantor_name,
 							required: true,
 							message: getError("guarantor_name"),
 							handleChange: (s) => {
@@ -306,6 +317,7 @@ const Page = () => {
 							title: 'Address',
 							name: "guarantor_address",
 							type: 'text',
+							value: form.guarantor_address,
 							required: true,
 							message: getError("guarantor_address"),
 							handleChange: (s) => {
@@ -317,6 +329,7 @@ const Page = () => {
 						<FormPhoneInput props={{
 							title: 'Phone No.',
 							type: 'number',
+							value: form.guarantor_phone as unknown as string,
 							required: true,
 							message: getError("guarantor_phone"),
 							handleChange: (s) => {
@@ -333,6 +346,7 @@ const Page = () => {
 							title: 'First Name',
 							type: 'text',
 							required: true,
+							value: nextOfKinForm[0].kfname,
 							handleChange: (s) => {
 								nextOfKinForm[0].kfname = s as unknown as string
 								setNextOfKinForm([
@@ -344,6 +358,7 @@ const Page = () => {
 							title: 'Last Name',
 							type: 'text',
 							required: true,
+							value: nextOfKinForm[0].klname,
 							handleChange: (s) => {
 								nextOfKinForm[0].klname = s as unknown as string
 								setNextOfKinForm([
@@ -355,6 +370,7 @@ const Page = () => {
 							title: 'Email',
 							type: 'text',
 							required: true,
+							value: nextOfKinForm[0].kemail,
 							message: ((): string => {
 								if (nextOfKinForm.length === 0) return
 								if (nextOfKinForm[0].kemail === undefined) return undefined
@@ -371,6 +387,7 @@ const Page = () => {
 							title: 'Address',
 							type: 'text',
 							required: true,
+							value: nextOfKinForm[0].kaddress,
 							handleChange: (s) => {
 								nextOfKinForm[0].kaddress = s as unknown as string
 								setNextOfKinForm([
@@ -382,6 +399,7 @@ const Page = () => {
 							title: 'LGA',
 							type: 'text',
 							required: true,
+							value: nextOfKinForm[0].klga,
 							handleChange: (s) => {
 								nextOfKinForm[0].klga = s as unknown as string
 								setNextOfKinForm([
@@ -393,6 +411,7 @@ const Page = () => {
 							title: 'State',
 							type: 'text',
 							required: true,
+							value: nextOfKinForm[0].kstate,
 							handleChange: (s) => {
 								nextOfKinForm[0].kstate = s as unknown as string
 								setNextOfKinForm([
@@ -415,6 +434,7 @@ const Page = () => {
 							title: 'Phone No.',
 							type: 'number',
 							required: true,
+							value: nextOfKinForm[0].kphone as unknown as string,
 							handleChange: (s) => {
 								nextOfKinForm[0].kphone = s as unknown as number
 								setNextOfKinForm([
@@ -443,6 +463,7 @@ const Page = () => {
 								title: 'First Name',
 								type: 'text',
 								required: true,
+								value: nextOfKinForm[1].kfname,
 								handleChange: (s) => {
 									nextOfKinForm[1].kfname = s as unknown as string
 									setNextOfKinForm([
@@ -454,6 +475,7 @@ const Page = () => {
 								title: 'Last Name',
 								type: 'text',
 								required: true,
+								value: nextOfKinForm[1].klname,
 								handleChange: (s) => {
 									nextOfKinForm[1].klname = s as unknown as string
 									setNextOfKinForm([
@@ -464,6 +486,7 @@ const Page = () => {
 							<FormInput props={{
 								title: 'Email',
 								type: 'text',
+								value: nextOfKinForm[1].kemail,
 								required: true,
 								message: ((): string => {
 									if (nextOfKinForm.length !== 2) return
@@ -481,6 +504,7 @@ const Page = () => {
 								title: 'Address',
 								type: 'text',
 								required: true,
+								value: nextOfKinForm[1].kaddress,
 								handleChange: (s) => {
 									nextOfKinForm[1].kaddress = s as unknown as string
 									setNextOfKinForm([
@@ -495,6 +519,7 @@ const Page = () => {
 								title: 'LGA',
 								type: 'text',
 								required: true,
+								value: nextOfKinForm[1].klga,
 								handleChange: (s) => {
 									nextOfKinForm[1].klga = s as unknown as string
 									setNextOfKinForm([
@@ -506,6 +531,7 @@ const Page = () => {
 								title: 'State',
 								type: 'text',
 								required: true,
+								value: nextOfKinForm[1].kstate,
 								handleChange: (s) => {
 									nextOfKinForm[1].kstate = s as unknown as string
 									setNextOfKinForm([
@@ -528,6 +554,7 @@ const Page = () => {
 								title: 'Phone No.',
 								type: 'number',
 								required: true,
+								value: nextOfKinForm[1].kphone,
 								handleChange: (s) => {
 									nextOfKinForm[1].kphone = s as unknown as number
 									setNextOfKinForm([
@@ -540,33 +567,7 @@ const Page = () => {
 				</>
 				}
 
-				<label
-					htmlFor=''
-					className='space-x-4 w-full text-gray-600'
-				>
-					<span className='text-gray-600 mb-2 text-md idden'>
-						Document Upload
-					</span>
-					<div className="flex justify-center">
-						<select name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value)}>
-							<option value="0">CHOOSE DOCUMENT TYPE</option>
-							{types.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
-						</select>
-					</div>
-					<DocumentUpload key={'document'} handleUpload={(s) => setForm({
-						...form, upload: s as unknown as string
-					})} documentType={docType} disabled={docType === '0'} />
-				</label>
 				<div className="col-span-2">
-					<div className="flex items-center justify-center">
-						<span className="text-sm px-4 text-gray-600">
-							Already paid for application?
-						</span>
-						<Switch
-							checked={form.paid}
-							onChange={() => setForm({ ...form, paid: !form.paid })}
-						/>
-					</div>
 					<div className={`text-center text-sm py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 						{message.text !== undefined && message.text}
 					</div>
@@ -577,7 +578,7 @@ const Page = () => {
 								className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out"
 								onClick={submit}>
 
-								Create
+								Update
 							</button>
 						</> : <div className="relative bg-red mx-auto text-center py-1 px-2 rounded-full mt-4 w-48 h-10 text-white cursor-wait">
 							<Loader />

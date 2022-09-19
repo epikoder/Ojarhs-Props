@@ -27,9 +27,6 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 						},
 					]} />
 				</div>
-				<div onClick={() => { router.push("/admin/message"); dispatch(toggleSideBar()) }}>
-					<SideBarItem name='Messages' />
-				</div>
 				<div onClick={() => { router.push("/admin/services"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Services' />
 				</div>
@@ -39,8 +36,14 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				<div onClick={() => { router.push("/admin/records"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Records' />
 				</div>
-				<div onClick={() => { router.push("/admin/d&r"); dispatch(toggleSideBar()) }}>
-					<SideBarItem name='Dispute & Reports' />
+				<div onClick={() => { router.push("/admin/message"); dispatch(toggleSideBar()) }}>
+					<SideBarItem name='Messages' />
+				</div>
+				<div onClick={() => { router.push("/admin/disputes"); dispatch(toggleSideBar()) }}>
+					<SideBarItem name='Disputes' />
+				</div>
+				<div onClick={() => { router.push("/admin/report"); dispatch(toggleSideBar()) }}>
+					<SideBarItem name='Reports' />
 				</div>
 				<div onClick={() => { router.push("/admin/adverts"); dispatch(toggleSideBar()) }}>
 					<SideBarItem name='Adverts' />

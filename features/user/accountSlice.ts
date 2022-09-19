@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loadUserAdverts, loadUserProperties, loadUserServices } from "../../redux/user/dashboard";
+import { loadUserConversations, loadUserDispute, loadUserReports } from "../../redux/user/message";
 import { uploadDoc } from "../../redux/user/uploadDoc";
 import { RootState, store } from "../../store";
-import { Advert, LoadState, Service, Space } from "../../Typing.d";
+import { Advert, LoadState, MessageOwner, MessageState, Service, Space } from "../../Typing.d";
 import { checkIsAuthenticated } from "../authSlice";
 
 type AccountState = {
@@ -16,29 +17,52 @@ type AccountState = {
     },
     documentUpload: {
         state: LoadState
-        message: string
+        message?: string
     },
     adverts: {
         state: LoadState
         data: Advert[]
+    },
+    message: {
+        conversations: MessageState
+        disputes: MessageState
+        reports: MessageState
+    }
+}
+const initialState: AccountState = {
+    properties: {
+        state: "success",
+        data: []
+    },
+    services: {
+        state: "success",
+        data: []
+    },
+    documentUpload: {
+        state: 'nil',
+    },
+    adverts: {
+        state: 'nil',
+        data: []
+    },
+    message: {
+        conversations: {
+            state: 'nil',
+            data: []
+        },
+        disputes: {
+            state: 'nil',
+            data: []
+        },
+        reports: {
+            state: 'nil',
+            data: []
+        }
     }
 }
 const AccountSlice = createSlice({
     name: 'AccountSlice',
-    initialState: {
-        properties: {
-            state: "success"
-        },
-        services: {
-            state: "success"
-        },
-        documentUpload: {
-            state: 'nil'
-        },
-        adverts: {
-            state: 'nil'
-        }
-    } as AccountState,
+    initialState: initialState,
     reducers: {},
     extraReducers(builder) {
         {/* User Properties */ }
@@ -85,6 +109,43 @@ const AccountSlice = createSlice({
         builder.addCase(uploadDoc.rejected, (state) => {
             state.documentUpload.state = 'failed'
             state.documentUpload.message = 'Error processing your application'
+        })
+
+        // Messages
+        builder.addCase(loadUserConversations.pending, (state) => {
+            state.message.conversations.state = 'pending'
+        })
+        builder.addCase(loadUserConversations.fulfilled, (state, { payload }) => {
+            state.message.conversations.state = 'success'
+            state.message.conversations.data = payload
+        })
+        builder.addCase(loadUserConversations.rejected, (state) => {
+            state.message.conversations.state = 'failed'
+        })
+
+        // Dispute
+        builder.addCase(loadUserDispute.pending, (state) => {
+            state.message.disputes.state = 'pending'
+        })
+        builder.addCase(loadUserDispute.fulfilled, (state, { payload }) => {
+            state.message.disputes.state = 'success'
+            console.log("GOT DISPUTES", payload)
+            state.message.disputes.data = payload
+        })
+        builder.addCase(loadUserDispute.rejected, (state) => {
+            state.message.disputes.state = 'failed'
+        })
+
+        // Rports
+        builder.addCase(loadUserReports.pending, (state) => {
+            state.message.reports.state = 'pending'
+        })
+        builder.addCase(loadUserReports.fulfilled, (state, { payload }) => {
+            state.message.reports.state = 'success'
+            state.message.reports.data = payload
+        })
+        builder.addCase(loadUserReports.rejected, (state) => {
+            state.message.reports.state = 'failed'
         })
     },
 })

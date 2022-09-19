@@ -36,8 +36,9 @@ export const UserSideBar = () => {
                 <div className="relative">
                     <DotsVerticalIcon className="text-black w-6 my-2 absolute right-1" onClick={() => toggleOpen(!isOpen)} />
                 </div>
-                {isOpen && <div className="absolute z-10 text-center text-white w-full h-[100vh]" style={{
-                    backgroundColor: '#000000de'
+                {isOpen && <div className="absolute text-center text-white w-full -my-5" style={{
+                    backgroundColor: '#000000de',
+                    zIndex: 99999999999
                 }}>
                     <div className="relative flex justify-end px-4">
                         <XIcon className="text-white w-8" onClick={() => toggleOpen(!isOpen)} />
@@ -46,9 +47,10 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Profile" href="/user/profile" />
                     <MenuItemMobile title="Service" href="/user/service" />
                     <MenuItemMobile title="Receipts" href="/user/receipt" />
+                    <MenuItemMobile title="Messages" href="/user/message" />
                     <MenuItemMobile title="Disputes" href="/user/disputes" />
-                    <MenuItemMobile title="Adverts" href="/user/advert" />
                     <MenuItemMobile title="Report" href="/user/report" />
+                    <MenuItemMobile title="Adverts" href="/user/advert" />
                     <MenuItemMobile title="Request pack out" href="/user/packout" />
                     <hr />
                     <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-red-500 rounded-md uppercase font-sans"
@@ -62,9 +64,10 @@ export const UserSideBar = () => {
                 <MenuItem title="Profile" href="/user/profile" />
                 <MenuItem title="Service" href="/user/service" />
                 <MenuItem title="Receipts" href="/user/receipt" />
+                <MenuItem title="Messages" href="/user/message" />
                 <MenuItem title="Disputes" href="/user/disputes" />
-                <MenuItem title="Adverts" href="/user/advert" />
                 <MenuItem title="Report" href="/user/report" />
+                <MenuItem title="Adverts" href="/user/advert" />
                 <MenuItem title="Request pack out" href="/user/packout" />
 
                 <hr />

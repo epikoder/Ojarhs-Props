@@ -16,6 +16,7 @@ import searchSlice from './features/searchSlice'
 import serviceSlice from './features/admin/serviceSlice'
 import advertSlice from './features/admin/advertSlice'
 import applicationsSlice from './features/admin/applicationsSlice'
+import messageSlice from './features/admin/messageSlice'
 
 
 export const store = configureStore({
@@ -36,6 +37,7 @@ export const store = configureStore({
     advertSlice: advertSlice,
     applicationSlice: applicationsSlice,
     indexAdvertSlice: indexAdvertSlice,
+    messageSlice: messageSlice
   },
 })
 

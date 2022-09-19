@@ -26,16 +26,18 @@ const NextOfKin = () => {
                 <div className="text-gray-500 text-sm uppercase">
                     {'Next Of Kin'}
                 </div>
-                {data.map((n, i) => <div key={i} className='my-1 space-y-2'>
-                    <Info title="First Name" value={n.kfname} />
-                    <Info title="Last Name" value={n.klname} />
-                    <Info title="Email" value={n.kemail} />
-                    <Info title="Phone" value={n.kphone} />
-                    <Info title="Address" value={n.kaddress} />
-                    <Info title="L.G.A" value={n.klga} />
-                    <Info title="State" value={n.kstate} />
-                    <Info title="Country" value={n.kcountry} />
-                </div>)}
+                <div className="md:grid grid-cols-2 gap-2">
+                    {data.map((n, i) => <div key={i} className='my-1 space-y-2'>
+                        <Info title="First Name" value={n.kfname} />
+                        <Info title="Last Name" value={n.klname} />
+                        <Info title="Email" value={n.kemail} />
+                        <Info title="Phone" value={n.kphone} />
+                        <Info title="Address" value={n.kaddress} />
+                        <Info title="L.G.A" value={n.klga} />
+                        <Info title="State" value={n.kstate} />
+                        <Info title="Country" value={n.kcountry} />
+                    </div>)}
+                </div>
             </div>}
         {state === 'failed' && <div className="text-gray-500">
             {'Could not load next of kin information'}
@@ -49,8 +51,8 @@ const Profile = () => {
             <div className="p-2 md:my-2 rounded-md w-full bg-white">
                 <UserInfo user={user} />
                 <div className="flex justify-center">
-                    <div className="space-y-2 my-2 min-w-[360px]">
-                        <Info title="Reference" value={user.reference} />
+                    <div className="space-y-2 my-2 max-w-screen-lg w-full">
+                        <Info title="Reference No." value={user.reference} />
                         <div className="text-gray-500 text-sm uppercase">
                             {'Guarantor Information'}
                         </div>

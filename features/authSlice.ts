@@ -5,11 +5,9 @@ import { loadNextOfKin, loginAdminApi, loginApi, rejectValue } from "../redux/au
 import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplicationStatus } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
-import { AxiosResponse } from "axios";
 import { updateUserProfile } from "../redux/user/dashboard";
-import { typography } from "@mui/system";
 
-export type AuthState = {
+type AuthState = {
     authenticated: boolean
     token: loginResponse
     status: LoadState
@@ -19,15 +17,32 @@ export type AuthState = {
         [key: string]: string
     }
     user?: User
-    nextOfKin?: {
+    nextOfKin: {
         state: LoadState
         data: NextOfKin[]
     },
     profileUpdate: {
         state: LoadState
-        message: string
+        message?: string
     }
     application: UserApplicationStatus
+}
+const initialState: AuthState = {
+    appState: 'pending',
+    token: undefined,
+    nextOfKin: {
+        state: 'nil',
+        data: []
+    },
+    profileUpdate: {
+        state: 'nil'
+    },
+    authenticated: false,
+    user: undefined,
+    status: "nil",
+    message: undefined,
+    error: {},
+    application: "nil"
 }
 
 export type JWTCLAIMS = {
@@ -104,15 +119,17 @@ const checkIsAuthenticatedAdminAsync = async () => {
     }
 }
 
+const logoutAsync = async () => {
+    try {
+        Api().post('/user/logout')
+    } catch (error) {
+
+    }
+}
+
 const authSlice = createSlice({
     name: "authSlice",
-    initialState: {
-        appState: 'completed',
-        token: {},
-        nextOfKin: {},
-        profileUpdate: {},
-        user: undefined
-    } as AuthState,
+    initialState: initialState,
     reducers: {
         logout: (state) => {
             console.log('LOGGGING OUT')
@@ -122,12 +139,15 @@ const authSlice = createSlice({
             state.message = undefined
             state.token = {} as loginResponse
             state.error = {}
+            logoutAsync()
             clearUserToken()
             // TODO: Clear token cache
         },
+
         setAppState: (state, { payload }: { payload: 'pending' | 'completed' }) => {
             state.appState = payload
         },
+
         setAuthenticated: (state, { payload }: {
             payload: {
                 authenticated: boolean
@@ -136,21 +156,18 @@ const authSlice = createSlice({
                 application?: UserApplicationStatus
             }
         }) => {
-            state.appState = 'completed'
             state.authenticated = payload.authenticated
+            state.appState = 'completed'
             state.user = payload.user
             state.token = payload.token
             state.application = payload.application
-            setTimeout(() => {
-                store.dispatch(setAppState("completed"))
-            }, 1500)
         },
+
         checkIsAuthenticated: (state, { payload }: {
             payload: {
                 isAdmin?: boolean
             }
         }) => {
-            if (state.appState === 'pending') return
             state.appState = 'pending'
             if (getUserToken() === undefined) {
                 state.appState = 'completed'
@@ -164,12 +181,14 @@ const authSlice = createSlice({
             }
             checkIsAuthenticatedAsync()
         },
+
         clearErr: (state) => {
             state.appState = 'completed'
             state.message = undefined
             state.error = {}
         }
     },
+
     extraReducers: (builder) => {
         builder.addCase(loginApi.fulfilled, (state, { payload }) => {
             if (payload === undefined) return
@@ -245,7 +264,6 @@ const authSlice = createSlice({
             state.profileUpdate.state = 'pending'
         })
         builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
-            console.log(payload.status, payload.data)
             if (payload.status === 'failed') {
                 state.profileUpdate.state = 'failed'
                 state.profileUpdate.message = payload.message
@@ -257,7 +275,6 @@ const authSlice = createSlice({
             state.token = payload.data
         })
         builder.addCase(updateUserProfile.rejected, (state, { payload }) => {
-            console.log(payload)
             state.profileUpdate.state = 'failed'
             state.profileUpdate.message = 'Failed to update profile'
         })

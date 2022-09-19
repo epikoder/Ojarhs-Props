@@ -1,5 +1,7 @@
+import { DisputeLevel } from "./Typing.d"
+
 const IsRelease = true
-export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "https://sleepy-everglades-36547.herokuapp.com/api"
+export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "http://ojarh-properties.com/api"
 export const OjarhEmail = "support@ojarproperties.com"
 export const OjarhAddress = "Ikeja, Lagos"
 export const OjarhPhone = "+2349011111111"
@@ -15,3 +17,21 @@ export const advertPrices = [{
     position: 'property',
     amount: 1500
 },]
+
+export const disputeLevel: {
+    value: DisputeLevel,
+    name: string
+}[] = [
+        {
+            name: 'Normal',
+            value: 0
+        },
+        {
+            name: 'Medium',
+            value: 1
+        },
+        {
+            name: 'Severe',
+            value: 2
+        },
+    ]

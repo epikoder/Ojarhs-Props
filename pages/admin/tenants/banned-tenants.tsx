@@ -17,7 +17,7 @@ const columns: GridColDef[] = [
 	{
 		field: '_id',
 		headerName: 'ID',
-		width: 50,
+		width: 80,
 	},
 	{
 		field: 'fname',
@@ -115,10 +115,16 @@ const columns: GridColDef[] = [
 		hideable: false,
 		disableColumnMenu: true,
 		width: 20,
-		renderCell: ({ row }) => <div className="cursor-pointer"> <Edit fontSize="small" /> </div>
+		renderCell: ({ row }) => <EditAction row={row} />
 	},
 ];
 
+const EditAction = ({ row }: { row: any }) => {
+	const router = useRouter()
+	return <div className="cursor-pointer" onClick={() => { router.push('/admin/tenants/update-tenant/' + row.id) }} >
+		<Edit fontSize="small" />
+	</div>
+}
 
 const Status = ({ active, status }: { active: boolean, status: UserApplicationStatus }) => {
 	return <>
@@ -162,7 +168,7 @@ function Page() {
 	React.useEffect(() => {
 		dispatch(loadAllTenants({ banned: true }))
 	}, [])
-	
+
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>

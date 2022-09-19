@@ -6,31 +6,31 @@ import { useSelector } from "react-redux";
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout";
-import { loadUserDispute } from "../../redux/user/message";
+import { loadUserConversations } from "../../redux/user/message";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 
 const ChatListGenerator = ({ o }: { o: MessageOwner }) => {
     const message = o.messages[o.messages.length - 1]
     return <>
-        <ChatList message={message} title={o.title} route='/user/disputes/chat' dispute_level={o.level} />
+        <ChatList message={message} title={o.title} route='/user/message/chat' />
     </>
 }
 
-function Page() {
-    const { data, state } = useSelector((store: RootState) => store.accountSlice.message.disputes)
+function Message() {
+    const { data, state } = useSelector((store: RootState) => store.accountSlice.message.conversations)
     const dispatch = useAppDispatch()
     const router = useRouter()
 
     React.useEffect(() => {
-        dispatch(loadUserDispute())
+        dispatch(loadUserConversations())
     }, [dispatch])
     return <UserDashboardLayout>
         {
             () => <React.Fragment>
                 <div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4 my-2 pt-10">
                     <div className="text-gray-500 text lg:text-lg">
-                        Disputes
+                        Messages
                     </div>
                     <div className="flex items-center space-x-2">
                         <div className="hidden: md:flex justify-around">
@@ -41,9 +41,9 @@ function Page() {
                                 variant='outlined'
                                 size='small'
                                 startIcon={<Add fontSize="small" />}
-                                onClick={() => router.push('/user/disputes/new')}
+                                onClick={() => router.push('/user/message/new')}
                             >
-                                Disputes
+                                Message
                             </Button>
                         </div>
                     </div>
@@ -63,4 +63,4 @@ function Page() {
     </UserDashboardLayout>
 }
 
-export default Page;
+export default Message;

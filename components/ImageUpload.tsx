@@ -2,6 +2,7 @@ import { XCircleIcon } from "@heroicons/react/outline"
 import React, { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { BASEURL } from "../constants"
+import { resolveFilePath } from "../helpers/helpers"
 import { RootState, useAppDispatch } from "../store"
 import Loader from "./Loader"
 
@@ -66,7 +67,19 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
             uploader.click()
         }
         reader.readAsDataURL(uploader.files[0])
+        toggleInput()
     }
+
+    // patch web limitation
+    const [ready, setReady] = React.useState(true)
+    const toggleInput = () => {
+        setReady(false)
+        const i = setTimeout(() => {
+            setReady(true)
+        }, 300)
+        return () => clearTimeout(i)
+    }
+
     return <>
         <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
             if (loading || disabled) return
@@ -86,7 +99,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
             height: height
         }}>
             {
-                (value !== undefined && (url === '' || forceValue)) ? <img src={value} alt="" className="object-cover h-full w-full rounded-md" /> :
+                (value !== undefined && (url === '' || forceValue)) ? <img src={resolveFilePath(value)} alt="" className="object-cover h-full w-full rounded-md" /> :
                     (url === '' ? (<div className="p-1 text-sm text-gray-500">
                         {errMessage ?? message ?? 'SELECT IMAGE'}
                     </div>) : loading ? <Loader /> : <>
@@ -101,7 +114,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                     </>)
             }
         </div>
-        <input ref={ref} type={"file"} className='hidden' onChange={onChange} disabled={disabled} accept='image/*' />
+        {ready && <input ref={ref} type={"file"} className='hidden' onChange={onChange} disabled={disabled} accept='image/*' />}
     </>
 }
 
@@ -173,6 +186,17 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
             uploader.click()
         }
         reader.readAsArrayBuffer(uploader.files[0])
+        toggleInput()
+    }
+
+    // patch web limitation
+    const [ready, setReady] = React.useState(true)
+    const toggleInput = () => {
+        setReady(false)
+        const i = setTimeout(() => {
+            setReady(true)
+        }, 300)
+        return () => clearTimeout(i)
     }
 
     if (!headless) {
@@ -215,7 +239,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                         </>)
                 }
             </div>
-            <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />
+            {ready && <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />}
         </>
     }
 
@@ -321,7 +345,19 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
             uploader.click()
         }
         reader.readAsDataURL(uploader.files[0])
+        toggleInput()
     }
+
+    // patch web limitation
+    const [ready, setReady] = React.useState(true)
+    const toggleInput = () => {
+        setReady(false)
+        const i = setTimeout(() => {
+            setReady(true)
+        }, 300)
+        return () => clearTimeout(i)
+    }
+
     return <>
         <div className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
             if (loading || disabled || (documentType === '' || documentType === '0')) return
@@ -342,6 +378,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
                 </>
             }
         </div>
-        <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='image/*' />
+        {ready && <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='image/*' />}
     </>
 }

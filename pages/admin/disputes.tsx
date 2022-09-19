@@ -3,29 +3,31 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
+import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
-import { UserDashboardLayout } from "../../components/user/UserDashboardLayout";
-import { loadUserDispute } from "../../redux/user/message";
+import { loadAdminDisputes } from "../../redux/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 
 const ChatListGenerator = ({ o }: { o: MessageOwner }) => {
     const message = o.messages[o.messages.length - 1]
     return <>
-        <ChatList message={message} title={o.title} route='/user/disputes/chat' dispute_level={o.level} />
+        <ChatList message={message} title={o.title} route='/admin/disputes/chat' dispute_level={o.level} />
     </>
 }
 
 function Page() {
-    const { data, state } = useSelector((store: RootState) => store.accountSlice.message.disputes)
+    const { data, state } = useSelector((store: RootState) => store.messageSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()
 
     React.useEffect(() => {
-        dispatch(loadUserDispute())
+        dispatch(loadAdminDisputes())
     }, [dispatch])
-    return <UserDashboardLayout>
+
+    console.log(state, data)
+    return <AdminDashboardLayout>
         {
             () => <React.Fragment>
                 <div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4 my-2 pt-10">
@@ -41,9 +43,9 @@ function Page() {
                                 variant='outlined'
                                 size='small'
                                 startIcon={<Add fontSize="small" />}
-                                onClick={() => router.push('/user/disputes/new')}
+                                onClick={() => router.push('/admin/disputes/new')}
                             >
-                                Disputes
+                                Dispute
                             </Button>
                         </div>
                     </div>
@@ -60,7 +62,7 @@ function Page() {
                 </div>
             </React.Fragment>
         }
-    </UserDashboardLayout>
+    </AdminDashboardLayout>
 }
 
 export default Page;

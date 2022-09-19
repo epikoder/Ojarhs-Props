@@ -11,7 +11,7 @@ import Header from "../Header"
 import Loader, { PageLoader } from "../Loader"
 import { UserSideBar } from "./UserSideBar"
 
-export const UserDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string }) => {
+export const UserDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string, style?: React.CSSProperties }) => {
     const { authenticated, user, appState, application } = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()
@@ -56,7 +56,7 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
                                 <div className="md:w-[20%]">
                                     <UserSideBar />
                                 </div>
-                                <div className={`md:w-[70%] ${props.className ?? ''}`}>
+                                <div className={`md:w-[70%] ${props.className ?? ''}`} style={props.style}>
                                     {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
                                         {props.children({ authenticated, user, application })}
                                     </React.Fragment>}

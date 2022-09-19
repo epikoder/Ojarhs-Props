@@ -138,7 +138,7 @@ function DashProps() {
 					</button>
 				</div>
 				<Table
-					TableHead={() => <TableHead />}
+					tableHead={() => <TableHead />}
 					tableBody={(value: Space, index: number) => <TableBody space={value} key={index} index={index} />}
 					data={data}
 					state={status} />
