@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Advert, ApiResponse, loginResponse, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing.d";
+import { Advert, ApiResponse, loginResponse, PackoutRequest, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing.d";
 import { Api } from "../../helpers/api";
 
 export const loadUserProperties =
-    createAsyncThunk<Space[] | undefined>("user/properties", async (payload, { rejectWithValue }) => {
+    createAsyncThunk<Space[] | undefined, void | QueryParam>("user/properties", async (payload, { rejectWithValue }) => {
         try {
             const { status, data } = await Api().get("/user/properties")
             if (status !== 200) {
@@ -66,7 +66,7 @@ export const updateUserProfile = createAsyncThunk<ApiResponse<loginResponse>, Us
     }
 })
 
-export const loadUserReceipt = createAsyncThunk<Receipt[], QueryParam>("user/receip    t", async (payload, { rejectWithValue }) => {
+export const loadUserReceipt = createAsyncThunk<Receipt[], QueryParam>("user/receipt", async (payload, { rejectWithValue }) => {
     try {
         const response = await Api().get<ApiResponse<Receipt[]>>("/user/receipt")
         return response
@@ -77,6 +77,18 @@ export const loadUserReceipt = createAsyncThunk<Receipt[], QueryParam>("user/rec
                 created_at: (new Date(e.created_at)).toLocaleDateString(),
                 expires: new Date(e.expires).toLocaleDateString()
             }))
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue({})
+    }
+})
+
+export const loadUserPackoutRequest = createAsyncThunk<PackoutRequest[], void | QueryParam>("user/packout", async (payload, { rejectWithValue }) => {
+    try {
+        const response = await Api().get<ApiResponse<PackoutRequest[]>>("/user/packout")
+        return response
+            .data
+            .data.map(e => ({ ...e, date: (new Date(e.date)).toLocaleDateString() }))
     } catch (error) {
         console.log(error)
         return rejectWithValue({})

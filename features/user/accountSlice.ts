@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadUserAdverts, loadUserProperties, loadUserReceipt, loadUserServices } from "../../redux/user/dashboard";
+import { loadUserAdverts, loadUserPackoutRequest, loadUserProperties, loadUserReceipt, loadUserServices } from "../../redux/user/dashboard";
 import { loadUserConversations, loadUserDispute, loadUserReports } from "../../redux/user/message";
 import { uploadDoc } from "../../redux/user/uploadDoc";
 import { RootState, store } from "../../store";
-import { Advert, LoadState, MessageOwner, MessageState, Receipt, Service, Space } from "../../Typing.d";
+import { Advert, LoadState, MessageOwner, MessageState, PackoutRequest, Receipt, Service, Space } from "../../Typing.d";
 import { checkIsAuthenticated } from "../authSlice";
 
 type AccountState = {
@@ -31,6 +31,10 @@ type AccountState = {
     receipts: {
         state: LoadState
         data: Receipt[]
+    },
+    packRequest: {
+        state: LoadState
+        data: PackoutRequest[]
     }
 }
 const initialState: AccountState = {
@@ -64,6 +68,10 @@ const initialState: AccountState = {
         }
     },
     receipts: {
+        state: 'nil',
+        data: []
+    },
+    packRequest: {
         state: 'nil',
         data: []
     }
@@ -166,6 +174,17 @@ const AccountSlice = createSlice({
             state.receipts.state = 'success'
         })
         builder.addCase(loadUserReceipt.rejected, (state, { payload }) => { state.receipts.state = 'failed' })
+
+        {/* User Packout */ }
+        builder.addCase(loadUserPackoutRequest.pending, (state, { payload }) => {
+            state.packRequest.state = 'pending'
+        })
+        builder.addCase(loadUserPackoutRequest.fulfilled, (state, { payload }) => {
+            if (payload === undefined) return
+            state.packRequest.data = payload
+            state.packRequest.state = 'success'
+        })
+        builder.addCase(loadUserPackoutRequest.rejected, (state, { payload }) => { state.packRequest.state = 'failed' })
     },
 })
 

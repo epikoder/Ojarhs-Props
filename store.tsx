@@ -17,6 +17,7 @@ import serviceSlice from './features/admin/serviceSlice'
 import advertSlice from './features/admin/advertSlice'
 import applicationsSlice from './features/admin/applicationsSlice'
 import messageSlice from './features/admin/messageSlice'
+import packoutSlice from './features/admin/packoutSlice'
 
 
 export const store = configureStore({
@@ -37,7 +38,8 @@ export const store = configureStore({
     advertSlice: advertSlice,
     applicationSlice: applicationsSlice,
     indexAdvertSlice: indexAdvertSlice,
-    messageSlice: messageSlice
+    messageSlice: messageSlice,
+    packoutSlice: packoutSlice
   },
 })
 

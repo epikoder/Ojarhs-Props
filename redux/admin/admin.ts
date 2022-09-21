@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { Api } from "../../helpers/api";
 import { parseString } from "../../helpers/helpers";
-import { Advert, ApiResponse, Message, MessageOwner, MesssageForm, Service, Space } from "../../Typing.d";
+import { Advert, ApiResponse, Message, MessageOwner, MesssageForm, PackoutRequest, Service, Space } from "../../Typing.d";
 
 export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
     status: 'failed'
@@ -368,3 +368,14 @@ export const createAdminMessage = createAsyncThunk<Message, MesssageForm>
             }
         }
     })
+
+export const loadAdminPackoutRequest = createAsyncThunk<PackoutRequest[]>("admin/packout-request", async (payload, { rejectWithValue }) => {
+    try {
+        const { data, status } = await Api().get<ApiResponse<PackoutRequest[]>>('/admin/packout')
+        return data
+            .data.map(e => ({ ...e, date: (new Date(e.date)).toLocaleDateString() }))
+    } catch (error) {
+        return rejectWithValue({})
+    }
+
+})

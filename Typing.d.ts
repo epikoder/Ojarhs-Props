@@ -251,3 +251,14 @@ export type Receipt = {
 	created_at: string
 	expires: string
 }
+
+export type PackoutRequest = {
+	id: number
+	name: string
+	property: string
+	date: string
+	fname?: string
+	lname?: string
+	status: 0 | 1 | 2
+	reason: string
+}
