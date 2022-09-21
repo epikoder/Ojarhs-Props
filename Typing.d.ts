@@ -241,3 +241,13 @@ export type MessageState = {
 	state: LoadState
 	data: MessageOwner[]
 }
+
+export type Receipt = {
+	id: string
+	name: string
+	type: string
+	slug: string
+	amount: number
+	created_at: string
+	expires: string
+}

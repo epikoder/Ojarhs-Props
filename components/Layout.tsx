@@ -19,8 +19,8 @@ function Layout(props: PropsWithChildren) {
         <title>Ojarh Properties</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='anonymous' />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet" crossOrigin='anonymous' />
       </Head>
       <Script src='/scripts/noimage.js'></Script>
       <Header />

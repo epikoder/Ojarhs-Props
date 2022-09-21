@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Advert, ApiResponse, loginResponse, Service, Space, UserUpdateForm } from "../../Typing.d";
+import { Advert, ApiResponse, loginResponse, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing.d";
 import { Api } from "../../helpers/api";
 
 export const loadUserProperties =
-    createAsyncThunk<Space[] | undefined, {}>("user/properties", async (payload: {}, { rejectWithValue }) => {
+    createAsyncThunk<Space[] | undefined>("user/properties", async (payload, { rejectWithValue }) => {
         try {
             const { status, data } = await Api().get("/user/properties")
             if (status !== 200) {
@@ -21,7 +21,7 @@ export const loadUserProperties =
     })
 
 export const loadUserServices =
-    createAsyncThunk<Service[] | undefined, {}>("user/services", async (payload: {}, { rejectWithValue }) => {
+    createAsyncThunk<Service[] | undefined>("user/services", async (payload, { rejectWithValue }) => {
         try {
             const { status, data } = await Api().get("/user/services")
             if (status !== 200) {
@@ -65,3 +65,21 @@ export const updateUserProfile = createAsyncThunk<ApiResponse<loginResponse>, Us
         return rejectWithValue({})
     }
 })
+
+export const loadUserReceipt = createAsyncThunk<Receipt[], QueryParam>("user/receip    t", async (payload, { rejectWithValue }) => {
+    try {
+        const response = await Api().get<ApiResponse<Receipt[]>>("/user/receipt")
+        return response
+            .data
+            .data
+            .map((e) => ({
+                ...e,
+                created_at: (new Date(e.created_at)).toLocaleDateString(),
+                expires: new Date(e.expires).toLocaleDateString()
+            }))
+    } catch (error) {
+        console.log(error)
+        return rejectWithValue({})
+    }
+})
+

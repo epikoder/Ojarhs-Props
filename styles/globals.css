@@ -302,3 +302,7 @@ div.spinner div.bar12 {
 	/* height: 500px;
 	width: 600px; */
 }
+
+.MuiDialog-root .MuiPaper-root {
+	margin: 10px;
+}

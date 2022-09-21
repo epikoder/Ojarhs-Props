@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadUserAdverts, loadUserProperties, loadUserServices } from "../../redux/user/dashboard";
+import { loadUserAdverts, loadUserProperties, loadUserReceipt, loadUserServices } from "../../redux/user/dashboard";
 import { loadUserConversations, loadUserDispute, loadUserReports } from "../../redux/user/message";
 import { uploadDoc } from "../../redux/user/uploadDoc";
 import { RootState, store } from "../../store";
-import { Advert, LoadState, MessageOwner, MessageState, Service, Space } from "../../Typing.d";
+import { Advert, LoadState, MessageOwner, MessageState, Receipt, Service, Space } from "../../Typing.d";
 import { checkIsAuthenticated } from "../authSlice";
 
 type AccountState = {
@@ -27,6 +27,10 @@ type AccountState = {
         conversations: MessageState
         disputes: MessageState
         reports: MessageState
+    },
+    receipts: {
+        state: LoadState
+        data: Receipt[]
     }
 }
 const initialState: AccountState = {
@@ -58,6 +62,10 @@ const initialState: AccountState = {
             state: 'nil',
             data: []
         }
+    },
+    receipts: {
+        state: 'nil',
+        data: []
     }
 }
 const AccountSlice = createSlice({
@@ -147,6 +155,17 @@ const AccountSlice = createSlice({
         builder.addCase(loadUserReports.rejected, (state) => {
             state.message.reports.state = 'failed'
         })
+
+        {/* User RECEIPT */ }
+        builder.addCase(loadUserReceipt.pending, (state, { payload }) => {
+            state.receipts.state = 'pending'
+        })
+        builder.addCase(loadUserReceipt.fulfilled, (state, { payload }) => {
+            if (payload === undefined) return
+            state.receipts.data = payload
+            state.receipts.state = 'success'
+        })
+        builder.addCase(loadUserReceipt.rejected, (state, { payload }) => { state.receipts.state = 'failed' })
     },
 })
 
