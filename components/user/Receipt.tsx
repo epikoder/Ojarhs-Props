@@ -3,7 +3,7 @@ import { money } from "../../helpers/helpers"
 import { Receipt, User } from "../../Typing.d"
 import React from "react"
 
-export const ReceiptComponent = React.forwardRef<HTMLDivElement, {
+const ReceiptComponent = React.forwardRef<HTMLDivElement, {
     user: User
     receipt: Receipt,
 }>
@@ -93,3 +93,5 @@ export const ReceiptComponent = React.forwardRef<HTMLDivElement, {
             </div>
         </>
     })
+ReceiptComponent.displayName = 'ReceiptComponent'
+export { ReceiptComponent }

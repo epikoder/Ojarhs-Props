@@ -305,4 +305,5 @@ div.spinner div.bar12 {
 
 .MuiDialog-root .MuiPaper-root {
 	margin: 10px;
+	max-width: 1024px;
 }

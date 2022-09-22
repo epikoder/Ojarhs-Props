@@ -21,7 +21,7 @@ export const loadUserProperties =
     })
 
 export const loadUserServices =
-    createAsyncThunk<Service[] | undefined>("user/services", async (payload, { rejectWithValue }) => {
+    createAsyncThunk<Service[] | undefined, void | QueryParam>("user/services", async (payload, { rejectWithValue }) => {
         try {
             const { status, data } = await Api().get("/user/services")
             if (status !== 200) {
