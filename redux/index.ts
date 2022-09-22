@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASEURL } from "../constants";
 import { fixSpace } from "../helpers/helpers";
-import { Advert, ApiResponse, Service, Space, Testimony } from "../Typing.d";
+import { Advert, ApiResponse, Notice, Service, Space, Testimony } from "../Typing.d";
 
 export type indexData = {
     status: 'failed' | 'success'
@@ -47,6 +47,21 @@ export const loadIndex =
                 status: "failed"
             })
         }
+    })
+
+export const loadNotice =
+    createAsyncThunk<Notice[]>("index/notice", async (payload, { rejectWithValue }) => {
+        try {
+            const response = await fetch(BASEURL + '/notices')
+            if (response.status == 200) {
+                const data = await response.json() as ApiResponse<Notice[]>
+                if (data.status === "success") {
+                    return data.data
+                }
+            }
+        } catch (error) {
+        }
+        return rejectWithValue({})
     })
 
 export const loadAdverts = createAsyncThunk<Advert[]>('index/load/advert', async (payload, { rejectWithValue }) => {

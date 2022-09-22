@@ -6,7 +6,7 @@ import Notice from "../components/Notice";
 import { PropertyAdvert } from "../components/Adverts";
 import Testimonials from "../components/Testimonials";
 import Layout from "../components/Layout";
-import { loadAdverts, loadIndex } from "../redux";
+import { loadAdverts, loadIndex, loadNotice } from "../redux";
 import { RootState, useAppDispatch } from "../store";
 import { CardLoader } from "../components/Loader";
 import { useSelector } from "react-redux";
@@ -22,7 +22,7 @@ type indexSliderType = {
 	apiImage: boolean
 	image: string
 	text: string
-	textColor?: string|JSX.Element
+	textColor?: string | JSX.Element
 }
 const IndexSlider = () => {
 	const slides: indexSliderType[] = [
@@ -47,6 +47,13 @@ const IndexSlider = () => {
 			image: 'slider3.jpeg',
 			text: 'Signup and advertise your services'
 		},
+		{
+			apiImage: false,
+			postion: 'right',
+			gravity: 'center',
+			image: 'slider4.jpeg',
+			text: 'Signup Now'
+		},
 	]
 
 	return <Carousel
@@ -55,12 +62,13 @@ const IndexSlider = () => {
 		showStatus={false}
 		autoPlay
 		emulateTouch
+		infiniteLoop
 		transitionTime={1000}
 		showIndicators
 		stopOnHover
 	>
-		{slides.map((s,i) =>
-			<div key={i} className="h-[40vh] md:h-[80vh] relative" style={{
+		{slides.map((s, i) =>
+			<div key={i} className="h-[40vh] md:h-[70vh] relative" style={{
 				backgroundImage: `url(${s.apiImage ? resolveFilePath(s.image) : '/image/' + s.image})`,
 				backgroundRepeat: 'no-repeat',
 				objectFit: 'cover',
@@ -71,9 +79,9 @@ const IndexSlider = () => {
 						backgroundColor: '#ffffffa1'
 					}}>
 						<span className={`text-${s.textColor}-500 text-md md:text-md`}
-						style={{
-							fontFamily:'space grotesk'
-						}}>{s.text}</span>
+							style={{
+								fontFamily: 'space grotesk'
+							}}>{s.text}</span>
 					</div>
 				</div>
 			</div>
@@ -89,6 +97,7 @@ function Home() {
 	React.useEffect(() => {
 		dispatch(loadIndex());
 		dispatch(loadAdverts());
+		dispatch(loadNotice())
 	}, [dispatch]);
 
 	return (

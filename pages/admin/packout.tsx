@@ -99,7 +99,6 @@ function Page() {
 
     const view = (request: PackoutRequest) => {
         setPreview({ open: true, data: request })
-        console.log(preview)
     }
 
     const closePreview = () => setPreview({ open: false })

@@ -5,16 +5,6 @@ import { HomeNotificationBox } from './HomeNotificationBox'
 import Slider from './Slider'
 
 function TopSection() {
-  const [ads, setAds] = React.useState([] as Advert[])
-
-  const _req = async () => {
-    try {
-      // const {} = await Api  
-    } catch (error) {
-
-    }
-  }
-
   return (
     <div className='flex justify-center bg-white'>
       <div className="md:grid md:grid-cols-6 lg:grid-cols-7 w-[100%]">
