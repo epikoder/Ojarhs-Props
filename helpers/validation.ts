@@ -1,4 +1,5 @@
 export const emailValidator = (val: string): string | undefined => {
+  if (val === '' || val === undefined) return undefined
   return String(val)
     .toLowerCase()
     .match(

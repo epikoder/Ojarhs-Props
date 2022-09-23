@@ -3,7 +3,6 @@ import menuStore from "./features/HeaderMenu"
 import TogglePassword from './features/TogglePassword'
 import ToggleSideBar from './features/ToggleSideBar'
 import TenantsSlice from "./features/TenantsSlice"
-import StaffSlice from './features/StaffSlice'
 import IndexSlice from './features/IndexSlice'
 import indexAdvertSlice from './features/indexAdvertSlice'
 import { useDispatch } from 'react-redux'
@@ -18,6 +17,8 @@ import advertSlice from './features/admin/advertSlice'
 import applicationsSlice from './features/admin/applicationsSlice'
 import messageSlice from './features/admin/messageSlice'
 import packoutSlice from './features/admin/packoutSlice'
+import staffSlice from './features/admin/staffSlice'
+import expenseSlice from './features/admin/expenseSlice'
 
 
 export const store = configureStore({
@@ -27,7 +28,6 @@ export const store = configureStore({
     toggleSideBar: ToggleSideBar,
     tenantsSlice: TenantsSlice,
     propertySlice: propertySlice,
-    staffSlice: StaffSlice,
     indexSlice: IndexSlice,
     authSlice: authSlice,
     accountSlice: accountSlice,
@@ -39,7 +39,9 @@ export const store = configureStore({
     applicationSlice: applicationsSlice,
     indexAdvertSlice: indexAdvertSlice,
     messageSlice: messageSlice,
-    packoutSlice: packoutSlice
+    packoutSlice: packoutSlice,
+    staffSlice: staffSlice,
+    expenseSlice: expenseSlice
   },
 })
 

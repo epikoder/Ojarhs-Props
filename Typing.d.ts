@@ -76,15 +76,6 @@ export type Service = {
 	updated_at?: Date
 }
 
-export type Staff = {
-	id: string
-	name: string
-	description: string
-	fee: number
-	no: string
-	email: String
-}
-
 export type NextOfKin = {
 	kfname: string
 	klname: string
@@ -266,5 +257,24 @@ export type PackoutRequest = {
 export type Notice = {
 	id: number
 	title: string
+	type: 'text' | 'image'
 	content: string
+}
+
+export type Staff = {
+	id?: string
+	name: string
+	email: string
+	phone: string
+	description: string
+	fee: number
+	is_disabled?: string
+}
+
+export type Expense = {
+	id?: string
+	name: string
+	duration: number
+	amount: number
+	description: string
 }

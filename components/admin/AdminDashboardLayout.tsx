@@ -16,6 +16,7 @@ export const AdminDashboardLayout = (props?: {
 }) => {
     const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
     const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
+    const [loading, setLoading] = React.useState<boolean>(false)
     const dispatch = useAppDispatch()
     const router = useRouter()
 
@@ -30,6 +31,9 @@ export const AdminDashboardLayout = (props?: {
         if (user !== undefined && !user.is_admin) router.push('/login')
     }, [authenticated, appState, router])
 
+    const setIdle = () => setLoading(false)
+    const setBusy = () => setLoading(true)
+
     return <React.Fragment>
         <Script src='/scripts/noimage.js'></Script>
         <div className='w-full grid-rows-6 gap-1 h-[90vh]'>
@@ -42,7 +46,9 @@ export const AdminDashboardLayout = (props?: {
                         <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
                         <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className ?? ''}`} style={props.style}>
                             {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
-                                {authenticated && user !== undefined && props.children({ authenticated, user })}
+                                {authenticated && user !== undefined && <>
+                                    {props.children({ authenticated, user, loading: { idle: setIdle, busy: setBusy, state: loading } })}
+                                </>}
                             </React.Fragment>}
                         </div>
                     </div>

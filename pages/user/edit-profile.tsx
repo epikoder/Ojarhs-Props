@@ -45,7 +45,7 @@ const Page = () => {
             <React.Fragment>
                 <form className="p-4 max-w-sm">
                     <div>
-                        <ImageUpload value={resolveFilePath(user.photo)}
+                        <ImageUpload value={user.photo}
                             handleUpload={(s) => setForm({ ...form, photo: s })} />
                         <span className="text-sm">PROPFILE PHOTO</span>
                     </div>

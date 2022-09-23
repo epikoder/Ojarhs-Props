@@ -1,7 +1,7 @@
-import { BASEURL } from "../constants"
+import { STORAGEURL } from "../constants"
 import { Space } from "../Typing.d";
 
-export const resolveFilePath = (s: string): string => { return s !== "" ? BASEURL + '/' + s : undefined };
+export const resolveFilePath = (s: string): string => { return s !== "" ? STORAGEURL + '/' + s : undefined };
 export const money = (amount: number): string => "₦" + amount.toLocaleString('en-US')
 export const addMonth = (date: Date, months: number): string => {
     const _ = new Date(date)

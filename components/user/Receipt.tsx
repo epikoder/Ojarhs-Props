@@ -49,26 +49,32 @@ const ReceiptComponent = React.forwardRef<HTMLDivElement, {
                     </div>
                     <div>
                         <div className="grid grid-cols-9 gap-1 text-sm font-semibold px-2 bg-red-600 text-white">
-                            <div className="col-span-2 py-2">
+                            <div className="col-span-1 border-r border-white py-2">
                                 ID
                             </div>
-                            <div className="col-span-4 text-center py-2">
+                            <div className="col-span-2 text-center border-r border-white py-2">
                                 ITEM
                             </div>
-                            <div className="col-span-3 text-right py-2">
+                            <div className="col-span-4 text-center border-r border-white py-2">
+                                DESCRIPTION
+                            </div>
+                            <div className="col-span-2 text-right py-2">
                                 AMOUNT
                             </div>
                         </div>
 
                         <div className="flex flex-col justify-between min-h-[200px]">
                             <div className="grid grid-cols-9 gap-1 text-sm px-2 border-y-gray-300 border-y-2">
-                                <div className="col-span-2 py-2">
+                                <div className="col-span-1 border-r border-gray-300 py-2">
                                     1
                                 </div>
-                                <div className="col-span-4 text-center py-2">
+                                <div className="col-span-2 text-center border-r border-gray-300 py-2">
+                                    {receipt.type}
+                                </div>
+                                <div className="col-span-4 text-center border-r border-gray-300 py-2">
                                     {receipt.name}
                                 </div>
-                                <div className="col-span-3 text-right py-2">
+                                <div className="col-span-2 text-right py-2">
                                     {money(receipt.amount)}
                                 </div>
                             </div>
@@ -84,7 +90,7 @@ const ReceiptComponent = React.forwardRef<HTMLDivElement, {
                     </div>
                     <div className="m-4 mx-auto justify-center items-center text-center w-full">
                         <div>
-                            <div className="text-sm p-1">Thank for your patronage</div>
+                            <div className="text-sm p-1">Thank you for your patronage</div>
                             <i className="text-xs">Ojarh properties</i>
                         </div>
                     </div>

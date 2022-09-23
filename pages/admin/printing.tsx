@@ -4,10 +4,10 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
-import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
-import { money } from "../../../helpers/helpers";
-import { loadExpenses } from "../../../redux/admin/admin";
-import { RootState, useAppDispatch } from "../../../store";
+import { money } from "../../helpers/helpers";
+import { loadExpenses } from "../../redux/admin/admin";
+import { RootState, useAppDispatch } from "../../store";
+import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 
 
 const columns: GridColDef[] = [
@@ -57,53 +57,34 @@ const columns: GridColDef[] = [
         width: 120,
         renderCell: ({ row }) => <div> {money(row.amount)} </div>
     },
-    {
-        field: '',
-        headerName: ':',
-        headerAlign: 'center',
-        align: 'center',
-        filterable: false,
-        hideable: false,
-        disableColumnMenu: true,
-        width: 50,
-        renderCell: ({ row }) => <UpdateAction row={row} />
-    },
 ];
 
-const UpdateAction = ({ row }: { row: any }) => {
-    const router = useRouter()
-    return <>
-        <div className="cursor-pointer" onClick={() => router.push('/admin/office/expense/update?id=' + row.id)}>
-            <Edit />
-        </div>
-    </>
-}
 
 function Page() {
-    const { data } = useSelector((store: RootState) => store.expenseSlice)
+    // const { data } = useSelector((store: RootState) => store.expenseSlice)
     const router = useRouter()
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        dispatch(loadExpenses())
+        // dispatch(loadExpenses())
     }, [])
 
     return <AdminDashboardLayout>
         {() => (
             <React.Fragment>
                 <div className='flex justify-between items-center'>
-                    <h1 className='text-lg red'>Expenses</h1>
+                    <h1 className='text-lg red'>Printing</h1>
 
                     <Button variant='outlined' size='small'
                         onClick={() => router.push('/admin/office/expense/new')}>
-                        NEW EXPENSES
+                        NEW
                     </Button>
                 </div>
                 <div className="h-[80vh] py-4">
-                    <DataGrid
+                    {/* <DataGrid
                         columns={columns}
                         rows={data.map((s, i) => ({ ...s, _id: i + 1 }))}
-                    />
+                    /> */}
                 </div>
             </React.Fragment>
         )}

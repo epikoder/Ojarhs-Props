@@ -64,7 +64,7 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 					/>
 				</div>
 				<div onClick={() => {
-					// router.push("/admin/adverts");
+					router.push("/admin/printing");
 					dispatch(toggleSideBar())
 				}}>
 					<SideBarItem name='Ojarh Printing' />
@@ -81,6 +81,13 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				}}>
 					<SideBarItem name='Packout Request' />
 				</div>
+				<div onClick={() => {
+					// router.push("/admin/packout");
+					dispatch(toggleSideBar())
+				}}>
+					<SideBarItem name='Manage Sub-Admin' />
+				</div>
+				
 				<div>
 					<SideBarItem
 						name='Ojarh Office'

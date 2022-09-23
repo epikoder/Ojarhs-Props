@@ -2,6 +2,7 @@ import { DisputeLevel } from "./Typing.d"
 
 const IsRelease = true
 export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "http://ojarh-properties.com/api"
+export const STORAGEURL = IsRelease ? "https://ojarhproperties.com" : "http://ojarh-properties.com"
 export const OjarhEmail = "support@ojarproperties.com"
 export const OjarhAddress = "Ikeja, Lagos"
 export const OjarhPhone = "+2349011111111"
