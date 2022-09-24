@@ -121,6 +121,7 @@ const Page = () => {
         } catch (error) {
             console.log(error)
         }
+        setPreview({ isOpen: false })
     }
     return <UserDashboardLayout>
         {({ user }) => <>

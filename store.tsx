@@ -19,6 +19,7 @@ import messageSlice from './features/admin/messageSlice'
 import packoutSlice from './features/admin/packoutSlice'
 import staffSlice from './features/admin/staffSlice'
 import expenseSlice from './features/admin/expenseSlice'
+import invoiceSlice from './features/admin/invoiceSlice'
 
 
 export const store = configureStore({
@@ -41,7 +42,8 @@ export const store = configureStore({
     messageSlice: messageSlice,
     packoutSlice: packoutSlice,
     staffSlice: staffSlice,
-    expenseSlice: expenseSlice
+    expenseSlice: expenseSlice,
+    invoiceSlice: invoiceSlice,
   },
 })
 

@@ -111,6 +111,10 @@ const checkIsAuthenticatedAdminAsync = async () => {
             }
             var dec = jose.decodeJwt(token.access)
             auth.user = (dec as unknown as JWTCLAIMS).aud as User
+            if (!(auth.user.is_admin && auth.user.roles !== undefined && auth.user.roles.find(s => s.includes("admin")))) {
+                store.dispatch(setAuthenticated({ authenticated: false }))
+                return
+            }
             auth.token = token
         }
         store.dispatch(setAuthenticated(auth))
@@ -229,6 +233,11 @@ const authSlice = createSlice({
             }
             const dec = jose.decodeJwt(payload.data.access)
             state.user = (dec as unknown as JWTCLAIMS).aud as User
+            if (!(state.user.is_admin && state.user.roles !== undefined && state.user.roles.find(s => s.includes("admin")))) {
+                state.authenticated = false
+                state.appState = 'completed'
+                return
+            }
 
             setUserToken(payload.data)
             state.token = payload.data

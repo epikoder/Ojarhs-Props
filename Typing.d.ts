@@ -3,6 +3,8 @@ export type User = Tenant & {
 	is_disabled: boolean
 	is_locked: boolean
 	email_verified: boolean
+	roles?: string[]
+	permissions?:string[]
 }
 
 export type Space = {
@@ -278,3 +280,10 @@ export type Expense = {
 	amount: number
 	description: string
 }
+
+export type Invoice = {
+	item: string
+	description: string
+	quantity: number
+	amount: number
+} & Partial<User>

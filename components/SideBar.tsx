@@ -69,12 +69,12 @@ function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 				}}>
 					<SideBarItem name='Ojarh Printing' />
 				</div>
-				<div onClick={() => {
+				{/* <div onClick={() => {
 					// router.push("/admin/adverts");
 					dispatch(toggleSideBar())
 				}}>
 					<SideBarItem name='Reference Numbers' />
-				</div>
+				</div> */}
 				<div onClick={() => {
 					router.push("/admin/packout");
 					dispatch(toggleSideBar())

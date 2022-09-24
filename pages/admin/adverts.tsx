@@ -1,12 +1,12 @@
-import { Check, Delete, MoreVert } from "@mui/icons-material";
+import { Delete } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Menu, MenuItem } from "@szhsin/react-menu";
+import { GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import ReactSwitch from "react-switch";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
+import GridTable from "../../components/Grid";
 import Loader from "../../components/Loader";
 import { deleteAdvert, toggleAdvertStatus } from "../../features/admin/advertSlice";
 import { Api } from "../../helpers/api";
@@ -155,11 +155,11 @@ function Adverts() {
 				</Button>
 			</div>
 			<div className="h-full">
-				{status === 'success' && data !== undefined && <DataGrid
+				{status === 'success' && data !== undefined && <GridTable
 					rows={data.map((s, i) => ({ ...s, _id: i + 1 }))}
 					columns={columns}
 					pageSize={10}
-
+					state={status}
 				/>}
 			</div>
 		</React.Fragment>}

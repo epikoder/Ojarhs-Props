@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
+import GridTable from "../../../components/Grid";
 import { money } from "../../../helpers/helpers";
 import { loadStaffs } from "../../../redux/admin/staff";
 import { RootState, useAppDispatch } from "../../../store";
@@ -89,7 +90,7 @@ const UpdateAction = ({ row }: { row: any }) => {
 	</>
 }
 function Staffs() {
-	const { data } = useSelector((store: RootState) => store.staffSlice)
+	const { data, state } = useSelector((store: RootState) => store.staffSlice)
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 
@@ -109,7 +110,8 @@ function Staffs() {
 					</Button>
 				</div>
 				<div className="h-[80vh] py-4">
-					<DataGrid
+					<GridTable
+						state={state}
 						columns={columns}
 						rows={data.map((s, i) => ({ ...s, _id: i + 1 }))}
 					/>

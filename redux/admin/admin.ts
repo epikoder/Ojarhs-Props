@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { Api } from "../../helpers/api";
 import { parseString } from "../../helpers/helpers";
-import { Advert, ApiResponse, Expense, Message, MessageOwner, MesssageForm, PackoutRequest, Service, Space } from "../../Typing.d";
+import { Advert, ApiResponse, Expense, Invoice, Message, MessageOwner, MesssageForm, PackoutRequest, Service, Space } from "../../Typing.d";
 
 export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
     status: 'failed'
@@ -384,6 +384,17 @@ export const loadAdminPackoutRequest = createAsyncThunk<PackoutRequest[]>("admin
 export const loadExpenses = createAsyncThunk<Expense[]>("admin/expense-all", async (payload, { rejectWithValue }) => {
     try {
         const { data, status } = await Api().get<ApiResponse<Expense[]>>('/admin/expenses/all')
+        return data
+            .data
+    } catch (error) {
+        return rejectWithValue({})
+    }
+
+})
+
+export const loadInvoices = createAsyncThunk<Invoice[]>("admin/invoice-all", async (payload, { rejectWithValue }) => {
+    try {
+        const { data, status } = await Api().get<ApiResponse<Invoice[]>>('/admin/invoice')
         return data
             .data
     } catch (error) {

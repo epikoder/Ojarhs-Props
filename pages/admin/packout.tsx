@@ -1,15 +1,14 @@
 import { Visibility } from "@mui/icons-material";
 import { Button, CircularProgress, Dialog, DialogActions, DialogContent, IconButton, TextField } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useRouter } from "next/router";
+import { GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
-import Loader from "../../components/Loader";
+import GridTable from "../../components/Grid";
 import { Api } from "../../helpers/api";
 import { loadAdminPackoutRequest } from "../../redux/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
-import { MessageOwner, PackoutRequest } from "../../Typing.d";
+import { PackoutRequest } from "../../Typing.d";
 
 const columns: GridColDef[] = [
     {
@@ -156,8 +155,9 @@ function Page() {
                     </DialogActions>}
                 </Dialog>
                 <div className="my-2 h-full">
-                    <DataGrid
+                    <GridTable
                         columns={columns}
+                        state={state}
                         rows={data.map((r, i) => ({ _id: i + 1, ...r, view: () => view(r) }))}
                     />
                 </div>

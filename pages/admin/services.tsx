@@ -5,10 +5,11 @@ import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
 import { loadAdminServices } from "../../redux/admin/admin";
 import { resetServiceState } from "../../features/admin/serviceSlice";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 import { money } from "../../helpers/helpers";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
+import GridTable from "../../components/Grid";
 
 
 const columns: GridColDef[] = [
@@ -125,7 +126,8 @@ function Page() {
 				</div>
 
 				<div className="lg:max-w-screen-xl w-full h-full">
-					<DataGrid
+					<GridTable
+						state={status}
 						columns={columns}
 						rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
 					/>

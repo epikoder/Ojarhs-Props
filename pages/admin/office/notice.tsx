@@ -3,9 +3,10 @@ import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/mater
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
+import GridTable from "../../../components/Grid";
 import { BASEURL } from "../../../constants";
 import { Api } from "../../../helpers/api";
-import { ApiResponse, Notice } from "../../../Typing";
+import { ApiResponse, LoadState, Notice } from "../../../Typing";
 
 
 const columns: GridColDef[] = [
@@ -66,8 +67,10 @@ function Page() {
 		open: boolean
 		data?: Notice
 	}>({ open: false })
+	const [state, setState] = React.useState<LoadState>('nil')
 
 	const _req = async () => {
+		setState('pending')
 		try {
 			const response = await fetch(BASEURL + '/notices')
 			if (response.status == 200) {
@@ -79,6 +82,7 @@ function Page() {
 		} catch (error) {
 
 		}
+		setState('success')
 	}
 
 	React.useEffect(() => {
@@ -107,7 +111,8 @@ function Page() {
 					</DialogContent>
 				</Dialog>
 				<div className="py-4 h-full">
-					<DataGrid
+					<GridTable
+						state={state}
 						columns={columns}
 						rows={data.map((e, i) => ({ ...e, _id: i + 1, load: _req }))}
 					/>
