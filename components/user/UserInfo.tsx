@@ -10,7 +10,7 @@ export const UserInfo = ({ user }: { user: User }) => {
             <img src={resolveFilePath(user.photo)} className="rounded-full md:rounded-xl h-32 w-32 md:w-48 md:h-48 object-cover" />
             <div className="p-4 md:py-8">
                 <div className="flex mt-2">
-                    <div className="font-semibold text-ellipsis overflow-hidden whitespace-nowrap w-36 md:w-48">
+                    <div className="font-semibold text-ellipsis overflow-hidden whitespace-nowrap md:w-48">
                         {`${user.fname} ${user.lname}`}
                     </div>
                     <div className="ml-4">

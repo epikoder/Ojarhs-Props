@@ -19,7 +19,7 @@ const MenuItem = ({ title, href = '/' }: { title: string, href?: string }) => {
 const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string }) => {
     return <>
         <NavLink href={href}>
-            <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out hover:text-gray-300 active:text-red-500 rounded-md uppercase font-sans text-md">
+            <div className="hover:cursor-pointer p-3 duration-300 transition-all ease-in-out hover:text-gray-500 active:text-red-500 rounded-md uppercase font-sans text-md">
                 {title}
             </div>
         </NavLink>
@@ -36,13 +36,10 @@ export const UserSideBar = () => {
                 <div className="relative">
                     <DotsVerticalIcon className="text-black w-6 my-2 absolute right-1" onClick={() => toggleOpen(!isOpen)} />
                 </div>
-                {isOpen && <div className="absolute text-center text-white w-full -my-5" style={{
+                {isOpen && <div className="absolute h-[1000px] text-center text-white w-full inset-0 py-6" style={{
                     backgroundColor: '#000000de',
-                    zIndex: 99999999999
+                    zIndex: 10000000
                 }}>
-                    <div className="relative flex justify-end px-4">
-                        <XIcon className="text-white w-8" onClick={() => toggleOpen(!isOpen)} />
-                    </div>
                     <MenuItemMobile title="Dasboard" href="/user/dashboard" />
                     <MenuItemMobile title="Profile" href="/user/profile" />
                     <MenuItemMobile title="Service" href="/user/service" />
@@ -53,9 +50,12 @@ export const UserSideBar = () => {
                     <MenuItemMobile title="Adverts" href="/user/advert" />
                     <MenuItemMobile title="Request pack out" href="/user/packout" />
                     <hr />
-                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-red-700 hover:text-red-500 rounded-md uppercase font-sans"
+                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-white hover:text-red-500 rounded-md uppercase font-sans"
                         onClick={() => dispatch(logout())}>
                         Logout
+                    </div>
+                    <div className="">
+                        <XIcon className="text-red-500 w-10 mx-auto" onClick={() => toggleOpen(!isOpen)} />
                     </div>
                 </div>}
             </div>

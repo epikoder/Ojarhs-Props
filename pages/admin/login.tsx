@@ -119,7 +119,7 @@ const AdminLogin = () => {
                                 <div
                                     onClick={submit}
                                     className="uppercase text-sm cursor-pointer text-white bg-black rounded-md px-2 py-1 border border-black hover:bg-white hover:text-black duration-300 transition-all ease-in-out">
-                                    submit
+                                    LOGIN
                                 </div>
                             </div>
                         </form>

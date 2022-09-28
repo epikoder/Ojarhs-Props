@@ -100,7 +100,7 @@ export const PageLoader = () => {
         return () => clearInterval(ref.current)
     }, [loading])
 
-    return <div className={`bg-black duration-75 ease-linear fixed top-1 left-0 right-0 transition-all`} style={{ zIndex: 10000000, height: 2 }}>
+    return <div className={`bg-black duration-75 ease-linear fixed top-1 left-0 right-0 transition-all`} style={{ zIndex: 11000000, height: 2 }}>
         <div className="bg-blue-500 h-full" style={{
             width: `${val}%`
         }}>
