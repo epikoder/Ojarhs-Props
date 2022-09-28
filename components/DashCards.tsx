@@ -1,12 +1,29 @@
+import { ArrowForwardIos } from '@mui/icons-material'
+import { Card } from '@mui/material'
 import React from 'react'
 
-function DashCards({name, lengths}) {
+function DashCards({ name, value, className, endIcon }: {
+  name: string
+  value: number
+  endIcon?: React.ReactNode
+  className?: string
+}) {
   return (
-    <div className={`px-8 py-4 space-y-3  justify-self-auto `}>
-      <h1 className='uppercase text-white text-lg'> {name}</h1>
-      <h1 className="text-white text-3xl "> {lengths} </h1>
-      <button className='rounded-full px-4 py-1 bg-white '>View All</button>
-    </div>
+    <Card className={`h-[15vh] grid grid-cols-7 rounded-md cursor-pointer hover:opacity-90 transit ${className || ''}`}>
+      <div className='col-span-5 p-4 flex flex-col text-white justify-between'>
+        <div className='uppercase text-md'>
+          {name}
+        </div>
+        <div className='text-4xl font-semibold'
+          style={{ fontFamily: 'Space Grotesk' }}
+        >
+          {value}
+        </div>
+      </div>
+      <div className='col-span-2 flex flex-col items-center justify-center'>
+        {endIcon}
+      </div>
+    </Card>
   )
 }
 

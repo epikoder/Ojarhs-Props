@@ -138,7 +138,7 @@ export const MessageComponent = ({ message }: { message: Message }) => {
                         <i style={{
                             fontSize: 10
                         }}>
-                            {hour}:{at.getMinutes()}<span className="text-gray-400">{morning ? 'am' : 'pm'}</span> {at.getDay()}/{at.getMonth()}{at.getFullYear() !== (new Date()).getFullYear() ? ('/' + at.getFullYear()) : ''}
+                            {hour}:{at.getMinutes()}<span className="text-gray-400">{morning ? 'am' : 'pm'}</span> {at.toLocaleDateString()}
                         </i>
                     </div>
                 </div>
@@ -211,7 +211,7 @@ export const TypeBox = ({ onSend, hideFilePicker = true }: {
             </div>
             <div className="max-w-fit flex flex-col">
                 <IconButton
-                    disabled={text.length < 2 || loading}
+                    disabled={text.length < 1 || loading}
                     onClick={async (e) => {
                         setLoading(true)
                         const status = await onSend(text)
@@ -221,7 +221,7 @@ export const TypeBox = ({ onSend, hideFilePicker = true }: {
                         }
                     }}
                 >
-                    {loading ? <CircularProgress size='16' /> : <Send className={`${text.length < 2 ? '' : 'text-blue-500'}`} />}
+                    {loading ? <CircularProgress size='16' /> : <Send className={`${text.length < 1 ? '' : 'text-blue-500'}`} />}
                 </IconButton>
                 {
                     !hideFilePicker && <IconButton

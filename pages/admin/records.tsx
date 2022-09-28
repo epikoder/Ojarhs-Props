@@ -2,39 +2,99 @@ import React from "react";
 import DashCards from "../../components/DashCards";
 import RecordCharts from "../../components/RecordCharts";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
+import { House } from "@mui/icons-material";
 
 function Records() {
 	return (
 		<AdminDashboardLayout>
 			{() => (
 				<React.Fragment>
-					<div className='grid md:grid-cols-2 grid-cols-1 gap-5 justify-center '>
-						{/* the numbers you are seeing as a class is for the linear gradient    */}
-						<div className=' one rounded-2xl w-full  '>
-							<DashCards name='total properties' lengths='70' />
-						</div>
-						<div className=' six rounded-2xl w-full  '>
-							<DashCards name='total Tenants' lengths='20' />
-						</div>{" "}
-						<div className=' three rounded-2xl w-full  '>
-							<DashCards name='total Staffs' lengths='5' />
-						</div>{" "}
-						<div className=' four rounded-2xl w-full  justify-self-start'>
-							<DashCards name='total adverts' lengths='5' />
-						</div>{" "}
+					<div className='grid md:grid-cols-2 grid-cols-1 gap-5 justify-center my-2'>
+						<DashCards
+							name='total properties'
+							value={70}
+							className='yoda'
+							endIcon={<House fontSize="large" className="text-white" />}
+						/>
+						<DashCards
+							name='total Tenants'
+							value={70}
+							className='wiretap'
+							endIcon={<House fontSize="large" className="text-white" />}
+						/>
+						<DashCards
+							name='total Staffs'
+							value={70}
+							className='red-sunset'
+							endIcon={<House fontSize="large" className="text-white" />}
+						/>
+						<DashCards
+							name='Rents paid'
+							value={70}
+							className='gradlegray'
+							endIcon={<House fontSize="large" className="text-white" />}
+						/>
+						<DashCards
+							name='printing jobs'
+							value={70}
+							className='vanusa'
+							endIcon={<House fontSize="large" className="text-white" />}
+						/>
+						<DashCards
+							name='Receipts'
+							value={70}
+							className='taran-tado'
+							endIcon={<House fontSize="large" className="text-white" />}
+						/>
 					</div>
 					<div className='grid gap-12 grid-cols-1 md:grid-cols-2 pb-8'>
 						<RecordCharts
-							active='Active Tenant'
-							activeVal='100'
-							free='Free Tenants'
-							freeVal='30'
+							values={[50, 40, 110]}
+							option={{
+								title: {
+									text: 'Adverts',
+									style: {
+										fontSize: '18px'
+									}
+								},
+								labels: ['Active', 'Approved', 'Unapproved'],
+							}}
 						/>
 						<RecordCharts
-							active='Taken Property'
-							activeVal='70'
-							free='Vacant Property'
-							freeVal='30'
+							values={[50, 40]}
+							option={{
+								title: {
+									text: 'Shops',
+									style: {
+										fontSize: '18px'
+									}
+								},
+								labels: ['Active', 'Free'],
+							}}
+						/>
+						<RecordCharts
+							values={[50, 40]}
+							option={{
+								title: {
+									text: 'Warehouse',
+									style: {
+										fontSize: '18px'
+									}
+								},
+								labels: ['Active', 'Free'],
+							}}
+						/>
+						<RecordCharts
+							values={[50, 40]}
+							option={{
+								title: {
+									text: 'Offices',
+									style: {
+										fontSize: '18px'
+									}
+								},
+								labels: ['Active', 'Free'],
+							}}
 						/>
 					</div>
 				</React.Fragment>

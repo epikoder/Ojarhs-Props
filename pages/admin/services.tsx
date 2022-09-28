@@ -8,8 +8,9 @@ import { resetServiceState } from "../../features/admin/serviceSlice";
 import { GridColDef } from "@mui/x-data-grid";
 import { money } from "../../helpers/helpers";
 import { Menu, MenuItem } from "@szhsin/react-menu";
-import { Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
+import { Add, Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
 import GridTable from "../../components/Grid";
+import { Button } from "@mui/material";
 
 
 const columns: GridColDef[] = [
@@ -116,13 +117,14 @@ function Page() {
 			{() => <React.Fragment>
 				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2'>
 					<h1 className='lg:text-xl text-lg red'>Services</h1>
-					<button
-						type='button'
-						className='inline-block px-6 lg:px-12 py-2 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
+					<Button
+						variant='outlined'
+						size='small'
+						startIcon={<Add fontSize="small" />}
 						onClick={() => { router.push('services/new-service') }}
 					>
-						Add new
-					</button>
+						ADD NEW
+					</Button>
 				</div>
 
 				<div className="lg:max-w-screen-xl w-full h-full">

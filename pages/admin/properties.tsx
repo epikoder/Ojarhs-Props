@@ -14,6 +14,8 @@ import { LoaderWhite } from "../../components/Loader";
 import { Api } from "../../helpers/api";
 import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
 import { ArrowsExpandIcon, EyeIcon, PencilIcon, TrashIcon, UserAddIcon } from "@heroicons/react/outline";
+import { Button } from "@mui/material";
+import { Add } from "@mui/icons-material";
 
 const TableHead = () => <div className="py-4 mt-4 my-1 bg-black px-2 rounded-md text-white text-xs sm:text-sm">
 	<div className="grid grid-cols-10 text-center lg:grid-cols-12 gap-2 font-semibold uppercase">
@@ -127,15 +129,16 @@ function DashProps() {
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
-				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2'>
+				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2 py-1'>
 					<h1 className='lg:text-xl text-lg red'>Properties</h1>
-					<button
-						type='button'
-						className='inline-block px-6 lg:px-12 py-2 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
+					<Button
+						variant='outlined'
+						size='small'
+						startIcon={<Add fontSize="small" />}
 						onClick={() => { router.push('properties/new-property') }}
 					>
-						Add new
-					</button>
+						ADD NEW
+					</Button>
 				</div>
 				<Table
 					tableHead={() => <TableHead />}

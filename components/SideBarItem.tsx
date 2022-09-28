@@ -1,18 +1,36 @@
 import React, { useState } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import SideBarSubItem from "./SideBarSubItem";
+import NavLink from "./NavLink";
+import { useAppDispatch } from "../store";
+import { toggleSideBar } from "../features/ToggleSideBar";
+import { useRouter } from "next/router";
 
-function SideBarItem({ name, subItem }: { name: string, subItem?: { name: string, link: string }[] }) {
-	const [toggle, setToggle] = useState(false)
+function SideBarItem({ name, link, subItem }: { name: string, link?: string, subItem?: { name: string, link: string }[] }) {
+	const dispatch = useAppDispatch()
+	const router = useRouter()
 
 	if (subItem !== undefined) {
+		const path = router.asPath.split('/')
+		let href = ''
+		if (path.length > 1) {
+			href = path[path.length - 2]
+		}
+		const subPath = subItem.length > 0 ? subItem[0].link.replace('/', (s: string, arr: number): string => {
+			return arr === 0 ? '' : s
+		}).split('/') : []
+		const [toggle, setToggle] = useState(subItem.length > 0 &&
+			subPath.length > 1 &&
+			subPath[subPath.length - 2] === href)
 		return (
-			<div className='hov text-white transition-all duration-200 ease-in-out my-2 p-2'>
-				<div className='flex justify-between hov cursor-pointer transition duration-700 ease-in-out mr-4' onClick={() => setToggle(!toggle)}>
-					<span>{name}</span>
-					<div className="relative">
-						<ChevronDownIcon className={`absolute hov h-6 w-6 ${toggle ? '' : 'hidden'}`} />
-						<ChevronRightIcon className={`absolute hov h-6 w-6 ${!toggle ? '' : 'hidden'}`} />
+			<div className='text-white transition-all duration-200 ease-in-out transit'>
+				<div className='hover:bg-[red] rounded-md p-2  cursor-pointer mr-4' onClick={() => setToggle(!toggle)}>
+					<div className="flex justify-between w-full">
+						<span>{name}</span>
+						<div className="relative w-6">
+							<ChevronDownIcon fontSize={'small'} className={`absolute h-6 w-6 ${toggle ? '' : 'hidden'} text-white`} />
+							<ChevronRightIcon fontSize={'small'} className={`absolute h-6 w-6 ${!toggle ? '' : 'hidden'} text-white`} />
+						</div>
 					</div>
 				</div>
 
@@ -21,10 +39,14 @@ function SideBarItem({ name, subItem }: { name: string, subItem?: { name: string
 		);
 	} else {
 		return (
-			<div className='hov my-2 p-2 cursor-pointer'>
-				<div className='text-white transition duration-700 ease-in-out hov'>
-					<span>{name}</span>
-				</div>
+			<div onClick={() => dispatch(toggleSideBar())}>
+				<NavLink
+					href={link || '#'}
+				>
+					<div className='text-white hover:bg-[red] transit rounded-md p-2 cursor-pointer'>
+						{name}
+					</div>
+				</NavLink>
 			</div>
 		);
 	}
