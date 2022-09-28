@@ -9,19 +9,17 @@ import { useRouter } from "next/router";
 function SideBarItem({ name, link, subItem }: { name: string, link?: string, subItem?: { name: string, link: string }[] }) {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
+	const path = router.asPath.split('/')
+	let href = ''
+	if (path.length > 1) {
+		href = path[path.length - 2]
+	}
+	const subPath = subItem !== undefined && subItem.length > 0 ? subItem[0].link.replace('/', (s: string, arr: number): string => {
+		return arr === 0 ? '' : s
+	}).split('/') : []
+	const [toggle, setToggle] = useState<boolean>(subPath.length > 1 && subPath[subPath.length - 2] === href)
 
 	if (subItem !== undefined) {
-		const path = router.asPath.split('/')
-		let href = ''
-		if (path.length > 1) {
-			href = path[path.length - 2]
-		}
-		const subPath = subItem.length > 0 ? subItem[0].link.replace('/', (s: string, arr: number): string => {
-			return arr === 0 ? '' : s
-		}).split('/') : []
-		const [toggle, setToggle] = useState(subItem.length > 0 &&
-			subPath.length > 1 &&
-			subPath[subPath.length - 2] === href)
 		return (
 			<div className='text-white transition-all duration-200 ease-in-out transit'>
 				<div className='hover:bg-[red] rounded-md p-2  cursor-pointer mr-4' onClick={() => setToggle(!toggle)}>
