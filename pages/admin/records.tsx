@@ -91,6 +91,7 @@ function Records() {
 								{
 									Object.keys(data.space).map(k =>
 										<RecordCharts
+											key={k}
 											values={[data.space[k].open, data.space[k].occupied]}
 											option={{
 												title: {
