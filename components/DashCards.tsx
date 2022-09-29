@@ -4,7 +4,7 @@ import React from 'react'
 
 function DashCards({ name, value, className, endIcon }: {
   name: string
-  value: number
+  value: string|number
   endIcon?: React.ReactNode
   className?: string
 }) {
@@ -14,7 +14,7 @@ function DashCards({ name, value, className, endIcon }: {
         <div className='uppercase text-md'>
           {name}
         </div>
-        <div className='text-4xl font-semibold'
+        <div className='text-2xl lg:text-4xl font-semibold'
           style={{ fontFamily: 'Space Grotesk' }}
         >
           {value}

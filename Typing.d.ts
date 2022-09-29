@@ -4,7 +4,7 @@ export type User = Tenant & {
 	is_locked: boolean
 	email_verified: boolean
 	roles?: string[]
-	permissions?:string[]
+	permissions?: string[]
 }
 
 export type Space = {

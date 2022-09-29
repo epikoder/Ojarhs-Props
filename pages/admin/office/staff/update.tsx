@@ -1,10 +1,12 @@
 import { Button, CircularProgress, TextField } from "@mui/material"
+import { AxiosError } from "axios"
 import { useRouter } from "next/router"
 import React from "react"
 import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout"
 import { Api } from "../../../../helpers/api"
 import { emailValidator } from "../../../../helpers/validation"
-import { ApiResponse, Staff } from "../../../../Typing"
+import { MapFunc } from "../../../../Type"
+import { ApiResponse, Map, Staff } from "../../../../Typing"
 
 const Page = () => {
     const [form, setForm] = React.useState<Staff>({
@@ -24,7 +26,7 @@ const Page = () => {
         if (!checkValid()) return;
         try {
             loading.busy()
-            const { data } = await Api().put<ApiResponse>('/admin/staffs/update', JSON.stringify({ ...form, fee: parseInt(form.fee as unknown as string) }))
+            const { data } = await Api().put<ApiResponse>('/admin/staffs', JSON.stringify({ ...form, fee: parseInt(form.fee as unknown as string) }))
             if (data.status === 'success') {
                 setTimeout(() => {
                     router.back()
@@ -35,6 +37,13 @@ const Page = () => {
             switch (error.response.status) {
                 case 404: {
                     setMessage(<span className="text-red-500">{'Staff not found'}</span>)
+                    break
+                }
+                case 400: {
+                    let m = (new MapFunc(((error as AxiosError<ApiResponse>).response.data.error as Map<string>))).first()
+                    if (m !== null) {
+                        setMessage(<span className="text-red-500">{m}</span>)
+                    }
                     break
                 }
                 default:
@@ -67,7 +76,7 @@ const Page = () => {
 
     return <AdminDashboardLayout>
         {({ loading }) => <>
-            <div className="max-w-3xl w-[90vw] mx-auto">
+            <div className="max-w-2xl w-[90vw] md:w-[60vw] mx-auto">
                 <div className="text-center text-red-500 text-lg">
                     Update Staff
                 </div>

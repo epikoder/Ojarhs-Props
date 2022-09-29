@@ -96,7 +96,7 @@ const Page = () => {
                                 </Select>
                             </div>
                             <div>
-                                <ImageUpload handleUpload={(s) => setForm({ ...form, photo: s })} width={320} />
+                                <ImageUpload handleUpload={(s) => setForm({ ...form, photo: s })} width={'100%'} height={'30vh'} />
                             </div>
                             <div className="flex justify-center">
                                 {form.position !== '' && IsLinkValid(form.link) && form.photo !== '' &&

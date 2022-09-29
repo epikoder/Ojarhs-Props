@@ -20,6 +20,7 @@ import packoutSlice from './features/admin/packoutSlice'
 import staffSlice from './features/admin/staffSlice'
 import expenseSlice from './features/admin/expenseSlice'
 import invoiceSlice from './features/admin/invoiceSlice'
+import recordSlice from './features/admin/recordSlice'
 
 
 export const store = configureStore({
@@ -44,6 +45,7 @@ export const store = configureStore({
     staffSlice: staffSlice,
     expenseSlice: expenseSlice,
     invoiceSlice: invoiceSlice,
+    recordSlice: recordSlice,
   },
 })
 
