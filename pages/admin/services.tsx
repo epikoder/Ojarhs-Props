@@ -85,7 +85,7 @@ const ActionCell = ({ row }: { row: any }) => {
 					<Edit onClick={() => router.push(`/admin/services/update-service/${row.slug}`)} className="text-black cursor-pointer" height={20} />
 				</MenuItem>
 				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-					<Visibility onClick={() => router.push(`/services?search=${row.slug}`)} className="text-black cursor-pointer" height={20} />
+					<Visibility onClick={() => router.push(`/services?search=${row.name}`)} className="text-black cursor-pointer" height={20} />
 				</MenuItem>
 				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
 					<Delete className="text-black cursor-pointer" height={20} />
@@ -115,7 +115,7 @@ function Page() {
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
-				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2'>
+				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md p-2'>
 					<h1 className='lg:text-xl text-lg red'>Services</h1>
 					<Button
 						variant='outlined'

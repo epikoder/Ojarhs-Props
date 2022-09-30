@@ -17,7 +17,7 @@ const initialState: { state: LoadState, data: RecordData } = {
             amount: 0,
             total: 0
         },
-        space: new Map(),
+        space: {},
         tenant: 0,
         staff: 0
     }

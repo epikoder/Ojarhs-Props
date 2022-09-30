@@ -196,7 +196,13 @@ export const SearchServices = () => {
     })
 
     React.useEffect(() => {
-        dispatch(searchServices(''))
+        const q = router.query
+        setForm({
+            search: q.search as string || '',
+            plan: q.plan as string || ''
+        })
+        const qs = `search=${q.search as string || ''}&plan=${q.plan as string || ''}&min=${minMax[0] === 0 ? '' : calValue(minMax[0])}&max=${minMax[1] === 100 ? '' : calValue(minMax[1])}`
+        dispatch(searchServices(qs))
     }, [])
 
     const search = () => {

@@ -30,7 +30,7 @@ export const FormInput = ({ props }: {
                 required={props.required}
                 placeholder={props.title}
                 defaultValue={props.defaultValue}
-                value={props.value !== undefined ? props.value : ''}
+                value={props.value !== undefined ? props.value : undefined}
                 error={props.message !== '' && props.message !== undefined}
                 onChange={(e) => {
                     props.handleChange(e.target.value)
@@ -46,7 +46,7 @@ export const FormPhoneInput = ({ props }: {
         required?: boolean
         message?: string
         type?: React.HTMLInputTypeAttribute
-        value?: string
+        value?: string | number
         handleChange: (s: any) => void
     }
 }) => {
@@ -249,7 +249,7 @@ export const ApplianceInput = ({ value, handleChange }: {
             handleChange(list)
         }
     }, [list])
-    
+
     React.useEffect(() => {
         if (value != undefined && value.length > 0 && value[0] !== "" && ref.current == false) {
             ref.current = true
