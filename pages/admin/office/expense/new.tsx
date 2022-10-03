@@ -73,10 +73,10 @@ const Page = () => {
                 <div>
                     <IconButton
                         onClick={() => router.back()}>
-                        <ArrowBack className="text-red-500" fontSize="medium" />
+                        <ArrowBack />
                     </IconButton>
                 </div>
-                <div className="text-center text-red-500 text-lg">
+                <div className="text-center text-lg">
                     New Expenses
                 </div>
                 <div className="p-2 shadow-md rounded-md">

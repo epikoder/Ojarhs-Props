@@ -14,7 +14,7 @@ export const UserInfo = ({ user }: { user: User }) => {
                         {`${user.fname} ${user.lname}`}
                     </div>
                     <div className="ml-4">
-                        <PencilIcon className="text-black w-4" onClick={() => router.push('/user/edit-profile')} />
+                        <PencilIcon className="w-4" onClick={() => router.push('/user/edit-profile')} />
                     </div>
                 </div>
                 <div className="text-sm text-ellipsis overflow-hidden whitespace-nowrap w-36 md:w-60">

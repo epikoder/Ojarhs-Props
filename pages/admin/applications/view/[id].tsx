@@ -1,4 +1,5 @@
-import { Button, CircularProgress, MenuItem, Select } from "@mui/material"
+import { ArrowBack } from "@mui/icons-material"
+import { Button, CircularProgress, IconButton, MenuItem, Select } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout"
@@ -59,6 +60,9 @@ const Page = () => {
         {() => <>
             {user !== undefined &&
                 <div className="my-1 max-w-5xl">
+                    <IconButton onClick={router.back}>
+                        <ArrowBack />
+                    </IconButton>
                     <div className="my-1">
                         <div className="text-center red uppercase">{'Tenant Application'}</div>
                     </div>
@@ -84,7 +88,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div>
-                        <div className="text-gray-500">
+                        <div >
                             Guarantor Information
                         </div>
                         <div className="sm:grid grid-cols-2 gap-1 ">
@@ -98,7 +102,7 @@ const Page = () => {
                         </div>
                     </div>
                     <div>
-                        <div className="text-gray-500">
+                        <div >
                             Next Of Kin Information
                         </div>
                         {user.next_of_kins.map((kin, i) =>
@@ -118,7 +122,7 @@ const Page = () => {
                             </div>)}
                     </div>
                     <div className="my-2">
-                        <div className="text-gray-500">
+                        <div >
                             DOCUMENT - <span className="text-red-500">{user.type}</span>
                         </div>
                         <img src={resolveFilePath(user.application.document)} className='max-w-[768px] max-h-[360px] w-full h-full rounded-md' />
@@ -126,7 +130,7 @@ const Page = () => {
                     <div className="flex justify-center my-1">
                         <Select
                             disabled={user.application.status === 'verified'}
-                            label={<span className="text-black">{'Application Status'}</span>}
+                            label={<span>{'Application Status'}</span>}
                             placeholder="Application Status"
                             defaultValue={user.application.status}
                             onChange={(e) => setForm({ ...form, status: e.target.value as UserApplicationStatus })}
@@ -146,9 +150,7 @@ const Page = () => {
                     </div>}
                     <div className="my-10 flex justify-center">
                         <Button
-                            startIcon={loading && <CircularProgress size={14} sx={{
-                                color: 'red',
-                            }} />}
+                            startIcon={loading && <CircularProgress size={14} />}
                             variant='outlined'
                             disabled={loading || user.application.status === 'verified'}
                             onClick={update}
@@ -156,19 +158,24 @@ const Page = () => {
                             Update
                         </Button>
                     </div>
-                </div>}
-            {!loading && user === undefined &&
+                </div>
+            }
+            {
+                !loading && user === undefined &&
                 <div>
                     <div>
                         {'Could not load Application'}
                     </div>
-                </div>}
-            {loading && user === undefined &&
+                </div>
+            }
+            {
+                loading && user === undefined &&
                 <div className="relative h-full">
                     <Loader />
-                </div>}
+                </div>
+            }
         </>}
-    </AdminDashboardLayout>
+    </AdminDashboardLayout >
 }
 
 export default Page

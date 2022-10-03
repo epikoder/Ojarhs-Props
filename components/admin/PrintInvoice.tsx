@@ -50,7 +50,7 @@ const PrintInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(({ i
                                 </td>
                             </tr>
                         </thead>
-                        <tbody>
+                        {/* <tbody>
                             <tr className="space-x-2">
                                 <td className="p-px py-1 border-gray-500">
                                     {invoice.item}
@@ -65,14 +65,14 @@ const PrintInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(({ i
                                     {money(invoice.amount)}
                                 </td>
                             </tr>
-                        </tbody>
+                        </tbody> */}
                     </table>
                     <div className="py-2 w-[269px] flex items-center justify-between uppercase font-bold">
                         <div>
                             TOTAL
                         </div>
                         <div className="text-right">
-                            {money(invoice.amount)}
+                            {/* {money(invoice.amount)} */}
                         </div>
                     </div>
                 </div>

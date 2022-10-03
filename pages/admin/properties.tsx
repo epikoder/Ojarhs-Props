@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
-import { Table } from "../../components/Table";
-import { resetPropertyState, toggleProperyStatus, updateProperty } from "../../features/admin/propertySlice";
+import { deleteProperty, resetPropertyState, toggleProperyStatus } from "../../features/admin/propertySlice";
 import { ApiResponse, Space } from "../../Typing.d";
 import { money } from "../../helpers/helpers";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
@@ -12,107 +11,147 @@ import { loadAdminProperties } from "../../redux/admin/admin";
 import ReactSwitch from "react-switch";
 import { LoaderWhite } from "../../components/Loader";
 import { Api } from "../../helpers/api";
-import { Menu, MenuButton, MenuItem } from "@szhsin/react-menu";
-import { ArrowsExpandIcon, EyeIcon, PencilIcon, TrashIcon, UserAddIcon } from "@heroicons/react/outline";
-import { Button } from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Menu, MenuItem } from "@szhsin/react-menu";
+import { Box, Button, IconButton } from "@mui/material";
+import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
+import { GridColDef } from "@mui/x-data-grid";
+import GridTable from "../../components/Grid";
 
-const TableHead = () => <div className="py-4 mt-4 my-1 bg-black px-2 rounded-md text-white text-xs sm:text-sm">
-	<div className="grid grid-cols-10 text-center lg:grid-cols-12 gap-2 font-semibold uppercase">
-		<div className="col-span-1 text-red-500">id</div>
-		<div className="col-span-2">name</div>
-		<div className="col-span-3 md:col-span-2">property</div>
-		<div className="hidden lg:block col-span-3">address</div>
-		<div className="col-span-3 md:col-span-2 lg:col-span-2">amount</div>
-		<div className="hidden md:block col-span-2 lg:col-span-1">occupied</div>
-		<div className="col-span-1 lg:col-span-1 text-center cursor-not-allowed">:</div>
-	</div>
-</div>
+const columns: GridColDef[] = [
+	{
+		field: 'id',
+		headerName: 'ID',
+		width: 120,
+	},
+	{
+		field: 'name',
+		headerName: 'Name',
+		width: 200,
+		align: 'center',
+		headerAlign: 'center',
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+	},
+	{
+		field: 'type',
+		headerName: 'Property',
+		width: 200,
+		align: 'center',
+		headerAlign: 'center',
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		renderCell: ({ value }) => <div className="font-semibold text-sm uppercase"> {value} </div>
+	},
+	{
+		field: 'description',
+		headerName: 'Description',
+		headerAlign: 'center',
+		align: 'center',
+		sortable: false,
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		width: 400,
+	},
+	{
+		field: 'address',
+		headerName: 'Address',
+		headerAlign: 'center',
+		align: 'center',
+		sortable: false,
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		width: 400,
+	},
+	{
+		field: 'amount',
+		headerName: 'Amount',
+		headerAlign: 'center',
+		align: 'center',
+		width: 150,
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		type: 'number',
+		renderCell: ({ value }) => <div>{money(value)}</div>
+	},
+	{
+		field: 'status',
+		headerName: 'Status',
+		headerAlign: 'center',
+		align: 'center',
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		width: 120,
+		renderCell: ({ row }) => <ActionStatus props={row} />
+	},
+	{
+		field: 'action',
+		headerName: ':',
+		headerAlign: 'center',
+		align: 'center',
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		width: 120,
+		renderCell: ({ value, row }) => <ActionCell row={row} />
+	},
+];
 
-const TableBody = ({ space, index }: { space: Space, index: number } & React.Attributes) => {
-	const [isOpen, setIsOpen] = React.useState<boolean>(false)
-	const [loading, setLoading] = React.useState<boolean>(false)
+const ActionStatus = ({ props }: { props: any }) => {
+	const [loading, setLoading] = React.useState(false)
 	const dispatch = useAppDispatch()
-	const router = useRouter()
 
-	return <div className={`py-2 my-1 ${index % 2 === 0 ? 'bg-black' : 'bg-slate-700'} px-2 rounded-md text-white text-sm`} key={index}>
-		<div className="grid grid-cols-10 text-center items-center lg:grid-cols-12 gap-2">
-			<div className="col-span-1 text-red-500">{index + 1}</div>
-			<div className="col-span-2 cursor-pointer text-ellipsis two-lines overflow-hidden whitespace-nowrap" onClick={() => setIsOpen(!isOpen)}>{space.name}</div>
-			<div className="col-span-3 md:col-span-2 text-ellipsis two-lines overflow-hidden whitespace-nowrap">{space.type}</div>
-			<div className="hidden lg:block col-span-3">
-				<span className="text-ellipsis two-lines overflow-hidden whitespace-nowrap">
-					{space.address}
-				</span>
-			</div>
-			<div className="col-span-3 md:col-span-2 text-ellipsis two-lines overflow-hidden whitespace-nowrap">{money(space.amount)}</div>
-			<div className="hidden md:block col-span-2 lg:col-span-1 text-ellipsis">
-				{loading && <div className="h-full relative">
-					<LoaderWhite />
-				</div>}
-				{!loading && <ReactSwitch
-					checked={space.status === 'occupied'}
-					onChange={async () => {
-						setLoading(true)
-						try {
-							const { data, status } = await Api().put<ApiResponse<'open' | 'occupied'>>('/admin/properties/update/status', { slug: space.slug, status: space.status === 'occupied' ? 'open' : 'occupied' })
-							setLoading(false)
-							if (status !== 200) return
-							if (data.status === 'failed') return
-							dispatch(toggleProperyStatus({
-								index: index,
-								status: data.data,
-							}))
-						} catch (error) {
-							setLoading(false)
-						}
-					}} />}
-			</div>
-			<div className="col-span-1 lg:col-span-1 flex justify-center cursor-pointer transition-all duration-300 ease-in-out">
-				<div className="mr-4">
-					<Menu menuButton={<DotsVerticalIcon height={18} />}>
-						<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110'} >
-							<PencilIcon onClick={() => router.push(`/admin/properties/update-property/${space.slug}`)} className="text-black" height={20} />
-						</MenuItem>
-						<MenuItem className={'p-2 my-2 bg-white rounded-full  hover:scale-110'} >
-							<EyeIcon onClick={() => router.push(`/property/${space.slug}`)} className="text-black" height={20} />
-						</MenuItem>
-						<MenuItem className={'p-2 my-2 bg-white rounded-full  hover:scale-110'} >
-							<UserAddIcon className="text-black" height={20} />
-						</MenuItem>
-						<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110'} >
-							<ArrowsExpandIcon onClick={() => setIsOpen(!isOpen)} className="text-black" height={20} />
-						</MenuItem>
-						<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110'} >
-							<TrashIcon className="text-black" height={20} />
-						</MenuItem>
-					</Menu>
-				</div>
-			</div>
+	return <ReactSwitch
+		checked={props.status === 'occupied'}
+		color='success'
+		disabled={loading}
+		onChange={async () => {
+			setLoading(true)
+			try {
+				const { data, status } = await Api().put<ApiResponse<'open' | 'occupied'>>('/admin/properties/update/status', { slug: props.slug, status: props.status === 'occupied' ? 'open' : 'occupied' })
+				setLoading(false)
+				if (status !== 200) return
+				if (data.status === 'failed') return
+				dispatch(toggleProperyStatus({
+					index: props.id - 1,
+					status: data.data,
+				}))
+			} catch (error) {
+				setLoading(false)
+			}
+		}} />
+}
+
+
+const ActionCell = ({ row }: { row: any }) => {
+	const router = useRouter()
+	return <>
+		<div className="absolute mx-1 my-4">
+			<Menu menuButton={<IconButton><DotsVerticalIcon height={18} /></IconButton>}>
+				<div className="py-4"></div>
+				<MenuItem className={'rounded-full outline-none my-1'} >
+					<IconButton onClick={() => router.push(`/admin/properties/update-property/${row.slug}`)}>
+						<Edit height={20} />
+					</IconButton>
+				</MenuItem>
+				<MenuItem className={'rounded-full outline-none my-1'} >
+					<IconButton onClick={() => router.push(`/property/${row.slug}`)}>
+						<Visibility height={20} />
+					</IconButton>
+				</MenuItem>
+				<MenuItem className={'rounded-full outline-none my-1'} >
+					<IconButton onClick={row.delete}>
+						<Delete height={20} />
+					</IconButton>
+				</MenuItem>
+			</Menu>
 		</div>
-		<div className={`${!isOpen && 'hidden'} px-2 my-2 py-1 w-10/12 lg:w-6/12 bg-white text-black rounded-md mx-2`}>
-			<div className="text-red-500 ">
-				Details
-			</div>
-			<ul>
-				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap border-y py-1 flex justify-between">
-					<span>{'Slug:'}</span> <span>{space.slug}</span>
-				</li>
-				<li className="text-xs font-mono flex justify-between">
-					<span>{'Description:'}</span> <span className="text-ellipsis two-lines overflow-hidden border-y py-1 whitespace-nowrap">{space.description}</span>
-				</li>
-				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap border-y py-1 flex justify-between">
-					<span>{'Size:'}</span> <span>{space.size}</span>
-				</li>
-				<li className="text-xs font-mono text-ellipsis overflow-hidden whitespace-nowrap border-y py-1 flex justify-between">
-					<span>{'Plan:'}</span> <span>{space.plan}</span>
-				</li>
-				{space.status === 'occupied' && <li className="text-xs font-mono text-ellipsis overflow-hidden border-y py-1 whitespace-nowrap flex justify-between">
-					<span>{'Tenant:'}</span> <span>{space.tenant}</span>
-				</li>}
-			</ul>
-		</div>
-	</div>
+	</>
 }
 
 function DashProps() {
@@ -126,10 +165,12 @@ function DashProps() {
 
 	React.useEffect(() => { dispatch(resetPropertyState()) }, [status])
 
+	const _deleteProperty = (s: string) => dispatch(deleteProperty(s))
+
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
-				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2 py-1'>
+				<Box className='flex justify-between w-full items-center px-2 py-1 my-1'>
 					<h1 className='lg:text-xl text-lg red'>Properties</h1>
 					<Button
 						variant='outlined'
@@ -139,14 +180,12 @@ function DashProps() {
 					>
 						ADD NEW
 					</Button>
-				</div>
-				<Table
-					tableHead={() => <TableHead />}
-					tableBody={(value: Space, index: number) => <TableBody space={value} key={index} index={index} />}
-					data={data}
-					state={status} />
-				<div className="mb-20">
-				</div>
+				</Box>
+				<GridTable
+					columns={columns}
+					rows={data.map((s, i) => ({ ...s, id: i + 1, delete: () => _deleteProperty(s.slug) }))}
+					state={status}
+				/>
 			</React.Fragment>}
 		</AdminDashboardLayout>
 	);

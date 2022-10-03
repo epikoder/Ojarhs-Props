@@ -101,60 +101,60 @@ function Home() {
 	}, [dispatch]);
 
 	return (
-		<div>
-			<Layout>
-				<div className='space-y-4'>
-					<div >
-						<IndexSlider />
+		<Layout>
+
+			<div className='space-y-4'>
+				<div >
+					<IndexSlider />
+				</div>
+				<Card className='justify-center flex'>
+					<div className='mx-4 w-full max-w-xl lg:max-w-4xl my-2'>
+						<Search />
 					</div>
-					<div className='justify-center md:flex bg-white'>
-						<div className='mx-4 max-w-xl lg:max-w-4xl my-2'>
-							<Search />
+				</Card>
+				<TopSection />
+				<HomeSignUp />
+				{state === "pending" && <CardLoader />}
+				{state === "failed" && (
+					<div>
+						<div className='text-center'>
+							<span className='text-red-500'>ERROR</span> | Reload page
 						</div>
 					</div>
-					<TopSection />
-					<HomeSignUp />
-					{state === "pending" && <CardLoader />}
-					{state === "failed" && (
-						<div>
-							<div className='text-center'>
-								<span className='text-red-500'>ERROR</span> | Reload page
-							</div>
-						</div>
-					)}
-					{state === "success" && typeof data === "object" && (
-						<>
-							<Plaza name='plaza shops' store={data.shops} prop='' />
-							<Notice />
-							<Plaza name='plaza office' store={data.office} prop='' />
-							<Card className='p-2 grid grid-cols-1 md:grid-cols-2'>
-								<div className="text-center flex flex-col justify-center items-center py-4 md:p-0">
-									<div className='uppercase text-lg font-semibold px-4'>
-										About Ojarh <span className='text-red-500'>Properties</span>
-									</div>
-									<div className='p-4 max-w-[28rem]  lg:text-lg text-slate-500'>
-										{`Ojarh Plaza is now open for you to rent and sell to your customers.
+				)}
+				{state === "success" && typeof data === "object" && (
+					<>
+						<Plaza name='plaza shops' store={data.shops} prop='' />
+						<Notice />
+						<Plaza name='plaza office' store={data.office} prop='' />
+						<Card className='p-2 grid grid-cols-1 md:grid-cols-2'>
+							<div className="text-center flex flex-col justify-center items-center py-4 md:p-0">
+								<div className='uppercase text-lg font-semibold px-4'>
+									About Ojarh <span className='text-red-500'>Properties</span>
+								</div>
+								<div className='p-4 max-w-[28rem]  lg:text-lg'>
+									{`Ojarh Plaza is now open for you to rent and sell to your customers.
 					            Our location remains the best and surely very accessible. Our
 					            processes are automated for credibility and satisfaction`}
-									</div>
 								</div>
-								<div className='relative md:w-[80%] rounded-lg overflow-hidden w-full h-[50vh] md:h-[50vh] mx-auto' style={{
-									backgroundImage: "url('/image/aboutus.jpeg')",
-									backgroundRepeat: "no-repeat",
-									objectFit: "cover",
-									backgroundSize: "cover",
-								}}>
-								</div>
-							</Card>
-							<PropertyAdvert />
-							<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
-							<Plaza name='Services' store={data.services} prop='' />
-							<Testimonials testimony={data.testimonies} />
-						</>
-					)}
-				</div>
-			</Layout>
-		</div>
+							</div>
+							<div className='relative md:w-[80%] rounded-lg overflow-hidden w-full h-[50vh] md:h-[50vh] mx-auto' style={{
+								backgroundImage: "url('/image/aboutus.jpeg')",
+								backgroundRepeat: "no-repeat",
+								objectFit: "cover",
+								backgroundSize: "cover",
+							}}>
+							</div>
+						</Card>
+						<PropertyAdvert />
+						<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
+						<Plaza name='Services' store={data.services} prop='' />
+						<Testimonials testimony={data.testimonies} />
+					</>
+				)}
+			</div>
+
+		</Layout>
 	);
 }
 

@@ -43,9 +43,9 @@ export const PropertyAdvert = () => {
   return <>
     {state !== 'success' && <Slider slider />}
     {state === 'success' &&
-      <div className='md:grid grid-cols-2 w-full h-full gap-1 md:gap-5 xl:gap-11 xl:px-24 md:px-12 px-2'>
+      <div className='md:grid grid-cols-2 w-full gap-1 md:gap-5 xl:gap-11 xl:px-24 md:px-12 px-2 h-[40vh]'>
         <Carousel
-          className={'object-cover h-full w-full'}
+          className={'object-cover w-full'}
           autoPlay={true}
           showIndicators={false}
           showArrows={false}
@@ -57,6 +57,7 @@ export const PropertyAdvert = () => {
           showThumbs={false}
           animationHandler='fade'
           interval={5000}
+          dynamicHeight={false}
           onClickItem={(i) => IsLinkValid(f[i].link) ? window.open(f[i].link, '_blank') : null}
         >
           {f.length > 0 ? f.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)

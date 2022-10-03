@@ -1,5 +1,5 @@
 import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material"
-import { FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
+import { Card, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { BASEURL } from "../constants"
@@ -258,18 +258,21 @@ export const ApplianceInput = ({ value, handleChange }: {
     }, [value])
 
     return <>
-        <div className="min-h-[3rem] border border-gray-300 bg-white rounded-md text-gray-600 flex flex-wrap" >
+        <Card className="min-h-[3rem] rounded-md flex flex-wrap p-1" >
             {(list).map((s, i) =>
-                <div key={i} className='bg-gray-100 px-2 py-1 flex items-center space-x-1 rounded-full m-1'>
+                <Card key={i} className='px-2 py-1 flex items-center text-sec space-x-1 bg-gray-500 rounded-full m-1'>
                     <span>{s}</span>
-                    <Cancel className="text-red-500" fontSize="small" onClick={() => {
+                    <Cancel fontSize="small" onClick={() => {
                         setList(List.remove(list, i))
                     }} />
-                </div>)}
+                </Card>)}
             <input
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 className="px-2 outline-none max-w-[320px] w-full rounded-md"
+                style={{
+                    backgroundColor: 'transparent',
+                }}
                 type={'text'}
                 placeholder='Enter to save'
                 onKeyDownCapture={e => {
@@ -281,6 +284,6 @@ export const ApplianceInput = ({ value, handleChange }: {
                         setText('')
                     }
                 }} />
-        </div>
+        </Card>
     </>
 }

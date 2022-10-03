@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, CircularProgress } from "@mui/material"
+import { Button, ButtonProps, CircularProgress, styled } from "@mui/material"
 import { ApiResponse, Service, Space } from "../Typing.d"
 import { Api } from "../helpers/api"
 import { fixSpace } from "../helpers/helpers"
@@ -89,19 +89,16 @@ export const PayButton = ({ slug, type, disabled }: { slug: string, type: 'servi
         {!success && <>
             {data === undefined && <Button variant="contained" sx={{
                 borderRadius: 0,
-                backgroundColor: 'transparent',
-                color: 'black',
                 transition: 'all .5s ease-in-out',
                 border: 'solid 1px #00000022',
                 ":hover": {
-                    backgroundColor: 'red',
-                    color: 'white'
+                    backgroundColor: 'gray',
                 },
                 ':disabled': {
-                    backgroundColor: 'gray',
-                    color: "white"
+                    backgroundColor: 'gray'
                 }
             }}
+                className='pay-btn'
                 onClick={check}
                 fullWidth
                 disableElevation
@@ -131,16 +128,13 @@ export const PayButton = ({ slug, type, disabled }: { slug: string, type: 'servi
                 {({ initializePayment }) => <Button variant="contained" sx={{
                     borderRadius: 0,
                     backgroundColor: 'transparent',
-                    color: 'black',
                     transition: 'all .5s ease-in-out',
                     border: 'solid 1px #00000022',
                     ":hover": {
-                        backgroundColor: 'red',
-                        color: 'white'
+                        backgroundColor: 'gray',
                     },
                     ':disabled': {
-                        backgroundColor: 'gray',
-                        color: "white"
+                        backgroundColor: 'gray'
                     }
                 }}
                     onClick={() => initializePayment()}
@@ -162,12 +156,8 @@ export const PayButton = ({ slug, type, disabled }: { slug: string, type: 'servi
                 sx={{
                     borderRadius: 0,
                     backgroundColor: 'transparent',
-                    color: '#1565c0',
                     transition: 'all .5s ease-in-out',
                     border: 'solid 1px #00000022',
-                    ':hover': {
-                        color: 'white'
-                    }
                 }}
                 onClick={() => router.push('/user/' + (type === 'service' ? 'service' : 'dashboard'))}
                 fullWidth

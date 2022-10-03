@@ -3,20 +3,18 @@ import { ApiResponse, Space } from "../../../../Typing.d";
 import { ImageUpload, VideoUpload } from "../../../../components/ImageUpload";
 import { GalleryUploader } from "../../../../components/admin/GalleryUploader";
 import { PaymentPlans, PropertyType } from "../../../../components/Resource";
-import { useAppDispatch } from "../../../../store";
 import Loader from "../../../../components/Loader";
-import { addNewPropertyThunck } from "../../../../redux/admin/admin";
 import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
 import { Api } from "../../../../helpers/api";
 import { fixSpace, resolveFilePath } from "../../../../helpers/helpers";
-import { TrashIcon } from "@heroicons/react/outline";
 import { AxiosError } from "axios";
-import { ArrowLeftIcon } from "@heroicons/react/solid";
+import { FormInput } from "../../../../components/FormInput";
+import { Button, Card, CircularProgress, IconButton } from "@mui/material";
+import { ArrowBack, Delete } from "@mui/icons-material";
 
 function UpdateProp() {
     const [loading, setLoading] = React.useState<boolean>(false)
-    const dispatch = useAppDispatch();
     const router = useRouter();
     const [errMessage, setErrMessage] = React.useState<{ status?: boolean, text: string }>({} as { status?: boolean, text: string })
     const [form, setForm] = React.useState<Space>({
@@ -134,171 +132,120 @@ function UpdateProp() {
             {() =>
                 <React.Fragment>
                     <div>
-                        <ArrowLeftIcon className="cursor-pointer text-red-500" onClick={() => router.back()} width={40} height={30} />
+                        <IconButton onClick={() => router.back()}>
+                            <ArrowBack />
+                        </IconButton>
                     </div>
-                    <div className='rounded-md bg-white border my-4 mb-8 shadow-md relative'>
-                        <h1 className='red text-center p-4'>
+                    <Card className='rounded-md relative'>
+                        <h1 className='red text-center p-2'>
                             <div className="uppercase text-sm">Update Property</div>
                         </h1>
                         <h1 className={`text-center my-1 text-${!errMessage.status ? 'red' : 'blue'}-500`}>
                             <div className="font-serif text-sm">{errMessage.text !== undefined && errMessage.text}</div>
                         </h1>
                         <form onSubmit={e => e.preventDefault()} action='' className='space-y-4 py-8 px-4 md:px-2 lg:px-4'>
+                            <FormInput
+                                props={{
+                                    value: form.name,
+                                    handleChange: (s) => setForm({
+                                        ...form, name: s
+                                    }),
+                                    title: 'Name',
+                                    message: formError.name,
+                                    required: true,
+                                }}
+                            />
+
+                            <FormInput
+                                props={{
+                                    value: form.no,
+                                    handleChange: (s) => setForm({
+                                        ...form, no: s
+                                    }),
+                                    title: 'Property ID',
+                                    message: formError.no,
+                                    required: true,
+                                }}
+                            />
+
+                            <FormInput
+                                props={{
+                                    value: form.description,
+                                    handleChange: (s) => setForm({
+                                        ...form, size: s
+                                    }),
+                                    title: 'Size',
+                                    message: formError.size,
+                                    required: true,
+                                }}
+                            />
+
+                            <FormInput
+                                props={{
+                                    value: form.description,
+                                    handleChange: (s) => setForm({
+                                        ...form, name: s
+                                    }),
+                                    title: 'Description',
+                                    message: formError.description,
+                                    required: true,
+                                }}
+                            />
+
+                            <FormInput
+                                props={{
+                                    value: form.address,
+                                    handleChange: (s) => setForm({
+                                        ...form, address: s
+                                    }),
+                                    title: 'Address',
+                                    message: formError.address,
+                                    required: true,
+                                }}
+                            />
+
+                            <FormInput
+                                props={{
+                                    value: form.amount,
+                                    handleChange: (s) => setForm({
+                                        ...form, amount: s
+                                    }),
+                                    title: 'Amount',
+                                    message: formError.amount !== undefined ? formError.amount.toString() : undefined,
+                                    required: true,
+                                    type: 'number'
+                                }}
+                            />
+
+                            <PropertyType
+                                value={form.type}
+                                error={formError.type !== undefined}
+                                handleChange={(s) => setForm({
+                                    ...form, type: s
+                                })} />
+
+                            <PaymentPlans
+                                value={form.plan}
+                                error={formError.plan !== undefined}
+                                handleChange={(s) => setForm({
+                                    ...form, plan: s
+                                })} />
                             <div>
-                                <label
-                                    htmlFor=''
-                                    className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                                >
-                                    <span className='text-gray-500 mb-2 text-xs idden'>Name</span>
-                                    <input
-                                        type='text'
-                                        placeholder='Name'
-                                        value={form.name}
-                                        className={`outline-none bg-transparent text-gray-600 ${formError.name && 'outline-red-500'}`}
-                                        onChange={(e) => setForm({
-                                            ...form, name: e.target.value
-                                        })}
-                                    />
-                                </label>
-                                <div className='red text-xs ml-4'>{formError.name}</div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor=''
-                                    className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                                >
-                                    <span className='text-gray-500 mb-2 text-xs idden'>Property ID</span>
-                                    <input
-                                        type='text'
-                                        placeholder='XXXXX/XXX/XXX'
-                                        value={form.no}
-                                        className={`outline-none bg-transparent text-gray-600 ${formError.no && 'outline-red-500'}`}
-                                        onChange={(e) => setForm({
-                                            ...form, no: e.target.value
-                                        })}
-                                    />
-                                </label>
-                                <div className='red text-xs ml-4'>{formError.no as string}</div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor=''
-                                    className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                                >
-                                    <span className='text-gray-500 mb-2 text-xs idden'>Size</span>
-                                    <input
-                                        type='text'
-                                        placeholder='Size'
-                                        value={form.size}
-                                        className={`outline-none bg-transparent text-gray-600 ${formError.size && 'outline-red-500'}`}
-                                        onChange={(e) => setForm({
-                                            ...form, size: e.target.value
-                                        })}
-                                    />
-                                </label>
-                                <div className='red text-xs ml-4'>{formError.size}</div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor=''
-                                    className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                                >
-                                    <span className='text-gray-500 mb-2 text-xs idden'>Description</span>
-                                    <input
-                                        type='text'
-                                        placeholder='Description'
-                                        value={form.description}
-                                        className={`outline-none bg-transparent text-gray-600 ${formError.description && 'outline-red-500'}`}
-                                        onChange={(e) => setForm({
-                                            ...form, description: e.target.value
-                                        })}
-                                    />
-                                </label>
-                                <div className='red text-xs ml-4'>{formError.description}</div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor=''
-                                    className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                                >
-                                    <span className='text-gray-500 mb-2 text-xs idden'>Address</span>
-                                    <input
-                                        type='text'
-                                        placeholder='Address'
-                                        value={form.address}
-                                        className={`outline-none bg-transparent text-gray-600 ${formError.address && 'outline-red-500'}`}
-                                        onChange={(e) => setForm({
-                                            ...form, address: e.target.value
-                                        })}
-                                    />
-                                </label>
-                                <div className='red text-xs ml-4'>{formError.address}</div>
-                            </div>
-
-                            <div>
-                                <label
-                                    htmlFor=''
-                                    className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                                >
-                                    <span className='text-gray-500 mb-2 text-xs idden'>Price in *Naira</span>
-                                    <input
-                                        type='number'
-                                        placeholder='Amount'
-                                        value={form.amount}
-                                        className={`outline-none bg-transparent text-gray-600 ${formError.amount && 'outline-red-500'}`}
-                                        onChange={(e) => setForm({
-                                            ...form, amount: e.target.value as unknown as number
-                                        })}
-                                    />
-                                </label>
-                                <div className='red text-xs ml-4'>{formError.amount}</div>
-                            </div>
-
-                            <label
-                                htmlFor=''
-                                className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                            >
-                                <span className='text-gray-500 mb-2 text-xs idden'>Property Type</span>
-                                <PropertyType
-                                    value={form.type}
-                                    error={formError.type !== undefined}
-                                    handleChange={(s) => setForm({
-                                        ...form, type: s
-                                    })} />
-                            </label>
-
-                            <label
-                                htmlFor=''
-                                className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                            >
-                                <span className='text-gray-500 mb-2 text-xs idden'>Payment Plan</span>
-                                <PaymentPlans
-                                    value={form.plan}
-                                    error={formError.plan !== undefined}
-                                    handleChange={(s) => setForm({
-                                        ...form, plan: s
-                                    })} />
-                            </label>
-                            <label htmlFor="Featured Image" className="my-2">
-                                <span className='text-gray-500 mb-2 text-sm idden'>Featured Image</span>
+                                <div className='mb-2 text-sm idden'>Featured Image</div>
                                 <ImageUpload
-                                    value={resolveFilePath(gallery.photo)}
+                                    value={gallery.photo}
                                     message={<div className={`text-sm text-${formError.photo ? 'red' : 'gray'}-500`}>{"FEATURED IMAGE"}</div>}
                                     width={260}
-                                    handleUpload={(s, raw) => setForm({
+                                    handleUpload={(s) => setForm({
                                         ...form, photo: s
                                     })} />
-                            </label>
+                            </div>
                             {(gallery.photos.length !== 0) && <div className="flex overflow-x-scroll">
                                 {form !== undefined && gallery.photos?.map((s: string, i: number) =>
                                     <div className="mx-1 relative" key={i}>
-                                        <div className="absolute z-10 right-0 cursor-pointer" onClick={() => deleteGalleryImage(s, i)}>
-                                            <TrashIcon className="text-black bg-white rounded-full p-1 hover:bg-red-500 hover:text-white" height={25} />
-                                        </div>
+                                        <IconButton className="absolute z-10 right-0 cursor-pointer" onClick={() => deleteGalleryImage(s, i)}>
+                                            <Delete height={25} />
+                                        </IconButton>
                                         <ImageUpload
                                             disabled={true}
                                             value={resolveFilePath(s)}
@@ -307,22 +254,18 @@ function UpdateProp() {
                                     </div>)}
                             </div>}
 
-                            <label
-                                htmlFor=''
-                                className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                            >
+                            <div className="my-2">
                                 <GalleryUploader
-                                    title="Upload Gallery Videos"
+                                    title="Upload Gallery Images"
                                     type="image"
                                     width={260}
                                     pre={gallery.photos.length}
                                     handleChange={(l) => setForm({
                                         ...form, galleries: l
                                     })} />
-                            </label>
+                            </div>
 
-                            <label htmlFor="Featured Video" className="my-2">
-                                <span className='text-gray-500 mb-2 text-sm idden'>Featured Video</span>
+                            <div>
                                 <VideoUpload
                                     src={resolveFilePath(gallery.video)}
                                     headless={false}
@@ -330,25 +273,23 @@ function UpdateProp() {
                                     width={260} handleUpload={(s) => setForm({
                                         ...form, video: s
                                     })} />
-                            </label>
+                            </div>
 
                             {(gallery.videos.length !== 0) && <div className="flex overflow-x-scroll">
                                 {form !== undefined && gallery.videos?.map((s: string, i: number) =>
                                     <div className="mx-1 relative" key={i}>
-                                        <div className="absolute z-10 right-0 cursor-pointer" onClick={() => deleteGalleryVideo(s, i)}>
-                                            <TrashIcon className="text-black bg-white rounded-full p-1 hover:bg-red-500 hover:text-white" height={25} />
-                                        </div>
+                                        <IconButton className="absolute z-10 right-0 cursor-pointer" onClick={() => deleteGalleryVideo(s, i)}>
+                                            <Delete height={25} />
+                                        </IconButton>
                                         <VideoUpload
                                             disabled={true}
                                             headless={false}
                                             src={resolveFilePath(s)}
                                             width={260} />
-                                    </div>)}
+                                    </div>)
+                                }
                             </div>}
-                            <label
-                                htmlFor=''
-                                className='flex flex-col bg-gray-100 shadow-sm shadow-gray-400 rounded-lg p-2'
-                            >
+                            <div className="my-2">
                                 <GalleryUploader
                                     title="Upload Gallery Videos"
                                     type="video"
@@ -357,19 +298,20 @@ function UpdateProp() {
                                     handleChange={(l) => setForm({
                                         ...form, video_galleries: l
                                     })} />
-                            </label>
+                            </div>
                             {loading && <Loader />}
-                            <button
-                                type='submit'
-                                className='w-full outline-none'
-                                onClick={() => update()}
-                            >
-                                <div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer '>
-                                    {status !== 'pending' ? 'Update Property' : 'Please wait...'}
-                                </div>
-                            </button>
+                            <div className="flex justify-center">
+                                <Button
+                                    variant="outlined"
+                                    size='small'
+                                    startIcon={loading && <CircularProgress size={14} />}
+                                    onClick={update}
+                                >
+                                    Update property
+                                </Button>
+                            </div>
                         </form>
-                    </div>
+                    </Card>
                 </React.Fragment>}
         </AdminDashboardLayout>
     );

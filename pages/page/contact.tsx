@@ -1,5 +1,5 @@
 import { Mail, Phone, Place } from "@mui/icons-material";
-import { Button, TextField } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import React from "react";
 import { Parallax } from "react-parallax";
 import Layout from "../../components/Layout";
@@ -8,7 +8,7 @@ import { OjarhAddress, OjarhEmail, OjarhPhone } from "../../constants";
 const Page = () => {
 	return (
 		<Layout>
-			<div className='text-gray-600 font-light w-full bg-white'>
+			<Paper className='font-light w-full'>
 				<Parallax bgImage='/image/ads1.jpg' className='w-full' strength={500}>
 					<div className='flex flex-col justify-center items-center my-10 lg:my-40'>
 						<div
@@ -19,7 +19,7 @@ const Page = () => {
 						>
 							<div className='border border-gray-300 p-8 lg:p-12 xl:p-16 2xl:p-24 rounded-sm'>
 								<div className='flex flex-col justify-center items-center'>
-									<div className='font-medium text-3xl'>
+									<div className='font-medium text-3xl text-black'>
 										CONTACT<span className='text-red-500'>{" US"}</span>
 									</div>
 									<hr
@@ -44,7 +44,7 @@ const Page = () => {
 						<div>
 							<form>
 								<div>
-									<div className='font-medium text-lg lg:text-2xl text-black'>
+									<div className='font-medium text-lg lg:text-2xl'>
 										SEND US A<span className='text-red-500'>{" MESSAGE"}</span>
 									</div>
 									<div className='max-w-sm'>
@@ -81,8 +81,12 @@ const Page = () => {
 									</div>
 									<div>
 										<textarea
-											className='border border-1 w-full'
+											className='border border-1 w-full p-2 h-24'
 											placeholder='Message'
+											style={{
+												backgroundColor: '#272424',
+												backgroundImage: 'linear - gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
+											}}
 										/>
 									</div>
 									<div className='flex justify-end'>
@@ -141,12 +145,12 @@ const Page = () => {
 								id='gmap_canvas'
 								src='https://maps.google.com/maps?q=ikeja,%20lagos&t=&z=13&ie=UTF8&iwloc=&output=embed'
 								frameBorder='0'
-								scrolling='no'													
+								scrolling='no'
 							></iframe>
 						</div>
 					</div>
 				</div>
-			</div>
+			</Paper>
 		</Layout>
 	);
 };

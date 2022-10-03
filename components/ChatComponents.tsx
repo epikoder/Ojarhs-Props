@@ -1,5 +1,5 @@
 import { ArrowBack, AttachFile, Dangerous, FastForward, Image as ImageIcon, Send } from "@mui/icons-material"
-import { CircularProgress, Dialog, DialogContent, DialogTitle, IconButton } from "@mui/material"
+import { Card, CircularProgress, Dialog, DialogContent, IconButton } from "@mui/material"
 import { useRouter } from "next/router"
 import React, { ChangeEvent } from "react"
 import { useSelector } from "react-redux"
@@ -13,9 +13,7 @@ export const ChatHeader = ({ message, title }: { message: Message, title: string
     const { user } = useSelector((store: RootState) => store.authSlice)
     return <>
         {user !== undefined && message !== undefined &&
-            <div className="flex justify-between items-center h-[5rem] p-1 px-2 w-full" style={{
-                backgroundColor: '#202934'
-            }}>
+            <Card className="flex justify-between items-center h-[5rem] p-1 px-2 w-full">
                 <div>
                     <IconButton onClick={() => router.back()}>
                         <ArrowBack className="text-white" fontSize="small" />
@@ -28,7 +26,7 @@ export const ChatHeader = ({ message, title }: { message: Message, title: string
                     alt=""
                     className={'w-[4rem] h-[4rem] object-cover rounded-full'}
                 />
-            </div>
+            </Card>
         }
     </>
 }
@@ -47,14 +45,13 @@ const DisputeLevel = ({ level }: {
         </div>
     </>
 }
+
 export const ChatList = ({ message, title, route, dispute_level }: { message: Message, title: string, route: string, dispute_level?: DisputeLevel }) => {
     const router = useRouter()
     const { user } = useSelector((store: RootState) => store.authSlice)
     return <>
         {user !== undefined && message !== undefined &&
-            <div className="flex justify-between rounded-lg p-1 px-2 cursor-pointer" style={{
-                backgroundColor: '#202934'
-            }}
+            <Card className="flex justify-between rounded-lg p-1 px-2 cursor-pointer"
                 onClick={() => { router.push(route + '?id=' + message.owner_id + '&type=' + message.owner_type) }}
             >
                 <div className="flex space-x-3 max-w-[70%]">
@@ -93,7 +90,7 @@ export const ChatList = ({ message, title, route, dispute_level }: { message: Me
                 <div className="text-xs text-gray-400">
                     {(new Date(message.created_at)).toLocaleDateString()}
                 </div>
-            </div>
+            </Card>
         }
     </>
 }
@@ -117,7 +114,7 @@ export const MessageComponent = ({ message }: { message: Message }) => {
                     alt=""
                     className={'w-[3rem] h-[3rem] object-cover rounded-full'}
                 />}
-                <div className="max-w-[80vw] lg:max-w-[60vw] bg-white shadow-md rounded-lg px-2 py-1 lg:px-4 text-gray-600 text-sm whitespace-pre-line">
+                <Card elevation={1} className="max-w-[80vw] lg:max-w-[60vw] px-2 py-1 lg:px-4 text-sm whitespace-pre-line">
                     <div>
                         {message.type === 'text' && message.content}
                         {message.type === 'image' &&
@@ -138,10 +135,10 @@ export const MessageComponent = ({ message }: { message: Message }) => {
                         <i style={{
                             fontSize: 10
                         }}>
-                            {hour}:{at.getMinutes()}<span className="text-gray-400">{morning ? 'am' : 'pm'}</span> {at.toLocaleDateString()}
+                            {hour}:{at.getMinutes()}<span className="text-sec">{morning ? 'am' : 'pm'}</span> {at.toLocaleDateString()}
                         </i>
                     </div>
-                </div>
+                </Card>
             </div>
         </div>
     </>
@@ -202,12 +199,17 @@ export const TypeBox = ({ onSend, hideFilePicker = true }: {
     }
 
     return <>
-        <div className="h-full w-full p-1 flex items-center justify-between bg-white shadow-md rounded-3xl border-t">
+        <div className="h-full w-full p-1 flex items-end justify-between rounded-3xl"
+            style={{
+                backgroundColor: '#272424',
+                backgroundImage: 'linear - gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
+            }}>
             <div className="px-4 w-full">
                 <textarea
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className="outline-none w-full h-16 text-gray-700 text-sm" />
+                    className="outline-none w-full h-20 text-sm bg-transparent"
+                />
             </div>
             <div className="max-w-fit flex flex-col">
                 <IconButton
@@ -220,6 +222,7 @@ export const TypeBox = ({ onSend, hideFilePicker = true }: {
                             setText('')
                         }
                     }}
+                    className='-rotate-12'
                 >
                     {loading ? <CircularProgress size='16' /> : <Send className={`${text.length < 1 ? '' : 'text-blue-500'}`} />}
                 </IconButton>

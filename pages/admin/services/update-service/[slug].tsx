@@ -11,7 +11,7 @@ import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboar
 import { useRouter } from "next/router";
 import { resetPropertyState } from "../../../../features/admin/propertySlice";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { FormInput } from "../../../../components/FormInput";
 import { Api } from "../../../../helpers/api";
 import { resolveFilePath } from "../../../../helpers/helpers";
@@ -19,7 +19,6 @@ import { AxiosError } from "axios";
 
 function UpdateService() {
     const [loading, setLoading] = React.useState<boolean>(false)
-    const dispatch = useAppDispatch();
     const router = useRouter();
 
     const [form, setForm] = React.useState<Service>(undefined as Service)
@@ -91,10 +90,12 @@ function UpdateService() {
             {() =>
                 <React.Fragment>
                     <div>
-                        <ArrowLeftIcon className="cursor-pointer text-red-500" onClick={() => router.back()} width={40} height={30} />
+                        <IconButton onClick={router.back}>
+                            <ArrowLeftIcon />
+                        </IconButton>
                     </div>
                     <div className="flex justify-center">
-                        <div className='rounded-md bg-white border my-4 mb-8 shadow-md relative max-w-4xl px-1 lg:px-4 w-full'>
+                        <div className='rounded-md border my-4 mb-8 shadow-md relative max-w-4xl px-1 lg:px-4 w-full'>
                             <h1 className='red text-center mt-4'>
                                 <div className="uppercase text-sm">Update Service</div>
                             </h1>

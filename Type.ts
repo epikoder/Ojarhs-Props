@@ -1,4 +1,4 @@
-import { Map } from "./Typing"
+import { Map, QueryParam } from "./Typing"
 
 export class MapFunc<T = any> {
     constructor(map: Map<T>) {
@@ -11,5 +11,23 @@ export class MapFunc<T = any> {
             return null
         }
         return this._map[Object.keys(this._map)[0]]
+    }
+}
+
+export class Query {
+    constructor(query: QueryParam) {
+        this._query = query
+    }
+    private _query: QueryParam
+
+    public toString(): string {
+        let s: string = ""
+        Object.keys(this._query).forEach((k, i) => {
+            if (i === 0) {
+                s += '?'
+            } else s += '&'
+            s += k + '=' + this._query[k]
+        })
+        return s
     }
 }

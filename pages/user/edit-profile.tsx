@@ -29,9 +29,6 @@ const Page = () => {
             console.log("form changed")
         }
     }, [user])
-    React.useEffect(() => {
-        console.log(form)
-    }, [form])
 
     const update = () => {
         dispatch(updateUserProfile({

@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNewPropertyThunck, loadAdminProperties } from "../../redux/admin/admin";
+import List from "../../helpers/list";
+import { addNewPropertyThunck, deletePropertyAsync, loadAdminProperties } from "../../redux/admin/admin";
 import { store } from "../../store";
 import { DashboardDataState, Map, Space } from "../../Typing.d";
 
@@ -14,14 +15,10 @@ const propertySlice = createSlice({
 		addProperty: (state) => {
 		},
 
-		deleteProperty: (state, { payload }) => {
+		deleteProperty: (_, { payload }: { payload: string }) => {
+			setTimeout(() => { store.dispatch(deletePropertyAsync(payload)) }, 300)
 		},
 
-		getProperty: (state, { payload }) => {
-		},
-
-		updateProperty: (state) => {
-		},
 		toggleProperyStatus: (state, { payload, type }: {
 			payload: {
 				index: number
@@ -65,9 +62,19 @@ const propertySlice = createSlice({
 			state.status = 'failed'
 			state.message = (payload as Map).message ?? undefined
 		})
+
+		builder.addCase(deletePropertyAsync.fulfilled, (state, { payload }) => {
+			let index: number
+			state.data.forEach((s, i) => {
+				if (s.slug === payload) {
+					index = i
+				}
+			})
+			state.data = List.remove<Space>(state.data, index)
+		})
 	}
 });
 
-export const { addProperty, deleteProperty, updateProperty, getProperty, resetPropertyState, toggleProperyStatus } = propertySlice.actions;
+export const { addProperty, deleteProperty, resetPropertyState, toggleProperyStatus } = propertySlice.actions;
 export default propertySlice.reducer;
 

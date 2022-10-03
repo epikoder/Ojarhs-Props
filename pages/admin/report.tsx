@@ -25,11 +25,12 @@ function Page() {
     React.useEffect(() => {
         dispatch(loadAdminReports())
     }, [dispatch])
+
     return <AdminDashboardLayout>
         {
             () => <React.Fragment>
                 <div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4 my-2 pt-10">
-                    <div className="text-gray-500 text-sm lg:text-lg">
+                    <div className="text-sm lg:text-lg">
                         Reports
                     </div>
                     <div className="flex items-center space-x-2">

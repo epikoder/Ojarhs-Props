@@ -10,7 +10,7 @@ const nextConfig = {
 
 module.exports = {
   images: {
-    domains: ["mdbcdn.b-cdn.net/img/new/slides/041.webp", "mdbcdn.b-cdn.net/img/new/slides/042.webp", "mdbcdn.b-cdn.net/img/new/slides/043.webp"]
+    domains: ["https://ojarhproperties.com/api", "http://ojarh-properties.com/api", 'https://sleepy-everglades-36547.herokuapp.com']
   },
 }
 

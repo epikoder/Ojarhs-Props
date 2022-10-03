@@ -31,7 +31,7 @@ function Message() {
 		{
 			() => <React.Fragment>
 				<div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4">
-					<div className="text-gray-500 text-sm lg:text-lg">
+					<div className="text-sm lg:text-lg">
 						Messages
 					</div>
 					<div className="flex items-center space-x-2">

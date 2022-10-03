@@ -1,14 +1,44 @@
+import { Box, CircularProgress, circularProgressClasses, CircularProgressProps, LinearProgress } from "@mui/material";
 import { style } from "@mui/system";
 import { Router } from "next/router";
 import React from "react";
 
-export default function Loader() {
+export default function Loader(props: CircularProgressProps) {
     return (
         <>
             <div className="absolute top-0 left-0 right-0 bottom-0 items-center flex flex-col justify-center cursor-wait"
                 style={{ backgroundColor: '#00000009' }}
             >
-                <div className="spinner">
+                <Box sx={{ position: 'relative' }}>
+                    <CircularProgress
+                        variant="determinate"
+                        sx={{
+                            color: (theme) =>
+                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                        }}
+                        size={40}
+                        thickness={4}
+                        {...props}
+                        value={100}
+                    />
+                    <CircularProgress
+                        variant="indeterminate"
+                        disableShrink
+                        sx={{
+                            color: (theme) => (theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8'),
+                            animationDuration: '550ms',
+                            position: 'absolute',
+                            left: 0,
+                            [`& .${circularProgressClasses.circle}`]: {
+                                strokeLinecap: 'round',
+                            },
+                        }}
+                        size={40}
+                        thickness={4}
+                        {...props}
+                    />
+                </Box>
+                {/* <div className="spinner">
                     <div className="bar1"></div>
                     <div className="bar2"></div>
                     <div className="bar3"></div>
@@ -21,7 +51,7 @@ export default function Loader() {
                     <div className="bar10"></div>
                     <div className="bar11"></div>
                     <div className="bar12"></div>
-                </div>
+                </div> */}
             </div>
         </>
     );
@@ -79,31 +109,10 @@ export const PageLoader = () => {
         setLoading(false)
     })
     Router.events.on('hashChangeComplete', () => setLoading(false))
-
-    React.useEffect(() => {
-        if (!loading) {
-            setVal(100)
-            setTimeout(() => {
-                setVal(0)
-            }, 100)
-            return
-        }
-        ref.current = setInterval(() => {
-            setVal((current) => {
-                if (current >= 98 && loading) {
-                    clearInterval(ref.current)
-                    return current
-                }
-                return current + 1
-            })
-        }, 20)
-        return () => clearInterval(ref.current)
-    }, [loading])
-
-    return <div className={`bg-black duration-75 ease-linear fixed top-1 left-0 right-0 transition-all`} style={{ zIndex: 11000000, height: 2 }}>
-        <div className="bg-blue-500 h-full" style={{
-            width: `${val}%`
-        }}>
-        </div>
+    return <div
+        className={`fixed top-0 left-0 right-0`}
+        style={{ zIndex: 11000000, height: 2 }}
+    >
+        {loading && <LinearProgress color="primary" />}
     </div>
 }

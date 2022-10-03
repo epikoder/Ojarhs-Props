@@ -1,5 +1,5 @@
 import { ArrowBack } from "@mui/icons-material"
-import { Button, MenuItem, Select, TextField } from "@mui/material"
+import { Button, IconButton, MenuItem, Select, TextField } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
@@ -51,11 +51,13 @@ const Page = () => {
         {({ user }: { user: User }) => <>
             <div className="flex flex-col justify-center">
                 <div className="w-full">
-                    <ArrowBack className="w-14 h-8 text-red-500" onClick={() => router.back()} />
+                    <IconButton onClick={router.back}>
+                        <ArrowBack />
+                    </IconButton>
                 </div>
                 <div className="w-full flex justify-center">
                     <div className="max-w-2xl w-full p-2 lg:p-8 shadow-md">
-                        <div className="text-red-600 text-center text-lg xl:text-xl">
+                        <div className="text-center text-lg xl:text-xl">
                             Add New Advert
                         </div>
                         <div>

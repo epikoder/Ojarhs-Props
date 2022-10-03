@@ -141,11 +141,11 @@ function Adverts() {
 	const { data, status } = useSelector((store: RootState) => store.advertSlice)
 	return <AdminDashboardLayout>
 		{() => <React.Fragment>
-			<div className='flex justify-between items-center shadow-gray-200 shadow-md px-2 py-2 '>
+			<div className='flex justify-between items-cente px-2 py-2 '>
 				<h1 className='lg:text-2xl text-md red'>Adverts</h1>
 				<Button
 					onClick={() => router.push('/admin/adverts/new-advert')}
-					variant='contained'
+					variant='outlined'
 					size="small"
 					sx={{
 						backgroundColor: 'red'

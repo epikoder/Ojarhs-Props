@@ -1,17 +1,12 @@
 import { TextField } from "@mui/material"
 import React from "react"
-import { Invoice } from "../../Typing"
+import { Invoice, InvoiceItem } from "../../Typing"
 
 const NewInvoice = React.forwardRef<{
-    data: Invoice,
+    data: InvoiceItem[],
     message?: React.Dispatch<React.SetStateAction<JSX.Element>>
 }, any>((props, ref) => {
-    const [form, setForm] = React.useState<Invoice>({
-        item: '',
-        description: '',
-        amount: 0,
-        quantity: 1
-    })
+    const [form, setForm] = React.useState<InvoiceItem[]>([])
     const [message, setMessage] = React.useState<JSX.Element>()
 
     React.useImperativeHandle(ref, () => {
@@ -30,7 +25,7 @@ const NewInvoice = React.forwardRef<{
                 <div className="text-center text-sm">
                     {message}
                 </div>
-                <div>
+                {/* <div>
                     <TextField
                         label='Name'
                         size='small'
@@ -65,7 +60,7 @@ const NewInvoice = React.forwardRef<{
                         value={form.amount}
                         onChange={e => setForm({ ...form, amount: e.target.value as unknown as number })}
                     />
-                </div>
+                </div> */}
             </form>
         </div>
     </>

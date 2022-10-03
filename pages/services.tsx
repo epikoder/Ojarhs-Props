@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
-import Card from "../components/Card";
+import OjarhCard from "../components/Card";
 import Layout from "../components/Layout";
 import { CardLoader } from "../components/Loader";
 import { SearchServices } from "../components/Search";
@@ -17,10 +17,10 @@ function Page() {
 
 	return (
 		<Layout>
-			<div className='w-full'>
+			<div className='w-full py-4'>
 				<div>
 					<div className="flex justify-end m-1 lg:mr-10">
-						<Tune htmlColor={showFilter ? '' : 'blue'} onClick={() => setShowFilter(!showFilter)} />
+						<Tune htmlColor={showFilter ? '' : 'red'} onClick={() => setShowFilter(!showFilter)} />
 					</div>
 					<div hidden={!showFilter}>
 						<SearchServices />
@@ -34,7 +34,7 @@ function Page() {
 						{data
 							.slice(page * perPage, page === 0 ? perPage : (page + 1) * perPage)
 							.map((s, i) => <div key={i}>
-								<Card data={s} />
+								<OjarhCard data={s} />
 							</div>)}
 					</div>}
 					{

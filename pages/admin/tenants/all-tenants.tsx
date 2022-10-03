@@ -182,14 +182,11 @@ function Page() {
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
 				<div className='w-full flex justify-between items-center my-2'>
-					<h1 className='lg:text-2xl text-md red'>All Tenants</h1>
+					<h1 className='text-lg'>All Tenants</h1>
 					<Button
 						onClick={() => router.push('/admin/tenants/new-tenant')}
-						variant='contained'
+						variant='outlined'
 						size="small"
-						sx={{
-							backgroundColor: 'red'
-						}}
 					>
 						ADD NEW
 					</Button>

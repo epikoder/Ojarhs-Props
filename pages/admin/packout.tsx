@@ -124,7 +124,7 @@ function Page() {
     return <AdminDashboardLayout>
         {
             () => <React.Fragment>
-                <div className="text-gray-500 text-sm lg:text-lg">
+                <div className="text-sm lg:text-lg">
                     Packout Requests
                 </div>
                 <Dialog open={preview.open} onClose={closePreview}>
@@ -168,19 +168,19 @@ function Page() {
 
 const RequestPreview = ({ request }: { request: PackoutRequest }) => {
     return <div className=" max-w-screen-md w-[80vw]">
-        <div className="text-center text-red-500 text-sm w-full">
+        <div className="text-center text-sm w-full">
             <span> {request.name} </span>
         </div>
         <div>
-            <label className="text-gray-500">
+            <label>
                 Reason
             </label>
             <textarea
                 maxLength={2000}
                 value={request.reason}
                 disabled
-                className="bg-white border border-gray-500 p-2 w-full h-[40vh] outline-red-500 px-1"
-                placeholder="Please state your reason..." />
+                className="bg-transparent border border-gray-500 p-2 w-full h-[40vh] px-1"
+                placeholder="Please enter your reason..." />
         </div>
         <div className="">
             <label className="text-gray-500">

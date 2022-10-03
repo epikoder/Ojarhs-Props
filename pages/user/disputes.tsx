@@ -1,5 +1,5 @@
 import { Add, Notifications } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Card } from "@mui/material";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -28,26 +28,19 @@ function Page() {
     return <UserDashboardLayout>
         {
             () => <React.Fragment>
-                <div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4 my-2 pt-10">
-                    <div className="text-gray-500 text lg:text-lg">
+                <Card className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4 my-2">
+                    <div className="text lg:text-lg">
                         Disputes
                     </div>
-                    <div className="flex items-center space-x-2">
-                        <div className="hidden: md:flex justify-around">
-                            <Notifications fontSize='small' />
-                        </div>
-                        <div>
-                            <Button
-                                variant='outlined'
-                                size='small'
-                                startIcon={<Add fontSize="small" />}
-                                onClick={() => router.push('/user/disputes/new')}
-                            >
-                                Disputes
-                            </Button>
-                        </div>
-                    </div>
-                </div>
+                    <Button
+                        variant='outlined'
+                        size='small'
+                        startIcon={<Add />}
+                        onClick={() => router.push('/user/disputes/new')}
+                    >
+                        Disputes
+                    </Button>
+                </Card>
                 <div className="my-2 h-full p-1">
                     <Table
                         state={state}

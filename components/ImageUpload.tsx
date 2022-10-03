@@ -1,7 +1,8 @@
 import { XCircleIcon } from "@heroicons/react/outline"
+import { Card } from "@mui/material"
 import React, { useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import { BASEURL } from "../constants"
+import { BASEURL, STORAGEURL } from "../constants"
 import { resolveFilePath } from "../helpers/helpers"
 import { RootState, useAppDispatch } from "../store"
 import Loader from "./Loader"
@@ -80,8 +81,10 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
         return () => clearTimeout(i)
     }
 
+    const showPreview = (value !== undefined && (url === '' || forceValue)) && (errMessage === '' || errMessage === undefined)
+
     return <>
-        <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+        <Card className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
             if (loading || disabled) return
             if (!required && url !== '') {
                 setUrl('')
@@ -99,8 +102,8 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
             height: height
         }}>
             {
-                (value !== undefined && (url === '' || forceValue)) ? <img src={resolveFilePath(value)} alt="" className="object-cover h-full w-full rounded-md" /> :
-                    (url === '' ? (<div className="p-1 text-sm text-gray-500">
+                showPreview ? <img src={value.includes(STORAGEURL) || value.includes('data:image') ? value : resolveFilePath(value)} alt="" className="object-cover h-full w-full rounded-md" /> :
+                    (url === '' ? (<div className="p-1 text-sm">
                         {errMessage ?? message ?? 'SELECT IMAGE'}
                     </div>) : loading ? <Loader /> : <>
                         <div className="relative h-full w-full">
@@ -113,7 +116,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                         </div>
                     </>)
             }
-        </div>
+        </Card>
         {ready && <input ref={ref} type={"file"} className='hidden' onChange={onChange} disabled={disabled} accept='image/*' />}
     </>
 }
@@ -201,8 +204,8 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
 
     if (!headless) {
         return <>
-            <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
-                if (loading || disabled || !(blob === undefined && src === undefined)) return
+            <Card className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+                if (loading || disabled) return
                 const uploader = ref.current;
                 if (uploader !== undefined && blob === undefined) {
                     uploader.click()
@@ -238,7 +241,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                             </div>
                         </>)
                 }
-            </div>
+            </Card>
             {ready && <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />}
         </>
     }

@@ -1,12 +1,12 @@
 import React, { HTMLAttributes } from "react";
 import SideBarItem from "./SideBarItem";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../store";
+import { RootState } from "../store";
 
 function SideBar(props?: HTMLAttributes<HTMLDivElement>) {
 	const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
 	return (
-		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-black w-full h-full transition-all duration-700 ease-in-out overflow-y-scroll pb-20 text-sm md:text-md ${props.className ?? ''}`}>
+		<div className={`${!sideBarState ? 'hidden md:block' : ''} bg-main w-full h-full transition-all duration-700 ease-in-out overflow-y-scroll py-4 text-sm md:text-md ${props.className ?? ''}`}>
 			<div className='px-4'>
 				<SideBarItem name='Dashboard' link="/admin/dashboard" />
 				<SideBarItem name='Tenants' subItem={[

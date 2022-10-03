@@ -10,9 +10,11 @@ function RecordCharts({ values, option }: {
 	option: ApexCharts.ApexOptions
 }) {
 	return (
-		<Card className='w-full h-4/12 mt-4 rounded-2xl'>
-			<Chart series={values} type='pie' options={option} height={200} />
-		</Card>
+		<div className='w-full h-4/12 p-2 rounded-2xl'>
+			<Chart series={values} type='pie' options={{...option, theme: {
+				mode: 'dark'
+			}}} height={200} />
+		</div>
 	);
 }
 

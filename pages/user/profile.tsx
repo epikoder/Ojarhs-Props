@@ -23,7 +23,7 @@ const NextOfKin = () => {
         {state === 'pending' && <div></div>}
         {state === 'success' &&
             <div>
-                <div className="text-gray-500 text-sm uppercase">
+                <div className="text-sm uppercase p-2">
                     {'Next Of Kin'}
                 </div>
                 <div className="md:grid grid-cols-2 gap-2">
@@ -48,12 +48,12 @@ const NextOfKin = () => {
 const Profile = () => {
     return <UserDashboardLayout>
         {({ user, application }: { user: User, application: UserApplicationStatus }) => <>
-            <div className="p-2 md:my-2 rounded-md w-full bg-white">
+            <div className="p-2 md:my-2 rounded-md w-full">
                 <UserInfo user={user} />
                 <div className="flex justify-center">
                     <div className="space-y-2 my-2 max-w-screen-lg w-full">
                         <Info title="Reference No." value={user.reference} />
-                        <div className="text-gray-500 text-sm uppercase">
+                        <div className="text-sm uppercase">
                             {'Guarantor Information'}
                         </div>
                         <Info title="Guarantor Name" value={user.guarantor_name} />

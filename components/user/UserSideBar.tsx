@@ -1,65 +1,42 @@
-import Link from "next/link"
-import { DotsVerticalIcon, XIcon } from "@heroicons/react/solid"
 import React from "react"
 import { RootState, useAppDispatch } from "../../store"
 import { useSelector } from "react-redux"
 import NavLink from "../NavLink"
 import { logout } from "../../features/authSlice"
+import { Button, Card } from "@mui/material"
+import { useRouter } from "next/router"
 
 const MenuItem = ({ title, href = '/' }: { title: string, href?: string }) => {
+    const router = useRouter()
+    const path = router.asPath.replace('/', (s: string, arr: number): string => {
+        return arr === 0 ? '' : s
+    }).split('/')
+    let _href = ''
+    if (path.length > 1) {
+        _href = path[1]
+    }
+    const subPath = href.replace('/', (s: string, arr: number): string => {
+        return arr === 0 ? '' : s
+    }).split('/')
     return <>
-        <NavLink href={href}>
-            <div className="hover:cursor-pointer p-4 hover:bg-red-800 active:bg-red-500 duration-300 transition-all ease-in-out hover:text-gray-300 rounded-md uppercase font-sans text-md">
-                {title}
-            </div>
-        </NavLink>
-    </>
-}
-
-const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string }) => {
-    return <>
-        <NavLink href={href}>
-            <div className="hover:cursor-pointer p-3 duration-300 transition-all ease-in-out hover:text-gray-500 active:text-red-500 rounded-md uppercase font-sans text-md">
-                {title}
-            </div>
-        </NavLink>
+        <div>
+            <NavLink href={href} active={subPath.length > 1 && subPath[1] === _href}>
+                <Button
+                    fullWidth
+                    size='large'>
+                    {title}
+                </Button>
+            </NavLink>
+        </div>
     </>
 }
 
 export const UserSideBar = () => {
-    const [isOpen, toggleOpen] = React.useState<boolean>(false)
-    const { user, authenticated } = useSelector((store: RootState) => store.authSlice)
+    const { user } = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     return <React.Fragment>
         {user !== undefined && <div>
-            <div className="md:hidden">
-                <div className="relative">
-                    <DotsVerticalIcon className="text-black w-6 my-2 absolute right-1" onClick={() => toggleOpen(!isOpen)} />
-                </div>
-                {isOpen && <div className="absolute h-[1000px] text-center text-white w-full inset-0 py-6" style={{
-                    backgroundColor: '#000000de',
-                    zIndex: 10000000
-                }}>
-                    <MenuItemMobile title="Dasboard" href="/user/dashboard" />
-                    <MenuItemMobile title="Profile" href="/user/profile" />
-                    <MenuItemMobile title="Service" href="/user/service" />
-                    <MenuItemMobile title="Receipts" href="/user/receipt" />
-                    <MenuItemMobile title="Messages" href="/user/message" />
-                    <MenuItemMobile title="Disputes" href="/user/disputes" />
-                    <MenuItemMobile title="Report" href="/user/report" />
-                    <MenuItemMobile title="Adverts" href="/user/advert" />
-                    <MenuItemMobile title="Request pack out" href="/user/packout" />
-                    <hr />
-                    <div className="hover:cursor-pointer p-4 duration-300 transition-all ease-in-out text-white hover:text-red-500 rounded-md uppercase font-sans"
-                        onClick={() => dispatch(logout())}>
-                        Logout
-                    </div>
-                    <div className="">
-                        <XIcon className="text-red-500 w-10 mx-auto" onClick={() => toggleOpen(!isOpen)} />
-                    </div>
-                </div>}
-            </div>
-            <div className="my-2 mx-2 bg-black text-center rounded-md hidden md:block text-white">
+            <Card className="my-2 mx-2 text-center rounded-md hidden md:block">
                 <MenuItem title="Dashboard" href="/user/dashboard" />
                 <MenuItem title="Profile" href="/user/profile" />
                 <MenuItem title="Service" href="/user/service" />
@@ -71,11 +48,18 @@ export const UserSideBar = () => {
                 <MenuItem title="Request pack out" href="/user/packout" />
 
                 <hr />
-                <div className="hover:cursor-pointer p-4 hover:bg-red-800 duration-300 transition-all ease-in-out text-white hover:text-gray-300 rounded-md uppercase font-sans"
+                <Button
+                    fullWidth
+                    size='large'
+                    sx={{
+                        ':hover': {
+                            backgroundColor: 'red'
+                        }
+                    }}
                     onClick={() => dispatch(logout())}>
-                    Logout
-                </div>
-            </div>
+                    LOGOUT
+                </Button>
+            </Card>
         </div>}
     </React.Fragment>
 }

@@ -181,7 +181,7 @@ export type QueryParam = {
 	search?: string
 	chunck?: number
 	offset?: number
-}
+} & Map<string | number | boolean>
 
 export interface MessageOwner {
 	id: number
@@ -282,8 +282,12 @@ export type Expense = {
 }
 
 export type Invoice = {
+	items: InvoiceItem[]
+} & Partial<User>
+
+export type InvoiceItem = {
 	item: string
 	description: string
 	quantity: number
 	amount: number
-} & Partial<User>
+}

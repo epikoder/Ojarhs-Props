@@ -1,3 +1,4 @@
+import { Card, Paper, Toolbar } from "@mui/material";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import React from "react"
@@ -7,7 +8,7 @@ import { RootState, useAppDispatch } from "../../store";
 import { CopyRight } from "../Copyright";
 import Loader, { PageLoader } from "../Loader";
 import SideBar from "../SideBar"
-import SideBarHeader from "../SideBarHeader"
+import AdminHeader from "../SideBarHeader"
 
 export const AdminDashboardLayout = (props?: {
     children?: (props?: any) => React.ReactNode | undefined,
@@ -36,27 +37,29 @@ export const AdminDashboardLayout = (props?: {
 
     return <React.Fragment>
         <Script src='/scripts/noimage.js'></Script>
-        <div className='w-full grid-rows-6 gap-1 h-[90vh]'>
+        <Paper className='w-full h-[100vh]'>
             {appState !== 'pending' && authenticated
                 &&
                 <React.Fragment>
-                    <SideBarHeader user={user} className="row-span-1" />
+                    <AdminHeader user={user} />
                     <PageLoader />
-                    <div className='grid grid-cols-12 h-full duration-300 transition-all ease-in-out md:row-span-5'>
-                        <SideBar className="col-span-6 md:col-span-3 lg:col-span-3 h-full" />
-                        <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-9 lg:col-span-9 ${props.className ?? ''}`} style={props.style}>
+                    <Card className='grid grid-cols-12 gap-1 duration-300 transition-all ease-in-out' style={{
+                        height: 'calc(100% - 136px)'
+                    }}>
+                        <SideBar className="col-span-6 md:col-span-4 lg:col-span-3 h-full" />
+                        <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-8 lg:col-span-9 ${props.className ?? ''}`} style={props.style}>
                             {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
                                 {authenticated && user !== undefined && <>
                                     {props.children({ authenticated, user, loading: { idle: setIdle, busy: setBusy, state: loading } })}
                                 </>}
                             </React.Fragment>}
                         </div>
-                    </div>
-                    <CopyRight className="bg-red text-white relative md:fixed w-full bottom-0 z-50 h-12 flex flex-col justify-center items-center" />
+                    </Card>
                 </React.Fragment>
             }
             {appState === 'pending' &&
                 <Loader />}
-        </div >
+            <CopyRight className="bg-red text-white fixed bottom-0 left-0 right-0 row-span-1 h-full flex flex-grow flex-col justify-center items-center" />
+        </Paper >
     </React.Fragment>
 }

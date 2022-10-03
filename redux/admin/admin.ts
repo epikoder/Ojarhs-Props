@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 import { Api } from "../../helpers/api";
 import { parseString } from "../../helpers/helpers";
-import { Advert, ApiResponse, Expense, Invoice, Message, MessageOwner, MesssageForm, PackoutRequest, Service, Space } from "../../Typing.d";
+import { Query } from "../../Type";
+import { Advert, ApiResponse, Expense, Invoice, Message, MessageOwner, MesssageForm, PackoutRequest, QueryParam, Service, Space } from "../../Typing.d";
 
 export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
     status: 'failed'
@@ -115,6 +116,16 @@ export const loadAdminProperties = createAsyncThunk<ApiResponse<Space[]>>
         }
     })
 
+export const deletePropertyAsync = createAsyncThunk<string, string>('admin/property-delete', async (payload, { rejectWithValue }) => {
+    try {
+        await Api().delete('/admin/properties/delete?slug=' + payload)
+        return payload
+    } catch (error) {
+        return rejectWithValue({})
+    }
+})
+
+
 export const loadAdminServices = createAsyncThunk<ApiResponse<Service[]>>
     ("services/all", async (payload, { rejectWithValue }) => {
         try {
@@ -149,6 +160,15 @@ export const loadAdminServices = createAsyncThunk<ApiResponse<Service[]>>
             }
         }
     })
+
+export const deleteServiceAsync = createAsyncThunk<string, string>('admin/service-delete', async (payload, { rejectWithValue }) => {
+    try {
+        await Api().delete('/admin/services/delete?slug=' + payload)
+        return payload
+    } catch (error) {
+        return rejectWithValue({})
+    }
+})
 
 export const loadAdminAdverts = createAsyncThunk<ApiResponse<Advert[]>>
     ("adverts/all", async (payload, { rejectWithValue }) => {
@@ -185,10 +205,10 @@ export const loadAdminAdverts = createAsyncThunk<ApiResponse<Advert[]>>
         }
     })
 
-export const loadApplications = createAsyncThunk<ApiResponse<Advert[]>>
+export const loadApplications = createAsyncThunk<ApiResponse<Advert[]>, QueryParam | void>
     ("applications/all", async (payload, { rejectWithValue }) => {
         try {
-            const { data, status } = await Api().get<ApiResponse>("/admin/applications/all")
+            const { data, status } = await Api().get<ApiResponse>("/admin/applications/all" + (new Query(payload || {})).toString())
             if (status !== 200) {
                 return rejectWithValue({
                     message: 'Error connecting to server'

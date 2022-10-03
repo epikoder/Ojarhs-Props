@@ -36,12 +36,13 @@ function Records() {
 
 					{state !== 'pending' &&
 						<div>
-							<div className='grid md:grid-cols-2 grid-cols-1 gap-5 justify-center my-2'>
+							<div className='grid md:grid-cols-2 grid-cols-1 gap-2 justify-center my-2'>
 								<DashCards
 									name='total properties'
 									value={totalProperties}
 									className='yoda'
 									endIcon={<House fontSize="large" className="text-white" />}
+									func={() => { }}
 								/>
 								<DashCards
 									name='total Tenants'
@@ -74,7 +75,7 @@ function Records() {
 									endIcon={<Receipt fontSize="large" className="text-white" />}
 								/>
 							</div>
-							<div className='grid gap-12 grid-cols-1 md:grid-cols-2 pb-8'>
+							<div className='grid gap-4 grid-cols-1 md:grid-cols-2 pb-8'>
 								<RecordCharts
 									values={[data.advert.active, data.advert.approved, data.advert.unapproved]}
 									option={{

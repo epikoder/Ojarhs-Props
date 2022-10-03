@@ -17,7 +17,7 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
                 {application === 'verified' && <UserDashboardProperties />}
                 {application === 'nil' && <React.Fragment>
                     <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
-                        <h6 className="text-red-500">NOTICE</h6>
+                        <div className="text-red-500">NOTICE</div>
                         <div className="lg:mx-12">
                             {`You are required to pay a one time non-refundable application fee of ${money(applicationFee)}`}
                             {' '} {'and upload a Valid ID for verification to access Ojarh Properties.'}

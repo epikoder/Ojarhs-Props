@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Api } from "../../helpers/api";
-import { ApiResponse, LoadState } from "../../Typing";
+import { ApiResponse, LoadState, Map } from "../../Typing";
 
 type SpaceReport = {
     total: number,
@@ -8,7 +8,7 @@ type SpaceReport = {
     occupied: number
 }
 export type RecordData = {
-    space: Map<string, SpaceReport>
+    space: Map<SpaceReport>
     advert: {
         total: number
         approved: number

@@ -4,6 +4,7 @@ import { PhoneOutgoingIcon, LocationMarkerIcon, InboxIcon } from "@heroicons/rea
 import Image from 'next/image'
 import Link from 'next/link'
 import { OjarhAddress, OjarhEmail, OjarhPhone } from '../constants'
+import { Card, Paper } from '@mui/material'
 
 
 function Footer() {
@@ -17,8 +18,10 @@ function Footer() {
                 <FT icon={<InboxIcon className='w-8' />} title="Email Address" details={<Link href='#'><span className='text-sm'>{OjarhEmail}</span></Link>} />
             </div>
 
-            <div className='flex justify-center bg-black'>
-                <div className='bg-black opacity-90 h-full space-y-10 text-gray-300 py-4 grid grid-cols-1 md:grid-cols-3 text-center w-full lg:w-[80%]'>
+            <Paper className='flex justify-center' sx={{
+                backgroundColor: '#141313'
+            }} >
+                <div className='opacity-90 h-full space-y-10 text-gray-300 py-4 grid grid-cols-1 md:grid-cols-3 text-center w-full lg:w-[80%]'>
                     <div className='my-3 flex flex-col items-center'>
                         <Image
                             src="/image/logo.png"
@@ -82,14 +85,14 @@ function Footer() {
                             </h3>
                         </a>
 
-                        <a href="#" target={'_blank'} rel="noreferrer" className=' cursor-pointer text-lg '>
+                        <a href="https://ojarhlogistics.com" target={'_blank'} rel="noreferrer" className=' cursor-pointer text-lg '>
                             <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
                                 Ojarhlogistics.com
                             </h3>
                         </a>
                     </div>
                 </div>
-            </div>
+            </Paper>
         </div>
     )
 }

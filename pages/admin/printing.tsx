@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { money } from "../../helpers/helpers";
 import { RootState, useAppDispatch } from "../../store";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
-import { ApiResponse, Invoice } from "../../Typing";
+import { ApiResponse, Invoice, InvoiceItem } from "../../Typing";
 import { Api } from "../../helpers/api";
 import { toPng } from "html-to-image";
 import { loadInvoices } from "../../redux/admin/admin";
@@ -99,7 +99,7 @@ function Page() {
     })
 
     const refNewForm = React.createRef<{
-        data: Invoice,
+        data: InvoiceItem[],
         message?: React.Dispatch<React.SetStateAction<JSX.Element>>
     }>()
     const refPreview = React.createRef<HTMLDivElement>()
@@ -111,23 +111,23 @@ function Page() {
     const toggleNewForm = () => setNewFormOpen(!newFormOpen)
 
     const createNew = async (loading: any) => {
-        if (refNewForm.current.data.quantity < 1 || refNewForm.current.data.amount < 1) return
+        // if (refNewForm.current.data.quantity < 1 || refNewForm.current.data.amount < 1) return
         loading.busy()
         refNewForm.current.message(undefined)
         try {
-            const { data } = await Api().post<ApiResponse<Invoice>>('/admin/invoice', {
-                ...refNewForm.current.data,
-                amount: parseInt(refNewForm.current.data.amount.toString()),
-                quantity: parseInt(refNewForm.current.data.quantity.toString())
-            })
-            refNewForm.current.message(<div className="text-blue-500">{'Created successfully'}</div>)
-            setTimeout(() => {
-                setNewFormOpen(false)
-                setPreview({
-                    open: true,
-                    invoice: data.data
-                })
-            }, 800)
+            // const { data } = await Api().post<ApiResponse<Invoice>>('/admin/invoice', {
+            //     ...refNewForm.current.data,
+            //     amount: parseInt(refNewForm.current.data.amount.toString()),
+            //     quantity: parseInt(refNewForm.current.data.quantity.toString())
+            // })
+            // refNewForm.current.message(<div className="text-blue-500">{'Created successfully'}</div>)
+            // setTimeout(() => {
+            //     setNewFormOpen(false)
+            //     setPreview({
+            //         open: true,
+            //         invoice: data.data
+            //     })
+            // }, 800)
         } catch (error) {
             refNewForm.current.message(<div className="text-red-500">{'Error connecting to server'}</div>)
         }

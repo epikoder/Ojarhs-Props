@@ -11,7 +11,7 @@ const ReceiptComponent = React.forwardRef<HTMLDivElement, {
         const user = props.user
         const receipt = props.receipt
         return <>
-            <div className="w-[500px] min-h-[500px] bg-white">
+            <div className="w-[500px] min-h-[500px] bg-white text-black">
                 <div ref={ref} className="w-[500px] min-h-[500px] bg-white px-8 py-16">
                     <div className="flex justify-between px-4 items-center">
                         <div style={{

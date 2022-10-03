@@ -282,6 +282,8 @@ const authSlice = createSlice({
             state.profileUpdate.message = payload.message
             state.profileUpdate.state = 'success'
             state.token = payload.data
+            var dec = jose.decodeJwt(payload.data.access)
+            state.user = (dec as unknown as JWTCLAIMS).aud as User
         })
         builder.addCase(updateUserProfile.rejected, (state, { payload }) => {
             state.profileUpdate.state = 'failed'

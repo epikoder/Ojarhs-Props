@@ -68,7 +68,7 @@ const Page = () => {
         {({ user }) => <>
             {conversation !== undefined && <div>
                 <ChatHeader title={conversation.title} message={conversation.messages[0]} />
-                <div className="flex flex-col justify-between h-[75vh] md:h-[70vh] lg:h-[70vh] 2xl:h-[78vh] bg-gray-100">
+                <div className="flex flex-col justify-between h-[75vh] md:h-[70vh] lg:h-[75vh] bg-main">
                     <div className="h-[80%] overflow-y-scroll" ref={chatBox}>
                         {conversation.messages.map((m, i) =>
                             <div key={i}>

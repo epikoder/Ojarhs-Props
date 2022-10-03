@@ -4,12 +4,10 @@ import Loader from "./Loader"
 
 const GridTable = (props: DataGridProps & React.RefAttributes<HTMLDivElement> & { state: LoadState }) => {
     return <>
-        {props.state !== 'pending' && <DataGrid
+        <DataGrid
             {...props}
-        />}
-        {props.state === 'pending' && <div>
-            <Loader />
-        </div>}
+            loading={props.state === 'pending'}
+        />
     </>
 }
 export default GridTable

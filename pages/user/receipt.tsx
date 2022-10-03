@@ -125,7 +125,7 @@ const Page = () => {
     }
     return <UserDashboardLayout>
         {({ user }) => <>
-            <div className="min-h-[20vh] h-[100vh] md:h-full p-2 lg:p-4">
+            <div className="h-[90vh] md:h-full p-2 lg:p-4">
                 <div>
                     Receipts
                 </div>

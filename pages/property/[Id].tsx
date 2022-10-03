@@ -11,8 +11,9 @@ import PlaceIcon from '@mui/icons-material/Place';
 import PaymentIcon from '@mui/icons-material/Payment';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import { loadIndex } from "../../redux"
-import Card from "../../components/Card"
+import OjarhCard from "../../components/Card"
 import { PayButton } from "../../components/PayButton"
+import { Card } from "@mui/material"
 
 const Details = () => {
 	const router = useRouter()
@@ -38,18 +39,18 @@ const Details = () => {
 				</div>}
 				{status === 'success' && <div className="flex flex-col lg:flex-row lg:justify-around justify-center ">
 					<div className="flex flex-col">
-						<div className="hidden md:flex flex-col justify-center md:justify-around items-center bg-white 2xl:max-w-6xl lg:max-w-2xl">
+						<div className="hidden md:flex flex-col justify-center md:justify-around items-center 2xl:max-w-6xl lg:max-w-2xl">
 							<div className="p-1 flex w-full">
-								<div className="2xl:h-[40vh] xl:h-[35vh] lg:h-[40vh] md:h-[35vh] h-[30vh] w-[70%]">
+								<Card className="2xl:h-[40vh] xl:h-[35vh] lg:h-[40vh] md:h-[35vh] h-[30vh] w-[70%]">
 									<Slider images={data.galleries.concat(data.photo)} />
-								</div>
-								<div className="w-[30%] p-1 flex flex-col overflow-x-hidden overflow-y-scroll 2xl:h-[40vh] xl:h-[35vh] lg:h-[40vh] md:h-[35vh] h-[30vh]">
+								</Card>
+								<Card className="w-[30%] p-1 flex flex-col overflow-x-hidden overflow-y-scroll 2xl:h-[40vh] xl:h-[35vh] lg:h-[40vh] md:h-[35vh] h-[30vh]">
 									{data.video_galleries.concat(data.video).map((e, i) =>
 										<video key={i} className="rounded-sm mx-1 my-1 w-full" src={resolveFilePath(e)} controls playsInline />)
 									}
-								</div>
+								</Card>
 							</div>
-							<div className="bg-white text-left h-full w-full border border-gray-300">
+							<Card className="text-left h-full w-full">
 								<div className="grid grid-cols-3 text-center items-center bg-red-600">
 									<div className="text-xs text-white">
 										<FullscreenIcon />
@@ -94,7 +95,7 @@ const Details = () => {
 								<div>
 									<PayButton disabled={data.status === 'occupied'} slug={data.slug} type='space' />
 								</div>
-							</div>
+							</Card>
 						</div>
 					</div>
 					<div className="md:hidden">
@@ -163,7 +164,7 @@ const Details = () => {
 									.concat(indexData.warehouse.slice(0, 4))
 									.map((s, i) =>
 										<div className="mx-2" key={i}>
-											<Card className="w-[90vw] sm:w-[60vw] md:w-70" data={s} />
+											<OjarhCard className="w-[90vw] sm:w-[60vw] md:w-70" data={s} />
 										</div>)}
 							</div>
 						}
@@ -176,7 +177,7 @@ const Details = () => {
 									.concat(indexData.warehouse.slice(0, 4))
 									.map((s, i) =>
 										<div className="mx-2" key={i}>
-											<Card className="lg:w-70 xl:w-80" data={s} />
+											<OjarhCard className="lg:w-70 xl:w-80" data={s} />
 										</div>)}
 							</div>
 						}
