@@ -37,7 +37,7 @@ const Details = () => {
 				{status === 'pending' && <div className="relative min-h-screen w-full">
 					<Loader />
 				</div>}
-				{status === 'success' && <div className="flex flex-col lg:flex-row lg:justify-around justify-center ">
+				{status === 'success' && <div className="flex flex-col gap-5 lg:flex-row lg:justify-around justify-center ">
 					<div className="flex flex-col">
 						<div className="hidden md:flex flex-col justify-center md:justify-around items-center 2xl:max-w-6xl lg:max-w-2xl">
 							<div className="p-1 flex w-full">

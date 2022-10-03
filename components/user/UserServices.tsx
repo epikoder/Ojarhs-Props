@@ -92,11 +92,10 @@ export const UserServices = () => {
 
     return (
         <div className="my-4 max-w-2xl" style={{ height: 400 }}>
-            {state === 'success' && data !== undefined && <DataGrid
+            <DataGrid
                 rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
                 columns={columns}
-                pageSize={10}
-                
-            />}
+                loading={state === 'pending'}
+            />
         </div>)
 }

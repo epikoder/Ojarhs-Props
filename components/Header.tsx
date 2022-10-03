@@ -230,10 +230,14 @@ function Header() {
 					}} />
 					<Box className="mx-auto py-2 space-y-4 text-center flex flex-col items-center w-full">
 						{isAuthenticated && user !== undefined ? <>
-							<Avatar
-								src={resolveFilePath(user.photo)}
-								className={'h-32 w-32'}
-							/>
+							<div className="flex justify-center">
+								<div className="border-4 border-gray-500 rounded-full">
+									<Avatar
+										src={resolveFilePath(user.photo)}
+										className={'h-32 w-32'}
+									/>
+								</div>
+							</div>
 							<Box className="w-full">
 								<Divider />
 								<MenuItemMobile title="Dasboard" href="/user/dashboard" />
@@ -261,9 +265,13 @@ function Header() {
 							:
 							<>
 								<Box className="w-full">
-									<IconButton onClick={() => router.push('/login')}>
-										<Person fontSize="large" className="text-black h-32" />
-									</IconButton>
+									<div className="flex justify-center">
+										<div className="border-4 border-gray-500 rounded-full">
+											<IconButton onClick={() => router.push('/login')}>
+												<Person fontSize="large" className="text-black h-12 w-12" />
+											</IconButton>
+										</div>
+									</div>
 									<MenuItemMobile title="Login" href="/login" />
 								</Box>
 							</>
