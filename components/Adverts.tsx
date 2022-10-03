@@ -43,7 +43,7 @@ export const PropertyAdvert = () => {
   return <>
     {state !== 'success' && <Slider slider />}
     {state === 'success' &&
-      <div className='md:grid grid-cols-2 w-full gap-1 md:gap-5 xl:gap-11 xl:px-24 md:px-12 px-2 h-[40vh]'>
+      <div className='md:grid grid-cols-2 w-full gap-1 md:gap-5 xl:gap-11 xl:px-24 md:px-12 px-2'>
         <Carousel
           className={'object-cover w-full'}
           autoPlay={true}

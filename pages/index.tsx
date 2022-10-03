@@ -68,7 +68,7 @@ const IndexSlider = () => {
 		stopOnHover
 	>
 		{slides.map((s, i) =>
-			<div key={i} className="h-[40vh] md:h-[70vh] relative" style={{
+			<div key={i} className="h-[40vh] md:h-[70vh] lg:h-[80vh] relative" style={{
 				backgroundImage: `url(${s.apiImage ? resolveFilePath(s.image) : '/image/' + s.image})`,
 				backgroundRepeat: 'no-repeat',
 				objectFit: 'cover',
