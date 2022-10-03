@@ -15,7 +15,8 @@ function Layout(props: PropsWithChildren) {
 
   return (
     <Card sx={{
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.background.default,
+      width: '100vw'
     }} className='duration-300 ease-in-out transition-all'>
       <Head>
         <title>Ojarh Properties</title>
