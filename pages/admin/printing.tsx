@@ -98,14 +98,14 @@ function Page() {
         try {
             let total = 0
             refNewForm.current.data.forEach(i => {
-                total += i.amount
+                total = parseInt(total.toString()) + parseInt(i.amount.toString())
             })
             const body: Invoice = {
                 items: refNewForm.current.data.map(i => ({
                     ...i, amount: parseInt(i.amount.toString()),
                     quantity: parseInt(i.quantity.toString())
                 })),
-                total: total
+                total: parseInt(total.toString())
             }
             const { data } = await Api().post<ApiResponse<Invoice>>('/admin/invoice', body)
             refNewForm.current.message(<div className="text-blue-500">{'Created successfully'}</div>)
@@ -117,6 +117,7 @@ function Page() {
                 })
             }, 800)
         } catch (error) {
+            loading.idle()
             switch (error.response.status) {
                 case 400: {
                     refNewForm.current.message(<div className="text-red-500">{'Please validate the form'}</div>)
