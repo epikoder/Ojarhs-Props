@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadRecord, RecordData } from "../../redux/admin/record";
+import { loadRecord, RecordData } from "../../actions/admin/record";
 import { LoadState } from "../../Typing";
 
 const initialState: { state: LoadState, data: RecordData } = {

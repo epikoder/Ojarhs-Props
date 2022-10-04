@@ -5,7 +5,7 @@ import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatC
 import Loader from "../../../components/Loader"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
 import { Api } from "../../../helpers/api"
-import { loadUserDispute } from "../../../redux/user/message"
+import { loadUserDispute } from "../../../actions/user/message"
 import { RootState, useAppDispatch } from "../../../store"
 import { MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
 

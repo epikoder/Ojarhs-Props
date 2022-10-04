@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import React, { } from "react"
 import { useSelector } from "react-redux"
 import { addMonth, money } from "../../helpers/helpers"
-import { loadUserProperties } from "../../redux/user/dashboard"
+import { loadUserProperties } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { MoreVert } from "@mui/icons-material"

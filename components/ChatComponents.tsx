@@ -207,6 +207,7 @@ export const TypeBox = ({ onSend, hideFilePicker = true }: {
             <div className="px-4 w-full">
                 <textarea
                     value={text}
+                    maxLength={2000}
                     onChange={(e) => setText(e.target.value)}
                     className="outline-none w-full h-20 text-sm bg-transparent"
                 />

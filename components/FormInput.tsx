@@ -58,7 +58,7 @@ export const FormPhoneInput = ({ props }: {
                 size="small"
                 type={props.type}
                 className="w-full text-sm"
-                value={props.value !== undefined ? props.value : ''}
+                value={props.value !== undefined ? props.value : undefined}
                 required={props.required}
                 placeholder={"090XXXXXXXX"}
                 error={props.message !== '' && props.message !== undefined}

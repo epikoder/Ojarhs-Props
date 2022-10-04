@@ -7,8 +7,8 @@ import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLa
 import { SearchTenants } from "../../../components/admin/Search"
 import { FormInput } from "../../../components/FormInput"
 import { resetMessageState } from "../../../features/admin/messageSlice"
-import { createAdminMessage } from "../../../redux/admin/admin"
-import { loadAllTenants } from "../../../redux/admin/tenant"
+import { createAdminMessage } from "../../../actions/admin/admin"
+import { loadAllTenants } from "../../../actions/admin/tenant"
 import { RootState, useAppDispatch } from "../../../store"
 import { MesssageForm } from "../../../Typing.d"
 

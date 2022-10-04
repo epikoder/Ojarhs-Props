@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadApplications } from "../../redux/admin/admin";
+import { loadApplications } from "../../actions/admin/admin";
 import { LoadState } from "../../Typing.d";
 
 const applicationsSlice = createSlice({

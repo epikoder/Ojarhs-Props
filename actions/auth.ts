@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASEURL } from "../constants";
 import { Api } from "../helpers/api";
-import { loginResponse, ApiResponse, UserApplicationStatus, NextOfKin, NextOfKinApi } from "../Typing.d"
+import { loginResponse, ApiResponse, UserApplicationStatus, NextOfKin, NextOfKinApi } from "../Typing"
 
 export type rejectValue = {
     status: 'failed'
@@ -14,7 +14,7 @@ export const loginApi =
         try {
             var response: Response = await fetch(BASEURL + "/auth/login", {
                 method: 'POST',
-                body: JSON.stringify(payload),
+                body: JSON.stringify({ ...payload, remember: localStorage.getItem('persist_auth') || 'false' }),
                 credentials: 'include'
             })
             switch (response.status) {
@@ -61,7 +61,7 @@ export const loginAdminApi =
         try {
             var response: Response = await fetch(BASEURL + "/admin", {
                 method: 'POST',
-                body: JSON.stringify(payload),
+                body: JSON.stringify({ ...payload, remember: localStorage.getItem('persist_auth') || 'false' }),
                 credentials: 'include'
             })
             switch (response.status) {

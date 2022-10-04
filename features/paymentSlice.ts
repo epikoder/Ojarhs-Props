@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { makePayment } from "../redux/payment";
+import { makePayment } from "../actions/payment";
 import { LoadState } from "../Typing.d";
 
 type paymenState = {

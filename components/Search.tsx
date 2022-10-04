@@ -2,7 +2,7 @@ import { Button, Slider, TextField } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { money } from "../helpers/helpers"
-import { searchProperty, searchServices } from "../redux/property"
+import { searchProperty, searchServices } from "../actions/property"
 import { useAppDispatch } from "../store"
 import { PaymentPlans, PropertyType } from "./Resource"
 

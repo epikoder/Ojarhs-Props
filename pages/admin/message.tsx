@@ -8,7 +8,7 @@ import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayou
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
 import { resolveFilePath } from "../../helpers/helpers";
-import { loadAdminConverstion } from "../../redux/admin/admin";
+import { loadAdminConverstion } from "../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 

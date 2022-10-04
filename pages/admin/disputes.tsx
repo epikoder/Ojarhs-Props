@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
-import { loadAdminDisputes } from "../../redux/admin/admin";
+import { loadAdminDisputes } from "../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { OjarhAddress, OjarhEmail, OjarhPhone } from '../constants'
 import { Card, Paper } from '@mui/material'
+import { Logo } from './Logo'
 
 
 function Footer() {
@@ -23,15 +24,7 @@ function Footer() {
             }} >
                 <div className='opacity-90 h-full space-y-10 text-gray-300 py-4 grid grid-cols-1 md:grid-cols-3 text-center w-full lg:w-[80%]'>
                     <div className='my-3 flex flex-col items-center'>
-                        <Image
-                            src="/image/logo.png"
-                            width={120}
-                            height={80}
-                            layout="fixed"
-                            alt="logo"
-                        />
-                        <p>{OjarhAddress} </p>
-                        <p>{OjarhPhone}</p>
+                        <Logo height={250} />
                     </div>
                     <div className='space-y-3 flex flex-col items-center'>
                         <div className='bg-red w-40 h-1 mb-4'></div>

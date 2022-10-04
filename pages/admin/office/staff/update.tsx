@@ -77,7 +77,7 @@ const Page = () => {
     return <AdminDashboardLayout>
         {({ loading }) => <>
             <div className="max-w-2xl w-[90vw] md:w-[60vw] mx-auto">
-                <div className="text-center text-red-500 text-lg">
+                <div className="text-center text-lg">
                     Update Staff
                 </div>
                 <div className="p-2 shadow-md rounded-md">

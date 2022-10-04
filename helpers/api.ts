@@ -1,10 +1,13 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { BASEURL } from "../constants";
-import { logout } from "../features/authSlice";
+import { JWTCLAIMS, logout, setAuthenticated } from "../features/authSlice";
 import { store } from "../store";
-import { getUserToken } from "./auth";
+import { ApiResponse, loginResponse, User, UserApplicationStatus } from "../Typing";
+import { getUserToken, setUserToken } from "./auth";
+import * as jose from 'jose'
+
 export var ApiCancel = undefined
-const Api = (useInterceptor: boolean = false) => {
+const Api = (useInterceptor: boolean = true) => {
     const _api = axios.create({
         baseURL: BASEURL,
         cancelToken: new axios.CancelToken((c) => { ApiCancel = c }),
@@ -21,29 +24,44 @@ const Api = (useInterceptor: boolean = false) => {
     })
 
     var refreshInterceptor: number
-    const handleExpiredToken = async (error) => {
+    const handleExpiredToken = async (error: AxiosError) => {
         if (error.response.status === 401) {
             try {
                 let t = getUserToken()
-                if (t === undefined || t === null) {
-                    console.log('HMMMM')
+                const init: RequestInit = {
+                    method: "POST",
+                    credentials: 'include',
+                }
+                if (t !== undefined) {
+                    init.headers = { authorization: 'Bearer ' + t?.refresh }
+                }
+                const res = await fetch(BASEURL + '/jwt/refresh', init)
+                if (res.status !== 200) {
+                    _api.interceptors.response.eject(refreshInterceptor)
                     return store.dispatch(logout())
                 }
-                if ((error.response as AxiosResponse).status === 401) {
-                    const res = await fetch(BASEURL + '/jwt/refresh', {
-                        method: "POST",
-                        credentials: 'include'
-                    })
-                    if (res.status !== 200) {
-                        _api.interceptors.response.eject(refreshInterceptor)
-                        return store.dispatch(logout())
-                    }
+
+                const data = (await res.json()) as ApiResponse<loginResponse, { application: UserApplicationStatus }>
+                setUserToken(data.data)
+                var dec = jose.decodeJwt(data?.data.access)
+                let user = (dec as unknown as JWTCLAIMS).aud as User
+                if (user?.is_admin && (user?.roles.find(s => s.includes("admin")) === undefined)) {
+                    store.dispatch(setAuthenticated({ authenticated: false }))
+                    return
                 }
+                const auth = {
+                    authenticated: true,
+                    application: data.extra?.application,
+                    token: data.data,
+                    user: user
+                }
+                _api.interceptors.response.eject(refreshInterceptor)
+                return store.dispatch(setAuthenticated(auth))
             } catch (error) {
-                console.log('ejecting')
                 _api.interceptors.response.eject(refreshInterceptor)
                 return store.dispatch(logout())
             }
+            console.log('401111')
         }
     }
     if (useInterceptor) {

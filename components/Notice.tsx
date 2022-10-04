@@ -10,12 +10,11 @@ import Slider from "./Slider";
 function Notice() {
 	const { data, state } = useSelector((store: RootState) => store.indexSlice.notice)
 	return (
-		<div className='h-[50vh] md:h-[40vh] flex w-full flex-col md:flex-row gap-4 px-4 justify-around'>
-			<div className='md:w-4/12 bg-black text-white w-full sm:h-48 md:h-full z-50 rounded-md lg:rounded-r-none h-full'>
+		<div className="md:grid grid-cols-8 w-[100%] overflow-hidden space-y-2">
+			<div className='col-span-3 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] sm:h-[60vh] h-[40vh]'>
 				<NoticeBoard />
 			</div>
-
-			<div className='md:w-8/12 w-[100%] h-full relative'>
+			<div className="bg-black text-center px-2 col-span-5 text-white 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] h-[35vh]">
 				<MiddleAdvert />
 			</div>
 		</div>

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadUserAdverts, loadUserPackoutRequest, loadUserProperties, loadUserReceipt, loadUserServices } from "../../redux/user/dashboard";
-import { loadUserConversations, loadUserDispute, loadUserReports } from "../../redux/user/message";
-import { uploadDoc } from "../../redux/user/uploadDoc";
+import { loadUserAdverts, loadUserPackoutRequest, loadUserProperties, loadUserReceipt, loadUserServices } from "../../actions/user/dashboard";
+import { loadUserConversations, loadUserDispute, loadUserReports } from "../../actions/user/message";
+import { uploadDoc } from "../../actions/user/uploadDoc";
 import { RootState, store } from "../../store";
 import { Advert, LoadState, MessageOwner, MessageState, PackoutRequest, Receipt, Service, Space } from "../../Typing.d";
 import { checkIsAuthenticated } from "../authSlice";

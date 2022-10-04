@@ -1,4 +1,4 @@
-import { Button } from "@mui/material"
+import { Button, Card } from "@mui/material"
 import { useRouter } from "next/router"
 import React, { PropsWithChildren } from "react"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
@@ -16,61 +16,60 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
                 <UserInfo user={user} />
                 {application === 'verified' && <UserDashboardProperties />}
                 {application === 'nil' && <React.Fragment>
-                    <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
+                    <Card className="py-4 mt-8  px-2 text-sm rounded-md text-white text-center">
                         <div className="text-red-500">NOTICE</div>
                         <div className="lg:mx-12">
                             {`You are required to pay a one time non-refundable application fee of ${money(applicationFee)}`}
                             {' '} {'and upload a Valid ID for verification to access Ojarh Properties.'}
                         </div>
-                    </div>
+                    </Card>
 
                     <div className="m-4 flex justify-center">
-                        <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
+                        <Button
+                            variant='outlined'
                             onClick={() => router.push('/user/upload-document')}>
                             {'BEGIN PROCCESS'}
-                        </div>
+                        </Button>
                     </div>
                 </React.Fragment>}
                 {application === 'pending' && <React.Fragment>
-                    <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
+                    <Card className="py-4 mt-8 px-2 text-sm rounded-md text-white text-center">
                         <h6 className="text-red-500">NOTICE</h6>
                         <div className="lg:mx-12">
                             {`Your application has been received, you'll be notified via email
                             on the status of your application`}
                         </div>
-                    </div>
+                    </Card>
                     <div className="m-4 flex justify-center">
-                        <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
+                        <Button variant="outlined"
                             onClick={() => router.push('/user/application')}>
                             {'LEARN MORE'}
-                        </div>
+                        </Button>
                     </div>
                 </React.Fragment>}
                 {application === 'rejected' && <React.Fragment>
-                    <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
+                    <Card className="py-4 mt-8 px-2 text-sm rounded-md text-white text-center">
                         <h6 className="text-red-500">NOTICE</h6>
                         <div className="lg:mx-12">
-                            {'Your application was rejected, you can update your doucment and restart the process with'}
-                            <span className="text-red-500">{' NO ADDITIONAL FEE '}</span>
+                            {'Your application was rejected, click the button to learn more and update your application. '}
                             {'if you are having problems with your application please contact support'}
                         </div>
-                    </div>
-
+                    </Card>
                     <div className="m-4 flex justify-center">
-                        <div className="px-4 py-2 bg-red-500 text-sm text-white rounded-full hover:scale-110 duration-300 transition-all ease-in-out cursor-pointer"
+                        <Button variant="outlined"
                             onClick={() => router.push('/user/application')}>
                             {'LEARN MORE'}
-                        </div>
+                        </Button>
                     </div>
                 </React.Fragment>}
                 {application === 'document-required' && <React.Fragment>
-                    <div className="py-4 mt-8 bg-gray-800 px-2 text-sm rounded-md text-white text-center">
+                    <Card className="py-4 mt-8 px-2 text-sm rounded-md text-white text-center">
                         <h6 className="text-red-500">NOTICE</h6>
                         <div className="lg:mx-12">
                             {'Your application was not successful due to problem with the document uploaded, please upload a new document to continue your application,'}
                             {' if you are having problems with your application please contact support as assistance'}
                         </div>
-                    </div>
+                    </Card>
 
                     <div className="m-4 flex justify-center">
                         <Button variant="outlined"
@@ -80,8 +79,9 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
                     </div>
                 </React.Fragment>}
             </div>
-        </>}
-    </UserDashboardLayout>
+        </>
+        }
+    </UserDashboardLayout >
 }
 
 export default UserDashboard

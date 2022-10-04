@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
 import { Api } from "../../helpers/api"
-import { ApiResponse, QueryParam, Tenant } from "../../Typing.d"
+import { ApiResponse, QueryParam, Tenant } from "../../Typing"
 
 export const loadAllTenants = createAsyncThunk<Tenant[],
     {

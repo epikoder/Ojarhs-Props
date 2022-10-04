@@ -84,7 +84,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
     const showPreview = (value !== undefined && (url === '' || forceValue)) && (errMessage === '' || errMessage === undefined)
 
     return <>
-        <Card className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
+        <Card className="h-36 m-none hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
             if (loading || disabled) return
             if (!required && url !== '') {
                 setUrl('')

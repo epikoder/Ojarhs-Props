@@ -129,7 +129,7 @@ function SignUp() {
 							}
 						}} />
 						<FormInput props={{
-							title: 'Last Mame',
+							title: 'Last Name',
 							name: "lname",
 							type: 'text',
 							required: true,

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout";
-import { loadUserConversations } from "../../redux/user/message";
+import { loadUserConversations } from "../../actions/user/message";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 

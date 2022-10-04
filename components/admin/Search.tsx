@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material"
 import React from "react"
-import { loadAllTenants } from "../../redux/admin/tenant"
+import { loadAllTenants } from "../../actions/admin/tenant"
 import { useAppDispatch } from "../../store"
 
 export const SearchTenants = () => {

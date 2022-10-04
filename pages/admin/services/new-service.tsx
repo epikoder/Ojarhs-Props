@@ -6,7 +6,7 @@ import { GalleryUploader } from "../../../components/admin/GalleryUploader";
 import { PaymentPlans, PropertyType } from "../../../components/Resource";
 import { RootState, useAppDispatch } from "../../../store";
 import Loader from "../../../components/Loader";
-import { addNewPropertyThunck, addNewServiceThunck } from "../../../redux/admin/admin";
+import { addNewPropertyThunck, addNewServiceThunck } from "../../../actions/admin/admin";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
 import { resetPropertyState } from "../../../features/admin/propertySlice";

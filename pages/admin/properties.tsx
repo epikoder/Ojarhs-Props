@@ -7,7 +7,7 @@ import { deleteProperty, resetPropertyState, toggleProperyStatus } from "../../f
 import { ApiResponse, Space } from "../../Typing.d";
 import { money } from "../../helpers/helpers";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
-import { loadAdminProperties } from "../../redux/admin/admin";
+import { loadAdminProperties } from "../../actions/admin/admin";
 import ReactSwitch from "react-switch";
 import { LoaderWhite } from "../../components/Loader";
 import { Api } from "../../helpers/api";

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadAdminPackoutRequest } from "../../redux/admin/admin";
+import { loadAdminPackoutRequest } from "../../actions/admin/admin";
 import { DashboardDataState, LoadState, PackoutRequest } from "../../Typing";
 
 const initialState: {

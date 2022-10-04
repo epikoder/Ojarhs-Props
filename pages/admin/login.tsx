@@ -6,8 +6,9 @@ import { useSelector } from "react-redux"
 import { CopyRight } from "../../components/Copyright"
 import { FormInput, FormPasswordControlledInput } from "../../components/FormInput"
 import Loader from "../../components/Loader"
+import { Logo } from "../../components/Logo"
 import { checkIsAuthenticated } from "../../features/authSlice"
-import { loginAdminApi } from "../../redux/auth"
+import { loginAdminApi } from "../../actions/auth"
 import { RootState, useAppDispatch } from "../../store"
 
 
@@ -73,9 +74,7 @@ const AdminLogin = () => {
                     <div className="flex flex-col justify-between p-4">
                         <form action="" className="p-4" ref={ref}>
                             <div className="flex justify-center mb-4">
-                                <img
-                                    src={"/image/logo.png"}
-                                    className="w-48 lg:w-48 h-36 " />
+                                <Logo height={100}/>
                             </div>
                             <h1 className="text-center text-lg font-semibold my-4">
                                 Login

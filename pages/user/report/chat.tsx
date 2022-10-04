@@ -6,7 +6,7 @@ import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatC
 import Loader from "../../../components/Loader"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
 import { Api } from "../../../helpers/api"
-import { loadUserConversations } from "../../../redux/user/message"
+import { loadUserConversations } from "../../../actions/user/message"
 import { RootState, useAppDispatch } from "../../../store"
 import { Message, MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
 

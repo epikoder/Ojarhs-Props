@@ -4,7 +4,7 @@ import { toggleSideBar } from "../features/ToggleSideBar";
 import { useAppDispatch } from "../store";
 import NavLink from "./NavLink";
 
-function SideBarSubItem({ subItem, toggle }: { subItem: { name: string, link: string }[], toggle: boolean }) {
+function SideBarSubItem({ subItem, toggle, mobile }: { subItem: { name: string, link: string }[], toggle: boolean, mobile?: boolean }) {
 	const dispatch = useAppDispatch()
 	return (
 		<div>
@@ -16,7 +16,7 @@ function SideBarSubItem({ subItem, toggle }: { subItem: { name: string, link: st
 								fullWidth
 								size='small'
 								className={`text-left text-sm ${toggle ? '' : 'hidden'}`}
-								onClick={() => dispatch(toggleSideBar())}
+								onClick={() => mobile === true ? dispatch(toggleSideBar()) : null}
 							>
 								<div className="text-left text-sec w-full p-2">
 									{`- ${item.name}`}

@@ -6,8 +6,8 @@ import { applicationFee, BASEURL, pk_key } from "../../constants"
 import { useSelector } from "react-redux"
 import { RootState, useAppDispatch } from "../../store"
 import { useRouter } from "next/router"
-import { uploadDoc } from "../../redux/user/uploadDoc"
-import { Button, CircularProgress } from "@mui/material"
+import { uploadDoc } from "../../actions/user/uploadDoc"
+import { Button, CircularProgress, MenuItem, Select } from "@mui/material"
 import { money } from "../../helpers/helpers"
 import { User, UserApplicationStatus } from "../../Typing.d"
 import { checkIsAuthenticated } from "../../features/authSlice"
@@ -67,10 +67,10 @@ const UploadDocument = () => {
                         UPLOAD A VALID DOCUMENT
                     </div>
                     <div className="flex justify-center">
-                        <select ref={ref} name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value)} disabled={completed} >
-                            <option value="0">CHOOSE DOCUMENT TYPE</option>
-                            {types.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
-                        </select>
+                        <Select size="small" value={docType} ref={ref} name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value as string)} disabled={completed} >
+                            <MenuItem value="0">CHOOSE DOCUMENT TYPE</MenuItem>
+                            {types.map((e) => <MenuItem key={e.id} value={e.id}>{e.name}</MenuItem>)}
+                        </Select>
                     </div>
 
                     {docType !== '0' && <DocumentUpload
@@ -101,7 +101,7 @@ const UploadDocument = () => {
                         </div>
                     }
                     {
-                        docUrl !== '' && <div className="m-4 flex justify-center">
+                        docUrl !== '' && application !== 'document-required' && <div className="m-4 flex justify-center">
                             <PaystackConsumer
                                 email={user.email}
                                 amount={1000000}

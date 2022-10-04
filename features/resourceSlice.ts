@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadPlans, loadPropertyTypes } from "../redux/resource";
+import { loadPlans, loadPropertyTypes } from "../actions/resource";
 import { store } from "../store";
 import { LoadState } from "../Typing.d";
 

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
-import { loadAdminServices } from "../../redux/admin/admin";
+import { loadAdminServices } from "../../actions/admin/admin";
 import { deleteService, resetServiceState } from "../../features/admin/serviceSlice";
 import { GridColDef } from "@mui/x-data-grid";
 import { money } from "../../helpers/helpers";

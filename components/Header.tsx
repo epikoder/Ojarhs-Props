@@ -9,6 +9,7 @@ import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, Toolbar } fro
 import { resolveFilePath } from "../helpers/helpers";
 import { Person } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import { Logo } from "./Logo";
 
 
 const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string }) => {
@@ -169,13 +170,9 @@ function Header() {
 					<Box
 						sx={{ flexGrow: 1 }}
 					>
-						<Link href='/'>
-							<img
-								src='/image/logo.png'
-								className="h-16 w-24 cursor-pointer object-cover"
-								alt='ojarh'
-							/>
-						</Link>
+						<div onClick={() => router.push('/')} className='cursor-pointer'>
+							<Logo height={60} width={50} />
+						</div>
 					</Box>
 					<Box>
 						<ul className='lg:flex items-center justify-between text-uppercase hidden'>

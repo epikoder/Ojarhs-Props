@@ -10,7 +10,8 @@ const nextConfig = {
 
 module.exports = {
   images: {
-    domains: ["https://ojarhproperties.com/api", "http://ojarh-properties.com/api", 'https://sleepy-everglades-36547.herokuapp.com']
+    domains: ["https://ojarhproperties.com/api", "http://ojarh-properties.com/api", 'https://sleepy-everglades-36547.herokuapp.com'],
+    minimumCacheTTL: 36000
   },
 }
 

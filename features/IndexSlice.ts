@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { indexData, loadIndex, loadNotice } from "../redux";
+import { indexData, loadIndex, loadNotice } from "../actions";
 import { LoadState, Notice } from "../Typing.d";
 
 type noticeState = { data: Notice[], state: LoadState }

@@ -5,7 +5,7 @@ import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
-import { loadApplications } from "../../../redux/admin/admin"
+import { loadApplications } from "../../../actions/admin/admin"
 import { RootState, useAppDispatch } from "../../../store"
 import { UserApplicationStatus } from "../../../Typing.d"
 

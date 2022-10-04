@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import GridTable from "../../components/Grid";
 import { Api } from "../../helpers/api";
-import { loadAdminPackoutRequest } from "../../redux/admin/admin";
+import { loadAdminPackoutRequest } from "../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { PackoutRequest } from "../../Typing.d";
 

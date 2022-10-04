@@ -9,7 +9,7 @@ function Testimonials({ testimony }: { testimony: Testimony[] }) {
     return (
         <div>
             {/* Testimonies */}
-            <div className="flex flex-col justify-center items-center my-2 lg:flex-row gap-5 rounded-lg overflow-hidden md:max-w-lg lg:max-w-full mx-auto">
+            <div className="flex flex-col space-y-10 justify-center items-center lg:flex-row gap-5 rounded-lg overflow-hidden md:max-w-lg lg:max-w-full mx-auto my-20">
                 <TestimonialSlide testimony={testimony} />
                 {/* Report  */}
                 <Card className="max-w-md w-full flex flex-col space-y-2 p-4">

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASEURL } from "../constants";
 import { fixSpace } from "../helpers/helpers";
-import { Advert, ApiResponse, Notice, Service, Space, Testimony } from "../Typing.d";
+import { Advert, ApiResponse, Notice, Service, Space, Testimony } from "../Typing";
 
 export type indexData = {
     status: 'failed' | 'success'

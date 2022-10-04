@@ -257,7 +257,7 @@ export type PackoutRequest = {
 }
 
 export type Notice = {
-	id: number
+	id?: number
 	title: string
 	type: 'text' | 'image'
 	content: string
@@ -283,6 +283,8 @@ export type Expense = {
 
 export type Invoice = {
 	items: InvoiceItem[]
+	total: number
+	created_at?: Date
 } & Partial<User>
 
 export type InvoiceItem = {
@@ -290,4 +292,14 @@ export type InvoiceItem = {
 	description: string
 	quantity: number
 	amount: number
+}
+
+export type Contact = {
+	id?: number
+	name: string
+	email: string
+	phone: string
+	subject: string
+	message: string
+	response?: string
 }

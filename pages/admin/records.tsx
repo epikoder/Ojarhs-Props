@@ -6,7 +6,7 @@ import { House, Money, Person, Person2, Print, Receipt } from "@mui/icons-materi
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
 import Loader from "../../components/Loader";
-import { loadRecord } from "../../redux/admin/record";
+import { loadRecord } from "../../actions/admin/record";
 import { money } from "../../helpers/helpers";
 
 function Records() {

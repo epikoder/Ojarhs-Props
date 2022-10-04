@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadExpenses } from "../../redux/admin/admin";
+import { loadExpenses } from "../../actions/admin/admin";
 import { Expense, LoadState } from "../../Typing";
 
 const initialState: {

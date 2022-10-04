@@ -7,7 +7,12 @@ import { toggleSideBar } from "../features/ToggleSideBar";
 import { useRouter } from "next/router";
 import { Button } from "@mui/material";
 
-function SideBarItem({ name, link, subItem }: { name: string, link?: string, subItem?: { name: string, link: string }[] }) {
+function SideBarItem({ name, link, subItem, mobile }: {
+	name: string,
+	link?: string,
+	mobile?: boolean
+	subItem?: { name: string, link: string }[]
+}) {
 	const dispatch = useAppDispatch()
 	const router = useRouter()
 	const path = router.asPath.split('/')
@@ -26,7 +31,7 @@ function SideBarItem({ name, link, subItem }: { name: string, link?: string, sub
 				<Button onClick={() => setToggle(!toggle)}
 					fullWidth
 				>
-					<div className="flex justify-between w-full p-1">
+					<div className="flex justify-between w-full p-1 text-sm md:text-md">
 						<span>{name}</span>
 						<div className="relative w-6">
 							<ChevronDownIcon fontSize={'small'} className={`absolute h-6 w-6 ${toggle ? '' : 'hidden'} text-white`} />
@@ -35,7 +40,7 @@ function SideBarItem({ name, link, subItem }: { name: string, link?: string, sub
 					</div>
 				</Button>
 
-				<SideBarSubItem subItem={subItem} toggle={toggle} />
+				<SideBarSubItem mobile={mobile} subItem={subItem} toggle={toggle} />
 			</>
 		);
 	} else {
@@ -48,11 +53,11 @@ function SideBarItem({ name, link, subItem }: { name: string, link?: string, sub
 				href={link || '#'}
 				active={p.length > 1 && p[p.length - 1] === href}
 			>
-				<Button onClick={() => dispatch(toggleSideBar())}
+				<Button onClick={() => mobile === true ? dispatch(toggleSideBar()) : null}
 					fullWidth
 					className="px-3 py-2 text-left"
 				>
-					<div className="w-full">
+					<div className="w-full text-sm md:text-md">
 						{name}
 					</div>
 				</Button>

@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
 import { clearUserToken, getUserToken, setUserToken } from "../helpers/auth";
-import { loadNextOfKin, loginAdminApi, loginApi, rejectValue } from "../redux/auth";
+import { loadNextOfKin, loginAdminApi, loginApi, rejectValue } from "../actions/auth";
 import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplicationStatus } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
-import { updateUserProfile } from "../redux/user/dashboard";
+import { updateUserProfile } from "../actions/user/dashboard";
+import { Cookies } from "next/dist/server/web/spec-extension/cookies";
 
 type AuthState = {
     authenticated: boolean
@@ -91,7 +92,7 @@ const checkIsAuthenticatedAsync = async () => {
 
 const checkIsAuthenticatedAdminAsync = async () => {
     try {
-        const { data } = await Api().get<ApiResponse>("/admin/user")
+        const { data } = await Api().get<ApiResponse<loginResponse>>("/admin/user")
         const auth = {} as {
             authenticated: boolean
             token?: loginResponse
@@ -123,9 +124,16 @@ const checkIsAuthenticatedAdminAsync = async () => {
     }
 }
 
-const logoutAsync = async () => {
+const logoutAsync = async (token: string) => {
     try {
-        Api().post('/user/logout')
+        await fetch('/user/logout', {
+            method: 'POST',
+            mode: "cors",
+            credentials: 'include',
+            headers: {
+                authorization: 'Bearer ' + token
+            }
+        })
     } catch (error) {
 
     }
@@ -143,7 +151,7 @@ const authSlice = createSlice({
             state.message = undefined
             state.token = {} as loginResponse
             state.error = {}
-            logoutAsync()
+            logoutAsync(state.token?.access)
             clearUserToken()
             // TODO: Clear token cache
         },
@@ -172,13 +180,9 @@ const authSlice = createSlice({
                 isAdmin?: boolean
             }
         }) => {
+            console.log('=======')
+            if (state.authenticated === true && state.user !== undefined) return
             state.appState = 'pending'
-            if (getUserToken() === undefined) {
-                state.appState = 'completed'
-                state.authenticated = false
-                state.user = undefined
-                return
-            }
             if (payload.isAdmin) {
                 checkIsAuthenticatedAdminAsync()
                 return

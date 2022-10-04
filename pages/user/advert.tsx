@@ -5,7 +5,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { addWeek, money } from "../../helpers/helpers";
 import React from "react";
 import { useRouter } from "next/router";
-import { loadUserAdverts } from "../../redux/user/dashboard";
+import { loadUserAdverts } from "../../actions/user/dashboard";
 import { Button, Card } from "@mui/material";
 import { Add } from "@mui/icons-material";
 

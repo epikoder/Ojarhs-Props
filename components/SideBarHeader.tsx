@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { toggleSideBar } from "../features/ToggleSideBar";
 import { resolveFilePath } from "../helpers/helpers";
 import { User } from "../Typing.d";
+import { Logo } from "./Logo";
 
 const AdminMenu = ({ user }: { user: User }) => {
 	const router = useRouter()
@@ -37,23 +38,14 @@ function AdminHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
 
 	return (
 		<>
-			<div className={`w-full p-4 ${props.className ?? ''} bg-main`}>
+			<div className={`w-full px-4 ${props.className ?? ''} bg-main`}>
 				<div className='flex space-x-5 items-center justify-between'>
 					<div className="flex items-center">
 						<MenuIcon
 							className='w-6 h-6 text-white mx-2 md:hidden'
 							onClick={() => dispatch(toggleSideBar())}
 						/>
-						<Image
-							src='/image/logo.png'
-							width={80}
-							height={40}
-							layout='fixed'
-							alt='ojarh'
-							style={{
-								flexGrow: 1
-							}}
-						/>
+						<Logo height={100} width={50} />
 					</div>
 					<AdminMenu user={props.user} />
 				</div>

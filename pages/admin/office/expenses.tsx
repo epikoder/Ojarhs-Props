@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import GridTable from "../../../components/Grid";
 import { money } from "../../../helpers/helpers";
-import { loadExpenses } from "../../../redux/admin/admin";
+import { loadExpenses } from "../../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../../store";
 
 

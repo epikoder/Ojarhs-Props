@@ -8,7 +8,7 @@ import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLa
 import GridTable from "../../../components/Grid";
 import { Api } from "../../../helpers/api";
 import { money } from "../../../helpers/helpers";
-import { loadStaffs } from "../../../redux/admin/staff";
+import { loadStaffs } from "../../../actions/admin/staff";
 import { RootState, useAppDispatch } from "../../../store";
 import { ApiResponse } from "../../../Typing";
 

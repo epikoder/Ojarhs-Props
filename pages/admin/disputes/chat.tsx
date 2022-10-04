@@ -5,7 +5,7 @@ import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLa
 import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatComponents"
 import Loader from "../../../components/Loader"
 import { Api } from "../../../helpers/api"
-import { loadAdminDisputes } from "../../../redux/admin/admin"
+import { loadAdminDisputes } from "../../../actions/admin/admin"
 import { RootState, useAppDispatch } from "../../../store"
 import { Message, MessageOwner, MessageType } from "../../../Typing.d"
 

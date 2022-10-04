@@ -10,7 +10,7 @@ import GridTable from "../../components/Grid";
 import Loader from "../../components/Loader";
 import { deleteAdvert, toggleAdvertStatus } from "../../features/admin/advertSlice";
 import { Api } from "../../helpers/api";
-import { loadAdminAdverts } from "../../redux/admin/admin";
+import { loadAdminAdverts } from "../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { ApiResponse } from "../../Typing.d";
 

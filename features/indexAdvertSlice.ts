@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadAdverts } from "../redux";
+import { loadAdverts } from "../actions";
 import { Advert, LoadState } from "../Typing.d";
 
 const indexAdvertSlice = createSlice({

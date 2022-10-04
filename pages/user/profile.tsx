@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { Info } from "../../components/Info"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { UserInfo } from "../../components/user/UserInfo"
-import { loadNextOfKin } from "../../redux/auth"
+import { loadNextOfKin } from "../../actions/auth"
 import { RootState, useAppDispatch } from "../../store"
 import { User, UserApplicationStatus } from "../../Typing.d"
 

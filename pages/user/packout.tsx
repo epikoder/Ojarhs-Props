@@ -5,7 +5,7 @@ import Loader from "../../components/Loader"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { Api } from "../../helpers/api"
 import { money } from "../../helpers/helpers"
-import { loadUserPackoutRequest, loadUserProperties } from "../../redux/user/dashboard"
+import { loadUserPackoutRequest, loadUserProperties } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { ApiResponse } from "../../Typing"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';

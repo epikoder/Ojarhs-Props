@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import List from "../../helpers/list";
-import { addNewPropertyThunck, addNewServiceThunck, deleteServiceAsync, loadAdminProperties, loadAdminServices } from "../../redux/admin/admin";
+import { addNewPropertyThunck, addNewServiceThunck, deleteServiceAsync, loadAdminProperties, loadAdminServices } from "../../actions/admin/admin";
 import { store } from "../../store";
 import { DashboardDataState, Map, Service, } from "../../Typing.d";
 

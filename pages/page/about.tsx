@@ -40,7 +40,7 @@ const Page = () => {
 					</div>
 				</Parallax>
 
-				<div className='grid grid-cols-1 md:grid-cols-2  justify-center my-4'>
+				<div className='grid grid-cols-1 md:grid-cols-2  justify-center py-4 min-h-[30vh]'>
 					<div className='relative md:w-[60%] rounded-lg overflow-hidden w-[70%] h-[30vh] xl:h-[40vh] md:h-full mx-auto quality' style={{
 						backgroundImage: "url('/image/aboutus.jpeg')",
 						backgroundRepeat: "no-repeat",
@@ -55,7 +55,7 @@ const Page = () => {
 					</div>
 				</div>
 				<div>
-					<div className='flex flex-col justify-center items-center h-[40vh]'>
+					<div className='flex flex-col justify-center items-center py-4'>
 						<div
 							className='p-2 w-full flex justify-center'
 							style={{
@@ -100,7 +100,7 @@ const Page = () => {
 							className="w-full max-h-[50vh] h-full object-cover"
 						/>
 					</div>
-					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
+					<div className='p-4 max-w-md  lg:text-lg mx-auto flex flex-col justify-center'>
 						{`We take pride in our work, performing to the highest possible standard team work: over values are not
                 achieved on our own. We understand the importance of working with all our partners, whether
                 employees, tenants, suppliers, contractor customers we establish good working relationships and values

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import Loader from "../components/Loader";
 import { RootState, useAppDispatch } from "../store";
-import { loginApi } from "../redux/auth";
+import { loginApi } from "../actions/auth";
 import { useRouter } from "next/router";
 import { checkIsAuthenticated } from "../features/authSlice";
 import { Button, Card, Checkbox, CircularProgress, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField, useTheme } from "@mui/material";

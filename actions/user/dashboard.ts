@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Advert, ApiResponse, loginResponse, PackoutRequest, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing.d";
+import { Advert, ApiResponse, loginResponse, PackoutRequest, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing";
 import { Api } from "../../helpers/api";
 import { Query } from "../../Type";
 

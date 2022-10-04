@@ -5,7 +5,7 @@ import { FormCountryInput, FormPhoneInput } from "../../components/FormInput"
 import { ImageUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { resolveFilePath } from "../../helpers/helpers"
-import { updateUserProfile } from "../../redux/user/dashboard"
+import { updateUserProfile } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { User, UserUpdateForm } from "../../Typing.d"
 

@@ -8,7 +8,7 @@ import ReactSwitch from "react-switch";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import Loader from "../../../components/Loader";
 import { Api } from "../../../helpers/api";
-import { loadAllTenants } from "../../../redux/admin/tenant";
+import { loadAllTenants } from "../../../actions/admin/tenant";
 import { RootState, useAppDispatch } from "../../../store";
 import { ApiResponse, UserApplicationStatus } from "../../../Typing.d";
 
