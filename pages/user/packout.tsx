@@ -5,7 +5,7 @@ import Loader from "../../components/Loader"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { Api } from "../../helpers/api"
 import { money } from "../../helpers/helpers"
-import { loadUserPackoutRequest, loadUserProperties } from "../../redux/user/dashboard"
+import { loadUserPackoutRequest, loadUserProperties } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { ApiResponse } from "../../Typing"
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -13,7 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Dayjs } from 'dayjs';
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { Delete } from "@mui/icons-material"
+import { Add, Delete } from "@mui/icons-material"
 
 const columns: GridColDef[] = [
     {
@@ -81,7 +81,7 @@ const DeleteAction = ({ row }: { row: any }) => {
 
         }
     }}>
-        <Delete fontSize="small" className={`${row.status === 0 ? 'text-red-500' : 'text-gray-500'} cursor-pointer`} />
+        <Delete fontSize="small" className={`${row.status === 0 ? 'text-red-500' : ''} cursor-pointer`} />
     </IconButton>
 }
 
@@ -187,7 +187,7 @@ const Page = () => {
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        dispatch(loadUserPackoutRequest())
+        dispatch(loadUserPackoutRequest({ packout: true }))
     }, [])
 
     return <UserDashboardLayout>
@@ -200,9 +200,10 @@ const Page = () => {
                     <Button
                         variant='outlined'
                         size='small'
+                        startIcon={<Add />}
                         onClick={() => setIsOpen(true)}
                     >
-                        CREATE
+                        Request
                     </Button>
                 </div>
             </div>

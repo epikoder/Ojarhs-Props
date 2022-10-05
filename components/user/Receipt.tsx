@@ -2,6 +2,7 @@ import { OjarhAddress, OjarhPhone } from "../../constants"
 import { money } from "../../helpers/helpers"
 import { Receipt, User } from "../../Typing.d"
 import React from "react"
+import { Logo } from "../Logo"
 
 const ReceiptComponent = React.forwardRef<HTMLDivElement, {
     user: User
@@ -11,14 +12,10 @@ const ReceiptComponent = React.forwardRef<HTMLDivElement, {
         const user = props.user
         const receipt = props.receipt
         return <>
-            <div className="w-[500px] min-h-[500px] bg-white">
+            <div className="w-[500px] min-h-[500px] bg-white text-black">
                 <div ref={ref} className="w-[500px] min-h-[500px] bg-white px-8 py-16">
                     <div className="flex justify-between px-4 items-center">
-                        <div style={{
-                            backgroundImage: `url(/image/logo.png)`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'cover',
-                        }} className="w-24 h-24"></div>
+                        <Logo height={200} width={200} textColor={'0c0d0d'} />
                         <div>
                             <span className="text-sm uppercase">Receipt</span> <span className="font-semibold">#{receipt.id}</span>
                         </div>

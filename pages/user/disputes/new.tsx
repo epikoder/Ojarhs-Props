@@ -1,5 +1,5 @@
 import { ArrowBack } from "@mui/icons-material"
-import { Box, Button, CircularProgress, FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material"
+import { Box, Button, Card, CircularProgress, FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { FormInput } from "../../../components/FormInput"
@@ -47,16 +47,16 @@ const Page = () => {
 
     return <UserDashboardLayout>
         {() => <>
-            <div>
-                <form ref={formRef} className=" shadow-md rounded-md border border-gray-100 p-4">
+            <Card>
+                <form ref={formRef} className=" shadow-md rounded-md p-4">
                     <IconButton onClick={() => router.back()}>
-                        <ArrowBack sx={{ color: 'red' }} />
+                        <ArrowBack />
                     </IconButton>
-                    <div className="text-center text-gray-600">
+                    <div className="text-center">
                         New Dispute
                     </div>
                     <div className="flex justify-center my-4 p-2">
-                        <div className="max-w-screen-lg w-full space-y-2">
+                        <div className="max-w-screen-lg w-full space-y-3">
                             <div className="text-center text-blue-500 text-sm">
                                 {message.message}
                             </div>
@@ -75,7 +75,7 @@ const Page = () => {
                                     required
                                     value={form.content}
                                     onChange={(e) => setForm({ ...form, content: e.target.value })}
-                                    className="p-2 border border-gray-500 w-full min-h-[20vh] text-gray-600" placeholder="Message" />
+                                    className="p-2 bg-transparent border border-gray-500 w-full min-h-[20vh]" placeholder="Message" />
                                 <div className="">
                                     <Box sx={{ minWidth: 120 }}>
                                         <FormControl fullWidth size="small">
@@ -90,9 +90,9 @@ const Page = () => {
                                                 onChange={(e) => setForm({ ...form, dispute_level: e.target.value as unknown as DisputeLevel })}
                                             >
                                                 {disputeLevel.map((d, i) =>
-                                                    <MenuItem className="text-gray-500 text-sm" key={i} value={d.value} >
-                                                        <div className="text-gray-500">
-                                                            <span className="text-md text-black">{d.name}</span>
+                                                    <MenuItem className="text-sm" key={i} value={d.value} >
+                                                        <div>
+                                                            <span className="text-md">{d.name}</span>
                                                         </div>
                                                     </MenuItem>)}
                                             </Select>
@@ -117,7 +117,7 @@ const Page = () => {
                         </div>
                     </div>
                 </form>
-            </div>
+            </Card>
         </>
         }
     </UserDashboardLayout >

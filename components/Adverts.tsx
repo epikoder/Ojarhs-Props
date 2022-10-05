@@ -43,51 +43,47 @@ export const PropertyAdvert = () => {
   return <>
     {state !== 'success' && <Slider slider />}
     {state === 'success' &&
-      <div className='md:grid grid-cols-2 w-full h-full gap-1 md:gap-5 xl:gap-11 xl:px-24 md:px-12 px-2'>
-        <Carousel
-          className={'object-cover h-full w-full'}
-          autoPlay={true}
-          showIndicators={false}
-          showArrows={false}
-          showStatus={false}
-          stopOnHover={false}
-          infiniteLoop={true}
-          transitionTime={1000}
-          emulateTouch={true}
-          showThumbs={false}
-          animationHandler='fade'
-          interval={5000}
-          onClickItem={(i) => IsLinkValid(f[i].link) ? window.open(f[i].link, '_blank') : null}
-        >
-          {f.length > 0 ? f.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
-            :
-            (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
-              <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
-            )
-          }
-        </Carousel>
-        <Carousel
-          className={'object-cover h-full w-full'}
-          autoPlay={true}
-          showIndicators={false}
-          showArrows={false}
-          showStatus={false}
-          stopOnHover={false}
-          infiniteLoop={true}
-          transitionTime={1000}
-          emulateTouch={true}
-          showThumbs={false}
-          animationHandler='fade'
-          interval={5000}
-          onClickItem={(i) => IsLinkValid(s[i].link) ? window.open(s[i].link, '_blank') : null}
-        >
-          {s.length > 0 ? s.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
-            :
-            (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
-              <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
-            )
-          }
-        </Carousel>
+      <div className="md:grid grid-cols-2 w-[100%] overflow-hidden space-y-2">
+        <div className='2xl:h-[70vh] px-2 xl:h-[55vh] lg:h-[50vh] md:h-[45vh] sm:h-[60vh] h-[40vh]'>
+          <Carousel
+            className={'h-full'}
+            autoPlay={true}
+            showIndicators={true}
+            showStatus={false}
+            infiniteLoop={true}
+            transitionTime={1000}
+            emulateTouch={true}
+            showThumbs={false}
+            onClickItem={(i) => IsLinkValid(f[i].link) ? window.open(f[i].link, '_blank') : null}
+          >
+            {f.length > 0 ? f.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
+              :
+              (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
+                <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
+              )
+            }
+          </Carousel>
+        </div>
+        <div className="bg-black text-center px-2 text-white 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] h-[35vh]">
+          <Carousel
+            className={'h-full'}
+            autoPlay={true}
+            showIndicators={true}
+            showStatus={false}
+            infiniteLoop={true}
+            transitionTime={1000}
+            emulateTouch={true}
+            showThumbs={false}
+            onClickItem={(i) => IsLinkValid(s[i].link) ? window.open(s[i].link, '_blank') : null}
+          >
+            {s.length > 0 ? s.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
+              :
+              (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
+                <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
+              )
+            }
+          </Carousel>
+        </div>
       </div>
     }
   </>
@@ -97,33 +93,28 @@ function MiddleAdvert() {
   const { middle, state } = useSelector((store: RootState) => store.indexAdvertSlice)
 
   return (
-    <div className='md:flex flex-row justify-center h-full'>
-      {state !== 'success' && <Slider slider />}
-      {state === 'success' &&
+    <>
+      {state === 'success' ?
         <Carousel
           className={'h-full'}
           autoPlay={true}
-          showIndicators={false}
-          showArrows={false}
+          showIndicators={true}
           showStatus={false}
-          stopOnHover={false}
           infiniteLoop={true}
           transitionTime={1000}
           emulateTouch={true}
           showThumbs={false}
-          animationHandler='fade'
-          interval={5000}
-          swipeable={false}
           onClickItem={(i) => IsLinkValid(middle[i].link) ? window.open(middle[i].link, '_blank') : null}
         >
-          {middle.length > 0 ? middle.map((a, i) => <div className='h-full w-full' key={i}>
-            <img src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />
-          </div>) :
+          {middle.length > 0 ? middle.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />) :
             (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
-              <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
+              <img key={i} src={'image/' + s} className={`w-full object-cover`} />
             )}
-        </Carousel>}
-    </div>
+        </Carousel>
+        :
+        <Slider slider />
+      }
+    </>
   )
 }
 

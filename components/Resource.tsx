@@ -2,7 +2,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
 import Head from "next/head"
 import React, { HTMLAttributes } from "react"
 import { useSelector } from "react-redux"
-import { loadPlans, loadPropertyTypes } from "../redux/resource"
+import { loadPlans, loadPropertyTypes } from "../actions/resource"
 import { RootState, useAppDispatch } from "../store"
 
 export const PaymentPlans = ({ value, handleChange, className, error }: {

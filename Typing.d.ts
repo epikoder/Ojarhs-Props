@@ -4,7 +4,7 @@ export type User = Tenant & {
 	is_locked: boolean
 	email_verified: boolean
 	roles?: string[]
-	permissions?:string[]
+	permissions?: string[]
 }
 
 export type Space = {
@@ -181,7 +181,7 @@ export type QueryParam = {
 	search?: string
 	chunck?: number
 	offset?: number
-}
+} & Map<string | number | boolean>
 
 export interface MessageOwner {
 	id: number
@@ -257,7 +257,7 @@ export type PackoutRequest = {
 }
 
 export type Notice = {
-	id: number
+	id?: number
 	title: string
 	type: 'text' | 'image'
 	content: string
@@ -282,8 +282,24 @@ export type Expense = {
 }
 
 export type Invoice = {
+	items: InvoiceItem[]
+	total: number
+	created_at?: Date
+} & Partial<User>
+
+export type InvoiceItem = {
 	item: string
 	description: string
 	quantity: number
 	amount: number
-} & Partial<User>
+}
+
+export type Contact = {
+	id?: number
+	name: string
+	email: string
+	phone: string
+	subject: string
+	message: string
+	response?: string
+}

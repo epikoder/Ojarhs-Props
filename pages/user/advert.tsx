@@ -5,8 +5,9 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { addWeek, money } from "../../helpers/helpers";
 import React from "react";
 import { useRouter } from "next/router";
-import { loadUserAdverts } from "../../redux/user/dashboard";
-import { Button } from "@mui/material";
+import { loadUserAdverts } from "../../actions/user/dashboard";
+import { Button, Card } from "@mui/material";
+import { Add } from "@mui/icons-material";
 
 const columns: GridColDef[] = [
     {
@@ -79,22 +80,19 @@ const Page = () => {
     return <UserDashboardLayout>
         {
             () => <div className="min-h-[20vh]">
-                <div className="p-2 font-semibold">
-                    Advert
-                </div>
-                <div className="flex justify-end max-w-2xl px-4">
+                <Card className="flex justify-between max-w-2xl p-2 items-center">
+                    <div className="font-semibold">
+                        Advert
+                    </div>
                     <Button
-                        variant="contained"
+                        variant="outlined"
                         size="small"
-                        className="text-sm"
+                        startIcon={<Add />}
                         onClick={() => router.push('/user/advert/new-advert')}
-                        sx={{
-                            backgroundColor: 'red'
-                        }}
                     >
-                        NEW ADVERT
+                        ADVERT
                     </Button>
-                </div>
+                </Card>
                 <div className="my-2 p-2">
                     <div className="my-4 max-w-2xl" style={{ height: 400 }}>
                         {state === 'success' && data !== undefined && <DataGrid

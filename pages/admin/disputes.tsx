@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
-import { loadAdminDisputes } from "../../redux/admin/admin";
+import { loadAdminDisputes } from "../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 
@@ -26,29 +26,21 @@ function Page() {
         dispatch(loadAdminDisputes())
     }, [dispatch])
 
-    console.log(state, data)
     return <AdminDashboardLayout>
         {
             () => <React.Fragment>
                 <div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4 my-2 pt-10">
-                    <div className="text-gray-500 text lg:text-lg">
+                    <div className="lg:text-lg">
                         Disputes
                     </div>
-                    <div className="flex items-center space-x-2">
-                        <div className="hidden: md:flex justify-around">
-                            <Notifications fontSize='small' />
-                        </div>
-                        <div>
-                            <Button
-                                variant='outlined'
-                                size='small'
-                                startIcon={<Add fontSize="small" />}
-                                onClick={() => router.push('/admin/disputes/new')}
-                            >
-                                Dispute
-                            </Button>
-                        </div>
-                    </div>
+                    <Button
+                        variant='outlined'
+                        size='small'
+                        startIcon={<Add fontSize="small" />}
+                        onClick={() => router.push('/admin/disputes/new')}
+                    >
+                        Dispute
+                    </Button>
                 </div>
                 <div className="my-2 h-full p-1">
                     <Table

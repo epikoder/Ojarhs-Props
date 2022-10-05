@@ -1,10 +1,11 @@
 import { Visibility } from "@mui/icons-material"
+import { IconButton } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
-import { loadApplications } from "../../../redux/admin/admin"
+import { loadApplications } from "../../../actions/admin/admin"
 import { RootState, useAppDispatch } from "../../../store"
 import { UserApplicationStatus } from "../../../Typing.d"
 
@@ -81,8 +82,11 @@ const Status = ({ active, status }: { active: boolean, status: UserApplicationSt
 
 const ActionCell = ({ row }: { row: any }) => {
     const router = useRouter()
-    return <Visibility onClick={() => router.push(`/admin/applications/view/${row.user_id}?doctype=${row.type}`)} className="text-black cursor-pointer" height={20} />
+    return <IconButton onClick={() => router.push(`/admin/applications/view/${row.user_id}?doctype=${row.type}`)}>
+        <Visibility />
+    </IconButton>
 }
+
 const Page = () => {
     const router = useRouter()
     const dispatch = useAppDispatch()
@@ -94,8 +98,8 @@ const Page = () => {
     const { data, status } = useSelector((store: RootState) => store.applicationSlice)
     return <AdminDashboardLayout>
         {() => <React.Fragment>
-            <div className='flex justify-between items-center shadow-gray-200 shadow-md px-2 py-2 '>
-                <h1 className='lg:text-2xl text-md red'>Applications</h1>
+            <div className='flex justify-between items-center px-2 py-2 '>
+                <h1 className='lg:text-xl text-md red'>Applications</h1>
             </div>
             <div className="h-full">
                 <DataGrid

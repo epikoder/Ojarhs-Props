@@ -5,7 +5,7 @@ import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLa
 import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatComponents"
 import Loader from "../../../components/Loader"
 import { Api } from "../../../helpers/api"
-import { loadAdminDisputes } from "../../../redux/admin/admin"
+import { loadAdminDisputes } from "../../../actions/admin/admin"
 import { RootState, useAppDispatch } from "../../../store"
 import { Message, MessageOwner, MessageType } from "../../../Typing.d"
 
@@ -62,12 +62,8 @@ const Page = () => {
     return <AdminDashboardLayout className="md:p-1">
         {({ user }) => <>
             {conversation !== undefined && <div>
-                <div className="pr-6" style={{
-                    backgroundColor: '#202934'
-                }}>
-                    <ChatHeader title={conversation.title} message={conversation.messages[0]} />
-                </div>
-                <div className="flex flex-col justify-between h-[65vh] md:h-[60vh] lg:h-[60vh] 2xl:h-[68vh] bg-gray-100">
+                <ChatHeader title={conversation.title} message={conversation.messages[0]} />
+                <div className="flex flex-col justify-between h-[65vh] md:h-[60vh] lg:h-[75vh] bg-main">
                     <div className="h-[80%] overflow-y-scroll" ref={chatBox}>
                         {conversation.messages.map((m, i) =>
                             <div key={i}>

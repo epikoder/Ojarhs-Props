@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadAdminAdverts } from "../../redux/admin/admin";
+import { loadAdminAdverts } from "../../actions/admin/admin";
 import { Advert, DashboardDataState, Map, } from "../../Typing.d";
 
 const initialState: DashboardDataState<Advert[]> = {

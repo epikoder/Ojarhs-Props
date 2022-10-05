@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadStaffs } from "../../redux/admin/staff";
+import { loadStaffs } from "../../actions/admin/staff";
 import { LoadState, Staff } from "../../Typing";
 
 const initialState: {

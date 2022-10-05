@@ -9,8 +9,8 @@ import { TypeBox } from "../../../components/ChatComponents"
 import { FormInput } from "../../../components/FormInput"
 import { disputeLevel } from "../../../constants"
 import { resetMessageState } from "../../../features/admin/messageSlice"
-import { createAdminMessage } from "../../../redux/admin/admin"
-import { loadAllTenants } from "../../../redux/admin/tenant"
+import { createAdminMessage } from "../../../actions/admin/admin"
+import { loadAllTenants } from "../../../actions/admin/tenant"
 import { RootState, useAppDispatch } from "../../../store"
 import { DisputeLevel, MesssageForm } from "../../../Typing.d"
 
@@ -50,11 +50,11 @@ const Page = () => {
     return <AdminDashboardLayout>
         {() => <>
             <div>
-                <form ref={formRef} className=" shadow-md rounded-md border border-gray-100 p-4">
-                    <IconButton onClick={() => router.back()}>
-                        <ArrowBack sx={{ color: 'red' }} />
+                <form ref={formRef} >
+                    <IconButton onClick={router.back}>
+                        <ArrowBack />
                     </IconButton>
-                    <div className="text-center text-gray-600 text">
+                    <div className="text-center">
                         New Dispute
                     </div>
                     <div className="flex justify-center my-4 p-2">
@@ -64,7 +64,7 @@ const Page = () => {
                             </div>
                             <div className="flex justify-end my-2">
                                 <div className="max-w-[200px]">
-                                    <label htmlFor="" className="text-gray-500 text-xs uppercase">Filter</label>
+                                    <label htmlFor="" className="text-xs uppercase">Filter</label>
                                     <SearchTenants />
                                 </div>
                             </div>
@@ -81,10 +81,10 @@ const Page = () => {
                                             className="overflow-hidden"
                                             onChange={(e) => setForm({ ...form, receiver: e.target.value })}
                                         >
-                                            {data.map((u, i) => <MenuItem className="text-gray-500 text-sm" key={i} value={u.id} >
-                                                <div className="text-gray-500">
-                                                    <span className="text-md text-black">{u.lname} {u.fname}</span>
-                                                    <span className="hidden lg:block text-xs lg:text-sm">{u.email} </span>
+                                            {data.map((u, i) => <MenuItem className="text-sm" key={i} value={u.id} >
+                                                <div>
+                                                    <span >{u.lname} {u.fname}</span>
+                                                    <span className="hidden lg:block text-sec text-xs lg:text-sm">{u.email} </span>
                                                 </div>
                                             </MenuItem>)}
                                         </Select>
@@ -108,7 +108,7 @@ const Page = () => {
                                     required
                                     value={form.content}
                                     onChange={(e) => setForm({ ...form, content: e.target.value })}
-                                    className="p-2 border border-gray-500 w-full min-h-[20vh] text-gray-600" placeholder="Message" />
+                                    className="p-2 border border-gray-500 w-full min-h-[20vh] bg-transparent" placeholder="Message" />
                             </div>
                             <div className="">
                                 <Box sx={{ minWidth: 120 }}>
@@ -124,16 +124,14 @@ const Page = () => {
                                             onChange={(e) => setForm({ ...form, dispute_level: e.target.value as unknown as DisputeLevel })}
                                         >
                                             {disputeLevel.map((d, i) =>
-                                                <MenuItem className="text-gray-500 text-sm" key={i} value={d.value} >
-                                                    <div className="text-gray-500">
-                                                        <span className="text-md text-black">{d.name}</span>
-                                                    </div>
+                                                <MenuItem className="text-sm" key={i} value={d.value} >
+                                                    <span>{d.name}</span>
                                                 </MenuItem>)}
                                         </Select>
                                     </FormControl>
                                 </Box>
                             </div>
-                            <div className="text-xs text-gray-500 text-center">
+                            <div className="text-xs text-center">
                                 You can attach a photo after starting a conversation
                             </div>
                             <div className="flex justify-end">

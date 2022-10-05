@@ -1,5 +1,6 @@
 import { ExternalLinkIcon, LinkIcon } from "@heroicons/react/outline";
 import { MenuIcon } from "@heroicons/react/solid";
+import { AppBar, Toolbar } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { HTMLAttributes } from "react";
@@ -7,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { toggleSideBar } from "../features/ToggleSideBar";
 import { resolveFilePath } from "../helpers/helpers";
 import { User } from "../Typing.d";
+import { Logo } from "./Logo";
 
 const AdminMenu = ({ user }: { user: User }) => {
 	const router = useRouter()
@@ -16,10 +18,10 @@ const AdminMenu = ({ user }: { user: User }) => {
 				{/* MENU */}
 			</div>
 			<div
-			className="mx-2 cursor-pointer hover:text-red-500 duration-300 ease-in-out transition-all text-sm flex items-center"
+				className="mx-2 cursor-pointer hover:text-red-500 duration-300 ease-in-out transition-all text-sm flex items-center"
 				onClick={() => router.push('/')}>
 				<span>{'Home'}</span>
-				<ExternalLinkIcon height={10}/>
+				<ExternalLinkIcon height={10} />
 			</div>
 			<div>
 				<img
@@ -31,29 +33,26 @@ const AdminMenu = ({ user }: { user: User }) => {
 		</div>
 	</>
 }
-function SideBarHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
+function AdminHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
 	const dispatch = useDispatch();
 
 	return (
-		<div className={`w-full bg-black p-4 sticky-top ${props.className ?? ''}`}>
-			<div className='flex space-x-5 items-center justify-between'>
-				<div className="flex items-center">
-					<MenuIcon
-						className='w-6 h-6 text-white mx-2 md:hidden'
-						onClick={() => dispatch(toggleSideBar())}
-					/>
-					<Image
-						src='/image/logo.png'
-						width={40}
-						height={40}
-						layout='fixed'
-						alt='ojarh'
-					/>
+		<>
+			<div className={`w-full px-4 ${props.className ?? ''} bg-main`}>
+				<div className='flex space-x-5 items-center justify-between'>
+					<div className="flex items-center">
+						<MenuIcon
+							className='w-6 h-6 text-white mx-2 md:hidden'
+							onClick={() => dispatch(toggleSideBar())}
+						/>
+						<Logo height={100} width={50} />
+					</div>
+					<AdminMenu user={props.user} />
 				</div>
-				<AdminMenu user={props.user} />
 			</div>
-		</div>
+			{/* <Toolbar className="mt-4" /> */}
+		</>
 	);
 }
 
-export default SideBarHeader;
+export default AdminHeader;

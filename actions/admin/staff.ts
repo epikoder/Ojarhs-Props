@@ -5,7 +5,7 @@ import { ApiResponse, Staff } from "../../Typing";
 
 export const loadStaffs = createAsyncThunk<Staff[]>('admin/staffs-all', async (payload, { rejectWithValue }) => {
     try {
-        const { data } = await Api().get('/admin/staffs/all')
+        const { data } = await Api().get('/admin/staffs')
         return data.data
     } catch (error) {
         return rejectWithValue({})

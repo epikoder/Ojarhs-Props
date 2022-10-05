@@ -1,5 +1,5 @@
 import { ArrowBack } from "@mui/icons-material"
-import { Button, CircularProgress, IconButton } from "@mui/material"
+import { Button, Card, CircularProgress, IconButton } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { FormInput } from "../../../components/FormInput"
@@ -45,12 +45,12 @@ const Page = () => {
 
     return <UserDashboardLayout>
         {() => <>
-            <div>
-                <form ref={formRef} className=" shadow-md rounded-md border border-gray-100 p-4">
+            <Card>
+                <form ref={formRef} className=" shadow-md rounded-md p-4">
                     <IconButton onClick={() => router.back()}>
-                        <ArrowBack sx={{ color: 'red' }} />
+                        <ArrowBack />
                     </IconButton>
-                    <div className="text-center text-gray-600 text-lg">
+                    <div className="text-center text-lg">
                         Send A Report
                     </div>
                     <div className="flex justify-center my-4 p-2">
@@ -73,7 +73,7 @@ const Page = () => {
                                     required
                                     value={form.content}
                                     onChange={(e) => setForm({ ...form, content: e.target.value })}
-                                    className="p-2 border border-gray-500 w-full min-h-[20vh] text-gray-600" placeholder="Message" />
+                                    className="p-2 border border-gray-500 w-full min-h-[20vh] bg-transparent" placeholder="Message" />
                             </div>
                             <div className="flex justify-end">
                                 <Button
@@ -89,7 +89,7 @@ const Page = () => {
                         </div>
                     </div>
                 </form>
-            </div>
+            </Card>
         </>
         }
     </UserDashboardLayout >

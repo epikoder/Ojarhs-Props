@@ -3,13 +3,15 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
-import { loadAdminServices } from "../../redux/admin/admin";
-import { resetServiceState } from "../../features/admin/serviceSlice";
+import { loadAdminServices } from "../../actions/admin/admin";
+import { deleteService, resetServiceState } from "../../features/admin/serviceSlice";
 import { GridColDef } from "@mui/x-data-grid";
 import { money } from "../../helpers/helpers";
 import { Menu, MenuItem } from "@szhsin/react-menu";
-import { Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
+import { Add, Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
 import GridTable from "../../components/Grid";
+import { Button, IconButton } from "@mui/material";
+import { Service } from "../../Typing";
 
 
 const columns: GridColDef[] = [
@@ -21,7 +23,7 @@ const columns: GridColDef[] = [
 	{
 		field: 'name',
 		headerName: 'Name',
-		width: 150,
+		width: 200,
 		align: 'center',
 		headerAlign: 'center',
 		filterable: false,
@@ -37,7 +39,7 @@ const columns: GridColDef[] = [
 		filterable: false,
 		hideable: false,
 		disableColumnMenu: true,
-		maxWidth: 400,
+		width: 400,
 	},
 	{
 		field: 'amount',
@@ -69,9 +71,8 @@ const columns: GridColDef[] = [
 		filterable: false,
 		hideable: false,
 		disableColumnMenu: true,
-		maxWidth: 500,
-		minWidth: 50,
-		renderCell: ({ value, row }) => <ActionCell row={row} />
+		width: 120,
+		renderCell: ({ row }) => <ActionCell row={row} />
 	},
 ];
 
@@ -79,22 +80,37 @@ const ActionCell = ({ row }: { row: any }) => {
 	const router = useRouter()
 	return <>
 		<div className="md:hidden absolute mx-1">
-			<Menu menuButton={<MoreVert fontSize="small" />}>
-				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-					<Edit onClick={() => router.push(`/admin/services/update-service/${row.slug}`)} className="text-black cursor-pointer" height={20} />
+			<Menu menuButton={<IconButton>
+				<MoreVert fontSize="small" />
+			</IconButton>} >
+				<div className="py-4"></div>
+				<MenuItem className={'rounded-full outline-none my-1'} >
+					<IconButton onClick={() => router.push(`/admin/services/update-service/${row.slug}`)}>
+						<Edit height={20} />
+					</IconButton>
 				</MenuItem>
-				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-					<Visibility onClick={() => router.push(`/services?search=${row.slug}`)} className="text-black cursor-pointer" height={20} />
+				<MenuItem className={'rounded-full outline-none my-1'} >
+					<IconButton onClick={() => router.push(`/services?search=${row.name}`)}>
+						<Visibility height={20} />
+					</IconButton>
 				</MenuItem>
-				<MenuItem className={'p-2 my-2 bg-white rounded-full hover:scale-110 border border-gray-300'} >
-					<Delete className="text-black cursor-pointer" height={20} />
+				<MenuItem className={'rounded-full outline-none my-1'} >
+					<IconButton onClick={row.delete}>
+						<Delete height={20} />
+					</IconButton>
 				</MenuItem>
 			</Menu>
 		</div>
-		<div className="hidden md:flex justify-evenly w-60">
-			<Edit onClick={() => router.push(`/admin/services/update-service/${row.slug}`)} className="text-black cursor-pointer" height={20} />
-			<Visibility onClick={() => router.push(`/services?search=${row.slug}`)} className="text-black cursor-pointer" height={20} />
-			<Delete className="text-black cursor-pointer" height={20} />
+		<div className="hidden md:flex space-x-px px-4">
+			<IconButton onClick={() => router.push(`/admin/services/update-service/${row.slug}`)}>
+				<Edit height={20} />
+			</IconButton>
+			<IconButton onClick={() => router.push(`/services?search=${row.slug}`)}>
+				<Visibility height={20} />
+			</IconButton>
+			<IconButton onClick={row.delete}>
+				<Delete height={20} />
+			</IconButton>
 		</div>
 	</>
 }
@@ -111,25 +127,28 @@ function Page() {
 
 	React.useEffect(() => { dispatch(resetServiceState()) }, [status])
 
+	const _deleteService = (service: Service) => dispatch(deleteService(service.slug))
+
 	return (
 		<AdminDashboardLayout>
 			{() => <React.Fragment>
-				<div className='flex justify-between w-full items-center shadow-gray-200 shadow-md px-2'>
-					<h1 className='lg:text-xl text-lg red'>Services</h1>
-					<button
-						type='button'
-						className='inline-block px-6 lg:px-12 py-2 rounded-full  hover:scale-110 active:scale-95  text-white bg-red font-medium text-xs leading-tight uppercase mb-4  shadow-md  hover:shadow-lg  focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out'
+				<div className='flex justify-between w-full items-center p-2'>
+					<h1 className='text-lg'>Services</h1>
+					<Button
+						variant='outlined'
+						size='small'
+						startIcon={<Add fontSize="small" />}
 						onClick={() => { router.push('services/new-service') }}
 					>
-						Add new
-					</button>
+						ADD NEW
+					</Button>
 				</div>
 
 				<div className="lg:max-w-screen-xl w-full h-full">
 					<GridTable
 						state={status}
 						columns={columns}
-						rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
+						rows={data.map((s, i) => ({ ...s, id: i + 1, delete: () => _deleteService(s) }))}
 					/>
 				</div>
 			</React.Fragment>}

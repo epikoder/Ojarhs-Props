@@ -1,4 +1,5 @@
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material"
+import { IconButton } from "@mui/material"
 import React from "react"
 import { LoadState } from "../Typing.d"
 
@@ -24,7 +25,7 @@ export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, pe
                             .slice(page * perPage, page === 0 ? perPage : (page + 1) * perPage)
                             .map((value, index) => tableBody(value, page === 0 ? index : (perPage * page) + index))}
                         {((state === 'success' || state === 'nil') && data.length === 0) && (noData ?? <>
-                            <div className="text-center text-sm my-4 text-gray-500">
+                            <div className="text-center text-sm my-4 ">
                                 NOTHING TO SHOW
                             </div>
                         </>)}
@@ -47,19 +48,19 @@ export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, pe
                             }} />
                         </>
                         }
-                        {(state === 'failed') && <div className="text-center my-1 bg-black text-white p-4 rounded-md">
+                        {(state === 'failed') && <div className="text-center my-1 bg-main text-white p-4 rounded-md">
                             <span>ERROR</span>
-                            <span className="text-red-500 text-xl">{" | "}</span>
+                            <span className="text-xl">{" | "}</span>
                             {"Try relaoding the page"}
                         </div>}
                     </div>
-                    {data.length > perPage && <div className="flex items-center justify-center text-black my-1">
+                    {data.length > perPage && <div className="flex items-center justify-center my-1 space-x-2">
                         {
                             page > navLimit && <>
-                                <div
+                                <IconButton
                                     onClick={() => setPage(page - navLimit < 0 ? 0 : page - navLimit)}>
                                     <ArrowBackIos fontSize="small" />
-                                </div>
+                                </IconButton>
                             </>
                         }
                         {
@@ -68,7 +69,7 @@ export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, pe
                                     {
                                         ((Math.abs(i - page) <= navLimit)) &&
                                         <div key={i}
-                                            className={`cursor-pointer border border-1 px-2 py-1 hover:bg-red-500 hover:text-white ${page === i && 'bg-red-500 text-white'}`}
+                                            className={`transit cursor-pointer border border-1 px-2 py-1 hover:bg-red-500 hover:text-white ${page === i && 'bg-red-500 text-white'}`}
                                             onClick={() => setPage(i)}>
                                             {i + 1}
                                         </div>
@@ -77,10 +78,10 @@ export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, pe
                         }
                         {
                             page + navLimit < pages.length - 1 && <>
-                                <div
+                                <IconButton
                                     onClick={() => setPage(page + navLimit > pages.length ? pages.length - 1 : page - navLimit)}>
                                     <ArrowForwardIos fontSize="small" />
-                                </div>
+                                </IconButton>
                             </>
                         }
                     </div>}

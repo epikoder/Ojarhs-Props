@@ -1,5 +1,5 @@
 import { Edit } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import {  GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
 import React from "react";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import GridTable from "../../../components/Grid";
 import { money } from "../../../helpers/helpers";
-import { loadExpenses } from "../../../redux/admin/admin";
+import { loadExpenses } from "../../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../../store";
 
 
@@ -74,9 +74,9 @@ const columns: GridColDef[] = [
 const UpdateAction = ({ row }: { row: any }) => {
     const router = useRouter()
     return <>
-        <div className="cursor-pointer" onClick={() => router.push('/admin/office/expense/update?id=' + row.id)}>
+        <IconButton className="cursor-pointer" onClick={() => router.push('/admin/office/expense/update?id=' + row.id)}>
             <Edit />
-        </div>
+        </IconButton>
     </>
 }
 

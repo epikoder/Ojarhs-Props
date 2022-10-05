@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { Advert, ApiResponse, loginResponse, PackoutRequest, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing.d";
+import { Advert, ApiResponse, loginResponse, PackoutRequest, QueryParam, Receipt, Service, Space, UserUpdateForm } from "../../Typing";
 import { Api } from "../../helpers/api";
+import { Query } from "../../Type";
 
 export const loadUserProperties =
     createAsyncThunk<Space[] | undefined, void | QueryParam>("user/properties", async (payload, { rejectWithValue }) => {
         try {
-            const { status, data } = await Api().get("/user/properties")
+            const { status, data } = await Api().get("/user/properties" + (new Query(payload || {})).toString())
             if (status !== 200) {
                 return rejectWithValue({
                     status: "failed"

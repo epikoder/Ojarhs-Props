@@ -12,7 +12,7 @@ import { emailValidator } from "../helpers/validation";
 import { RootState } from "../store";
 import { useRouter } from "next/router";
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Switch } from "@mui/material";
+import { Button, Card, Checkbox, CircularProgress, Switch } from "@mui/material";
 import List from "../helpers/list";
 
 function SignUp() {
@@ -105,7 +105,7 @@ function SignUp() {
 
 	return (
 		<Layout>
-			<div className='my-16 bg-gray-100 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 py-4'>
+			<Card className='my-16 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 space-y-2 py-4'>
 				<div className='red text-center lg:text-2xl md:text-xl text-lg '> Sign Up / Application Form</div>
 				<div className={`text-center text-sm font-sans text-red-500`}>
 					All fields are compulsory*
@@ -129,7 +129,7 @@ function SignUp() {
 							}
 						}} />
 						<FormInput props={{
-							title: 'Last Mame',
+							title: 'Last Name',
 							name: "lname",
 							type: 'text',
 							required: true,
@@ -264,7 +264,7 @@ function SignUp() {
 							htmlFor=''
 							className='space-x-4 w-full text-gray-600'
 						>
-							<span className='text-gray-600 mb-2 text-md idden'>
+							<span className='text-sec mb-2 text-md idden'>
 								Profile photo
 							</span>
 							<ImageUpload key={'photo'} handleUpload={(s) => setForm({
@@ -409,10 +409,10 @@ function SignUp() {
 							}} />
 
 							<div className="flex items-center">
-								<span className="text-sm px-4 text-gray-600">
+								<span className="text-sm px-4 text-sec">
 									Second Next of Kin
 								</span>
-								<Switch
+								<Checkbox
 									checked={secondNextofKin}
 									onChange={() => setSecondNextofKin(!secondNextofKin)}
 								/>
@@ -525,40 +525,46 @@ function SignUp() {
 					</>
 					}
 
-					<div className="col-span-2">
+					<div className="col-span-2 text-sec">
 						<div className={`text-center text-sm py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 							{message.text !== undefined && message.text}
 						</div>
 						<Link href={'/page/terms'}>
 							<div className="cursor-pointer">
-								<span className="text-gray-500 text-xs">By creating an account you agree to our terms and conditions</span>
+								<span className=" text-xs">By creating an account you agree to our terms and conditions</span>
 								<LaunchIcon fontSize='inherit' />
 							</div>
 						</Link>
-						<div className="text-center text-xs my-2 text-gray-500">
+						<div className="text-center text-xs my-2">
 							{`This form doesn't mean that the property has been given to you. However, after reviewing your application our administrator will revert to you via email or your dashboard`}
 						</div>
-						<div className="w-full flex">
-							{!loading ? <>
-								<button type='submit' className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out" onClick={submit}>
-
-									Sign Up
-								</button>
-							</> : <div className="relative bg-red mx-auto text-center py-1 px-2 rounded-full mt-4 w-48 h-10 text-white cursor-wait">
-								<Loader />
-							</div>}
+						<div className="w-full flex justify-center">
+							<Button
+								variant="outlined"
+								onClick={submit}
+								disabled={loading}
+								startIcon={loading && <CircularProgress size={14} />}
+							>
+								SIGN UP
+							</Button>
 						</div>
 
-						<div className='space-x-4 mx-auto text-sm text-center text-gray-400 '>
+						<div className='space-x-4 mx-auto text-sm text-center'>
 							Already have an account?{" "}
-							<Link href='/login' className='ml-1 cursor-pointer'>
-								<span className='hov cursor-pointer'>Login</span>
-							</Link>
+							<Button
+								sx={{
+									fontSize: 12
+								}}
+								size='small'
+								onClick={() => router.push('/login')}
+							>
+								LOGIN
+							</Button>
 						</div>
 					</div>
 
 				</form>
-			</div>
+			</Card>
 		</Layout >
 
 	);

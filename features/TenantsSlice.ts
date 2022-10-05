@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loadAllTenants } from "../redux/admin/tenant";
+import { loadAllTenants } from "../actions/admin/tenant";
 import { LoadState, Tenant } from "../Typing.d";
 
 type STATE = {

@@ -1,195 +1,286 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Image from "next/image";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
-import { openMenu, closeMenu, openState } from "../features/HeaderMenu";
 import Link from "next/link";
 import NavLink from "./NavLink";
 import { RootState } from "../store";
-import { checkIsAuthenticated } from "../features/authSlice";
+import { checkIsAuthenticated, logout } from "../features/authSlice";
+import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, Toolbar } from "@mui/material";
+import { resolveFilePath } from "../helpers/helpers";
+import { Person } from "@mui/icons-material";
+import { useRouter } from "next/router";
+import { Logo } from "./Logo";
 
+
+const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string }) => {
+	const router = useRouter()
+	const path = router.asPath.replace('/', (s: string, arr: number): string => {
+		return arr === 0 ? '' : s
+	}).split('/')
+	let _href = ''
+	if (path.length > 1) {
+		_href = path[1]
+	}
+	const subPath = href.replace('/', (s: string, arr: number): string => {
+		return arr === 0 ? '' : s
+	}).split('/')
+	return <>
+		<div>
+			<NavLink href={href} active={subPath.length > 1 && subPath[1] === _href}>
+				<Button
+					sx={{
+						':hover': {
+							backgroundColor: 'gray',
+							color: 'white'
+						}
+					}}
+					className="text-black"
+					fullWidth
+					size='large'
+				>
+					{title}
+				</Button>
+			</NavLink>
+		</div>
+	</>
+}
+
+const MainNav = () => <>
+	<NavLink href={'/'}>
+		<Button
+			size='large'>
+			Home
+		</Button>
+	</NavLink>
+	<NavLink href='/properties'>
+		<Button
+			size='large'>
+			Properties
+		</Button>
+	</NavLink>
+	<NavLink href='/services'>
+		<Button
+			size='large'>
+			Services
+		</Button>
+	</NavLink>
+	<NavLink href='/page/about'>
+		<Button
+			size='large'>
+			About us
+		</Button>
+	</NavLink>
+	<NavLink href='/page/contact'>
+		<Button
+			size='large'>
+			Contact Us
+		</Button>
+	</NavLink>
+</>
+
+const SideNav = ({ fullWidth = false }: { fullWidth?: boolean }) => <>
+	<NavLink href={'/'}>
+		<Button
+			sx={{
+				':hover': {
+					backgroundColor: 'gray',
+					color: 'white'
+				}
+			}}
+			className="text-black"
+			fullWidth={fullWidth}
+			size='large'>
+			Home
+		</Button>
+	</NavLink>
+	<NavLink href='/properties'>
+		<Button
+			sx={{
+				':hover': {
+					backgroundColor: 'gray',
+					color: 'white'
+				}
+			}}
+			className="text-black"
+			fullWidth={fullWidth}
+			size='large'>
+			Properties
+		</Button>
+	</NavLink>
+	<NavLink href='/services'>
+		<Button
+			sx={{
+				':hover': {
+					backgroundColor: 'gray',
+					color: 'white'
+				}
+			}}
+			className="text-black"
+			fullWidth={fullWidth}
+			size='large'>
+			Services
+		</Button>
+	</NavLink>
+	<NavLink href='/page/about'>
+		<Button
+			sx={{
+				':hover': {
+					backgroundColor: 'gray',
+					color: 'white'
+				}
+			}}
+			className="text-black"
+			fullWidth={fullWidth}
+			size='large'>
+			About us
+		</Button>
+	</NavLink>
+	<NavLink href='/page/contact'>
+		<Button
+			sx={{
+				':hover': {
+					backgroundColor: 'gray',
+					color: 'white'
+				}
+			}}
+			className="text-black"
+			fullWidth={fullWidth}
+			size='large'>
+			Contact Us
+		</Button>
+	</NavLink>
+</>
 function Header() {
 	const dispatch = useDispatch();
-	const isOpen = useSelector(openState);
-	const isAuthenticated = useSelector((store: RootState) => store.authSlice.authenticated)
-	// const [fixed, setFixed] = React.useState(false)
-
-	// let lsc = 0
-	// if (typeof window !== 'undefined') {
-	// 	const el = window.document.getElementById('fixedTop')
-	// 	lsc = window.scrollY || window.document.documentElement.scrollTop
-	// 	let sc = 0
-	// 	window.document.onscroll = (e) => {
-	// 		const csc = window.scrollY || window.document.documentElement.scrollTop
-	// 		if (csc > lsc) {
-	// 			sc = sc < -105 && window.scrollY <= 150 ? sc : sc - 5
-	// 			if (window.scrollY >= 150) sc = -100
-	// 			if (window.scrollY > 200) {
-	// 				el.style.transition = 'all 0.8s linear'
-	// 				el.style.transform = 'translateY(100px)'
-	// 				el.style.position = 'fixed'
-	// 				el.style.top = `${sc}px`
-	// 			} else {
-	// 				el.style.position = 'fixed'
-	// 			}
-	// 		} else {
-	// 			sc = sc > 0 ? sc : sc + 5
-	// 			el.style.position = sc >= 0 && window.scrollY < 10 ? 'unset' : 'fixed'
-	// 			el.style.transform = ''
-	// 			if (window.scrollY <= 10) {
-	// 				el.style.position = 'unset'
-	// 			}
-	// 		}
-	// 		lsc = csc <= 0 ? 0 : csc
-	// 	}
-	// }
+	const [isOpen, setIsOpen] = React.useState<boolean>(false)
+	const { authenticated: isAuthenticated, user } = useSelector((store: RootState) => store.authSlice)
+	const router = useRouter()
 
 	React.useEffect(() => {
 		if (!isAuthenticated) dispatch(checkIsAuthenticated({}))
 	}, [isAuthenticated])
 
+	const closeMenu = () => setIsOpen(false)
+	const openMenu = () => setIsOpen(true)
+
 	return (
-		<div className="sticky-top">
-			<div className="flex justify-center bg-black" >
-				<div className='lg:p-4 lg:px-24 md:p-2 md:px-12 p-2 w-full sticky-top max-w-7xl' >
-					<div>
-						<div className='flex justify-between items-center text-sm'>
-							<Link href='/'>
-								<img
-									src='/image/logo.png'
-									className="h-16 w-24 cursor-pointer"
-									alt='ojarh'
-								/>
-							</Link>
-							<ul className='lg:flex items-center justify-between text-uppercase w-8/12 hidden'>
-								<NavLink href='/'>
-									<li className='active:text-red-600 a uppercase cursor-pointer  text-white hov duration-300 transition-all ease-in-out'>
-										<a>Home</a>
-									</li>
-								</NavLink>
-								<NavLink href='/properties'>
-									<li className='text-white active:text-red-600 a uppercase cursor-pointer hov  duration-300 transition-all ease-in-out'>
-										<a>Properties</a>
-									</li>
-								</NavLink>
-								<NavLink href='/services'>
-									<li className='text-white active:text-red-600 a uppercase cursor-pointer hov  duration-300 transition-all ease-in-out'>
-										<a>Services</a>
-									</li>
-								</NavLink>
-								<NavLink href='/page/about'>
-									<li className='text-white uppercase hov active:text-red-600 a cursor-pointer  duration-300 transition-all ease-in-out'>
-										<a>About us</a>
-									</li>
-								</NavLink>
-								<NavLink href='/page/contact'>
-									<li className='text-white uppercase hov active:text-red-600 a cursor-pointer  duration-300 transition-all ease-in-out'>
-										<a>Contact Us</a>
-									</li>
-								</NavLink>
-								{
-									isAuthenticated ? <>
-										<NavLink href='/user/dashboard'>
-											<li className='text-white uppercase hov cursor-pointer active:text-red-600 a duration-300 transition-all ease-in-out'>
-												<a>Dashboard</a>
-											</li>
-										</NavLink>
-									</> :
-										<>
-											<NavLink href='/login'>
-												<li className='text-white uppercase hov cursor-pointer active:text-red-600 a duration-300 transition-all ease-in-out'>
-													<a>Sign up/login</a>
-												</li>
-											</NavLink>
-										</>
-								}
-							</ul>
-							{isOpen ? (
-								<XIcon
-									onClick={() => dispatch(closeMenu())}
-									className='h-7 w-7 text-white bg-red lg:hidden cursor-pointer'
-								/>
-							) : (
-								<MenuIcon
-									onClick={() => dispatch(openMenu())}
-									className='h-7 w-7 text-white bg-red lg:hidden cursor-pointer'
-								/>
-							)}
+		<Box sx={{ display: 'flex' }}>
+			<AppBar className="bg-black opacity-95 p-2" component={'nav'} >
+				<Toolbar>
+					<Box
+						sx={{ flexGrow: 1 }}
+					>
+						<div onClick={() => router.push('/')} className='cursor-pointer'>
+							<Logo height={60} width={50} />
 						</div>
-						{isOpen ? (
-							<div className='w-full bg-black items-end space-y-2 mt-4 z-50'>
-								<ul className='flex flex-col items-start justify-between text-uppercase w-6/12 lg:hidden space-y-3'>
-									<NavLink href='/'>
-										<li
-											onClick={() => dispatch(closeMenu())}
-											className='text-white  uppercase cursor-pointer '
-										>
-											Home
-										</li>
+					</Box>
+					<Box>
+						<ul className='lg:flex items-center justify-between text-uppercase hidden'>
+							<MainNav />
+							{
+								isAuthenticated ? <>
+									<NavLink href='/user/dashboard'>
+										<Button
+											size='large'>
+											dashboard
+										</Button>
 									</NavLink>
-									<NavLink href='/properties'>
-										<li
-											onClick={() => dispatch(closeMenu())}
-											className='text-white  uppercase hov cursor-pointer '
-										>
-											Properties
-										</li>
-									</NavLink>
-									<NavLink href='/services'>
-										<li
-											onClick={() => dispatch(closeMenu())}
-											className='text-white  uppercase hov cursor-pointer '
-										>
-											Services
-										</li>
-									</NavLink>
-									<NavLink href='/page/about'>
-										<li
-											onClick={() => dispatch(closeMenu())}
-											className='text-white  uppercase hov cursor-pointer '
-										>
-											About us
-										</li>
-									</NavLink>
-									<NavLink href='/page/contact'>
-										<li
-											onClick={() => dispatch(closeMenu())}
-											className='text-white  uppercase hov cursor-pointer '
-										>
-											Contact Us
-										</li>
-									</NavLink>
-									{
-										isAuthenticated ? <>
-											<NavLink href='/user/dashboard'>
-												<li
-													onClick={() => dispatch(closeMenu())}
-													className='text-white  uppercase hov cursor-pointer '
-												>
-													Dashboard
-												</li>
-											</NavLink>
-										</> :
-											<>
-												<NavLink href='/login'>
-													<li
-														onClick={() => dispatch(closeMenu())}
-														className='text-white  uppercase hov cursor-pointer '
-													>
-														Sign up/login
-													</li>
-												</NavLink>
-											</>
-									}
-								</ul>
-							</div>
-						) : (
-							""
-						)}
+								</> :
+									<>
+										<NavLink href='/login'>
+											<Button
+												size='large'>
+												Sign up / Login
+											</Button>
+										</NavLink>
+									</>
+							}
+						</ul>
+					</Box>
+					<div className='h-7 w-7 lg:hidden cursor-pointer'>
+						{isOpen ?
+							<XIcon
+								onClick={closeMenu}
+							/>
+							:
+							<MenuIcon
+								onClick={openMenu}
+							/>}
 					</div>
-				</div>
-			</div>
-		</div>
+				</Toolbar>
+			</AppBar>
+			<Box component='nav'>
+				<Drawer
+					variant="temporary"
+					open={isOpen}
+					onClick={closeMenu}
+					sx={{
+						display: { xs: 'block', lg: 'none' },
+						'& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240, backgroundColor: 'white' }
+					}}
+					ModalProps={{
+						keepMounted: true,
+					}}
+				>
+					<Toolbar className="bg-black" sx={{
+						minHeight: 80
+					}} />
+					<Box className="mx-auto py-2 space-y-4 text-center flex flex-col items-center w-full">
+						{isAuthenticated && user !== undefined ? <>
+							<div className="flex justify-center">
+								<div className="border-4 border-gray-500 rounded-full">
+									<Avatar
+										src={resolveFilePath(user.photo)}
+										className={'h-32 w-32'}
+									/>
+								</div>
+							</div>
+							<Box className="w-full">
+								<Divider />
+								<MenuItemMobile title="Dasboard" href="/user/dashboard" />
+								<MenuItemMobile title="Profile" href="/user/profile" />
+								<MenuItemMobile title="Service" href="/user/service" />
+								<MenuItemMobile title="Receipts" href="/user/receipt" />
+								<MenuItemMobile title="Messages" href="/user/message" />
+								<MenuItemMobile title="Disputes" href="/user/disputes" />
+								<MenuItemMobile title="Report" href="/user/report" />
+								<MenuItemMobile title="Adverts" href="/user/advert" />
+								<MenuItemMobile title="Request pack out" href="/user/packout" />
+								<Button sx={{
+									":hover": {
+										backgroundColor: 'red',
+										color: 'white'
+									},
+									width: '100%',
+									color: 'black'
+								}}
+									onClick={() => dispatch(logout())}>
+									Logout
+								</Button>
+							</Box>
+						</>
+							:
+							<>
+								<Box className="w-full">
+									<div className="flex justify-center">
+										<div className="border-4 border-gray-500 rounded-full">
+											<IconButton onClick={() => router.push('/login')}>
+												<Person fontSize="large" className="text-black h-12 w-12" />
+											</IconButton>
+										</div>
+									</div>
+									<MenuItemMobile title="Login" href="/login" />
+								</Box>
+							</>
+						}
+					</Box>
+					<Divider className="bg-gray-400" />
+					<Box className="w-full py-2">
+						<SideNav fullWidth />
+					</Box>
+				</Drawer>
+			</Box>
+		</Box>
 	);
 }
 

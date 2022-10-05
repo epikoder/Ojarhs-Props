@@ -8,7 +8,7 @@ import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayou
 import { ChatList } from "../../components/ChatComponents";
 import { Table } from "../../components/Table";
 import { resolveFilePath } from "../../helpers/helpers";
-import { loadAdminConverstion } from "../../redux/admin/admin";
+import { loadAdminConverstion } from "../../actions/admin/admin";
 import { RootState, useAppDispatch } from "../../store";
 import { MessageOwner } from "../../Typing.d";
 
@@ -31,7 +31,7 @@ function Message() {
 		{
 			() => <React.Fragment>
 				<div className="flex justify-between items-center shadow-md rounded-md p-2 lg:p-4">
-					<div className="text-gray-500 text-sm lg:text-lg">
+					<div className="text-sm lg:text-lg">
 						Messages
 					</div>
 					<div className="flex items-center space-x-2">

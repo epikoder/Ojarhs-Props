@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNewPropertyThunck, addNewServiceThunck, loadAdminProperties, loadAdminServices } from "../../redux/admin/admin";
+import List from "../../helpers/list";
+import { addNewPropertyThunck, addNewServiceThunck, deleteServiceAsync, loadAdminProperties, loadAdminServices } from "../../actions/admin/admin";
 import { store } from "../../store";
 import { DashboardDataState, Map, Service, } from "../../Typing.d";
 
@@ -11,6 +12,9 @@ const serviceSlice = createSlice({
 	name: "serviceSlice",
 	initialState: initialState,
 	reducers: {
+		deleteService: (_, { payload }: { payload: string }) => {
+			setTimeout(() => { store.dispatch(deleteServiceAsync(payload)) }, 300)
+		},
 		resetServiceState: (state) => {
 			state.status = 'nil'
 		}
@@ -40,9 +44,19 @@ const serviceSlice = createSlice({
 			state.status = 'failed'
 			state.message = (payload as Map).message ?? undefined
 		})
+
+		builder.addCase(deleteServiceAsync.fulfilled, (state, { payload }) => {
+			let index: number
+			state.data.forEach((s, i) => {
+				if (s.slug === payload) {
+					index = i
+				}
+			})
+			state.data = List.remove<Service>(state.data, index)
+		})
 	}
 });
 
-export const { resetServiceState } = serviceSlice.actions
+export const { resetServiceState, deleteService } = serviceSlice.actions
 export default serviceSlice.reducer;
 

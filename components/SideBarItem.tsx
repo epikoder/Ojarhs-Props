@@ -1,31 +1,67 @@
 import React, { useState } from "react";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import SideBarSubItem from "./SideBarSubItem";
+import NavLink from "./NavLink";
+import { useAppDispatch } from "../store";
+import { toggleSideBar } from "../features/ToggleSideBar";
+import { useRouter } from "next/router";
+import { Button } from "@mui/material";
 
-function SideBarItem({ name, subItem }: { name: string, subItem?: { name: string, link: string }[] }) {
-	const [toggle, setToggle] = useState(false)
+function SideBarItem({ name, link, subItem, mobile }: {
+	name: string,
+	link?: string,
+	mobile?: boolean
+	subItem?: { name: string, link: string }[]
+}) {
+	const dispatch = useAppDispatch()
+	const router = useRouter()
+	const path = router.asPath.split('/')
+	let href = ''
+	if (path.length > 1) {
+		href = path[path.length - 2]
+	}
+	const subPath = subItem !== undefined && subItem.length > 0 ? subItem[0].link.replace('/', (s: string, arr: number): string => {
+		return arr === 0 ? '' : s
+	}).split('/') : []
+	const [toggle, setToggle] = useState<boolean>(subPath.length > 1 && subPath[subPath.length - 2] === href)
 
 	if (subItem !== undefined) {
 		return (
-			<div className='hov text-white transition-all duration-200 ease-in-out my-2 p-2'>
-				<div className='flex justify-between hov cursor-pointer transition duration-700 ease-in-out mr-4' onClick={() => setToggle(!toggle)}>
-					<span>{name}</span>
-					<div className="relative">
-						<ChevronDownIcon className={`absolute hov h-6 w-6 ${toggle ? '' : 'hidden'}`} />
-						<ChevronRightIcon className={`absolute hov h-6 w-6 ${!toggle ? '' : 'hidden'}`} />
+			<>
+				<Button onClick={() => setToggle(!toggle)}
+					fullWidth
+				>
+					<div className="flex justify-between w-full p-1 text-sm md:text-md">
+						<span>{name}</span>
+						<div className="relative w-6">
+							<ChevronDownIcon fontSize={'small'} className={`absolute h-6 w-6 ${toggle ? '' : 'hidden'} text-white`} />
+							<ChevronRightIcon fontSize={'small'} className={`absolute h-6 w-6 ${!toggle ? '' : 'hidden'} text-white`} />
+						</div>
 					</div>
-				</div>
+				</Button>
 
-				<SideBarSubItem subItem={subItem} toggle={toggle} />
-			</div>
+				<SideBarSubItem mobile={mobile} subItem={subItem} toggle={toggle} />
+			</>
 		);
 	} else {
+		const p = link !== undefined ? link.replace('/', (s: string, arr: number): string => {
+			return arr === 0 ? '' : s
+		}).split('/') : []
+
 		return (
-			<div className='hov my-2 p-2 cursor-pointer'>
-				<div className='text-white transition duration-700 ease-in-out hov'>
-					<span>{name}</span>
-				</div>
-			</div>
+			<NavLink
+				href={link || '#'}
+				active={p.length > 1 && p[p.length - 1] === href}
+			>
+				<Button onClick={() => mobile === true ? dispatch(toggleSideBar()) : null}
+					fullWidth
+					className="px-3 py-2 text-left"
+				>
+					<div className="w-full text-sm md:text-md">
+						{name}
+					</div>
+				</Button>
+			</NavLink>
 		);
 	}
 }

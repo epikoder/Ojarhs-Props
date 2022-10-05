@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
 import { fixSpace } from "../helpers/helpers";
-import { ApiResponse, Service, Space } from "../Typing.d";
+import { ApiResponse, Service, Space } from "../Typing";
 
 export const loadProperty = createAsyncThunk<Space, string>("load/property-item", async (payload: string, { rejectWithValue }) => {
     try {

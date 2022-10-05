@@ -8,14 +8,16 @@
 body,
 html {
 	height: 100%;
+	width: 100%;
 }
 
 .bg-red {
 	background-color: red;
 }
 
-.red {
-	color: red;
+.hov {
+	transition: all 500ms cubic-bezier(0.44, 0.92, 0.47, 0.88);
+	cursor: pointer;
 }
 
 .hov:hover {
@@ -25,6 +27,40 @@ html {
 .bg-hov:hover {
 	background-color: rgba(255, 0, 0, 0.792);
 	color: white;
+}
+
+.nav-item {
+	cursor: pointer;
+	padding: 5px 10px;
+	border-radius: 5px;
+	text-transform: uppercase;
+	font-size: small;
+	font-family: 'space grotesk';
+	transition: all 500ms cubic-bezier(0.44, 0.92, 0.47, 0.88);
+}
+
+.nav-item:hover {
+	background-color: red;
+	color: white;
+}
+
+@media screen and (min-width: 768px) {
+	.nav-item {
+		font-size: medium;
+	}
+}
+
+.text-sec {
+	color: #dcdada;
+}
+
+.bg-main {
+	background-color: #141313;
+}
+
+.pay-btn {
+	background-color: red;
+	background-image: inherit;
 }
 
 @media screen and (max-width: 400px) {
@@ -63,6 +99,10 @@ html {
 
 [aria-current] {
 	color: red;
+}
+
+[aria-current]:hover {
+	color: white;
 }
 
 .szh-menu--state-open {
@@ -302,26 +342,115 @@ div.spinner div.bar12 {
 	width: 600px; */
 }
 
-/* google map end */
+.MuiDialog-root .MuiPaper-root {
+	margin: 10px;
+	max-width: 1024px;
+}
 
-/* vision image */
+.transit {
+	transition-property: all !important;
+	transition-duration: 300ms !important;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
 
-@media (max-width:600px) {
-	.vis{
-		width:70%;
+/** GRADIENT **/
+.yoda {
+	background: #FF0099;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #493240, #FF0099);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #493240, #FF0099);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.wiretap {
+	background: #8A2387;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #F27121, #E94057, #8A2387);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #F27121, #E94057, #8A2387);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.purelust {
+	background: #333333;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #dd1818, #333333);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #dd1818, #333333);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.gradlegray {
+	background: #bdc3c7;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #2c3e50, #bdc3c7);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.vanusa {
+	background: #DA4453;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #89216B, #DA4453);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #89216B, #DA4453);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.taran-tado {
+	background: #23074d;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #cc5333, #23074d);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #cc5333, #23074d);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.red-sunset {
+	background: #355C7D;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #C06C84, #6C5B7B, #355C7D);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #C06C84, #6C5B7B, #355C7D);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+/** END GRADIENT **/
+
+.m-none {
+	margin: 0px !important;
+}
+
+.slider {
+	position: absolute;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	transition: all 2s cubic-bezier(0.44, 0.92, 0.47, 0.88);
+}
+
+.slide-in {
+	animation: slide-in 2s forwards;
+	-webkit-animation: slide-in 2s forwards;
+}
+
+@keyframes slide-in {
+	0% {
+		transform: translateX(50%);
 	}
 
-	.quality, .offer{
-		width:70%;
+	100% {
+		transform: translateX(0%);
 	}
 }
 
-@media (max-width:400px) {
-	.vis{
-		width:90%;
+@-webkit-keyframes slide-in {
+	0% {
+		-webkit-transform: translateX(50%);
 	}
 
-	.quality, .offer{
-		width:90%;
+	100% {
+		transform: translateX(0%);
 	}
 }

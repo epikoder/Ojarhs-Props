@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import { AxiosError } from "axios"
 import { Api } from "../../helpers/api"
 import { parseString } from "../../helpers/helpers"
-import { ApiResponse, Message, MessageOwner, MesssageForm, Service } from "../../Typing.d"
+import { ApiResponse, Message, MessageOwner, MesssageForm, Service } from "../../Typing"
 
 export const loadUserConversations = createAsyncThunk<MessageOwner[]>
     ("user-messages/all", async (payload, { rejectWithValue }) => {

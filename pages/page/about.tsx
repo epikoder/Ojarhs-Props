@@ -1,12 +1,14 @@
+import { useTheme } from "@mui/system";
 import Image from "next/image";
 import React from "react";
 import { Parallax } from "react-parallax";
 import Layout from "../../components/Layout";
 
 const Page = () => {
+	const theme = useTheme()
 	return (
 		<Layout>
-			<div className='text-gray-600 font-light w-full'>
+			<div className='font-light w-full'>
 				<Parallax bgImage='/image/ads1.jpg' className='w-full' strength={500}>
 					<div className='flex flex-col justify-center items-center my-10 lg:my-40'>
 						<div
@@ -17,7 +19,7 @@ const Page = () => {
 						>
 							<div className='border border-gray-300 p-8 lg:p-12 xl:p-16 2xl:p-24 rounded-sm'>
 								<div className='flex flex-col justify-center items-center'>
-									<div className='font-medium text-3xl'>
+									<div className='font-medium text-3xl text-black'>
 										ABOUT<span className='text-red-500'>{" US"}</span>
 									</div>
 									<div>
@@ -41,23 +43,22 @@ const Page = () => {
 					</div>
 				</Parallax>
 
-				<div className='grid grid-cols-1 md:grid-cols-2  justify-center my-4'>
-					<div className='relative md:w-[60%] rounded-lg overflow-hidden w-[70%] h-[30vh] md:h-full mx-auto quality' style={{
-                        backgroundImage:"url('/image/sign.jpg')",
-                        backgroundRepeat:"no-repeat",
-                        objectFit:"contain",
-                        backgroundSize:"cover",
-
-                    }}>						
+				<div className='grid grid-cols-1 md:grid-cols-2  justify-center py-4 min-h-[30vh]'>
+					<div className='relative md:w-[60%] rounded-lg overflow-hidden w-[70%] h-[30vh] xl:h-[40vh] md:h-full mx-auto quality' style={{
+						backgroundImage: "url('/image/aboutus.jpeg')",
+						backgroundRepeat: "no-repeat",
+						objectFit: "cover",
+						backgroundSize: "cover",
+					}}>
 					</div>
-					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
+					<div className='p-4 max-w-md  lg:text-lg mx-auto h-full flex flex-col items-center justify-center'>
 						{`Ojarh Plaza is now open for you to rent and sell to your customers.
 					Our location remains the best and surely very accessible. Our
 					processes are automated for credibility and satisfaction`}
 					</div>
 				</div>
 				<div>
-					<div className='flex flex-col justify-center items-center h-[40vh]'>
+					<div className='flex flex-col justify-center items-center py-4'>
 						<div
 							className='p-2 w-full flex justify-center'
 							style={{
@@ -72,7 +73,7 @@ const Page = () => {
 							>
 								<div className='border border-gray-300 px-6 py-12 md:px-12 md:py-20 lg:px-16 xl:px-16 2xl:p-16 rounded-sm'>
 									<div className='flex flex-col'>
-										<div className='font-medium text-1xl xl:text-2xl'>
+										<div className='font-medium text-1xl xl:text-2xl text-black'>
 											COMMITMENT
 											<span className='text-red-500'>{" TO QUALITY"}</span>
 										</div>
@@ -102,7 +103,7 @@ const Page = () => {
 							layout='fill'
 						/>{" "}
 					</div>
-					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
+					<div className='p-4 max-w-md  lg:text-lg mx-auto flex flex-col justify-center'>
 						{`We take pride in our work, performing to the highest possible standard team work: over values are not
                 achieved on our own. We understand the importance of working with all our partners, whether
                 employees, tenants, suppliers, contractor customers we establish good working relationships and values
@@ -128,7 +129,7 @@ const Page = () => {
 							>
 								<div className='border border-gray-300 px-6 py-12 md:px-12 md:py-20 lg:px-16 xl:px-16 2xl:p-16 rounded-sm'>
 									<div className='flex flex-col'>
-										<div className='font-medium text-1xl xl:text-2xl'>
+										<div className='font-medium text-1xl xl:text-2xl text-black'>
 											OUR<span className='text-red-500'>{" MISSION"}</span>
 										</div>
 										<hr
@@ -177,7 +178,7 @@ const Page = () => {
 							>
 								<div className='border border-gray-300 px-6 py-12 md:px-12 md:py-20 lg:px-16 xl:px-16 2xl:p-16 rounded-sm'>
 									<div className='flex flex-col'>
-										<div className='font-medium text-1xl xl:text-2xl'>
+										<div className='font-medium text-1xl xl:text-2xl text-black'>
 											OUR<span className='text-red-500'>{" VISION"}</span>
 										</div>
 										<hr
@@ -200,7 +201,7 @@ const Page = () => {
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center my-4'>
 					<div className='pl-4 overflow-hidden relative rounded-lg md:w-[80%] w-[70%] h-[30vh] md:h-[38vh] mx-auto quality '>
-						<Image src='/image/vision.jpg' alt='quality' layout='fill' />{" "}
+						<img src='/image/vision.jpg' alt='quality' className="h-full w-full object-cover" />
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
 						{`Our vision is to be premier organization for the delivery of all aspects of property and asset management
@@ -226,7 +227,7 @@ const Page = () => {
 							>
 								<div className='border border-gray-300 px-6 py-12 md:px-12 md:py-20 lg:px-16 xl:px-16 2xl:p-16 rounded-sm'>
 									<div className='flex flex-col'>
-										<div className='font-medium text-1xl xl:text-2xl'>
+										<div className='font-medium text-1xl xl:text-2xl text-black'>
 											WHAT WE<span className='text-red-500'>{" OFFER"}</span>
 										</div>
 										<hr
@@ -247,8 +248,8 @@ const Page = () => {
 						</div>
 					</div>
 				</div>
-				<div className='grid grid-cols-1 md:grid-cols-2 justify-center my-4'>
-					<div className='p-4 max-w-md  lg:text-lg text-slate-500 mx-auto'>
+				<div className='flex flex-col-reverse md:grid md:grid-cols-2 justify-center my-4'>
+					<div className='p-4 max-w-md text-sec lg:text-lg mx-auto'>
 						<div className='font-semibold'>AMENITIES AVAILABLE</div>
 						<div className='space-y-1'>
 							<div>1. Water Supply</div>
@@ -282,13 +283,12 @@ const Page = () => {
 					<div
 						className='relative rounded-lg overflow-hidden md:rounded-none w-[60%] mx-auto md:w-full h-[30vh] md:h-full offer '
 						style={{
-                            backgroundImage:"url('/image/offer.jpg')",
-                            backgroundRepeat:"no-repeat",
-                            objectFit:"contain",
-                            backgroundSize:"cover",
-    
-                        }}
-					>						
+							backgroundImage: "url('/image/offer.jpg')",
+							backgroundRepeat: "no-repeat",
+							objectFit: "contain",
+							backgroundSize: "cover",
+						}}
+					>
 					</div>
 				</div>
 			</div>

@@ -1,3 +1,4 @@
+import { Paper } from "@mui/material"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import Script from "next/script"
@@ -8,6 +9,7 @@ import { RootState, useAppDispatch } from "../../store"
 import { CopyRight } from "../Copyright"
 import Footer from "../Footer"
 import Header from "../Header"
+import Layout from "../Layout"
 import Loader, { PageLoader } from "../Loader"
 import { UserSideBar } from "./UserSideBar"
 
@@ -28,49 +30,29 @@ export const UserDashboardLayout = (props?: { children?: (props?: any) => React.
             router.push('/login')
             return
         }
-        if (user !== undefined && user.is_admin) {
-            router.replace("/admin/login")
+        if (user !== undefined && user.is_admin && authenticated) {
+            router.replace("/admin/dashboard")
             return
         }
     }, [authenticated])
 
-    return <>
-        <div className='duration-300 ease-in-out transition-all' style={{
-            backgroundColor: '#edf3f8'
-        }}>
-            <Head>
-                <title>Ojarh Properties</title>
-                <link rel="shortcut icon" href="/favicon.ico" />
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='anonymous' />
-                <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet" crossOrigin='anonymous' />
-            </Head>
-            <Script src='/scripts/noimage.js'></Script>
-            <Header />
-            <PageLoader />
-            <div className='min-h-[100vh]'>
-                <div className='min-h-[50vh]'>
-                    {(appState === 'completed' && authenticated && user !== undefined) &&
-                        <main className='min-h-[60vh] lg:flex justify-center'>
-                            <div className="lg:max-w-7xl md:flex justify-between w-full">
-                                <div className="md:w-[20%]">
-                                    <UserSideBar />
-                                </div>
-                                <div className={`md:w-[70%] ${props.className ?? ''}`} style={props.style}>
-                                    {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
-                                        {props.children({ authenticated, user, application })}
-                                    </React.Fragment>}
-                                </div>
-                            </div>
-                        </main>}
-                    {(appState === 'pending') &&
-                        <div className='p-4 relative h-[50vh]'>
-                            <Loader />
-                        </div>}
+    return <Layout>
+        {(appState === 'completed' && authenticated && user !== undefined) &&
+            <div className='min-h-[60vh] py-4 lg:flex justify-center'>
+                <div className="lg:max-w-7xl md:flex justify-between w-full">
+                    <div className="md:w-[25%]">
+                        <UserSideBar />
+                    </div>
+                    <div className={`md:w-[70%] ${props.className ?? ''}`} style={props.style}>
+                        {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>
+                            {props.children({ authenticated, user, application })}
+                        </React.Fragment>}
+                    </div>
                 </div>
-                <Footer />
-            </div>
-            <CopyRight className='bg-red text-white' />
-        </div>
-    </>
+            </div>}
+        {(appState === 'pending') &&
+            <div className='p-4 relative h-[50vh]'>
+                <Loader />
+            </div>}
+    </Layout>
 }

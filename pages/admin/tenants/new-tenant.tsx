@@ -1,16 +1,17 @@
 import React from "react"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
 import { useSelector } from "react-redux";
-import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordControlledInput, FormPasswordInput, FormPhoneInput } from "../../../components/FormInput";
+import { ApplianceInput, FormCountryInput, FormInput, FormPhoneInput } from "../../../components/FormInput";
 import { DocumentUpload, ImageUpload } from "../../../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../../../Typing.d";
 import Loader from "../../../components/Loader";
 import { emailValidator } from "../../../helpers/validation";
 import { useRouter } from "next/router";
-import { Switch } from "@mui/material";
+import { Button, CircularProgress, IconButton, Switch } from "@mui/material";
 import List from "../../../helpers/list";
 import { BASEURL } from "../../../constants";
 import { RootState } from "../../../store";
+import { ArrowBack } from "@mui/icons-material";
 
 type createTenantForm = SignUpForm & {
 	upload: string
@@ -123,6 +124,9 @@ const Page = () => {
 
 	return <AdminDashboardLayout>
 		{() => <React.Fragment>
+			<IconButton onClick={router.back}>
+				<ArrowBack />
+			</IconButton>
 			<div className="text-center red text-lg py-2">
 				Add New Tenant
 			</div>
@@ -277,9 +281,9 @@ const Page = () => {
 					}} />
 					<label
 						htmlFor=''
-						className='space-x-4 w-full text-gray-600'
+						className='space-x-4 w-full '
 					>
-						<span className='text-gray-600 mb-2 text-md idden'>
+						<span className=' mb-2 text-md idden'>
 							Profile photo
 						</span>
 						<ImageUpload key={'photo'} handleUpload={(s) => setForm({
@@ -424,11 +428,12 @@ const Page = () => {
 						}} />
 
 						<div className="flex items-center">
-							<span className="text-sm px-4 text-gray-600">
+							<span className="text-sm px-4 ">
 								Second Next of Kin
 							</span>
 							<Switch
 								checked={secondNextofKin}
+								color='success'
 								onChange={() => setSecondNextofKin(!secondNextofKin)}
 							/>
 						</div>
@@ -542,9 +547,9 @@ const Page = () => {
 
 				<label
 					htmlFor=''
-					className='space-x-4 w-full text-gray-600'
+					className='space-x-4 w-full '
 				>
-					<span className='text-gray-600 mb-2 text-md idden'>
+					<span className=' mb-2 text-md idden'>
 						Document Upload
 					</span>
 					<div className="flex justify-center">
@@ -559,29 +564,27 @@ const Page = () => {
 				</label>
 				<div className="col-span-2">
 					<div className="flex items-center justify-center">
-						<span className="text-sm px-4 text-gray-600">
+						<span className="text-sm px-4 ">
 							Already paid for application?
 						</span>
 						<Switch
 							checked={form.paid}
+							color='success'
 							onChange={() => setForm({ ...form, paid: !form.paid })}
 						/>
 					</div>
 					<div className={`text-center text-sm py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 						{message.text !== undefined && message.text}
 					</div>
-					<div className="w-full flex py-2">
-						{!loading ? <>
-							<button
-								type='submit'
-								className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out"
-								onClick={submit}>
-
-								Create
-							</button>
-						</> : <div className="relative bg-red mx-auto text-center py-1 px-2 rounded-full mt-4 w-48 h-10 text-white cursor-wait">
-							<Loader />
-						</div>}
+					<div className="w-full flex py-2 justify-center">
+						<Button
+							type='submit'
+							variant="outlined"
+							disabled={loading}
+							startIcon={loading && <CircularProgress size={14} />}
+							onClick={submit}>
+							Create
+						</Button>
 					</div>
 				</div>
 			</form>

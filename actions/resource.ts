@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
-import { ApiResponse } from "../Typing.d";
+import { ApiResponse } from "../Typing";
 
 export const loadPlans = createAsyncThunk<{ name: string }[]>("load/plans", async (payload, { rejectWithValue }) => {
     try {

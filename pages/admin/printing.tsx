@@ -1,15 +1,15 @@
 import { Edit, Visibility } from "@mui/icons-material";
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, TextField } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, IconButton, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { useSelector } from "react-redux";
 import { money } from "../../helpers/helpers";
 import { RootState, useAppDispatch } from "../../store";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
-import { ApiResponse, Invoice } from "../../Typing";
+import { ApiResponse, Invoice, InvoiceItem } from "../../Typing";
 import { Api } from "../../helpers/api";
 import { toPng } from "html-to-image";
-import { loadInvoices } from "../../redux/admin/admin";
+import { loadInvoices } from "../../actions/admin/admin";
 import NewInvoice from "../../components/admin/NewInvoice";
 import PrintInvoice from "../../components/admin/PrintInvoice";
 import GridTable from "../../components/Grid";
@@ -22,45 +22,26 @@ const columns: GridColDef[] = [
         width: 50,
     },
     {
-        field: 'item',
-        headerName: 'Item',
+        field: 'count',
+        headerName: 'Items',
         width: 150,
         align: 'center',
         headerAlign: 'center',
         filterable: false,
         hideable: false,
         disableColumnMenu: true,
+        renderCell: ({ row }: { row: Invoice }) => <div> {row.items.length} </div>
     },
     {
-        field: 'description',
-        headerName: 'Description',
+        field: 'total',
+        headerName: 'Total',
         headerAlign: 'center',
         align: 'center',
         filterable: false,
         hideable: false,
         disableColumnMenu: true,
-        width: 350,
-    },
-    {
-        field: 'quantity',
-        headerName: 'Quantity',
-        headerAlign: 'center',
-        align: 'center',
-        filterable: false,
-        hideable: false,
-        disableColumnMenu: true,
-        width: 80,
-    },
-    {
-        field: 'amount',
-        headerName: 'Amount',
-        headerAlign: 'center',
-        align: 'center',
-        filterable: false,
-        hideable: false,
-        disableColumnMenu: true,
-        width: 120,
-        renderCell: ({ row }) => <div> {money(row.amount)} </div>
+        width: 200,
+        renderCell: ({ row }) => <div> {money(row.total)} </div>
     },
     {
         field: 'fname',
@@ -70,11 +51,11 @@ const columns: GridColDef[] = [
         filterable: false,
         hideable: false,
         disableColumnMenu: true,
-        width: 250,
+        width: 300,
         renderCell: ({ row }) => <div> {row.lname} {row.fname} </div>
     },
     {
-        field: '',
+        field: 'action',
         headerName: ':',
         headerAlign: 'center',
         align: 'center',
@@ -82,7 +63,7 @@ const columns: GridColDef[] = [
         hideable: false,
         disableColumnMenu: true,
         width: 30,
-        renderCell: ({ row }) => <div className="cursor-pointer" onClick={() => row.view()}> <Visibility fontSize="small" /> </div>
+        renderCell: ({ row }) => <IconButton className="cursor-pointer" onClick={() => row.view()}> <Visibility fontSize="small" /> </IconButton>
     },
 ];
 
@@ -97,9 +78,10 @@ function Page() {
     }>({
         open: false
     })
+    const [_loading, setLoading] = React.useState<boolean>(false)
 
     const refNewForm = React.createRef<{
-        data: Invoice,
+        data: InvoiceItem[],
         message?: React.Dispatch<React.SetStateAction<JSX.Element>>
     }>()
     const refPreview = React.createRef<HTMLDivElement>()
@@ -111,15 +93,16 @@ function Page() {
     const toggleNewForm = () => setNewFormOpen(!newFormOpen)
 
     const createNew = async (loading: any) => {
-        if (refNewForm.current.data.quantity < 1 || refNewForm.current.data.amount < 1) return
         loading.busy()
         refNewForm.current.message(undefined)
         try {
-            const { data } = await Api().post<ApiResponse<Invoice>>('/admin/invoice', {
-                ...refNewForm.current.data,
-                amount: parseInt(refNewForm.current.data.amount.toString()),
-                quantity: parseInt(refNewForm.current.data.quantity.toString())
-            })
+            const body: Partial<Invoice> = {
+                items: refNewForm.current.data.map(i => ({
+                    ...i, amount: parseInt(i.amount.toString()),
+                    quantity: parseInt(i.quantity.toString())
+                })),
+            }
+            const { data } = await Api().post<ApiResponse<Invoice>>('/admin/invoice', body)
             refNewForm.current.message(<div className="text-blue-500">{'Created successfully'}</div>)
             setTimeout(() => {
                 setNewFormOpen(false)
@@ -129,7 +112,14 @@ function Page() {
                 })
             }, 800)
         } catch (error) {
-            refNewForm.current.message(<div className="text-red-500">{'Error connecting to server'}</div>)
+            loading.idle()
+            switch (error.response.status) {
+                case 400: {
+                    refNewForm.current.message(<div className="text-red-500">{'Please validate the form'}</div>)
+                    break
+                }
+                default: refNewForm.current.message(<div className="text-red-500">{'Error connecting to server'}</div>)
+            }
         }
         loading.idle()
     }
@@ -140,19 +130,22 @@ function Page() {
     }
 
     const handlePrint = async () => {
+        setLoading(true)
         const frameId = 'frameID'
         const parentId = 'elementID'
+        const width = '302.362204728px'
         try {
-            if (document.getElementById(frameId) !== null) { document.removeChild(document.getElementById(frameId)) }
             const frame = document.createElement("iframe")
             frame.id = frameId
             frame.style.position = "absolute";
             frame.style.top = "-10000px";
-            frame.style.width = '302.362204728px'
+            frame.style.width = width
             document.body.appendChild(frame);
 
             const img = document.createElement("img")
-            img.src = await toPng(refPreview.current, { quality: 1 })
+            console.log('GOT HERE', refPreview.current)
+            img.src = await toPng(refPreview.current || document.getElementById('print-page') as HTMLDivElement, { quality: 1 })
+            img.width = 302.362204728
 
             const parent = document.createElement("div")
             parent.style.display = "flex"
@@ -163,10 +156,12 @@ function Page() {
             frame.contentWindow.document.getElementsByTagName("body")[0].append(parent)
             setTimeout(() => {
                 const i = setInterval(function () {
-                    if (frame.contentWindow.document.getElementById(parentId) !== null) {
+                    console.log((frame.contentWindow.document || frame.contentDocument))
+                    if ((frame.contentWindow.document || frame.contentDocument).readyState === 'complete') {
                         frame.focus();
                         frame.contentDocument.title = 'invoice-' + preview.invoice.id
                         frame.contentWindow.print();
+                        setLoading(false)
                         closePreview()
                         frame.parentNode.removeChild(frame);
                         clearInterval(i)
@@ -176,6 +171,7 @@ function Page() {
             window.focus();
         } catch (error) {
             console.log(error)
+            setLoading(false)
         }
     }
 
@@ -226,8 +222,8 @@ function Page() {
                                 size='small'
                                 fullWidth
                                 onClick={handlePrint}
-                                disabled={loading.state}
-                                startIcon={loading.state && <CircularProgress size={14} />}
+                                disabled={_loading}
+                                startIcon={_loading && <CircularProgress size={14} />}
                             >
                                 PRINT
                             </Button>

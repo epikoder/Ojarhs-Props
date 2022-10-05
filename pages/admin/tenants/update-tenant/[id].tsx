@@ -7,11 +7,12 @@ import { ApiResponse, NextOfKin, NextOfKinApi } from "../../../../Typing.d";
 import Loader from "../../../../components/Loader";
 import { emailValidator } from "../../../../helpers/validation";
 import { useRouter } from "next/router";
-import { Switch } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
 import List from "../../../../helpers/list";
 import { BASEURL } from "../../../../constants";
 import { RootState } from "../../../../store";
 import { Api } from "../../../../helpers/api";
+import { ArrowBack } from "@mui/icons-material";
 
 type updateTenantForm = {
 	fname: string
@@ -34,16 +35,30 @@ type updateTenantForm = {
 
 }
 
+const _kin = { kcountry: '', kaddress: '', kemail: '', kfname: '', klga: '', klname: '', kphone: 0, kstate: '' }
 const Page = () => {
 	const [form, setForm] = React.useState<updateTenantForm>({
+		address: '',
 		country: '',
 		appliances: '',
 		phone: '' as unknown as number,
-		next_of_kins: [{ kcountry: '' }],
+		next_of_kins: [_kin],
+		business: '',
+		email: '',
+		fname: '',
+		guarantor_address: '',
+		guarantor_name: '',
+		guarantor_phone: 0,
+		interested_shop: '',
+		lga: '',
+		lname: '',
+		password: '',
+		photo: '',
+		state: ''
 	} as updateTenantForm)
 
 	const [loading, setLoading] = React.useState<boolean>(false);
-	const [nextOfKinForm, setNextOfKinForm] = React.useState<NextOfKin[]>([{} as NextOfKin])
+	const [nextOfKinForm, setNextOfKinForm] = React.useState<NextOfKin[]>([_kin as NextOfKin])
 	const [secondNextofKin, setSecondNextofKin] = React.useState<boolean>(false)
 	const [errors, setErrors] = React.useState<updateTenantForm>({} as updateTenantForm)
 	const formRef = React.useRef<HTMLFormElement>()
@@ -60,7 +75,7 @@ const Page = () => {
 			if (nextOfKinForm.length === 2) {
 				setNextOfKinForm(nextOfKinForm)
 			} else {
-				setNextOfKinForm([nextOfKinForm[0], { kcountry: '' } as NextOfKin])
+				setNextOfKinForm([nextOfKinForm[0], _kin as NextOfKin])
 			}
 		} else {
 			setNextOfKinForm([nextOfKinForm[0]])
@@ -71,7 +86,7 @@ const Page = () => {
 		if (!router.isReady) return
 		const req = async () => {
 			try {
-				const { data, status } = await Api().get('/admin/tenants/find?id=' + router.asPath.split('/').pop())
+				const { data } = await Api().get('/admin/tenants/find?id=' + router.asPath.split('/').pop())
 
 				const nk = (data.data.next_of_kins as NextOfKinApi[]).map(e => {
 					const kin: NextOfKin = {
@@ -159,8 +174,11 @@ const Page = () => {
 
 	return <AdminDashboardLayout>
 		{() => <React.Fragment>
+			<IconButton onClick={router.back}>
+				<ArrowBack />
+			</IconButton>
 			<div className="text-center red text-lg py-2">
-				Add New Tenant
+				Update Tenant
 			</div>
 			<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
 				{message.text !== undefined && message.text}
@@ -219,7 +237,7 @@ const Page = () => {
 						}
 					}} />
 					<ApplianceInput
-						value={form.appliances.split(',')}
+						value={form.appliances !== '' ? form.appliances.split(',') : []}
 						handleChange={(arr) => {
 							setForm({ ...form, appliances: List.toString(arr) })
 						}}

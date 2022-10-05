@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fixSpace } from "../helpers/helpers";
-import { loadProperty } from "../redux/property";
+import { loadProperty } from "../actions/property";
 import { LoadState, Space } from "../Typing.d";
 
 const initialState = {

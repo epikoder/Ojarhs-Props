@@ -1,7 +1,6 @@
-import { TextField } from "@mui/material";
+import { Button, Card, TextField } from "@mui/material";
 import React from "react";
 import { Testimony } from "../Typing.d";
-import Button, { OjarhButton } from "./Button";
 import TestimonialSlide from "./TestimonialSlide";
 
 
@@ -10,25 +9,29 @@ function Testimonials({ testimony }: { testimony: Testimony[] }) {
     return (
         <div>
             {/* Testimonies */}
-            <div className="flex flex-col lg:flex-row gap-5 rounded-lg overflow-hidden md:max-w-lg lg:max-w-full mx-auto">
+            <div className="flex flex-col space-y-10 justify-center items-center lg:flex-row gap-5 rounded-lg overflow-hidden md:max-w-lg lg:max-w-full mx-auto my-20">
                 <TestimonialSlide testimony={testimony} />
                 {/* Report  */}
-                <div className=" lg:w-5/12 flex flex-col space-y-2 bg-gray-100 border shadow-sm shadow-gray-400 p-4 rounded-lg">
+                <Card className="max-w-md w-full flex flex-col space-y-2 p-4">
                     <h1>Review</h1>
                     <TextField
                         label='Subject'
                         variant="outlined"
                         size="small"
-                        className="w-4/5 text-sm"
+                        className="text-sm"
                         placeholder="Subject" />
                     <TextField
                         label='Review'
                         variant="outlined"
                         size="small"
-                        className="w-4/5 text-sm"
+                        className="text-sm"
                         placeholder="Review" />
-                    <OjarhButton text="Submit" className="hover:bg-transparent hover:text-red-500" />
-                </div>
+                    <Button
+                        variant="outlined"
+                    >
+                        SUBMIT
+                    </Button>
+                </Card>
             </div>
         </div>
     )

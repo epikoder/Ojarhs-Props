@@ -12,8 +12,6 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	deleteProperty,
-	// getProperty,
-	updateProperty,
 } from "../features/admin/propertySlice";
 
 type Props = {
@@ -22,10 +20,7 @@ type Props = {
 };
 
 function DashProps({ Prop, setOpen }: Props) {
-
-
 	const str = Prop.amount.toString();
-
 	const price = parseInt(str);
 
 	return (

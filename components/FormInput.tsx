@@ -1,5 +1,5 @@
 import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material"
-import { FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
+import { Card, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { BASEURL } from "../constants"
@@ -30,7 +30,7 @@ export const FormInput = ({ props }: {
                 required={props.required}
                 placeholder={props.title}
                 defaultValue={props.defaultValue}
-                value={props.value !== undefined ? props.value : ''}
+                value={props.value !== undefined ? props.value : undefined}
                 error={props.message !== '' && props.message !== undefined}
                 onChange={(e) => {
                     props.handleChange(e.target.value)
@@ -46,7 +46,7 @@ export const FormPhoneInput = ({ props }: {
         required?: boolean
         message?: string
         type?: React.HTMLInputTypeAttribute
-        value?: string
+        value?: string | number
         handleChange: (s: any) => void
     }
 }) => {
@@ -58,7 +58,7 @@ export const FormPhoneInput = ({ props }: {
                 size="small"
                 type={props.type}
                 className="w-full text-sm"
-                value={props.value !== undefined ? props.value : ''}
+                value={props.value !== undefined ? props.value : undefined}
                 required={props.required}
                 placeholder={"090XXXXXXXX"}
                 error={props.message !== '' && props.message !== undefined}
@@ -249,7 +249,7 @@ export const ApplianceInput = ({ value, handleChange }: {
             handleChange(list)
         }
     }, [list])
-    
+
     React.useEffect(() => {
         if (value != undefined && value.length > 0 && value[0] !== "" && ref.current == false) {
             ref.current = true
@@ -258,18 +258,21 @@ export const ApplianceInput = ({ value, handleChange }: {
     }, [value])
 
     return <>
-        <div className="min-h-[3rem] border border-gray-300 bg-white rounded-md text-gray-600 flex flex-wrap" >
+        <Card className="min-h-[3rem] rounded-md flex flex-wrap p-1" >
             {(list).map((s, i) =>
-                <div key={i} className='bg-gray-100 px-2 py-1 flex items-center space-x-1 rounded-full m-1'>
+                <Card key={i} className='px-2 py-1 flex items-center text-sec space-x-1 bg-gray-500 rounded-full m-1'>
                     <span>{s}</span>
-                    <Cancel className="text-red-500" fontSize="small" onClick={() => {
+                    <Cancel fontSize="small" onClick={() => {
                         setList(List.remove(list, i))
                     }} />
-                </div>)}
+                </Card>)}
             <input
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 className="px-2 outline-none max-w-[320px] w-full rounded-md"
+                style={{
+                    backgroundColor: 'transparent',
+                }}
                 type={'text'}
                 placeholder='Enter to save'
                 onKeyDownCapture={e => {
@@ -281,6 +284,6 @@ export const ApplianceInput = ({ value, handleChange }: {
                         setText('')
                     }
                 }} />
-        </div>
+        </Card>
     </>
 }

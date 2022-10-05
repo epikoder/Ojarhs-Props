@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { ReceiptComponent } from "../../components/user/Receipt";
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { addMonth, money } from "../../helpers/helpers";
-import { loadUserProperties, loadUserReceipt, loadUserServices } from "../../redux/user/dashboard";
+import { loadUserProperties, loadUserReceipt, loadUserServices } from "../../actions/user/dashboard";
 import { RootState, useAppDispatch } from "../../store";
 import { Receipt, Service, Space } from "../../Typing.d";
 import { toPng } from 'html-to-image';
@@ -125,7 +125,7 @@ const Page = () => {
     }
     return <UserDashboardLayout>
         {({ user }) => <>
-            <div className="min-h-[20vh] h-[100vh] md:h-full p-2 lg:p-4">
+            <div className="h-[90vh] md:h-full p-2 lg:p-4">
                 <div>
                     Receipts
                 </div>

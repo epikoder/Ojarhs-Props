@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { Service, Space } from "../Typing.d";
-import Card from "./Card";
+import OjarhCard from "./Card";
 
 interface Shops {
 	store: Space[] | Service[];
@@ -12,18 +12,17 @@ interface Shops {
 
 function Plaza({ name, store, prop, perPage = 12 }: Shops) {
 	const router = useRouter()
-	return (
-		<div>
-			<h1 className='text-black text-center my-4 uppercase text-md lg:text-3xl'>
-				{" "}
-				<span className='uppercase red lg:text-3xl text-md'>Ojarh</span>{" "}
+	return <>
+		{store.length > 0 && <div>
+			<h1 className='text-center my-4 uppercase text-2xl lg:text-5xl'>
+				<span className='uppercase red text-md'>Ojarh</span>{" "}
 				{`${" "}  ${name}`}
 			</h1>
 
 			<div className="flex justify-center">
-				<div className='sm:grid grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[50vw] xl:max-w-[70vw] max-w-[90vw]'>
+				<div className='sm:grid grid-cols-2 lg:grid-cols-3 gap-8 items-center justify-center mx-auto 2xl:max-w-[60vw] xl:max-w-[80vw] max-w-[90vw]'>
 					{store.map((shop: any, index: number) => {
-						if (index + 1 !== perPage) return <Card key={index} data={shop} />
+						if (index + 1 !== perPage) return <OjarhCard key={index} data={shop} />
 					})}
 				</div>
 			</div>
@@ -37,8 +36,8 @@ function Plaza({ name, store, prop, perPage = 12 }: Shops) {
 					See more
 				</button>}
 			</div>}
-		</div>
-	);
+		</div>}
+	</>;
 }
 
 export default Plaza;

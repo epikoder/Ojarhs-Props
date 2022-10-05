@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createAdminMessage, loadAdminConverstion, loadAdminDisputes, loadAdminReports } from "../../redux/admin/admin";
+import { createAdminMessage, loadAdminConverstion, loadAdminDisputes, loadAdminReports } from "../../actions/admin/admin";
 import { LoadState, Message, MessageOwner, MessageState } from "../../Typing.d";
 
 const initialState: MessageState = {

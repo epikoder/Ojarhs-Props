@@ -25,7 +25,7 @@ const Page = () => {
         setFError({} as Staff)
         try {
             loading.busy()
-            const { data } = await Api().post<ApiResponse>('/admin/staffs/create', JSON.stringify({ ...form, fee: parseInt(form.fee as unknown as string) }))
+            const { data } = await Api().post<ApiResponse>('/admin/staffs', JSON.stringify({ ...form, fee: parseInt(form.fee as unknown as string) }))
             if (data.status === 'success') {
                 setTimeout(() => {
                     router.back()
@@ -33,7 +33,8 @@ const Page = () => {
                 setMessage('Staff created successfully')
             }
         } catch (error) {
-            switch (error.respsone.status) {
+            console.log(error)
+            switch (error.response.status) {
                 case 400: {
                     const err = (error.response.data as ApiResponse).error
                     setFError(err as unknown as Staff)
@@ -54,8 +55,8 @@ const Page = () => {
 
     return <AdminDashboardLayout>
         {({ loading }) => <>
-            <div className="max-w-3xl w-[90vw] mx-auto">
-                <div className="text-center text-red-500 text-lg">
+            <div className="max-w-2xl w-[90vw] md:w-[60vw] mx-auto">
+                <div className="text-center text-lg">
                     New Staff
                 </div>
                 <div className="p-2 shadow-md rounded-md">

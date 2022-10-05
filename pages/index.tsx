@@ -7,7 +7,7 @@ import Notice from "../components/Notice";
 import { PropertyAdvert } from "../components/Adverts";
 import Testimonials from "../components/Testimonials";
 import Layout from "../components/Layout";
-import { loadAdverts, loadIndex, loadNotice } from "../redux";
+import { loadAdverts, loadIndex, loadNotice } from "../actions";
 import { RootState, useAppDispatch } from "../store";
 import { CardLoader } from "../components/Loader";
 import { useSelector } from "react-redux";
@@ -32,60 +32,86 @@ const IndexSlider = () => {
 	const slides: indexSliderType[] = [
 		{
 			apiImage: false,
-			postion: 'left',
-			gravity: 'end',
+			postion: 'center',
+			gravity: 'center',
 			image: 'slider1.jpeg',
 			text: 'Welcome to Ojarh plaza, pay for your office and warehouse'
 		},
 		{
 			apiImage: false,
-			postion: 'right',
+			postion: 'center',
 			gravity: 'center',
 			image: 'slider2.jpeg',
 			text: ' Office, Shop, and warehouse available for rent at the heart of Anambra'
 		},
 		{
 			apiImage: false,
-			postion: 'right',
+			postion: 'center',
 			gravity: 'center',
 			image: 'slider3.jpeg',
 			text: 'Signup and advertise your services'
 		},
 		{
 			apiImage: false,
-			postion: 'right',
+			postion: 'center',
 			gravity: 'center',
 			image: 'slider4.jpeg',
-			text: 'Signup Now'
+			text: 'Dont\' Have an account Signup Now!!'
 		},
 	]
 
+	const ref = React.useRef<HTMLSpanElement[]>([])
+	const _ = (index: number) => {
+		const els: HTMLCollectionOf<HTMLSpanElement> = document.getElementsByClassName(index.toString() + '-slider') as HTMLCollectionOf<HTMLSpanElement>
+		Array.from(Array(els.length).keys()).forEach(e => {
+			if (ref.current !== undefined && ref.current !== null) {
+				ref.current.forEach(k => {
+					k.className = k.className.replaceAll('slide-in', '').trim()
+				})
+			}
+			const el = els[e]
+			el.className += ' slide-in'
+		})
+		ref.current = Array.from(Array(els.length).keys()).map(i => els[i])
+	}
+
 	return <Carousel
+		onChange={_}
 		showThumbs={false}
 		showArrows={true}
 		showStatus={false}
 		autoPlay
 		emulateTouch
 		infiniteLoop
-		transitionTime={1000}
+		transitionTime={1500}
 		showIndicators
 		stopOnHover
 	>
 		{slides.map((s, i) =>
-			<div key={i} className="h-[40vh] md:h-[70vh] relative" style={{
+			<div key={i} className="h-[40vh] md:h-[70vh] lg:h-[80vh] relative" style={{
 				backgroundImage: `url(${s.apiImage ? resolveFilePath(s.image) : '/image/' + s.image})`,
 				backgroundRepeat: 'no-repeat',
 				objectFit: 'cover',
 				backgroundSize: 'cover'
 			}}>
-				<div className={`${s.postion}-10 absolute flex flex-col justify-${s.gravity} h-full max-w-[40%]`} >
-					<div className={`p-2 m-4`} style={{
-						backgroundColor: '#ffffffa1'
+				<div className={`${s.postion !== 'center' ? '' : 'items-center'} flex flex-col justify-${s.gravity} h-full w-full`} >
+					<div className={`p-2 m-4 max-w-[50%] lg:max-w-[30%] absolute ${s.postion !== 'center' ? s.postion + '-10' : ''}`} style={{
+						backgroundColor: '#0d0d0d89'
 					}}>
-						<span className={`text-${s.textColor}-500 text-md md:text-md`}
-							style={{
-								fontFamily: 'space grotesk'
-							}}>{s.text}</span>
+
+						<div className="relative">
+							<div className="w-1/2 bg-white h-2 absolute -top-3 -left-2"></div>
+							<div className="w-2 bg-white h-[50%] absolute -top-3 -left-2"></div>
+							<div className="w-1/2 bg-white h-2 absolute -bottom-3 -right-2"></div>
+							<div className="w-2 bg-white h-[50%] absolute -bottom-3 -right-2"></div>
+							<div className="p-2 lg:p-8">
+								<span className={`${i.toString() + "-slider"} ${i === 0 ? 'slide-in' : ''} text-${s.textColor || ''}-500 ease-linear text-xl md:text-3xl slider`}
+									style={{
+										fontFamily: 'space grotesk'
+									}}>{s.text}</span>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -103,53 +129,60 @@ function Home() {
 	}, [dispatch]);
 
 	return (
-		<div>
-			<Layout>
-				<div className='space-y-4'>
-					<TopSection />
-					<div className='justify-center hidden md:flex bg-white'>
-						<div className='mx-4 max-w-xl lg:max-w-4xl my-2'>
-							<Search />
+		<Layout>
+
+			<div className='space-y-4'>
+				<div >
+					<IndexSlider />
+				</div>
+				<Card className='justify-center flex'>
+					<div className='mx-4 w-full max-w-xl lg:max-w-4xl my-2'>
+						<Search />
+					</div>
+				</Card>
+				<TopSection />
+				<HomeSignUp />
+				{state === "pending" && <CardLoader />}
+				{state === "failed" && (
+					<div>
+						<div className='text-center'>
+							<span className='text-red-500'>ERROR</span> | Reload page
 						</div>
 					</div>
-					<HomeSignUp />
-					{state === "pending" && <CardLoader />}
-					{state === "failed" && (
-						<div>
-							<div className='text-center'>
-								<span className='text-red-500'>ERROR</span> | Reload page
-							</div>
-						</div>
-					)}
-					{state === "success" && typeof data === "object" && (
-						<>
-							<Plaza name='plaza shops' store={data.shops} prop='' />
-							<Notice />
-							<Plaza name='plaza office' store={data.office} prop='' />
-							<Card className='p-2 grid grid-cols-1 md:grid-cols-2'>
-								<div>
-									<div className='uppercase text-lg font-semibold px-4'>
-										About Ojarh <span className='text-red-500'>Properties</span>
-									</div>
-									<div className='p-4 max-w-md  lg:text-lg text-slate-500'>
-										{`Ojarh Plaza is now open for you to rent and sell to your customers.
+				)}
+				{state === "success" && typeof data === "object" && (
+					<>
+						<Plaza name='plaza shops' store={data.shops} prop='' />
+						<Notice />
+						<Plaza name='plaza office' store={data.office} prop='' />
+						<Card className='p-2 grid grid-cols-1 md:grid-cols-2'>
+							<div className="text-center flex flex-col justify-center items-center py-4 md:p-0">
+								<div className='uppercase text-lg font-semibold px-4'>
+									About Ojarh <span className='text-red-500'>Properties</span>
+								</div>
+								<div className='p-4 max-w-[28rem]  lg:text-lg'>
+									{`Ojarh Plaza is now open for you to rent and sell to your customers.
 					            Our location remains the best and surely very accessible. Our
 					            processes are automated for credibility and satisfaction`}
-									</div>
 								</div>
-								<div className='relative overflow-hidden md:rounded-r-lg md:w-[100%] rounded-lg h-[30vh] md:h-full' style={{backgroundImage:'url("/image/tower.jpg")', backgroundRepeat:"no-repeat", objectFit:"contain",backgroundSize:"cover"}}>
-									{/* <Image src='/image/sign.jpg' layout='fill' /> */}
-								</div>
-							</Card>
-							<Adverts />
-							<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
-							<Plaza name='Services' store={data.services} prop='' />
-							<Testimonials testimony={data.testimonies} />
-						</>
-					)}
-				</div>
-			</Layout>
-		</div>
+							</div>
+							<div className='relative md:w-[80%] rounded-lg overflow-hidden w-full h-[50vh] md:h-[50vh] mx-auto' style={{
+								backgroundImage: "url('/image/aboutus.jpeg')",
+								backgroundRepeat: "no-repeat",
+								objectFit: "cover",
+								backgroundSize: "cover",
+							}}>
+							</div>
+						</Card>
+						<PropertyAdvert />
+						<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
+						<Plaza name='Services' store={data.services} prop='' />
+						<Testimonials testimony={data.testimonies} />
+					</>
+				)}
+			</div>
+
+		</Layout>
 	);
 }
 

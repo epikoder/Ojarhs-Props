@@ -74,10 +74,10 @@ const Page = () => {
                 <div>
                     <IconButton
                         onClick={() => router.back()}>
-                        <ArrowBack className="text-red-500" fontSize="medium" />
+                        <ArrowBack />
                     </IconButton>
                 </div>
-                <div className="text-center text-red-500 text-lg">
+                <div className="text-center text-lg">
                     Update Expenses
                 </div>
                 <div className="p-2 shadow-md rounded-md">
@@ -102,7 +102,7 @@ const Page = () => {
                                 placeholder='Job Description'
                                 value={form.description}
                                 required
-                                className="w-full h-36 p-2 border border-gray-300 rounded-md"
+                                className="w-full h-36 p-2 border border-gray-300 bg-transparent rounded-md"
                                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                             />
                         </div>

@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import React, { } from "react"
 import { useSelector } from "react-redux"
 import { addMonth, money } from "../../helpers/helpers"
-import { loadUserProperties } from "../../redux/user/dashboard"
+import { loadUserProperties } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { MoreVert } from "@mui/icons-material"
@@ -85,7 +85,7 @@ const columns: GridColDef[] = [
 const ActionCell = ({ row }: { row: any }) => {
     const router = useRouter()
     return KMenu({
-        button: <MoreVert fontSize="small" />,
+        button: <MoreVert fontSize="small" className='text-white' />,
         menu: [
             (<span className="text-sm" key={1} onClick={() => router.push('/property/' + row.slug)} >VIEW</span>),
             (<span className="text-sm" key={2} onClick={() => router.push('/user/packout/' + row.slug)} >REQUEST PACKOUT</span>)
@@ -103,12 +103,11 @@ export const UserDashboardProperties = () => {
 
     return (
         <div className="my-4 max-w-2xl" style={{ height: 400 }}>
-            {state === 'success' && data !== undefined && <DataGrid
+            <DataGrid
                 rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
                 columns={columns}
-                pageSize={10}
-                
-            />}
+                loading={state === 'pending'}
+            />
         </div>
     )
 }

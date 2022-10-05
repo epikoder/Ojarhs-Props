@@ -1,8 +1,8 @@
 import { STORAGEURL } from "../constants"
 import { Space } from "../Typing.d";
 
-export const resolveFilePath = (s: string): string => { return s !== "" ? STORAGEURL + '/' + s : undefined };
-export const money = (amount: number): string => "₦" + amount.toLocaleString('en-US')
+export const resolveFilePath = (s: string): string | undefined => { return s !== "" ? STORAGEURL + '/' + s : undefined };
+export const money = (amount: number): string => "₦" + (amount !== undefined ? amount.toLocaleString('en-US') : 0.00)
 export const addMonth = (date: Date, months: number): string => {
     const _ = new Date(date)
     return date !== undefined && date !== null ? new Date(_.setMonth(_.getMonth() + months)).toLocaleDateString() : "Not Available"

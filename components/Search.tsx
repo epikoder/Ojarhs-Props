@@ -2,7 +2,7 @@ import { Button, Slider, TextField } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { money } from "../helpers/helpers"
-import { searchProperty, searchServices } from "../redux/property"
+import { searchProperty, searchServices } from "../actions/property"
 import { useAppDispatch } from "../store"
 import { PaymentPlans, PropertyType } from "./Resource"
 
@@ -65,11 +65,11 @@ export const Search = () => {
                     </div>
                     <div className="my-2 w-full px-4">
                         <div className="flex justify-end">
-                            <div className="text-gray-500 text-xs mx-2">
+                            <div className="text-xs mx-2">
                                 {money(calValue(minMax[0]))}
                             </div>
                             <span className="text-red-500 text-xs  mx-2" >TO</span>
-                            <div className="text-gray-500 text-xs  mx-2">
+                            <div className="text-xs  mx-2">
                                 {money(calValue(minMax[1]))}
                             </div>
                         </div>
@@ -84,10 +84,11 @@ export const Search = () => {
                     </div>
                     <div className="flex justify-end">
                         <div className="flex flex-col justify-center">
-                            <Button onClick={() => router.push(`/properties?search=${form.search}&type=${form.type}&plan=${form.plan}&min=${minMax[0] === 0 ? '' : calValue(minMax[0])}&max=${minMax[1] === 100 ? '' : calValue(minMax[1])}`)}>
-                                <div className="text-white uppercase bg-red-500 hover:bg-white hover:text-red-500 border border-red-500 px-2 py-1 duration-300 transition-all ease-in-out cursor-pointer">
-                                    search
-                                </div>
+                            <Button
+                                onClick={() => router.push(`/properties?search=${form.search}&type=${form.type}&plan=${form.plan}&min=${minMax[0] === 0 ? '' : calValue(minMax[0])}&max=${minMax[1] === 100 ? '' : calValue(minMax[1])}`)}
+                                variant='outlined'
+                            >
+                                search
                             </Button>
                         </div>
                     </div>
@@ -159,11 +160,11 @@ export const SearchProperties = () => {
             </div>
             <div className="px-4 lg:w-[30vw]">
                 <div className="flex justify-end">
-                    <div className="text-gray-500 text-xs mx-2">
+                    <div className="text-xs mx-2">
                         {money(calValue(minMax[0]))}
                     </div>
                     <span className="text-red-500 text-xs  mx-2" >TO</span>
-                    <div className="text-gray-500 text-xs  mx-2">
+                    <div className="text-xs  mx-2">
                         {money(calValue(minMax[1]))}
                     </div>
                 </div>
@@ -178,10 +179,9 @@ export const SearchProperties = () => {
             </div>
         </div>
         <div className="my-1">
-            <Button onClick={search}>
-                <div className="text-white uppercase bg-red-500 hover:bg-white hover:text-red-500 border border-red-500 px-2 py-1 duration-300 transition-all ease-in-out cursor-pointer">
-                    search
-                </div>
+            <Button onClick={search}
+                variant='outlined'>
+                search
             </Button>
         </div>
     </div>
@@ -196,7 +196,13 @@ export const SearchServices = () => {
     })
 
     React.useEffect(() => {
-        dispatch(searchServices(''))
+        const q = router.query
+        setForm({
+            search: q.search as string || '',
+            plan: q.plan as string || ''
+        })
+        const qs = `search=${q.search as string || ''}&plan=${q.plan as string || ''}&min=${minMax[0] === 0 ? '' : calValue(minMax[0])}&max=${minMax[1] === 100 ? '' : calValue(minMax[1])}`
+        dispatch(searchServices(qs))
     }, [])
 
     const search = () => {
@@ -227,11 +233,11 @@ export const SearchServices = () => {
             </div>
             <div className="px-4 lg:w-[30vw]">
                 <div className="flex justify-end">
-                    <div className="text-gray-500 text-xs mx-2">
+                    <div className="text-xs mx-2">
                         {money(calValue(minMax[0]))}
                     </div>
                     <span className="text-red-500 text-xs  mx-2" >TO</span>
-                    <div className="text-gray-500 text-xs  mx-2">
+                    <div className="text-xs  mx-2">
                         {money(calValue(minMax[1]))}
                     </div>
                 </div>
@@ -246,10 +252,9 @@ export const SearchServices = () => {
             </div>
         </div>
         <div className="my-1">
-            <Button onClick={search}>
-                <div className="text-white uppercase bg-red-500 hover:bg-white hover:text-red-500 border border-red-500 px-2 py-1 duration-300 transition-all ease-in-out cursor-pointer">
-                    search
-                </div>
+            <Button onClick={search}
+                variant='outlined'>
+                search
             </Button>
         </div>
     </div>

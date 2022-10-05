@@ -1,9 +1,10 @@
 import { Delete } from "@mui/icons-material";
-import { Button, Dialog, DialogContent, IconButton, TextField } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogContent, IconButton, MenuItem, Select, TextField } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import GridTable from "../../../components/Grid";
+import { ImageUpload } from "../../../components/ImageUpload";
 import { BASEURL } from "../../../constants";
 import { Api } from "../../../helpers/api";
 import { ApiResponse, LoadState, Notice } from "../../../Typing";
@@ -34,6 +35,7 @@ const columns: GridColDef[] = [
 		hideable: false,
 		disableColumnMenu: true,
 		width: 500,
+		renderCell: ({ row }: { row: Notice }) => <div> {row.type === 'image' ? 'Image' : row.content} </div>
 	},
 	{
 		field: '',
@@ -124,15 +126,14 @@ function Page() {
 
 const NewNoticeForm = ({ close }: { close: () => void }) => {
 	const [loading, setLoading] = React.useState(false)
-	const [form, setForm] = React.useState<{
-		title: string
-		content: string
-	}>({
+	const [form, setForm] = React.useState<Notice>({
 		title: '',
-		content: ''
+		content: '',
+		type: 'text'
 	})
 
 	const create = async () => {
+		if (form.title === '' || form.content === '') return
 		setLoading(true)
 		try {
 			await Api().post('/admin/notice', JSON.stringify(form))
@@ -156,12 +157,35 @@ const NewNoticeForm = ({ close }: { close: () => void }) => {
 					size="small" />
 			</div>
 			<div>
-				<textarea onChange={(e) => setForm({ ...form, content: e.target.value })} className="h-52 w-full border border-gray-300 rounded-md p-2" placeholder="Notice..." />
+				<Select
+					size="small"
+					value={form.type}
+					fullWidth
+					onChange={e => setForm({ ...form, type: e.target.value as 'text' | 'image' })}
+				>
+					{['image', 'text'].map((t, i) => <MenuItem value={t} key={i}>
+						{t}
+					</MenuItem>)}
+				</Select>
 			</div>
-			<div>
+			{form.type === 'text'
+				?
+				<div>
+					<textarea onChange={(e) => setForm({ ...form, type: 'text', content: e.target.value })} className="h-52 w-full border border-gray-300 bg-transparent rounded-md p-2" placeholder="Notice..." />
+				</div>
+				:
+				<div>
+					<ImageUpload
+						height={280}
+						width={'100%'}
+						handleUpload={(s) => setForm({ ...form, type: 'image', content: s })}
+					/>
+				</div>}
+			<div className="flex justify-center">
 				<Button
 					onClick={create}
 					disabled={loading}
+					startIcon={loading && <CircularProgress size={14} />}
 					variant="outlined" size='small'>
 					CREATE
 				</Button>

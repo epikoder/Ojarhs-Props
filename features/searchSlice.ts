@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { searchProperty, searchServices } from "../redux/property";
+import { searchProperty, searchServices } from "../actions/property";
 import { LoadState, Service, Space } from "../Typing.d";
 
 const initialState = {
