@@ -96,16 +96,11 @@ function Page() {
         loading.busy()
         refNewForm.current.message(undefined)
         try {
-            let total = 0
-            refNewForm.current.data.forEach(i => {
-                total = parseInt(total.toString()) + parseInt(i.amount.toString())
-            })
-            const body: Invoice = {
+            const body: Partial<Invoice> = {
                 items: refNewForm.current.data.map(i => ({
                     ...i, amount: parseInt(i.amount.toString()),
                     quantity: parseInt(i.quantity.toString())
                 })),
-                total: parseInt(total.toString())
             }
             const { data } = await Api().post<ApiResponse<Invoice>>('/admin/invoice', body)
             refNewForm.current.message(<div className="text-blue-500">{'Created successfully'}</div>)
