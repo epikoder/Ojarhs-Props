@@ -107,7 +107,7 @@ export const UserDashboardProperties = () => {
                 rows={data.map((s, i) => ({ ...s, id: i + 1 }))}
                 columns={columns}
                 pageSize={10}
-                rowsPerPageOptions={[10]}
+                
             />}
         </div>
     )

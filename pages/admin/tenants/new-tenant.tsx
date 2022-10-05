@@ -1,259 +1,592 @@
-import React from "react";
+import React from "react"
+import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
+import { useSelector } from "react-redux";
+import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordControlledInput, FormPasswordInput, FormPhoneInput } from "../../../components/FormInput";
+import { DocumentUpload, ImageUpload } from "../../../components/ImageUpload";
+import { ApiResponse, NextOfKin, SignUpForm } from "../../../Typing.d";
+import Loader from "../../../components/Loader";
+import { emailValidator } from "../../../helpers/validation";
+import { useRouter } from "next/router";
+import { Switch } from "@mui/material";
+import List from "../../../helpers/list";
+import { BASEURL } from "../../../constants";
+import { RootState } from "../../../store";
 
-function NewTenant() {
-
-	return (
-		<div className=' z-40 absolute w-full bg mx-auto pb-12 overflow-scroll h-full scrollbar-hide p-4'>
-			{/* <div className='rounded-md bg-gray-300 lg:w-7/12 w-11/12 mx-auto overflow-hidden md:w-9/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 pt-4 relative'>
-				<div onClick={()=> router.push("/admin/AllTenants")}>
-					<h1 className='hover:text-red-500  cursor-pointer'>
-						{" "}
-						&larr; Go back
-					</h1>
-				</div>
-				<h1 className='red text-center text-3xl mt-4'>
-					{" "}
-					{type === "New" ? <p>Add New Tenant</p> : <p>Update Tenant</p>}
-				</h1>
-				<form action='' className='space-y-4 py-8 px-1 md:px-2 lg:px-4'>
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>
-								First Name
-							</span>
-							<input
-								// ref={fnRef}
-								type='text'
-								placeholder='First Name'
-								value={firstName}
-								{...register("firstName", { required: true })}
-								onChange={(e) => setName(e.target.value)}
-								className={`${errors.firstName
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.firstName?.message as string}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>
-								Last Name
-							</span>
-							<input
-								// ref={lnRef}
-								type='text'
-								placeholder='Last Name'
-								value={lastName}
-								{...register("lastName")}
-								onChange={(e) => setLastName(e.target.value)}
-								className={`${errors.lastName
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.lastName?.message as string}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Address</span>
-							<input
-								// ref={addressRef}
-								type='text'
-								placeholder='Adress'
-								value={address}
-								{...register("address")}
-								onChange={(e) => setAddress(e.target.value)}
-								className={`${errors.address
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.address?.message as string}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Email</span>
-							<input
-								// ref={emailRef}
-								type='email'
-								placeholder='Email'
-								value={email}
-								{...register("email")}
-								onChange={(e) => setEmail(e.target.value)}
-								className={`${errors.email
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.email?.message as string}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Phone No</span>
-							<input
-								// ref={phoneRef}
-								type='text'
-								placeholder='Phone No'
-								value={phone}
-								{...register("phoneNo")}
-								onChange={(e) => setPhone(e.target.value)}
-								className={`${errors.phoneNo
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.phoneNo?.message as string}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>Shop No</span>
-							<input
-								// ref={shopNoRef}
-								type='text'
-								placeholder='Shop No'
-								value={shop}
-								{...register("shopNo")}
-								onChange={(e) => setShop(e.target.value)}
-								className={`${errors.shopNo
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>{errors.shopNo?.message as string}</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs idden'>
-								Registeration code
-							</span>
-							<input
-								type='number'
-								placeholder='Registeration code'
-								{...register("registerationCode")}
-								className={`${errors.registerationCode
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-						</label>
-						<div className='red text-xs ml-4'>
-							{errors.registerationCode?.message as string}
-						</div>
-					</div>
-
-					<div>
-						<label
-							htmlFor=''
-							className='flex flex-col relative bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-						>
-							<span className='text-gray-600 mb-2 text-xs flex justify-between'>
-								password{" "}
-							</span>
-							<input
-								type={togglePasswordState ? "text" : "password"}
-								{...register("password")}
-								placeholder='password'
-								className={`${errors.password
-										? "text-gray-400 bg-transparent border-red-500 border outline-red-500"
-										: "text-gray-400 bg-transparent outline-none"
-									}`}
-							/>
-
-							{togglePasswordState ? (
-								<EyeOffIcon
-									onClick={() => dispatch(ShowPassword())}
-									className='w-4 h-4 absolute bottom-3 right-3'
-								/>
-							) : (
-								<EyeIcon
-									onClick={() => dispatch(HidePassword())}
-									className='w-4 h-4 absolute bottom-3 right-2'
-								/>
-							)}
-						</label>
-						<div className='red text-xs ml-4'>{errors.password?.message as string}</div>
-					</div>
-
-					<label
-						htmlFor=''
-						className='flex flex-col bg-gray-200 shadow-sm shadow-gray-400 rounded-lg p-2'
-					>
-						<span className='text-gray-600 mb-2 text-xs idden'>Status</span>
-						<select
-							name=''
-							id=''
-							className='bg-transparent outline-none text-gray-400'
-							required
-							value={status}
-							onChange={(e) => setStatus(e.target.value)}
-						>
-							<option value='active'>Active</option>
-							<option value='banned'>Banned</option>
-						</select>
-					</label>
-
-					<div className='flex items-center'>
-						<span className='text-sm px-4 text-gray-600'>
-							Pay for application
-						</span>
-						<input type='checkbox' />
-					</div>
-
-					{type === "New" ? (
-						<button
-							type='submit'
-							className='w-full outline-none'
-							onClick={handleSubmit(onSubmit)}
-						>
-							<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer'>
-								Add New
-							</div>
-						</button>
-					) : (
-						<button className='w-full outline-none' onClick={handleUpdate}>
-							<div className='bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer'>
-								Update
-							</div>
-						</button>
-					)}
-				</form>
-			</div> */}
-		</div>
-	);
+type createTenantForm = SignUpForm & {
+	upload: string
+	paid: boolean
 }
 
-export default NewTenant;
+const Page = () => {
+	const [form, setForm] = React.useState<createTenantForm>({
+		country: '',
+		next_of_kins: [{ kcountry: '' }],
+		upload: '',
+		paid: false
+	} as createTenantForm)
+	const [types, setTypes] = React.useState<{ id: number, name: string }[]>(Array.from([]))
+	const [docType, setDocType] = React.useState<string>('0')
+
+	const [loading, setLoading] = React.useState<boolean>(false);
+	const [nextOfKinForm, setNextOfKinForm] = React.useState<NextOfKin[]>([{} as NextOfKin])
+	const [secondNextofKin, setSecondNextofKin] = React.useState<boolean>(false)
+	const [errors, setErrors] = React.useState<SignUpForm>({} as SignUpForm)
+	const formRef = React.useRef<HTMLFormElement>()
+	const router = useRouter()
+	const [message, setMessage] = React.useState<{ text?: string, status?: boolean }>({});
+	const { token } = useSelector((store: RootState) => store.authSlice)
+
+	const getError = (key: string): string | undefined => {
+		return errors[key]
+	}
+
+	React.useEffect(() => {
+		if (secondNextofKin) {
+			if (nextOfKinForm.length === 2) {
+				setNextOfKinForm(nextOfKinForm)
+			} else {
+				setNextOfKinForm([nextOfKinForm[0], { kcountry: '' } as NextOfKin])
+			}
+		} else {
+			setNextOfKinForm([nextOfKinForm[0]])
+		}
+	}, [secondNextofKin])
+
+	React.useEffect(() => {
+		const req = async () => {
+			try {
+				let res = await fetch(BASEURL + '/resources/document-types')
+				if (res.status !== 200) return
+				setTypes((await res.json()).data)
+			} catch (error) {
+			}
+		}
+		req()
+	}, [])
+
+	const submit = async () => {
+		let _form = { ...form, next_of_kins: nextOfKinForm, }
+		if (!formRef.current.checkValidity()) {
+			setMessage({ text: "fill all fields correctly" })
+			return
+		}
+		try {
+			setMessage({
+				text: ''
+			})
+			setLoading(true)
+			setErrors({} as SignUpForm)
+			var res = await fetch(BASEURL + "/admin/tenants/create", {
+				method: 'POST',
+				body: JSON.stringify(_form),
+				headers: {
+					authorization: ((): string => {
+						if (token !== undefined) return 'Bearer ' + token.access
+						return ''
+					})()
+				}
+			})
+			setLoading(false)
+			switch (res.status) {
+				case 400:
+					let r = await res.json() as ApiResponse
+					setMessage({ text: 'please fill the form correctly' })
+					if (r.error['photo'] && Object.keys(r.error).length == 1) {
+						setMessage({ text: 'please upload your photo' })
+					}
+					let ee = {} as SignUpForm
+					for (let n in r.error) {
+						ee[n] = r.error[n]
+					}
+					setErrors(ee)
+					break
+				case 200:
+					let rr = await res.json() as ApiResponse
+					if (rr.status === 'failed') {
+						setMessage({
+							status: false,
+							text: rr.message
+						})
+						return
+					}
+					setMessage({ text: rr.message, status: true })
+					setTimeout(() => {
+						router.back()
+					}, 1500)
+					break
+				default:
+			}
+		} catch (error) {
+			setLoading(false)
+		}
+	}
+
+	return <AdminDashboardLayout>
+		{() => <React.Fragment>
+			<div className="text-center red text-lg py-2">
+				Add New Tenant
+			</div>
+			<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
+				{message.text !== undefined && message.text}
+			</div>
+			<form ref={formRef} onSubmit={(e) => e.preventDefault()} action='' className='py-2 px-1 md:px-2 lg:px-4 md:grid md:grid-cols-2 gap-4'>
+				<div>
+					<h2 className='red'>Personal Information</h2>
+					<FormInput props={{
+						title: 'First Name',
+						name: "fname",
+						type: 'text',
+						required: true,
+						message: getError("fname"),
+						handleChange: (s) => {
+							setForm({
+								...form, fname: s as unknown as string
+							})
+						}
+					}} />
+					<FormInput props={{
+						title: 'Last Mame',
+						name: "lname",
+						type: 'text',
+						required: true,
+						message: getError("lname"),
+						handleChange: (s) => {
+							setForm({
+								...form, lname: s as unknown as string
+							})
+						}
+					}} />
+					<FormInput props={{
+						title: 'Email',
+						name: "email",
+						type: 'text',
+						required: true,
+						message: ((): string => {
+							if (form.email === undefined) return undefined
+							if (getError("email") !== undefined && getError("email").includes("exist")) return getError("email")
+							return emailValidator(form.email)
+						})(),
+						handleChange: (s) => {
+							setForm({
+								...form, email: s as unknown as string
+							})
+						}
+					}} />
+					<FormInput props={{
+						title: 'Nature of Business',
+						name: "business",
+						required: true,
+						message: getError("business"),
+						handleChange: (s) => {
+							setForm({
+								...form, business: s as unknown as string
+							})
+						}
+					}} />
+					<FormInput props={{
+						title: 'Interested Shop Name or No',
+						name: "interested_shop",
+						required: true,
+						message: getError("interested_shop"),
+						handleChange: (s) => {
+							setForm({
+								...form, interested_shop: s as unknown as string
+							})
+						}
+					}} />
+					<ApplianceInput
+						handleChange={(arr) => {
+							setForm({ ...form, appliances: List.toString(arr) })
+						}}
+					/>
+					{/* <FormPasswordInput props={{
+						title: 'Password',
+						name: "password",
+						requried: true,
+						message: getError("password") || form.password !== '' && form.password !== undefined && form.password.length < 8 ? ' ' : undefined,
+						handleChange: (s) => {
+							setForm({
+								...form, password: s as unknown as string
+							})
+						}
+					}} />
+					<FormConfirmPasswordInput
+						props={{
+							title: 'Confirm Password',
+							name: "c_password",
+							requried: true,
+							password: form.password
+						}}
+					/> */}
+					<FormInput props={{
+						title: 'Address',
+						name: "address",
+						type: 'text',
+						required: true,
+						message: getError("address"),
+						handleChange: (s) => {
+							setForm({
+								...form, address: s as unknown as string
+							})
+						}
+					}} />
+					<FormInput props={{
+						title: 'LGA',
+						name: "lga",
+						required: true,
+						message: getError("lga"),
+						type: 'text', handleChange: (s) => {
+							setForm({
+								...form, lga: s as unknown as string
+							})
+						}
+					}} />
+					<FormInput props={{
+						title: 'State',
+						name: "state",
+						type: 'text',
+						required: true,
+						message: getError("state"),
+						handleChange: (s) => {
+							setForm({
+								...form, state: s as unknown as string
+							})
+						}
+					}} />
+					<FormCountryInput props={{
+						title: 'Country',
+						required: true,
+						value: form.country,
+						handleChange: (s) => {
+							setForm({
+								...form, country: s as unknown as string
+							})
+						}
+					}} />
+					<FormPhoneInput props={{
+						title: 'Phone No.',
+						name: "phone",
+						type: 'number',
+						required: true,
+						message: getError("phone"),
+						handleChange: (s) => {
+							setForm({
+								...form, phone: s as unknown as number
+							})
+						}
+					}} />
+					<label
+						htmlFor=''
+						className='space-x-4 w-full text-gray-600'
+					>
+						<span className='text-gray-600 mb-2 text-md idden'>
+							Profile photo
+						</span>
+						<ImageUpload key={'photo'} handleUpload={(s) => setForm({
+							...form, photo: s as unknown as string
+						})} />
+					</label>
+				</div>
+				<div>
+					<div className='row-span-1'>
+						<h2 className='red'>Guarantor</h2>
+						<FormInput props={{
+							title: 'Name',
+							name: "gurantor_name",
+							type: 'text',
+							required: true,
+							message: getError("guarantor_name"),
+							handleChange: (s) => {
+								setForm({
+									...form, guarantor_name: s as unknown as string
+								})
+							}
+						}} />
+						<FormInput props={{
+							title: 'Address',
+							name: "guarantor_address",
+							type: 'text',
+							required: true,
+							message: getError("guarantor_address"),
+							handleChange: (s) => {
+								setForm({
+									...form, guarantor_address: s as unknown as string
+								})
+							}
+						}} />
+						<FormPhoneInput props={{
+							title: 'Phone No.',
+							type: 'number',
+							required: true,
+							message: getError("guarantor_phone"),
+							handleChange: (s) => {
+								setForm({
+									...form, guarantor_phone: s as unknown as number
+								})
+							}
+						}} />
+					</div>
+
+					<div>
+						<h2 className='red'>Next Of Kin</h2>
+						<FormInput props={{
+							title: 'First Name',
+							type: 'text',
+							required: true,
+							handleChange: (s) => {
+								nextOfKinForm[0].kfname = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormInput props={{
+							title: 'Last Name',
+							type: 'text',
+							required: true,
+							handleChange: (s) => {
+								nextOfKinForm[0].klname = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormInput props={{
+							title: 'Email',
+							type: 'text',
+							required: true,
+							message: ((): string => {
+								if (nextOfKinForm.length === 0) return
+								if (nextOfKinForm[0].kemail === undefined) return undefined
+								return emailValidator(nextOfKinForm[0].kemail)
+							})(),
+							handleChange: (s) => {
+								nextOfKinForm[0].kemail = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormInput props={{
+							title: 'Address',
+							type: 'text',
+							required: true,
+							handleChange: (s) => {
+								nextOfKinForm[0].kaddress = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormInput props={{
+							title: 'LGA',
+							type: 'text',
+							required: true,
+							handleChange: (s) => {
+								nextOfKinForm[0].klga = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormInput props={{
+							title: 'State',
+							type: 'text',
+							required: true,
+							handleChange: (s) => {
+								nextOfKinForm[0].kstate = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormCountryInput props={{
+							title: 'Country',
+							required: true,
+							value: nextOfKinForm[0].kcountry,
+							handleChange: (s) => {
+								nextOfKinForm[0].kcountry = s as unknown as string
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+						<FormPhoneInput props={{
+							title: 'Phone No.',
+							type: 'number',
+							required: true,
+							handleChange: (s) => {
+								nextOfKinForm[0].kphone = s as unknown as number
+								setNextOfKinForm([
+									...nextOfKinForm,
+								])
+							}
+						}} />
+
+						<div className="flex items-center">
+							<span className="text-sm px-4 text-gray-600">
+								Second Next of Kin
+							</span>
+							<Switch
+								checked={secondNextofKin}
+								onChange={() => setSecondNextofKin(!secondNextofKin)}
+							/>
+						</div>
+					</div>
+				</div>
+
+				{(secondNextofKin && nextOfKinForm.length === 2) && <>
+					<div className="col-span-2 md:grid md:grid-cols-2 gap-4">
+						<h2 className='red col-span-2'>Next Of Kin</h2>
+						<div>
+							<FormInput props={{
+								title: 'First Name',
+								type: 'text',
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].kfname = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+							<FormInput props={{
+								title: 'Last Name',
+								type: 'text',
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].klname = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+							<FormInput props={{
+								title: 'Email',
+								type: 'text',
+								required: true,
+								message: ((): string => {
+									if (nextOfKinForm.length !== 2) return
+									if (nextOfKinForm[1].kemail === undefined) return undefined
+									return emailValidator(nextOfKinForm[1].kemail)
+								})(),
+								handleChange: (s) => {
+									nextOfKinForm[1].kemail = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+							<FormInput props={{
+								title: 'Address',
+								type: 'text',
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].kaddress = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+						</div>
+
+						<div>
+							<FormInput props={{
+								title: 'LGA',
+								type: 'text',
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].klga = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+							<FormInput props={{
+								title: 'State',
+								type: 'text',
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].kstate = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+							<FormCountryInput props={{
+								title: 'Country',
+								value: nextOfKinForm[1].kcountry,
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].kcountry = s as unknown as string
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+							<FormInput props={{
+								title: 'Phone No.',
+								type: 'number',
+								required: true,
+								handleChange: (s) => {
+									nextOfKinForm[1].kphone = s as unknown as number
+									setNextOfKinForm([
+										...nextOfKinForm,
+									])
+								}
+							}} />
+						</div>
+					</div>
+				</>
+				}
+
+				<label
+					htmlFor=''
+					className='space-x-4 w-full text-gray-600'
+				>
+					<span className='text-gray-600 mb-2 text-md idden'>
+						Document Upload
+					</span>
+					<div className="flex justify-center">
+						<select name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value)}>
+							<option value="0">CHOOSE DOCUMENT TYPE</option>
+							{types.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
+						</select>
+					</div>
+					<DocumentUpload key={'document'} handleUpload={(s) => setForm({
+						...form, upload: s as unknown as string
+					})} documentType={docType} disabled={docType === '0'} />
+				</label>
+				<div className="col-span-2">
+					<div className="flex items-center justify-center">
+						<span className="text-sm px-4 text-gray-600">
+							Already paid for application?
+						</span>
+						<Switch
+							checked={form.paid}
+							onChange={() => setForm({ ...form, paid: !form.paid })}
+						/>
+					</div>
+					<div className={`text-center text-sm py-2 font-sans text-${message.status ? 'blue' : 'red'}-500`}>
+						{message.text !== undefined && message.text}
+					</div>
+					<div className="w-full flex py-2">
+						{!loading ? <>
+							<button
+								type='submit'
+								className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out"
+								onClick={submit}>
+
+								Create
+							</button>
+						</> : <div className="relative bg-red mx-auto text-center py-1 px-2 rounded-full mt-4 w-48 h-10 text-white cursor-wait">
+							<Loader />
+						</div>}
+					</div>
+				</div>
+			</form>
+		</React.Fragment>}
+	</AdminDashboardLayout>
+}
+
+export default Page

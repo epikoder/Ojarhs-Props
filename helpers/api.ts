@@ -1,11 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 import { BASEURL } from "../constants";
+import { logout } from "../features/authSlice";
 import { store } from "../store";
-import { clearUserToken, getTokenStore, getUserToken } from "./auth";
-import ServerStorage from "./storage";
-
+import { getUserToken } from "./auth";
 export var ApiCancel = undefined
-const Api = (useInterceptor?: boolean) => {
+const Api = (useInterceptor: boolean = false) => {
     const _api = axios.create({
         baseURL: BASEURL,
         cancelToken: new axios.CancelToken((c) => { ApiCancel = c }),
@@ -23,20 +22,28 @@ const Api = (useInterceptor?: boolean) => {
 
     var refreshInterceptor: number
     const handleExpiredToken = async (error) => {
-        try {
-            let t = getUserToken()
-            if (t === undefined || t === null) {
-                return clearUserToken()
-            }
-            if ((error.response as AxiosResponse).status === 401) {
-                const res = await _api.post('/jwt/refresh')
-                if (res.status !== 200) {
-                    _api.interceptors.response.eject(refreshInterceptor)
-                    return clearUserToken()
+        if (error.response.status === 401) {
+            try {
+                let t = getUserToken()
+                if (t === undefined || t === null) {
+                    console.log('HMMMM')
+                    return store.dispatch(logout())
                 }
+                if ((error.response as AxiosResponse).status === 401) {
+                    const res = await fetch(BASEURL + '/jwt/refresh', {
+                        method: "POST",
+                        credentials: 'include'
+                    })
+                    if (res.status !== 200) {
+                        _api.interceptors.response.eject(refreshInterceptor)
+                        return store.dispatch(logout())
+                    }
+                }
+            } catch (error) {
+                console.log('ejecting')
+                _api.interceptors.response.eject(refreshInterceptor)
+                return store.dispatch(logout())
             }
-        } catch (error) {
-            _api.interceptors.response.eject(refreshInterceptor)
         }
     }
     if (useInterceptor) {

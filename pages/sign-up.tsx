@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { TogglePasswordState } from "../features/TogglePassword";
 import Link from "next/link";
 import Layout from "../components/Layout";
-import { FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordInput, FormPhoneInput } from "../components/FormInput";
+import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordControlledInput, FormPhoneInput } from "../components/FormInput";
 import { ImageUpload } from "../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../Typing.d";
 import { BASEURL } from "../constants";
@@ -14,9 +13,9 @@ import { RootState } from "../store";
 import { useRouter } from "next/router";
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Switch } from "@mui/material";
+import List from "../helpers/list";
 
 function SignUp() {
-	const dispatch = useDispatch();
 	const togglePasswordState = useSelector(TogglePasswordState);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [message, setMessage] = useState<{ text?: string, status?: boolean }>({});
@@ -107,7 +106,7 @@ function SignUp() {
 	return (
 		<Layout>
 			<div className='my-16 bg-gray-100 lg:w-8/12 w-11/12 mx-auto px-2 overflow-hidden md:w-10/12 lg:space-y-4 lg:py-8 lg:p-4 shadow-md shadow-gray-600 space-y-2 py-4'>
-				<div className='red text-center lg:text-2xl md:text-xl text-lg '> Sign Up</div>
+				<div className='red text-center lg:text-2xl md:text-xl text-lg '> Sign Up / Application Form</div>
 				<div className={`text-center text-sm font-sans text-red-500`}>
 					All fields are compulsory*
 				</div>
@@ -157,7 +156,34 @@ function SignUp() {
 								})
 							}
 						}} />
-						<FormPasswordInput props={{
+						<FormInput props={{
+							title: 'Nature of Business',
+							name: "business",
+							required: true,
+							message: getError("business"),
+							handleChange: (s) => {
+								setForm({
+									...form, business: s as unknown as string
+								})
+							}
+						}} />
+						<FormInput props={{
+							title: 'Interested Shop Name or No',
+							name: "interested_shop",
+							required: true,
+							message: getError("interested_shop"),
+							handleChange: (s) => {
+								setForm({
+									...form, interested_shop: s as unknown as string
+								})
+							}
+						}} />
+						<ApplianceInput
+							handleChange={(arr) => {
+								setForm({ ...form, appliances: List.toString(arr) })
+							}}
+						/>
+						<FormPasswordControlledInput props={{
 							title: 'Password',
 							name: "password",
 							requried: true,
@@ -509,6 +535,9 @@ function SignUp() {
 								<LaunchIcon fontSize='inherit' />
 							</div>
 						</Link>
+						<div className="text-center text-xs my-2 text-gray-500">
+							{`This form doesn't mean that the property has been given to you. However, after reviewing your application our administrator will revert to you via email or your dashboard`}
+						</div>
 						<div className="w-full flex">
 							{!loading ? <>
 								<button type='submit' className="bg-red mx-auto text-center py-1 px-2 rounded-full hover:scale-110 active:scale-95 mt-4 w-48 text-white cursor-pointer duration-300 transition-all ease-in-out" onClick={submit}>

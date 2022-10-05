@@ -1,16 +1,15 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { XIcon } from "@heroicons/react/outline";
 import { Space } from "../../../Typing.d";
 import { ImageUpload, VideoUpload } from "../../../components/ImageUpload";
 import { GalleryUploader } from "../../../components/admin/GalleryUploader";
 import { PaymentPlans, PropertyType } from "../../../components/Resource";
 import { RootState, useAppDispatch } from "../../../store";
 import Loader from "../../../components/Loader";
-import { addNewPropertyThunck } from "../../../redux/admin/property";
+import { addNewPropertyThunck } from "../../../redux/admin/admin";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
-import { resetPropertyStatus } from "../../../features/admin/propertySlice";
+import { resetPropertyState } from "../../../features/admin/propertySlice";
 import { ArrowLeftIcon } from "@heroicons/react/solid";
 
 function NewProps() {
@@ -47,7 +46,7 @@ function NewProps() {
 		}
 	}, [status, router])
 
-	React.useEffect(() => { dispatch(resetPropertyStatus()) }, [status])
+	React.useEffect(() => { dispatch(resetPropertyState()) }, [status])
 
 	return (
 		<AdminDashboardLayout>

@@ -54,13 +54,13 @@ function Footer() {
                         <Link href="/page/terms" className=' cursor-pointer font-mono text-lg '>
                             <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Terms and conditions </h3>
                         </Link>
-                        <Link href="ojarh.com" target={'_blank'} className=' cursor-pointer font-mono text-lg '>
+                        <a href="https://ojarh.com" target={'_blank'} rel="noreferrer" className=' cursor-pointer text-lg '>
                             <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '> Ojarh.com </h3>
-                        </Link>
+                        </a>
 
-                        <Link href="" className=' cursor-pointer font-mono text-lg '>
+                        <a href="#" target={'_blank'} rel="noreferrer" className=' cursor-pointer text-lg '>
                             <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hover:pl-2 hov transition-all duration-700 ease-in-out cursor-pointer '>  Ojarhlogistics.com </h3>
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </div>

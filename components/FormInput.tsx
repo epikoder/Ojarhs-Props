@@ -1,19 +1,22 @@
-import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material"
 import { FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { BASEURL } from "../constants"
 import { HidePassword, ShowPassword } from "../features/TogglePassword"
+import List from "../helpers/list"
 import { Country } from "../Typing.d"
 
 export const FormInput = ({ props }: {
     props: {
         title: string
         name?: string
+        value?: string | number
+        defaultValue?: string | number
         message?: string
         required?: boolean
         type?: React.HTMLInputTypeAttribute
-        handleChange?: (s: any) => void
+        handleChange: (s: any) => void
     }
 }) => {
     return <>
@@ -26,6 +29,8 @@ export const FormInput = ({ props }: {
                 className={`w-full text-sm`}
                 required={props.required}
                 placeholder={props.title}
+                defaultValue={props.defaultValue}
+                value={props.value !== undefined ? props.value : ''}
                 error={props.message !== '' && props.message !== undefined}
                 onChange={(e) => {
                     props.handleChange(e.target.value)
@@ -41,7 +46,8 @@ export const FormPhoneInput = ({ props }: {
         required?: boolean
         message?: string
         type?: React.HTMLInputTypeAttribute
-        handleChange?: (s: any) => void
+        value?: string
+        handleChange: (s: any) => void
     }
 }) => {
     return <>
@@ -52,6 +58,7 @@ export const FormPhoneInput = ({ props }: {
                 size="small"
                 type={props.type}
                 className="w-full text-sm"
+                value={props.value !== undefined ? props.value : ''}
                 required={props.required}
                 placeholder={"090XXXXXXXX"}
                 error={props.message !== '' && props.message !== undefined}
@@ -62,14 +69,14 @@ export const FormPhoneInput = ({ props }: {
     </>
 }
 
-export const FormPasswordInput = ({ props }: {
+export const FormPasswordControlledInput = ({ props }: {
     props?: {
         title: string
         name: string
         requried?: boolean
         message?: string
         hidden: boolean
-        handleChange?: (s: any) => void
+        handleChange: (s: any) => void
     }
 }) => {
     const dispatch = useDispatch();
@@ -92,6 +99,46 @@ export const FormPasswordInput = ({ props }: {
                                 edge="end"
                             >
                                 {props.hidden ? <Visibility /> : <VisibilityOff />}
+                            </IconButton>
+                        </InputAdornment>
+                    }
+                    label="Password"
+                />
+            </FormControl>
+        </div>
+    </>
+}
+
+export const FormPasswordInput = ({ props }: {
+    props?: {
+        title: string
+        name: string
+        requried?: boolean
+        message?: string
+        handleChange: (s: any) => void
+    }
+}) => {
+    const [hidden, setHidden] = React.useState<boolean>(true)
+    const toggle = () => setHidden(!hidden)
+    return <>
+        <div className="my-2">
+            <FormControl sx={{ m: 1, width: '100%', margin: 0 }} variant="outlined" size="small">
+                <InputLabel>Password</InputLabel>
+                <OutlinedInput
+                    type={!hidden ? 'text' : 'password'}
+                    onChange={(e) => {
+                        props.handleChange(e.target.value)
+                    }}
+                    error={props.message !== '' && props.message !== undefined}
+                    endAdornment={
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={toggle}
+                                onMouseDown={toggle}
+                                edge="end"
+                            >
+                                {!hidden ? <Visibility /> : <VisibilityOff />}
                             </IconButton>
                         </InputAdornment>
                     }
@@ -145,7 +192,7 @@ export const FormCountryInput = ({ props }: {
     props?: {
         title: string
         required?: boolean
-        handleChange?: <T>(s: T) => void
+        handleChange: <T>(s: T) => void
         value?: string
     }
 }) => {
@@ -168,12 +215,13 @@ export const FormCountryInput = ({ props }: {
     }, [])
 
 
+    let value = props.value !== undefined ? (countries.find((c) => c.code === props.value || c.name === props.value)) : undefined
     return <>
         <div className="my-2">
             <FormControl size="small" fullWidth>
                 <InputLabel>{'Country'}</InputLabel>
                 <Select
-                    value={props.value !== undefined ? props.value : ''}
+                    value={value !== undefined ? (value as Country).code : ''}
                     label="Country"
                     className="text-sm uppercase"
                     size="small"
@@ -184,6 +232,55 @@ export const FormCountryInput = ({ props }: {
                     )}
                 </Select>
             </FormControl>
+        </div>
+    </>
+}
+
+export const ApplianceInput = ({ value, handleChange }: {
+    handleChange?: (s: string[]) => void
+    value?: string[]
+}): JSX.Element => {
+    const [list, setList] = React.useState<string[]>(value || [])
+    const [text, setText] = React.useState<string>('')
+    const ref = React.useRef(false)
+
+    React.useEffect(() => {
+        if (handleChange !== undefined) {
+            handleChange(list)
+        }
+    }, [list])
+    
+    React.useEffect(() => {
+        if (value != undefined && value.length > 0 && value[0] !== "" && ref.current == false) {
+            ref.current = true
+            setList(value)
+        }
+    }, [value])
+
+    return <>
+        <div className="min-h-[3rem] border border-gray-300 bg-white rounded-md text-gray-600 flex flex-wrap" >
+            {(list).map((s, i) =>
+                <div key={i} className='bg-gray-100 px-2 py-1 flex items-center space-x-1 rounded-full m-1'>
+                    <span>{s}</span>
+                    <Cancel className="text-red-500" fontSize="small" onClick={() => {
+                        setList(List.remove(list, i))
+                    }} />
+                </div>)}
+            <input
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                className="px-2 outline-none max-w-[320px] w-full rounded-md"
+                type={'text'}
+                placeholder='Enter to save'
+                onKeyDownCapture={e => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault()
+                        if (text === '') return
+                        if (!/^[a-zA-Z0-9 ]{2,256}/.test(text.trim())) return
+                        setList([...list, text])
+                        setText('')
+                    }
+                }} />
         </div>
     </>
 }

@@ -24,7 +24,7 @@ function Card({ data, className }: { data: Space | Service, className?: string }
 
 				{/* sliders */}
 				<div className='w-full h-48 top-0 cursor-pointer'>
-					<img src={"image/ads1.jpg"} className='w-full h-full' />
+					<img src={service.photo !== '' ? resolveFilePath(service.photo) : "image/ads1.jpg"} className='w-full h-full' />
 				</div>
 				<div className="bg-white">
 					<div className="text-xs text-white text-center bg-red-500">

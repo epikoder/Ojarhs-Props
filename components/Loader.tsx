@@ -6,7 +6,7 @@ export default function Loader() {
     return (
         <>
             <div className="absolute top-0 left-0 right-0 bottom-0 items-center flex flex-col justify-center cursor-wait"
-                style={{ backgroundColor: '#00000021' }}
+                style={{ backgroundColor: '#00000009' }}
             >
                 <div className="spinner">
                     <div className="bar1"></div>

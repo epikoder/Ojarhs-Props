@@ -1,14 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { indexData, loadIndex } from "../redux";
-import { LoadState } from "../Typing.d";
+import { indexData, loadIndex, loadNotice } from "../redux";
+import { LoadState, Notice } from "../Typing.d";
 
+type noticeState = { data: Notice[], state: LoadState }
 export type indexState = {
     data: indexData
     state: LoadState
+    notice?: noticeState
 }
 const IndexSlice = createSlice({
     name: "IndexSlice",
-    initialState: {} as indexState,
+    initialState: {
+        notice: {
+            data: [],
+            state: 'nil'
+        }
+    } as indexState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(loadIndex.fulfilled, (state, { payload }) => {
@@ -29,6 +36,17 @@ const IndexSlice = createSlice({
         })
         builder.addCase(loadIndex.rejected, (state) => {
             state.state = 'failed'
+        })
+
+        builder.addCase(loadNotice.pending, (state) => {
+            state.notice.state = 'pending'
+        })
+        builder.addCase(loadNotice.fulfilled, (state, { payload }) => {
+            state.notice.data = payload
+            state.notice.state = 'success'
+        })
+        builder.addCase(loadNotice.rejected, (state) => {
+            state.notice.state = 'failed'
         })
     },
 })

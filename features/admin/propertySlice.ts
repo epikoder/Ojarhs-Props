@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addNewPropertyThunck, loadAdminProperties } from "../../redux/admin/property";
+import { addNewPropertyThunck, loadAdminProperties } from "../../redux/admin/admin";
 import { store } from "../../store";
 import { DashboardDataState, Map, Space } from "../../Typing.d";
 
@@ -35,7 +35,7 @@ const propertySlice = createSlice({
 				}).concat(state.data.slice(payload.index + 1, state.data.length))
 			}
 		},
-		resetPropertyStatus: (state) => {
+		resetPropertyState: (state) => {
 			state.status = 'nil'
 
 		}
@@ -68,6 +68,6 @@ const propertySlice = createSlice({
 	}
 });
 
-export const { addProperty, deleteProperty, updateProperty, getProperty, resetPropertyStatus, toggleProperyStatus } = propertySlice.actions;
+export const { addProperty, deleteProperty, updateProperty, getProperty, resetPropertyState, toggleProperyStatus } = propertySlice.actions;
 export default propertySlice.reducer;
 

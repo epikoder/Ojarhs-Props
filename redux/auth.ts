@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASEURL } from "../constants";
 import { Api } from "../helpers/api";
-import { loginResponse, ApiResponse, UserApplicationStatus } from "../Typing.d"
+import { loginResponse, ApiResponse, UserApplicationStatus, NextOfKin, NextOfKinApi } from "../Typing.d"
 
 export type rejectValue = {
     status: 'failed'
@@ -101,3 +101,23 @@ export const loginAdminApi =
             })
         }
     })
+
+
+export const loadNextOfKin = createAsyncThunk<NextOfKin[]>("load/nextofkin", async (payload, { rejectWithValue }) => {
+    try {
+        const { data, status } = await Api().get<ApiResponse<NextOfKinApi[]>>("/user/next_of_kin")
+        if (status !== 200) return rejectWithValue({})
+        return data.data.map((n) => ({
+            kfname: n.fname,
+            klname: n.lname,
+            kaddress: n.address,
+            kcountry: n.country,
+            kemail: n.email,
+            klga: n.lga,
+            kphone: n.phone,
+            kstate: n.state
+        } as NextOfKin))
+    } catch (error) {
+        return rejectWithValue({})
+    }
+})

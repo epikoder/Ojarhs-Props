@@ -44,6 +44,7 @@ export const Search = () => {
                                 className="w-full md:w-4/5 lg:w-44 text-sm"
                                 placeholder="Search"
                                 value={form.search}
+                                type='search'
                                 onChange={(e) => setForm({
                                     ...form, search: e.target.value as string
                                 })}
@@ -149,6 +150,7 @@ export const SearchProperties = () => {
                         label='Search'
                         variant="outlined"
                         size="small"
+                        type='search'
                         value={form.search}
                         onChange={(e) => setForm({ ...form, search: e.target.value })}
                         className="w-full md:w-4/5 lg:w-44"
@@ -215,6 +217,7 @@ export const SearchServices = () => {
                     <TextField
                         label='Search'
                         variant="outlined"
+                        type='search'
                         size="small"
                         value={form.search}
                         onChange={(e) => setForm({ ...form, search: e.target.value })}

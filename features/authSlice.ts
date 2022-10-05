@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Api } from "../helpers/api";
 import { clearUserToken, getUserToken, setUserToken } from "../helpers/auth";
-import { loginAdminApi, loginApi, rejectValue } from "../redux/auth";
-import { ApiResponse, LoadState, loginResponse, User, UserApplicationStatus } from "../Typing.d";
+import { loadNextOfKin, loginAdminApi, loginApi, rejectValue } from "../redux/auth";
+import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplicationStatus } from "../Typing.d";
 import * as jose from 'jose'
 import { store } from "../store";
-import { AxiosResponse } from "axios";
+import { updateUserProfile } from "../redux/user/dashboard";
 
-export type AuthState = {
+type AuthState = {
     authenticated: boolean
     token: loginResponse
     status: LoadState
@@ -17,7 +17,32 @@ export type AuthState = {
         [key: string]: string
     }
     user?: User
+    nextOfKin: {
+        state: LoadState
+        data: NextOfKin[]
+    },
+    profileUpdate: {
+        state: LoadState
+        message?: string
+    }
     application: UserApplicationStatus
+}
+const initialState: AuthState = {
+    appState: 'pending',
+    token: undefined,
+    nextOfKin: {
+        state: 'nil',
+        data: []
+    },
+    profileUpdate: {
+        state: 'nil'
+    },
+    authenticated: false,
+    user: undefined,
+    status: "nil",
+    message: undefined,
+    error: {},
+    application: "nil"
 }
 
 export type JWTCLAIMS = {
@@ -30,8 +55,10 @@ export type JWTCLAIMS = {
 }
 
 const checkIsAuthenticatedAsync = async () => {
+    console.log("CHEEEEEEKKIII")
     try {
         const { data } = await Api().get<ApiResponse<loginResponse, { application: UserApplicationStatus }>>("/user/user")
+        console.log("CHEEEEEEKKIII", "SI")
         const auth = {} as {
             authenticated: boolean
             token?: loginResponse
@@ -57,6 +84,7 @@ const checkIsAuthenticatedAsync = async () => {
         }
         store.dispatch(setAuthenticated(auth))
     } catch (error) {
+        console.log("CHEEEEEEKKIII", "FA")
         store.dispatch(setAuthenticated({ authenticated: false }))
     }
 }
@@ -83,6 +111,10 @@ const checkIsAuthenticatedAdminAsync = async () => {
             }
             var dec = jose.decodeJwt(token.access)
             auth.user = (dec as unknown as JWTCLAIMS).aud as User
+            if (!(auth.user.is_admin && auth.user.roles !== undefined && auth.user.roles.find(s => s.includes("admin")))) {
+                store.dispatch(setAuthenticated({ authenticated: false }))
+                return
+            }
             auth.token = token
         }
         store.dispatch(setAuthenticated(auth))
@@ -91,25 +123,35 @@ const checkIsAuthenticatedAdminAsync = async () => {
     }
 }
 
+const logoutAsync = async () => {
+    try {
+        Api().post('/user/logout')
+    } catch (error) {
+
+    }
+}
+
 const authSlice = createSlice({
     name: "authSlice",
-    initialState: {
-        appState: 'completed',
-        token: {}
-    } as AuthState,
+    initialState: initialState,
     reducers: {
         logout: (state) => {
+            console.log('LOGGGING OUT')
+            state.appState = 'completed'
             state.authenticated = false
             state.user = undefined
             state.message = undefined
             state.token = {} as loginResponse
             state.error = {}
+            logoutAsync()
             clearUserToken()
             // TODO: Clear token cache
         },
+
         setAppState: (state, { payload }: { payload: 'pending' | 'completed' }) => {
             state.appState = payload
         },
+
         setAuthenticated: (state, { payload }: {
             payload: {
                 authenticated: boolean
@@ -119,19 +161,17 @@ const authSlice = createSlice({
             }
         }) => {
             state.authenticated = payload.authenticated
+            state.appState = 'completed'
             state.user = payload.user
             state.token = payload.token
             state.application = payload.application
-            setTimeout(() => {
-                store.dispatch(setAppState("completed"))
-            }, 1500)
         },
+
         checkIsAuthenticated: (state, { payload }: {
             payload: {
                 isAdmin?: boolean
             }
         }) => {
-            if (state.appState === 'pending') return
             state.appState = 'pending'
             if (getUserToken() === undefined) {
                 state.appState = 'completed'
@@ -145,12 +185,14 @@ const authSlice = createSlice({
             }
             checkIsAuthenticatedAsync()
         },
+
         clearErr: (state) => {
             state.appState = 'completed'
             state.message = undefined
             state.error = {}
         }
     },
+
     extraReducers: (builder) => {
         builder.addCase(loginApi.fulfilled, (state, { payload }) => {
             if (payload === undefined) return
@@ -191,6 +233,11 @@ const authSlice = createSlice({
             }
             const dec = jose.decodeJwt(payload.data.access)
             state.user = (dec as unknown as JWTCLAIMS).aud as User
+            if (!(state.user.is_admin && state.user.roles !== undefined && state.user.roles.find(s => s.includes("admin")))) {
+                state.authenticated = false
+                state.appState = 'completed'
+                return
+            }
 
             setUserToken(payload.data)
             state.token = payload.data
@@ -207,6 +254,38 @@ const authSlice = createSlice({
         builder.addCase(loginAdminApi.rejected, (state, { payload }: { payload }) => {
             state.status = 'failed'
             state.message = (payload as rejectValue).message
+        })
+
+        {/* User profile: NEXT OF KIN */ }
+        builder.addCase(loadNextOfKin.pending, (state) => {
+            state.nextOfKin.state = 'pending'
+        })
+        builder.addCase(loadNextOfKin.fulfilled, (state, { payload }) => {
+            state.nextOfKin.data = payload
+            state.nextOfKin.state = 'success'
+        })
+        builder.addCase(loadNextOfKin.rejected, (state) => {
+            state.nextOfKin.state = 'failed'
+        })
+
+        {/* User profile: Update Profile */ }
+        builder.addCase(updateUserProfile.pending, (state) => {
+            state.profileUpdate.state = 'pending'
+        })
+        builder.addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+            if (payload.status === 'failed') {
+                state.profileUpdate.state = 'failed'
+                state.profileUpdate.message = payload.message
+                return
+            }
+            setUserToken(Object.assign(payload.data))
+            state.profileUpdate.message = payload.message
+            state.profileUpdate.state = 'success'
+            state.token = payload.data
+        })
+        builder.addCase(updateUserProfile.rejected, (state, { payload }) => {
+            state.profileUpdate.state = 'failed'
+            state.profileUpdate.message = 'Failed to update profile'
         })
     },
 })

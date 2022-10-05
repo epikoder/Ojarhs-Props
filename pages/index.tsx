@@ -4,10 +4,10 @@ import Plaza from "../components/Plaza";
 import HomeSignUp from "../components/HomeSignUp";
 import TopSection from "../components/TopSection";
 import Notice from "../components/Notice";
-import Adverts from "../components/Adverts";
+import { PropertyAdvert } from "../components/Adverts";
 import Testimonials from "../components/Testimonials";
 import Layout from "../components/Layout";
-import { loadIndex } from "../redux";
+import { loadAdverts, loadIndex, loadNotice } from "../redux";
 import { RootState, useAppDispatch } from "../store";
 import { CardLoader } from "../components/Loader";
 import { useSelector } from "react-redux";
@@ -15,7 +15,83 @@ import { Search } from "../components/Search";
 import { useRouter } from "next/router";
 import { Card } from "@mui/material";
 import Image from "next/image"
+import { Carousel } from "react-responsive-carousel";
+import Adverts from "./admin/adverts";
+import { resolveFilePath } from "../helpers/helpers";
 
+type indexSliderType = {
+	postion: 'left' | 'right' | 'center'
+	gravity: 'start' | 'center' | 'end'
+	apiImage: boolean
+	image: string
+	text: string
+	textColor?: string | JSX.Element
+}
+const IndexSlider = () => {
+	const slides: indexSliderType[] = [
+		{
+			apiImage: false,
+			postion: 'left',
+			gravity: 'end',
+			image: 'slider1.jpeg',
+			text: 'Welcome to Ojarh plaza, pay for your office and warehouse'
+		},
+		{
+			apiImage: false,
+			postion: 'right',
+			gravity: 'center',
+			image: 'slider2.jpeg',
+			text: ' Office, Shop, and warehouse available for rent at the heart of Anambra'
+		},
+		{
+			apiImage: false,
+			postion: 'right',
+			gravity: 'center',
+			image: 'slider3.jpeg',
+			text: 'Signup and advertise your services'
+		},
+		{
+			apiImage: false,
+			postion: 'right',
+			gravity: 'center',
+			image: 'slider4.jpeg',
+			text: 'Signup Now'
+		},
+	]
+
+	return <Carousel
+		showThumbs={false}
+		showArrows={true}
+		showStatus={false}
+		autoPlay
+		emulateTouch
+		infiniteLoop
+		transitionTime={1000}
+		showIndicators
+		stopOnHover
+	>
+		{slides.map((s, i) =>
+			<div key={i} className="h-[40vh] md:h-[70vh] relative" style={{
+				backgroundImage: `url(${s.apiImage ? resolveFilePath(s.image) : '/image/' + s.image})`,
+				backgroundRepeat: 'no-repeat',
+				objectFit: 'cover',
+				backgroundSize: 'cover'
+			}}>
+				<div className={`${s.postion}-10 absolute flex flex-col justify-${s.gravity} h-full max-w-[40%]`} >
+					<div className={`p-2 m-4`} style={{
+						backgroundColor: '#ffffffa1'
+					}}>
+						<span className={`text-${s.textColor}-500 text-md md:text-md`}
+							style={{
+								fontFamily: 'space grotesk'
+							}}>{s.text}</span>
+					</div>
+				</div>
+			</div>
+		)
+		}
+	</Carousel >
+}
 function Home() {
 	const dispatch = useAppDispatch();
 	const { data, state } = useSelector((store: RootState) => store.indexSlice);

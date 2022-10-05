@@ -27,7 +27,7 @@ const Details = () => {
 	}, [router.asPath])
 
 	React.useEffect(() => {
-		if (state !== 'success') { dispatch(loadIndex({})) }
+		if (state !== 'success') { dispatch(loadIndex()) }
 	}, [dispatch])
 
 	return <Layout>

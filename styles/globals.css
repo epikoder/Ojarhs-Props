@@ -266,6 +266,10 @@ div.spinner div.bar12 {
 }
 
 /* carousel */
+.carousel li {
+	z-index: 1 !important;
+}
+
 .carousel-root {
 	height: 100%;
 }
