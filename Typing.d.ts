@@ -1,4 +1,4 @@
-export type User = Tenant & {
+export type User = Partial<Tenant> & {
 	is_admin: boolean
 	is_disabled: boolean
 	is_locked: boolean

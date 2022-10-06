@@ -139,6 +139,7 @@ export const PayButton = ({ slug, type, disabled }: { slug: string, type: 'servi
                 }}
                     onClick={() => initializePayment()}
                     fullWidth
+                    className='pay-btn'
                     disableElevation
                     disabled={loading}
                     style={{ fontFamily: 'space grotesk' }}

@@ -1,15 +1,14 @@
 import { ArrowForward, Cancel, Download } from "@mui/icons-material";
 import { Button, Dialog, DialogActions, DialogContent } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import { ReceiptComponent } from "../../components/user/Receipt";
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
-import { addMonth, money } from "../../helpers/helpers";
-import { loadUserProperties, loadUserReceipt, loadUserServices } from "../../actions/user/dashboard";
+import { money } from "../../helpers/helpers";
+import { loadUserReceipt } from "../../actions/user/dashboard";
 import { RootState, useAppDispatch } from "../../store";
-import { Receipt, Service, Space } from "../../Typing.d";
+import { Receipt } from "../../Typing.d";
 import { toPng } from 'html-to-image';
 
 

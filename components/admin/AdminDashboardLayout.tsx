@@ -5,16 +5,25 @@ import React from "react"
 import { useSelector } from "react-redux";
 import { checkIsAuthenticated } from "../../features/authSlice";
 import { RootState, useAppDispatch } from "../../store";
+import { User } from "../../Typing";
 import { CopyRight } from "../Copyright";
 import Loader, { PageLoader } from "../Loader";
 import SideBar from "../SideBar"
 import AdminHeader from "../SideBarHeader"
 
-export const AdminDashboardLayout = (props?: {
-    children?: (props?: any) => React.ReactNode | undefined,
+export const AdminDashboardLayout: React.FC<{
+    children?: (params: {
+        authenticated: boolean,
+        user: User,
+        loading: {
+            busy: () => void,
+            idle: () => void,
+            state: boolean
+        }
+    }) => React.ReactNode | undefined,
     className?: string
     style?: React.CSSProperties
-}) => {
+}> = (props) => {
     const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
     const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
     const [loading, setLoading] = React.useState<boolean>(false)

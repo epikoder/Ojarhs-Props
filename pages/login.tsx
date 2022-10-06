@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import Link from "next/link";
 import Layout from "../components/Layout";
-import Loader from "../components/Loader";
 import { RootState, useAppDispatch } from "../store";
 import { loginApi } from "../actions/auth";
 import { useRouter } from "next/router";
@@ -18,7 +16,6 @@ type LoginForm = {
 function Login() {
 	const dispatch = useAppDispatch();
 	const router = useRouter()
-	const theme = useTheme()
 	const [isHidden, setIsHidden] = React.useState(true)
 	const [remember, setRemember] = useState<boolean>(false);
 	const [form, setForm] = useState<LoginForm>({

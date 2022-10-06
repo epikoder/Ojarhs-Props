@@ -1,13 +1,12 @@
 import { Button, TextField } from "@mui/material"
 import React from "react"
 import { useSelector } from "react-redux"
-import { FormCountryInput, FormPhoneInput } from "../../components/FormInput"
+import { FormCountryInput } from "../../components/FormInput"
 import { ImageUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
-import { resolveFilePath } from "../../helpers/helpers"
 import { updateUserProfile } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
-import { User, UserUpdateForm } from "../../Typing.d"
+import {  UserUpdateForm } from "../../Typing.d"
 
 const Page = () => {
     const { user, profileUpdate } = useSelector((store: RootState) => store.authSlice)
@@ -38,7 +37,7 @@ const Page = () => {
     }
 
     return <UserDashboardLayout>
-        {({ user }: { user: User }) =>
+        {({ user }) =>
             <React.Fragment>
                 <form className="p-4 max-w-sm">
                     <div>

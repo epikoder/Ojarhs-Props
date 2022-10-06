@@ -6,12 +6,11 @@ import { UserDashboardProperties } from "../../components/user/UserDashboardProp
 import { UserInfo } from "../../components/user/UserInfo"
 import { applicationFee } from "../../constants"
 import { money } from "../../helpers/helpers"
-import { User, UserApplicationStatus } from "../../Typing.d"
 
 const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
     const router = useRouter()
     return <UserDashboardLayout>
-        {({ user, application }: { user: User, application: UserApplicationStatus }) => <>
+        {({ user, application }) => <>
             <div className="p-2">
                 <UserInfo user={user} />
                 {application === 'verified' && <UserDashboardProperties />}

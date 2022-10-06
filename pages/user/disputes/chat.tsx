@@ -61,7 +61,7 @@ const Page = () => {
     }, [conversation])
 
     return <UserDashboardLayout className="md:p-1">
-        {({ user }) => <>
+        {() => <>
             {conversation !== undefined && <div>
                 <ChatHeader title={conversation.title} message={conversation.messages[0]} />
                 <div className="flex flex-col justify-between h-[65vh] md:h-[60vh] lg:h-[60vh] 2xl:h-[68vh] bg-main">
