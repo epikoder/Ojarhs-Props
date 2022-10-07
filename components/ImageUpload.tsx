@@ -108,9 +108,9 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                     </div>) : loading ? <Loader /> : <>
                         <div className="relative h-full w-full">
                             <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
-                            <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                            <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-gray-100 ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
                             </div>
-                            <div className="z-20 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                            <div className="z-20 duration-300 transition-all text-transparent hover:text-gray-100 ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
                                 REMOVE
                             </div>
                         </div>

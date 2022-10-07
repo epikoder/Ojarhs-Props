@@ -257,7 +257,6 @@ export const loadAdminConverstion = createAsyncThunk<MessageOwner[]>
             }
             var m: MessageOwner[] = []
             data.data.forEach((_m) => {
-                console.log(_m)
                 if (_m.messages.length > 0) {
                     m = m.concat(_m)
                 }
@@ -302,7 +301,6 @@ export const loadAdminDisputes = createAsyncThunk<MessageOwner[]>
             })
             return m
         } catch (error) {
-            console.log(error)
             const { status, data } = (error as AxiosError<ApiResponse>).response
             switch (status) {
                 case 400:

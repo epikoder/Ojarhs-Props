@@ -18,7 +18,10 @@ type LoginForm = {
 }
 
 const AdminLogin = () => {
-    const [form, setForm] = React.useState<LoginForm>({} as LoginForm)
+    const [form, setForm] = React.useState<LoginForm>({
+        email: '',
+        password: ''
+    } as LoginForm)
     const [message, setMessage] = React.useState<{ text?: string, status?: boolean }>({});
     const [remember, setRemember] = React.useState<boolean>(false);
     const { authenticated, user, status, message: errMessage, appState } = useSelector((store: RootState) => store.authSlice)
@@ -67,14 +70,14 @@ const AdminLogin = () => {
                         src={"/image/tower.jpg"}
                         className="h-full w-full object-cover" />
                 </div>
-                <Card className="h-full sm:h-[60vh] lg:h-full w-full sm:w-[80vw] lg:w-[40vw] flex flex-col items-center justify-center shadow-md relative">
+                <Card className="h-full sm:h-[60vh] lg:h-full w-[90vw] lg:w-[40vw] flex flex-col items-center justify-center shadow-md relative">
                     {(status === 'pending' || appState === 'pending') && <div className="absolute z-10 inset-0" style={{ backgroundColor: '#04040414' }}>
                         <Loader />
                     </div>}
-                    <div className="flex flex-col justify-between p-4">
+                    <div className="flex flex-col justify-between p-4 w-full">
                         <form action="" className="p-4" ref={ref}>
                             <div className="flex justify-center mb-4">
-                                <Logo height={100}/>
+                                <Logo height={100} textColor='white' />
                             </div>
                             <h1 className="text-center text-lg font-semibold my-4">
                                 Login

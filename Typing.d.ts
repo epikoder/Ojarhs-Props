@@ -141,7 +141,7 @@ export type ApiResponse<T = any, TT = any> = {
 	status: 'success' | 'failed'
 	message?: string
 	error?: { [key: string]: string }
-	data: T
+	data?: T
 	extra?: TT
 }
 

@@ -59,7 +59,6 @@ const checkIsAuthenticatedAsync = async () => {
     console.log("CHEEEEEEKKIII")
     try {
         const { data } = await Api().get<ApiResponse<loginResponse, { application: UserApplicationStatus }>>("/user/user")
-        console.log("CHEEEEEEKKIII", "SI")
         const auth = {} as {
             authenticated: boolean
             token?: loginResponse
@@ -85,7 +84,6 @@ const checkIsAuthenticatedAsync = async () => {
         }
         store.dispatch(setAuthenticated(auth))
     } catch (error) {
-        console.log("CHEEEEEEKKIII", "FA")
         store.dispatch(setAuthenticated({ authenticated: false }))
     }
 }
@@ -180,7 +178,6 @@ const authSlice = createSlice({
                 isAdmin?: boolean
             }
         }) => {
-            console.log('=======')
             if (state.authenticated === true && state.user !== undefined) return
             state.appState = 'pending'
             if (payload.isAdmin) {
