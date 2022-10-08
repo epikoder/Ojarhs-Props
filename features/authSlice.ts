@@ -56,7 +56,6 @@ export type JWTCLAIMS = {
 }
 
 const checkIsAuthenticatedAsync = async () => {
-    console.log("CHEEEEEEKKIII")
     try {
         const { data } = await Api().get<ApiResponse<loginResponse, { application: UserApplicationStatus }>>("/user/user")
         const auth = {} as {

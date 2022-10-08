@@ -28,12 +28,6 @@ export type Space = {
 	updated_at?: Date
 }
 
-export type Testimony = {
-	name: string;
-	photo?: string
-	testimony: string;
-};
-
 export type Tenant = {
 	id: string
 	fname: string;

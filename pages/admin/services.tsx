@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { RootState, useAppDispatch } from "../../store";
@@ -10,8 +9,9 @@ import { money } from "../../helpers/helpers";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { Add, Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
 import GridTable from "../../components/Grid";
-import { Button, IconButton } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Service } from "../../Typing";
+import { useEffect, useState } from "react";
 
 
 const columns: GridColDef[] = [
@@ -78,7 +78,28 @@ const columns: GridColDef[] = [
 
 const ActionCell = ({ row }: { row: any }) => {
 	const router = useRouter()
+	const [dialogOpen, setDialogOpen] = useState(false)
+
 	return <>
+		<Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+			<DialogTitle sx={{ fontSize: 15, textAlign: 'center' }}>
+				DELETE SERVICE
+			</DialogTitle>
+			<DialogContent>
+				This action is irreversible
+			</DialogContent>
+			<DialogActions>
+				<Button color="error" onClick={() => setDialogOpen(false)}>
+					CANCEL
+				</Button>
+				<Button color="success" onClick={() => {
+					setDialogOpen(false)
+					row.delete()
+				}}>
+					CONFIRM
+				</Button>
+			</DialogActions>
+		</Dialog>
 		<div className="md:hidden absolute mx-1">
 			<Menu menuButton={<IconButton>
 				<MoreVert fontSize="small" />
@@ -95,7 +116,7 @@ const ActionCell = ({ row }: { row: any }) => {
 					</IconButton>
 				</MenuItem>
 				<MenuItem className={'rounded-full outline-none my-1'} >
-					<IconButton onClick={row.delete}>
+					<IconButton onClick={() => setDialogOpen(true)}>
 						<Delete height={20} />
 					</IconButton>
 				</MenuItem>
@@ -108,7 +129,7 @@ const ActionCell = ({ row }: { row: any }) => {
 			<IconButton onClick={() => router.push(`/services?search=${row.slug}`)}>
 				<Visibility height={20} />
 			</IconButton>
-			<IconButton onClick={row.delete}>
+			<IconButton onClick={() => setDialogOpen(true)}>
 				<Delete height={20} />
 			</IconButton>
 		</div>
@@ -120,18 +141,18 @@ function Page() {
 	const router = useRouter()
 	const { status, data } = useSelector((store: RootState) => store.serviceSlice)
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dispatch(loadAdminServices())
 	}, [])
 
 
-	React.useEffect(() => { dispatch(resetServiceState()) }, [status])
+	useEffect(() => { dispatch(resetServiceState()) }, [status])
 
 	const _deleteService = (service: Service) => dispatch(deleteService(service.slug))
 
 	return (
 		<AdminDashboardLayout>
-			{() => <React.Fragment>
+			{() => <>
 				<div className='flex justify-between w-full items-center p-2'>
 					<h1 className='text-lg'>Services</h1>
 					<Button
@@ -151,7 +172,7 @@ function Page() {
 						rows={data.map((s, i) => ({ ...s, id: i + 1, delete: () => _deleteService(s) }))}
 					/>
 				</div>
-			</React.Fragment>}
+			</>}
 		</AdminDashboardLayout>
 	);
 }

@@ -1,13 +1,13 @@
 import { ArrowForwardIos } from '@mui/icons-material'
 import { Button, Card, CircularProgress } from '@mui/material'
-import React from 'react'
+import { useState } from 'react'
 
-function DashCards({ name, value, className, endIcon, func }: {
+function DashCards({ name, value, className, endIcon, exportFunc }: {
   name: string
   value: string | number
   endIcon?: React.ReactNode
   className?: string
-  func?: VoidFunction
+  exportFunc?: () => boolean | Promise<boolean>
 }) {
   return (
     <Card className={`h-[15vh] grid grid-cols-7 rounded-md hover:opacity-80 transit ${className || ''}`}>
@@ -23,8 +23,8 @@ function DashCards({ name, value, className, endIcon, func }: {
       </div>
       <div className='col-span-2 flex flex-col items-center justify-center relative'>
         {endIcon}
-        {func !== undefined && <>
-          <CardProcess handleClick={func} />
+        {exportFunc !== undefined && <>
+          <CardProcess handleClick={exportFunc} />
         </>}
       </div>
     </Card >
@@ -32,17 +32,19 @@ function DashCards({ name, value, className, endIcon, func }: {
 }
 
 const CardProcess = ({ handleClick }: {
-  handleClick: VoidFunction
+  handleClick: () => boolean | Promise<boolean>
 }) => {
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(true)
   return <Button className='absolute cursor-pointer bottom-0 right-0 px-2 py-1'
     variant='outlined'
     size='small'
     endIcon={loading ? <CircularProgress size={14} /> : <ArrowForwardIos fontSize='small' />}
     disabled={loading}
-    onClick={() => {
+    color={success ? 'primary' : 'error'}
+    onClick={async () => {
       setLoading(true)
-      handleClick()
+      setSuccess(await handleClick())
       setTimeout(() => setLoading(false), 2000)
     }}
   >

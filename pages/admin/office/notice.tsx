@@ -1,7 +1,7 @@
 import { Delete } from "@mui/icons-material";
-import { Button, CircularProgress, Dialog, DialogContent, IconButton, MenuItem, Select, TextField } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React from "react";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, MenuItem, Select, TextField } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
+import React, { useState } from "react";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import GridTable from "../../../components/Grid";
 import { ImageUpload } from "../../../components/ImageUpload";
@@ -51,16 +51,36 @@ const columns: GridColDef[] = [
 ];
 
 const DeleteAction = ({ row }: { row: any }) => {
-	return <IconButton disabled={row.status === 1} onClick={async () => {
-		try {
-			await Api().delete('/admin/notice?id=' + row.id)
-			row.load()
-		} catch (error) {
+	const [dialogOpen, setDialogOpen] = useState(false)
+	return <>
+		<Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+			<DialogTitle sx={{ fontSize: 15, textAlign: 'center' }}>
+				DELETE NOTICE
+			</DialogTitle>
+			<DialogContent>
+				This action is irreversible
+			</DialogContent>
+			<DialogActions>
+				<Button color="error" onClick={() => setDialogOpen(false)}>
+					CANCEL
+				</Button>
+				<Button color="success" onClick={async () => {
+					setDialogOpen(false)
+					try {
+						await Api().delete('/admin/notice?id=' + row.id)
+						row.load()
+					} catch (error) {
 
-		}
-	}}>
-		<Delete fontSize="small" className={`text-red-500 cursor-pointer`} />
-	</IconButton>
+					}
+				}}>
+					CONFIRM
+				</Button>
+			</DialogActions>
+		</Dialog>
+		<IconButton disabled={row.status === 1} onClick={() => setDialogOpen(true)}>
+			<Delete fontSize="small" className={`text-red-500 cursor-pointer`} />
+		</IconButton>
+	</>
 }
 
 function Page() {

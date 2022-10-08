@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
 import { RootState, useAppDispatch } from "../../store";
@@ -12,10 +11,11 @@ import ReactSwitch from "react-switch";
 import { LoaderWhite } from "../../components/Loader";
 import { Api } from "../../helpers/api";
 import { Menu, MenuItem } from "@szhsin/react-menu";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
 import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
 import { GridColDef } from "@mui/x-data-grid";
 import GridTable from "../../components/Grid";
+import { useEffect, useState } from "react";
 
 const columns: GridColDef[] = [
 	{
@@ -103,7 +103,7 @@ const columns: GridColDef[] = [
 ];
 
 const ActionStatus = ({ props }: { props: any }) => {
-	const [loading, setLoading] = React.useState(false)
+	const [loading, setLoading] = useState(false)
 	const dispatch = useAppDispatch()
 
 	return <ReactSwitch
@@ -130,7 +130,27 @@ const ActionStatus = ({ props }: { props: any }) => {
 
 const ActionCell = ({ row }: { row: any }) => {
 	const router = useRouter()
+	const [dialogOpen, setDialogOpen] = useState(false)
 	return <>
+		<Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+			<DialogTitle sx={{ fontSize: 15, textAlign: 'center' }}>
+				DELETE PROPERTY
+			</DialogTitle>
+			<DialogContent>
+				This action is irreversible
+			</DialogContent>
+			<DialogActions>
+				<Button color="error" onClick={() => setDialogOpen(false)}>
+					CANCEL
+				</Button>
+				<Button color="success" onClick={() => {
+					setDialogOpen(false)
+					row.delete()
+				}}>
+					CONFIRM
+				</Button>
+			</DialogActions>
+		</Dialog>
 		<div className="absolute mx-1 my-4">
 			<Menu menuButton={<IconButton><DotsVerticalIcon height={18} /></IconButton>}>
 				<div className="py-4"></div>
@@ -145,7 +165,7 @@ const ActionCell = ({ row }: { row: any }) => {
 					</IconButton>
 				</MenuItem>
 				<MenuItem className={'rounded-full outline-none my-1'} >
-					<IconButton onClick={row.delete}>
+					<IconButton onClick={() => setDialogOpen(true)}>
 						<Delete height={20} />
 					</IconButton>
 				</MenuItem>
@@ -159,17 +179,17 @@ function DashProps() {
 	const router = useRouter()
 	const { status, data } = useSelector((store: RootState) => store.propertySlice)
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dispatch(loadAdminProperties())
 	}, [])
 
-	React.useEffect(() => { dispatch(resetPropertyState()) }, [status])
+	useEffect(() => { dispatch(resetPropertyState()) }, [status])
 
 	const _deleteProperty = (s: string) => dispatch(deleteProperty(s))
 
 	return (
 		<AdminDashboardLayout>
-			{() => <React.Fragment>
+			{() => <>
 				<Box className='flex justify-between w-full items-center px-2 py-1 my-1'>
 					<h1 className='lg:text-xl text-lg red'>Properties</h1>
 					<Button
@@ -186,7 +206,7 @@ function DashProps() {
 					rows={data.map((s, i) => ({ ...s, id: i + 1, delete: () => _deleteProperty(s.slug) }))}
 					state={status}
 				/>
-			</React.Fragment>}
+			</>}
 		</AdminDashboardLayout>
 	);
 }

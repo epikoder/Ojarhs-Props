@@ -13,25 +13,26 @@ export const NoticeBoard = () => {
                 showThumbs={false}
                 showArrows={true}
                 showStatus={false}
-                autoPlay
+                autoPlay={false}
                 emulateTouch
                 transitionTime={1000}
                 interval={5000}
-                showIndicators
+                showIndicators={false}
                 infiniteLoop
                 stopOnHover
             >
                 {data.map((n, i) =>
-                    <div key={i} className="h-full w-full text-left whitespace-pre-line">
+                    <div key={i} className="h-full w-full text-left whitespace-pre-line overflow-scroll">
                         <div className="font-semibold bg-black text-sec text-center rounded-sm p-1">
                             OJARH NOTICE
                         </div>
                         {n.type === 'text' && <div className="text-center font-semibold">
                             {n.title}
                         </div>}
-                        <div className="p-2 flex flex-col items-center justify-center h-full">
-                            {n.type !== 'image' ? n.content : <img src={resolveFilePath(n.content)} className='h-full object-cover' />}
-                        </div>
+                        {n.type === 'image' && <img src={resolveFilePath(n.content)} className='h-full object-cover' />}
+                        {n.type === 'text' && <div className="p-2 overflow-y-scroll">
+                            {n.content}
+                        </div>}
                     </div>
                 )
                 }

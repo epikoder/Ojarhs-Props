@@ -4,7 +4,7 @@ import HomeSignUp from "../components/HomeSignUp";
 import TopSection from "../components/TopSection";
 import Notice from "../components/Notice";
 import { PropertyAdvert } from "../components/Adverts";
-import Testimonials from "../components/Testimonials";
+import Review from "../components/Review";
 import Layout from "../components/Layout";
 import { loadAdverts, loadIndex, loadNotice } from "../actions";
 import { RootState, useAppDispatch } from "../store";
@@ -175,7 +175,7 @@ function Home() {
 						<PropertyAdvert />
 						<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
 						<Plaza name='Services' store={data.services} prop='' />
-						<Testimonials testimony={data.testimonies} />
+						<Review />
 					</>
 				)}
 			</div>
