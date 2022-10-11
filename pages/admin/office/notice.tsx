@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import GridTable from "../../../components/Grid";
 import { ImageUpload } from "../../../components/ImageUpload";
-import { BASEURL } from "../../../constants";
+import { BASEURL } from "../../../config";
 import { Api } from "../../../helpers/api";
 import { ApiResponse, LoadState, Notice } from "../../../Typing";
 

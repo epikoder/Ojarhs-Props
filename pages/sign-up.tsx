@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordControlledInput, FormPhoneInput } from "../components/FormInput";
 import { ImageUpload } from "../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../Typing.d";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import Loader from "../components/Loader";
 import { emailValidator } from "../helpers/validation";
 import { RootState } from "../store";

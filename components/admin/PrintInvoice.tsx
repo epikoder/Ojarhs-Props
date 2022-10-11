@@ -1,5 +1,5 @@
 import React from "react"
-import { OjarhAddress, OjarhPhone } from "../../constants"
+import { OjarhAddress, OjarhPhone } from "../../config"
 import { money } from "../../helpers/helpers"
 import { Invoice } from "../../Typing"
 import { Logo } from "../Logo"

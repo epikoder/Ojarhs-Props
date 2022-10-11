@@ -3,7 +3,7 @@ import { Alert, Button, CircularProgress, Paper, TextField } from "@mui/material
 import React from "react";
 import { Parallax } from "react-parallax";
 import Layout from "../../components/Layout";
-import { BASEURL, OjarhAddress, OjarhEmail, OjarhPhone } from "../../constants";
+import { BASEURL, OjarhAddress, OjarhEmail, OjarhPhone } from "../../config";
 import { emailValidator } from "../../helpers/validation";
 import { Contact } from "../../Typing";
 

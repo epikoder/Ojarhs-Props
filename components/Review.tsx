@@ -2,7 +2,7 @@ import { Button, Card, CircularProgress, TextField } from "@mui/material";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import { getUserToken } from "../helpers/auth";
 import { RootState } from "../store";
 

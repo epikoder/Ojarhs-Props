@@ -4,7 +4,7 @@ import React, { PropsWithChildren } from "react"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { UserDashboardProperties } from "../../components/user/UserDashboardProperties"
 import { UserInfo } from "../../components/user/UserInfo"
-import { applicationFee } from "../../constants"
+import { applicationFee } from "../../config"
 import { money } from "../../helpers/helpers"
 
 const UserDashboard = ({ props }: { props: PropsWithChildren }) => {

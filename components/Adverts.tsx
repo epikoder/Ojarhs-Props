@@ -24,7 +24,7 @@ export const SliderAdvert = () => {
         onClickItem={(i) => IsLinkValid(slider[i].link) ? window.open(slider[i].link, '_blank') : null}
       >
         {slider.length > 0 ?
-          slider.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
+          slider.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full' />)
           :
           ['slider1.jpeg', 'slider2.jpeg',].map((s, i) =>
             <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
@@ -55,7 +55,7 @@ export const PropertyAdvert = () => {
             showThumbs={false}
             onClickItem={(i) => IsLinkValid(f[i].link) ? window.open(f[i].link, '_blank') : null}
           >
-            {f.length > 0 ? f.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
+            {f.length > 0 ? f.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full' />)
               :
               (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
                 <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />
@@ -75,7 +75,7 @@ export const PropertyAdvert = () => {
             showThumbs={false}
             onClickItem={(i) => IsLinkValid(s[i].link) ? window.open(s[i].link, '_blank') : null}
           >
-            {s.length > 0 ? s.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full object-cover' />)
+            {s.length > 0 ? s.map((a, i) => <img key={i} src={resolveFilePath(a.photo)} className='h-full w-full' />)
               :
               (['advert1.jpeg', 'advert2.jpeg', 'advert3.jpeg',]).map((s, i) =>
                 <img key={i} src={'image/' + s} className={`h-full w-full object-cover`} />

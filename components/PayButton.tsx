@@ -8,7 +8,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../store"
 import { useRouter } from "next/router"
 import { PaystackConsumer } from "react-paystack"
-import { pk_key } from "../constants"
+import { pk_key } from "../config"
 
 const NotAvailable = 'NOT AVAILABLE'
 const NotFound = 'NOT FOUND'

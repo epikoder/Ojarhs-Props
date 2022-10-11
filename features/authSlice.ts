@@ -6,7 +6,7 @@ import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplication
 import * as jose from 'jose'
 import { store } from "../store";
 import { updateUserProfile } from "../actions/user/dashboard";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import { StartNotify } from "utils/notification";
 
 type AuthState = {

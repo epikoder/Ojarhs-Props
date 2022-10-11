@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import { fixSpace } from "../helpers/helpers";
 import { Advert, ApiResponse, Notice, Service, Space } from "../Typing";
 

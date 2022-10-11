@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import React from "react"
 import { FormInput } from "../../../components/FormInput"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
-import { disputeLevel } from "../../../constants"
+import { disputeLevel } from "../../../config"
 import { Api } from "../../../helpers/api"
 import { DisputeLevel, MesssageForm } from "../../../Typing.d"
 

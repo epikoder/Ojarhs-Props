@@ -1,7 +1,7 @@
 import React from 'react'
 import FT from './FT'
 import Link from 'next/link'
-import { OjarhAddress, OjarhEmail, OjarhPhone } from '../constants'
+import { OjarhAddress, OjarhEmail, OjarhPhone } from '../config'
 import { IconButton, Paper } from '@mui/material'
 import { Logo } from './Logo'
 import { Facebook, Inbox, Instagram, Phone, Place, Twitter } from '@mui/icons-material'

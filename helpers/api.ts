@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import { JWTCLAIMS, logout, setAuthenticated } from "../features/authSlice";
 import { store } from "../store";
 import { ApiResponse, loginResponse, User, UserApplicationStatus } from "../Typing";

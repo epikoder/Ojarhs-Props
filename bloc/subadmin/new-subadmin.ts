@@ -2,7 +2,7 @@ import { PageRoot, PageState } from "../_page"
 import { BlacReact } from 'blac'
 import { ApiResponse, User } from "../../Typing"
 import { getUserToken } from "../../helpers/auth"
-import { BASEURL } from "../../constants"
+import { BASEURL } from "../../config"
 
 type State = ApiResponse<User, Partial<User>> & { form: Partial<User> }
 export class NewSubAdminPageState extends PageRoot<State> {

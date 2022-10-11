@@ -1,5 +1,5 @@
 import { Button, Card, IconButton, MenuItem, Select } from "@mui/material"
-import { BASEURL } from "../../constants"
+import { BASEURL } from "../../config"
 import { Api } from "helpers/api"
 import { useEffect, useRef, useState } from "react"
 import { ApiResponse, UserApplication } from "Typing"

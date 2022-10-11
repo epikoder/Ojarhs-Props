@@ -1,4 +1,4 @@
-import { DisputeLevel } from "./Typing.d"
+import { DisputeLevel } from "./Typing"
 
 const IsRelease = true
 const PaystackMode: 'live' | 'sandbox' = 'live'

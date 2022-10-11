@@ -3,7 +3,7 @@ import { Avatar, Card, CircularProgress, Dialog, DialogContent, IconButton } fro
 import { useRouter } from "next/router"
 import React, { ChangeEvent } from "react"
 import { useSelector } from "react-redux"
-import { BASEURL, disputeLevel } from "../constants"
+import { BASEURL, disputeLevel } from "../config"
 import { resolveFilePath } from "../helpers/helpers"
 import { RootState } from "../store"
 import { DisputeLevel, Message, MessageType } from "../Typing.d"
