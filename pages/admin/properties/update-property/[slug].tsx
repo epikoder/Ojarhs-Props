@@ -170,7 +170,7 @@ function UpdateProp() {
 
                             <FormInput
                                 props={{
-                                    value: form.description,
+                                    value: form.size,
                                     handleChange: (s) => setForm({
                                         ...form, size: s
                                     }),
