@@ -82,7 +82,7 @@ function NewProps() {
 							<FormInput
 								props={{
 									title: 'Property ID',
-									value: form.name,
+									value: form.no,
 									handleChange: (s) => setForm({
 										...form, no: s
 									}),
@@ -93,7 +93,7 @@ function NewProps() {
 							<FormInput
 								props={{
 									title: 'Size',
-									value: form.name,
+									value: form.size,
 									handleChange: (s) => setForm({
 										...form, size: s
 									}),

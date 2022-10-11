@@ -207,7 +207,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
             <Card elevation={2} className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
                 if (loading || disabled) return
                 const uploader = ref.current;
-                if (uploader !== undefined && blob === undefined) {
+                if (uploader !== undefined && blob === undefined && src === undefined) {
                     uploader.click()
                 }
             }} style={{
@@ -221,6 +221,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                         if (src !== undefined && handleUpload) {
                             handleUpload('', blob)
                         }
+                        ref.current?.click()
                     }}>
                     <Cancel />
                 </IconButton>
@@ -247,7 +248,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
     }
 
     return <>
-        <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
             if (loading || disabled) return
             const uploader = ref.current;
             if (uploader !== undefined && blob === undefined) {
@@ -275,7 +276,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                         </div>
                     </>)
             }
-        </div>
+        </Card>
         <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />
     </>
 }
@@ -291,7 +292,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
     const [message, setMessage] = useState<string>('')
     const ref = useRef<HTMLInputElement>()
     const { access } = useSelector((store: RootState) => store.authSlice.token)
-    const dispatch = useAppDispatch()
 
     function onUpload() {
         setUrl('')
@@ -362,7 +362,7 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
     }
 
     return <>
-        <Card elevation={2} className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-centerrounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-center relative" onClick={() => {
             if (loading || disabled || (documentType === '' || documentType === '0')) return
             if (!required && url !== '') {
                 setUrl('')

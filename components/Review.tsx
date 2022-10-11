@@ -37,7 +37,7 @@ function Review() {
                 case 200:
                     {
                         setMessage(<div className="text-white text-center bg-blue-500 rounded-md px-2 py-1">
-                            Review submitted successfully
+                            Thank you for your report
                         </div>)
                         setForm({
                             review: '',
@@ -88,7 +88,7 @@ function Review() {
                         onChange={(e) => setForm({ ...form, review: e.target.value })} />
                     {authenticated ? <Button
                         variant="outlined"
-                        disabled={loading}
+                        disabled={loading || form.title.trim() === '' || form.review.trim().length < 5}
                         startIcon={loading && <CircularProgress size={14} />}
                         onClick={send}
                     >

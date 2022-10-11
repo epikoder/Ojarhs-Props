@@ -52,6 +52,7 @@ export const PropertyAdvert = () => {
             infiniteLoop={true}
             transitionTime={1000}
             emulateTouch={true}
+            interval={4000}
             showThumbs={false}
             onClickItem={(i) => IsLinkValid(f[i].link) ? window.open(f[i].link, '_blank') : null}
           >
@@ -71,6 +72,7 @@ export const PropertyAdvert = () => {
             showStatus={false}
             infiniteLoop={true}
             transitionTime={1000}
+            interval={3000}
             emulateTouch={true}
             showThumbs={false}
             onClickItem={(i) => IsLinkValid(s[i].link) ? window.open(s[i].link, '_blank') : null}
@@ -102,6 +104,7 @@ function MiddleAdvert() {
           infiniteLoop={true}
           transitionTime={1000}
           emulateTouch={true}
+          interval={5000}
           showThumbs={false}
           onClickItem={(i) => IsLinkValid(middle[i].link) ? window.open(middle[i].link, '_blank') : null}
         >
