@@ -114,16 +114,7 @@ export type SignUpForm = {
 	next_of_kins: NextOfKin[]
 }
 
-export type UserUpdateForm = {
-	fname: string
-	lname: string
-	phone: string
-	photo: string
-	address: string
-	lga: string
-	state: string
-	country: string
-}
+export type UserUpdateForm = Partial<User>
 
 export type Country = {
 	id: number
@@ -155,6 +146,13 @@ export type DashboardDataState<T> = {
 	message?: string
 }
 export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected' | 'document-required'
+export type UserApplication = {
+	id: string
+	user_id: string
+	status: UserApplicationStatus
+	message: string
+	document: string
+}
 
 export type Advert = {
 	id: number

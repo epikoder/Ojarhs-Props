@@ -2,15 +2,16 @@ import { ArrowForwardIos } from '@mui/icons-material'
 import { Button, Card, CircularProgress } from '@mui/material'
 import { useState } from 'react'
 
-function DashCards({ name, value, className, endIcon, exportFunc }: {
+function DashCards({ name, value, className, endIcon, handleClick: exportFunc, buttonTitle }: {
   name: string
   value: string | number
   endIcon?: React.ReactNode
   className?: string
-  exportFunc?: () => boolean | Promise<boolean>
+  handleClick?: () => boolean | Promise<boolean>
+  buttonTitle?: string
 }) {
   return (
-    <Card className={`h-[15vh] grid grid-cols-7 rounded-md hover:opacity-80 transit ${className || ''}`}>
+    <Card elevation={2} className={`h-[15vh] grid grid-cols-7 rounded-md hover:opacity-80 transit ${className || ''}`}>
       <div className='col-span-5 p-4 flex flex-col text-white justify-between'>
         <div className='uppercase text-md'>
           {name}
@@ -24,15 +25,16 @@ function DashCards({ name, value, className, endIcon, exportFunc }: {
       <div className='col-span-2 flex flex-col items-center justify-center relative'>
         {endIcon}
         {exportFunc !== undefined && <>
-          <CardProcess handleClick={exportFunc} />
+          <CardProcess handleClick={exportFunc} title={buttonTitle} />
         </>}
       </div>
     </Card >
   )
 }
 
-const CardProcess = ({ handleClick }: {
+const CardProcess = ({ handleClick, title }: {
   handleClick: () => boolean | Promise<boolean>
+  title?: string
 }) => {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(true)
@@ -48,7 +50,7 @@ const CardProcess = ({ handleClick }: {
       setTimeout(() => setLoading(false), 2000)
     }}
   >
-    export
+    {title || 'export'}
   </Button>
 }
 export default DashCards

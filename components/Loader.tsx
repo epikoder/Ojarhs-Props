@@ -1,5 +1,4 @@
 import { Box, CircularProgress, circularProgressClasses, CircularProgressProps, LinearProgress } from "@mui/material";
-import { style } from "@mui/system";
 import { Router } from "next/router";
 import React from "react";
 

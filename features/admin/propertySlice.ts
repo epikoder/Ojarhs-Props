@@ -34,7 +34,7 @@ const propertySlice = createSlice({
 		},
 		resetPropertyState: (state) => {
 			state.status = 'nil'
-
+			state.err = {}
 		}
 	},
 	extraReducers: (builder) => {

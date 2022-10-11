@@ -6,7 +6,8 @@ import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplication
 import * as jose from 'jose'
 import { store } from "../store";
 import { updateUserProfile } from "../actions/user/dashboard";
-import { Cookies } from "next/dist/server/web/spec-extension/cookies";
+import { BASEURL } from "../constants";
+import { StartNotify } from "utils/notification";
 
 type AuthState = {
     authenticated: boolean
@@ -123,13 +124,10 @@ const checkIsAuthenticatedAdminAsync = async () => {
 
 const logoutAsync = async (token: string) => {
     try {
-        await fetch('/user/logout', {
+        await fetch(BASEURL + '/auth/logout', {
             method: 'POST',
             mode: "cors",
-            credentials: 'include',
-            headers: {
-                authorization: 'Bearer ' + token
-            }
+            credentials: 'include'
         })
     } catch (error) {
 
@@ -141,14 +139,13 @@ const authSlice = createSlice({
     initialState: initialState,
     reducers: {
         logout: (state) => {
-            console.log('LOGGGING OUT')
             state.appState = 'completed'
             state.authenticated = false
             state.user = undefined
             state.message = undefined
             state.token = {} as loginResponse
             state.error = {}
-            logoutAsync(state.token?.access)
+            logoutAsync(state.token?.refresh)
             clearUserToken()
             // TODO: Clear token cache
         },
@@ -170,6 +167,9 @@ const authSlice = createSlice({
             state.user = payload.user
             state.token = payload.token
             state.application = payload.application
+            if (state.authenticated) {
+                StartNotify()
+            }
         },
 
         checkIsAuthenticated: (state, { payload }: {

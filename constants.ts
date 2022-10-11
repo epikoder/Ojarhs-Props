@@ -3,8 +3,9 @@ import { DisputeLevel } from "./Typing.d"
 const IsRelease = true
 const PaystackMode: 'live' | 'sandbox' = 'live'
 export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "http://ojarh-properties.com/api"
+export const WSURL = IsRelease ? "wss://ojarhproperties.com" : "ws://ojarh-properties.com"
 export const STORAGEURL = IsRelease ? "https://ojarhproperties.com" : "http://ojarh-properties.com"
-export const OjarhEmail = "support@ojarproperties.com"
+export const OjarhEmail = "support@ojarhproperties.com"
 export const OjarhAddress = "22 Oraifite Road, Uruagu Nnewi, Anambra State"
 export const OjarhPhone = "+2349161103990"
 export const pk_key = PaystackMode === 'live'

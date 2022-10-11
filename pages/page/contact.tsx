@@ -150,13 +150,9 @@ const Page = () => {
 									</div>
 									<div>
 										<textarea
-											className='border border-1 w-full p-2 h-24'
+											className='border border-gray-300 w-full p-2 h-24 bg-transparent'
 											placeholder='Message'
 											onChange={e => setForm({ ...form, message: e.target.value })}
-											style={{
-												backgroundColor: '#272424',
-												backgroundImage: 'linear - gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))',
-											}}
 										/>
 									</div>
 									<div>

@@ -3,16 +3,14 @@ import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayou
 import { RootState, useAppDispatch } from "../../store";
 import { useRouter } from "next/router";
 import { deleteProperty, resetPropertyState, toggleProperyStatus } from "../../features/admin/propertySlice";
-import { ApiResponse, Space } from "../../Typing.d";
+import { ApiResponse } from "../../Typing.d";
 import { money } from "../../helpers/helpers";
-import { DotsVerticalIcon } from "@heroicons/react/solid";
 import { loadAdminProperties } from "../../actions/admin/admin";
 import ReactSwitch from "react-switch";
-import { LoaderWhite } from "../../components/Loader";
 import { Api } from "../../helpers/api";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from "@mui/material";
-import { Add, Delete, Edit, Visibility } from "@mui/icons-material";
+import { Add, Delete, Edit, MoreVert, Visibility } from "@mui/icons-material";
 import { GridColDef } from "@mui/x-data-grid";
 import GridTable from "../../components/Grid";
 import { useEffect, useState } from "react";
@@ -152,7 +150,7 @@ const ActionCell = ({ row }: { row: any }) => {
 			</DialogActions>
 		</Dialog>
 		<div className="absolute mx-1 my-4">
-			<Menu menuButton={<IconButton><DotsVerticalIcon height={18} /></IconButton>}>
+			<Menu menuButton={<IconButton><MoreVert height={18} /></IconButton>}>
 				<div className="py-4"></div>
 				<MenuItem className={'rounded-full outline-none my-1'} >
 					<IconButton onClick={() => router.push(`/admin/properties/update-property/${row.slug}`)}>

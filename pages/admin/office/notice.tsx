@@ -191,7 +191,8 @@ const NewNoticeForm = ({ close }: { close: () => void }) => {
 			{form.type === 'text'
 				?
 				<div>
-					<textarea onChange={(e) => setForm({ ...form, type: 'text', content: e.target.value })} className="h-52 w-full border border-gray-300 bg-transparent rounded-md p-2" placeholder="Notice..." />
+					<textarea onChange={(e) => setForm({ ...form, type: 'text', content: e.target.value })} 
+					className="h-52 w-full border border-gray-300 bg-transparent rounded-md p-2" placeholder="Notice..." />
 				</div>
 				:
 				<div>

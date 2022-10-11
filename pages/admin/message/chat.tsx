@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
 import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatComponents"
@@ -7,7 +7,8 @@ import Loader from "../../../components/Loader"
 import { Api } from "../../../helpers/api"
 import { loadAdminConverstion } from "../../../actions/admin/admin"
 import { RootState, useAppDispatch } from "../../../store"
-import { Message, MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
+import { MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
+import { markMessageAsRead } from "actions/message"
 
 const Page = () => {
     const { data, state } = useSelector((store: RootState) => store.messageSlice)
@@ -60,6 +61,13 @@ const Page = () => {
     React.useEffect(() => {
         if (chatBox.current == undefined) return
         chatBox.current.scrollTop = chatBox.current.scrollHeight
+    }, [conversation])
+
+    useEffect(() => {
+        markMessageAsRead({
+            owner: conversation?.messages[0].owner_type,
+            id: conversation?.id
+        })
     }, [conversation])
 
     return <AdminDashboardLayout style={{

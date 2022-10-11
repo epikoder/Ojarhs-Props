@@ -137,7 +137,7 @@ const NewRequest = ({ close }: { close: () => void }) => {
 
     return <>
         {loading && <Loader />}
-        <div className="min-h-[20vh] p-2 max-w-screen-md w-[80vw] space-y-2" >
+        <div className="min-h-[20vh] p-2 max-w-sm w-[80vw] space-y-2" >
             <div className="text-center w-full">
                 New Packout Request
             </div>
@@ -164,7 +164,7 @@ const NewRequest = ({ close }: { close: () => void }) => {
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value as string })}
                     disabled={form.space === ''}
-                    className="bg-white border border-gray-500 p-2 w-full h-[40vh] outline-red-500 px-1"
+                    className="bg-transparent border border-gray-300 p-2 w-full h-[40vh] outline-red-500 px-1"
                     placeholder="Please state your reason..." />
                 <div className="text-xs text-center px-1">
                     <span> {form.message.length} </span>

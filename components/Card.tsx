@@ -7,14 +7,12 @@ import Button from "./Button";
 import PaymentIcon from '@mui/icons-material/Payment';
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import PlaceIcon from '@mui/icons-material/Place';
-import { UserIcon } from "@heroicons/react/outline";
 import { PayButton } from "./PayButton";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Card, Typography, useTheme } from "@mui/material";
+import { Card } from "@mui/material";
+import { Person } from "@mui/icons-material";
 
 function OjarhCard({ data, className }: { data: Space | Service, className?: string }) {
-	const theme = useTheme()
-
 	if (data.type === "service") {
 		const service = data as Service
 		return (
@@ -44,7 +42,7 @@ function OjarhCard({ data, className }: { data: Space | Service, className?: str
 						</div>
 						<div className="space-y-3 text-sec">
 							<div className="flex items-center">
-								<UserIcon className="w-5" />
+								<Person className="w-5" />
 								<span className="px-2 text-md">{service.manager}</span>
 							</div>
 							<div className="ellipse three-lines">

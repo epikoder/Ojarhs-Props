@@ -1,15 +1,14 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { MenuIcon, XIcon } from "@heroicons/react/solid";
-import Link from "next/link";
 import NavLink from "./NavLink";
 import { RootState } from "../store";
 import { checkIsAuthenticated, logout } from "../features/authSlice";
 import { AppBar, Avatar, Box, Button, Divider, Drawer, IconButton, Toolbar } from "@mui/material";
 import { resolveFilePath } from "../helpers/helpers";
-import { Person } from "@mui/icons-material";
+import { Close, Menu, Person } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { Logo } from "./Logo";
+import NotificationBox from "./Notification";
 
 
 const MenuItemMobile = ({ title, href = '/' }: { title: string, href?: string }) => {
@@ -185,6 +184,7 @@ function Header() {
 											dashboard
 										</Button>
 									</NavLink>
+									{/* <NotificationBox /> */}
 								</> :
 									<>
 										<NavLink href='/login'>
@@ -197,16 +197,20 @@ function Header() {
 							}
 						</ul>
 					</Box>
-					<div className='h-7 w-7 lg:hidden cursor-pointer'>
-						{isOpen ?
-							<XIcon
-								onClick={closeMenu}
-							/>
-							:
-							<MenuIcon
-								onClick={openMenu}
-							/>}
-					</div>
+					{isOpen ?
+						<IconButton className='h-7 w-7 lg:hidden'
+							onClick={closeMenu}>
+							<Close />
+						</IconButton>
+						:
+						<div className='lg:hidden flex'>
+							{/* <NotificationBox /> */}
+							<IconButton
+								onClick={openMenu}>
+								<Menu />
+							</IconButton>
+						</div>
+					}
 				</Toolbar>
 			</AppBar>
 			<Box component='nav'>

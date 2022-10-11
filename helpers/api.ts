@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 import { BASEURL } from "../constants";
 import { JWTCLAIMS, logout, setAuthenticated } from "../features/authSlice";
 import { store } from "../store";
@@ -38,7 +38,8 @@ const Api = (useInterceptor: boolean = true) => {
                 const res = await fetch(BASEURL + '/jwt/refresh', init)
                 if (res.status !== 200) {
                     _api.interceptors.response.eject(refreshInterceptor)
-                    return store.dispatch(logout())
+                    store.dispatch(logout())
+                    return Promise.reject(error)
                 }
 
                 const data = (await res.json()) as ApiResponse<loginResponse, { application: UserApplicationStatus }>
@@ -47,7 +48,7 @@ const Api = (useInterceptor: boolean = true) => {
                 let user = (dec as unknown as JWTCLAIMS).aud as User
                 if (user?.is_admin && (user?.roles.find(s => s.includes("admin")) === undefined)) {
                     store.dispatch(setAuthenticated({ authenticated: false }))
-                    return
+                    return Promise.reject(error)
                 }
                 const auth = {
                     authenticated: true,
@@ -59,13 +60,16 @@ const Api = (useInterceptor: boolean = true) => {
                 return store.dispatch(setAuthenticated(auth))
             } catch (error) {
                 _api.interceptors.response.eject(refreshInterceptor)
-                return store.dispatch(logout())
+                store.dispatch(logout())
+                return Promise.reject(error)
             }
-            console.log('401111')
         }
+        return Promise.reject(error)
     }
     if (useInterceptor) {
-        refreshInterceptor = _api.interceptors.response.use(null, handleExpiredToken)
+        refreshInterceptor = _api.interceptors.response.use(response => {
+            return Promise.resolve(response)
+        }, handleExpiredToken)
     }
     return _api
 }

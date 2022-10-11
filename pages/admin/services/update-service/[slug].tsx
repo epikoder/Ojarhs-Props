@@ -1,21 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { ApiResponse, Service, Space } from "../../../../Typing.d";
-import { ImageUpload, VideoUpload } from "../../../../components/ImageUpload";
-import { GalleryUploader } from "../../../../components/admin/GalleryUploader";
-import { PaymentPlans, PropertyType } from "../../../../components/Resource";
-import { RootState, useAppDispatch } from "../../../../store";
-import Loader from "../../../../components/Loader";
-import { addNewPropertyThunck, addNewServiceThunck } from "../../../../actions/admin/admin";
+import { ApiResponse, Service } from "../../../../Typing.d";
+import { ImageUpload } from "../../../../components/ImageUpload";
+import { PaymentPlans } from "../../../../components/Resource";
 import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
-import { resetPropertyState } from "../../../../features/admin/propertySlice";
-import { ArrowLeftIcon } from "@heroicons/react/solid";
 import { Button, IconButton } from "@mui/material";
 import { FormInput } from "../../../../components/FormInput";
 import { Api } from "../../../../helpers/api";
 import { resolveFilePath } from "../../../../helpers/helpers";
 import { AxiosError } from "axios";
+import { ArrowBack } from "@mui/icons-material";
 
 function UpdateService() {
     const [loading, setLoading] = React.useState<boolean>(false)
@@ -91,7 +85,7 @@ function UpdateService() {
                 <React.Fragment>
                     <div>
                         <IconButton onClick={router.back}>
-                            <ArrowLeftIcon />
+                            <ArrowBack />
                         </IconButton>
                     </div>
                     <div className="flex justify-center">
@@ -123,7 +117,7 @@ function UpdateService() {
                                         <textarea
                                             defaultValue={form.description}
                                             onChange={(e) => setForm({ ...form, description: e.target.value })}
-                                            className='w-full border border-gray-300 p-2'
+                                            className='w-full border border-gray-300 p-2 bg-transparent'
                                             placeholder="Decription"
                                         />
                                     </div>

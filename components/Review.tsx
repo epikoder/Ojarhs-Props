@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { BASEURL } from "../constants";
-import { Api } from "../helpers/api";
 import { getUserToken } from "../helpers/auth";
 import { RootState } from "../store";
 

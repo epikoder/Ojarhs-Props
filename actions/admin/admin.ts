@@ -3,7 +3,19 @@ import { AxiosError } from "axios";
 import { Api } from "../../helpers/api";
 import { parseString } from "../../helpers/helpers";
 import { Query } from "../../Type";
-import { Advert, ApiResponse, Expense, Invoice, Message, MessageOwner, MesssageForm, PackoutRequest, QueryParam, Service, Space } from "../../Typing";
+import {
+    Advert,
+    ApiResponse,
+    Expense,
+    Invoice,
+    Message,
+    MessageOwner,
+    MesssageForm,
+    PackoutRequest,
+    QueryParam,
+    Service,
+    Space
+} from "../../Typing";
 
 export const addNewPropertyThunck = createAsyncThunk<ApiResponse | {
     status: 'failed'

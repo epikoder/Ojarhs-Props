@@ -43,7 +43,7 @@ function Records() {
 									value={totalProperties}
 									className='yoda'
 									endIcon={<House fontSize="large" className="text-white" />}
-									exportFunc={async (): Promise<boolean> => {
+									handleClick={async (): Promise<boolean> => {
 										try {
 											const { data } = await Api().get('/admin/records/properties')
 											const a = document.createElement('a')
@@ -63,7 +63,7 @@ function Records() {
 									value={data.tenant}
 									className='wiretap'
 									endIcon={<Person fontSize="large" className="text-white" />}
-									exportFunc={async (): Promise<boolean> => {
+									handleClick={async (): Promise<boolean> => {
 										try {
 											const { data } = await Api().get('/admin/records/tenants')
 											const a = document.createElement('a')
@@ -83,7 +83,7 @@ function Records() {
 									value={data.staff}
 									className='red-sunset'
 									endIcon={<Person2 fontSize="large" className="text-white" />}
-									exportFunc={async (): Promise<boolean> => {
+									handleClick={async (): Promise<boolean> => {
 										try {
 											const { data } = await Api().get('/admin/records/staffs')
 											const a = document.createElement('a')
@@ -103,7 +103,7 @@ function Records() {
 									value={money(data.rent.amount)}
 									className='gradlegray'
 									endIcon={<Money fontSize="large" className="text-white" />}
-									exportFunc={async (): Promise<boolean> => {
+									handleClick={async (): Promise<boolean> => {
 										try {
 											const { data } = await Api().get('/admin/records/rents')
 											const a = document.createElement('a')
@@ -123,7 +123,7 @@ function Records() {
 									value={data.invoice}
 									className='vanusa'
 									endIcon={<Print fontSize="large" className="text-white" />}
-									exportFunc={async (): Promise<boolean> => {
+									handleClick={async (): Promise<boolean> => {
 										try {
 											const { data } = await Api().get('/admin/records/invoices')
 											const a = document.createElement('a')

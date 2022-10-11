@@ -1,11 +1,10 @@
 import React from 'react'
 import FT from './FT'
-import { PhoneOutgoingIcon, LocationMarkerIcon, InboxIcon } from "@heroicons/react/outline"
 import Link from 'next/link'
 import { OjarhAddress, OjarhEmail, OjarhPhone } from '../constants'
 import { IconButton, Paper } from '@mui/material'
 import { Logo } from './Logo'
-import { Facebook, Instagram, Twitter } from '@mui/icons-material'
+import { Facebook, Inbox, Instagram, Phone, Place, Twitter } from '@mui/icons-material'
 
 
 function Footer() {
@@ -14,9 +13,9 @@ function Footer() {
             {/* the red background with phone email and location  */}
             <div className='bg-red py-12 px-4 gap-2 grid grid-cols-3'>
                 {/* no vex for the component name oh i no fit think of better name */}
-                <FT icon={<PhoneOutgoingIcon className='w-8' />} title="Phone Number" details={<span>{OjarhPhone}</span>} />
-                <FT icon={<LocationMarkerIcon className='w-8' />} title="Location" details={<span className='text-sm'>{OjarhAddress}</span>} />
-                <FT icon={<InboxIcon className='w-8' />} title="Email Address" details={<Link href='#'><span className='text-sm'>{OjarhEmail}</span></Link>} />
+                <FT icon={<Phone className='w-8' />} title="Phone Number" details={<span>{OjarhPhone}</span>} />
+                <FT icon={<Place className='w-8' />} title="Location" details={<span className='text-sm'>{OjarhAddress}</span>} />
+                <FT icon={<Inbox className='w-8' />} title="Email Address" details={<Link href='#'><span className='text-sm'>{OjarhEmail}</span></Link>} />
             </div>
 
             <Paper className='flex justify-center' sx={{
@@ -50,29 +49,9 @@ function Footer() {
                                 About
                             </h3>
                         </Link>
-                        <Link href="/page/sales_policy" className=' cursor-pointer font-mono text-lg '>
+                        <Link href="/page/terms" className=' cursor-pointer font-mono text-lg '>
                             <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
-                                Sales policy
-                            </h3>
-                        </Link>
-                        <Link href="/page/policy" className=' cursor-pointer font-mono text-lg'>
-                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500  mb-2 border hov transition-all duration-700 ease-in-out cursor-pointer '>
-                                Policy
-                            </h3>
-                        </Link>
-                        <Link href="/page/tenancy_agreement" className=' cursor-pointer font-mono text-lg '>
-                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
-                                Tenancy Agreement
-                            </h3>
-                        </Link>
-                        <Link href="/page/employee_agreement" className=' cursor-pointer font-mono text-lg '>
-                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
-                                Employee Agreement
-                            </h3>
-                        </Link>
-                        <Link href="/page/management_contractor_agreement" className=' cursor-pointer font-mono text-lg '>
-                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
-                                Management And Contractor Agreement
+                                Terms and conditions
                             </h3>
                         </Link>
 
@@ -82,11 +61,6 @@ function Footer() {
                         <Link href="/page/tenancy_service_fee" className=' cursor-pointer font-mono text-lg '>
                             <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
                                 Tenancy Service Fee
-                            </h3>
-                        </Link>
-                        <Link href="/page/terms" className=' cursor-pointer font-mono text-lg '>
-                            <h3 className=' border-dashed pb-1 border-transparent border-b-gray-500 border mb-2 hov transition-all duration-700 ease-in-out cursor-pointer '>
-                                Terms and conditions
                             </h3>
                         </Link>
                         <a href="/pdf/daily_incident_report.pdf" download={'daily_incident_report.pdf'}>

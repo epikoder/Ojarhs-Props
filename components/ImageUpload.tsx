@@ -1,5 +1,5 @@
-import { XCircleIcon } from "@heroicons/react/outline"
-import { Card } from "@mui/material"
+import { Cancel } from "@mui/icons-material"
+import { Card, IconButton } from "@mui/material"
 import React, { useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { BASEURL, STORAGEURL } from "../constants"
@@ -84,7 +84,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
     const showPreview = (value !== undefined && (url === '' || forceValue)) && (errMessage === '' || errMessage === undefined)
 
     return <>
-        <Card className="h-36 m-none hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-36 m-none hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
             if (loading || disabled) return
             if (!required && url !== '') {
                 setUrl('')
@@ -204,7 +204,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
 
     if (!headless) {
         return <>
-            <Card className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+            <Card elevation={2} className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
                 if (loading || disabled) return
                 const uploader = ref.current;
                 if (uploader !== undefined && blob === undefined) {
@@ -215,15 +215,15 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                 height: height
             }}>
 
-                <div className={blob === undefined && src === undefined || disabled ? 'hidden' : "absolute z-30 text-orange-500 cursor-pointer top-0"}
+                <IconButton className={blob === undefined && src === undefined || disabled ? 'hidden' : "absolute z-30 text-orange-500 top-0"}
                     onClick={() => {
                         setBlob(undefined)
                         if (src !== undefined && handleUpload) {
                             handleUpload('', blob)
                         }
                     }}>
-                    <XCircleIcon width={25} />
-                </div>
+                    <Cancel />
+                </IconButton>
                 {
                     ((value !== undefined || src !== undefined) && (blob === undefined || forceValue)) ?
                         (<video
@@ -362,7 +362,7 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
     }
 
     return <>
-        <div className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-centerrounded-md relative" onClick={() => {
             if (loading || disabled || (documentType === '' || documentType === '0')) return
             if (!required && url !== '') {
                 setUrl('')
@@ -374,13 +374,13 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
             }
         }}>
             {
-                url === '' ? (<div className="p-1">
+                url === '' ? (<div className="p-1 text-center">
                     {message !== '' ? message : 'SELECT PHOTO'}
                 </div>) : loading ? <Loader /> : <>
                     <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
                 </>
             }
-        </div>
+        </Card>
         {ready && <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='image/*' />}
     </>
 }

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import SideBarSubItem from "./SideBarSubItem";
 import NavLink from "./NavLink";
 import { useAppDispatch } from "../store";
 import { toggleSideBar } from "../features/ToggleSideBar";
 import { useRouter } from "next/router";
 import { Button } from "@mui/material";
+import { ArrowDropDown, ArrowForwardIos } from "@mui/icons-material";
 
 function SideBarItem({ name, link, subItem, mobile }: {
 	name: string,
@@ -34,8 +34,8 @@ function SideBarItem({ name, link, subItem, mobile }: {
 					<div className="flex justify-between w-full p-1 text-sm md:text-md">
 						<span>{name}</span>
 						<div className="relative w-6">
-							<ChevronDownIcon fontSize={'small'} className={`absolute h-6 w-6 ${toggle ? '' : 'hidden'} text-white`} />
-							<ChevronRightIcon fontSize={'small'} className={`absolute h-6 w-6 ${!toggle ? '' : 'hidden'} text-white`} />
+							<ArrowDropDown fontSize={'small'} className={`absolute ${toggle ? '' : 'hidden'} text-white`} />
+							<ArrowForwardIos fontSize={'small'} className={`absolute ${!toggle ? '' : 'hidden'} text-white`} />
 						</div>
 					</div>
 				</Button>

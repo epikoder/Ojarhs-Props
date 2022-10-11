@@ -35,8 +35,8 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
                     <Card className="py-4 mt-8 px-2 text-sm rounded-md text-white text-center">
                         <h6 className="text-red-500">NOTICE</h6>
                         <div className="lg:mx-12">
-                            {`Your application has been received, you'll be notified via email
-                            on the status of your application`}
+                            {`Thanks, you have successfully submitted your application 
+                            Ojarh global properties Estate Agent will contact you for an interview.`}
                         </div>
                     </Card>
                     <div className="m-4 flex justify-center">

@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { IsLinkValid, resolveFilePath } from '../helpers/helpers'

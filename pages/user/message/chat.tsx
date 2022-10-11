@@ -1,5 +1,4 @@
 import { useRouter } from "next/router"
-import React from "react"
 import { useSelector } from "react-redux"
 import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatComponents"
 import Loader from "../../../components/Loader"
@@ -7,24 +6,25 @@ import { UserDashboardLayout } from "../../../components/user/UserDashboardLayou
 import { Api } from "../../../helpers/api"
 import { loadUserConversations } from "../../../actions/user/message"
 import { RootState, useAppDispatch } from "../../../store"
-import { MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
+import { Message, MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
+import { useEffect, useRef, useState } from "react"
+import { markMessageAsRead } from "actions/message"
 
 const Page = () => {
     const { data, state } = useSelector((store: RootState) => store.accountSlice.message.conversations)
     const { user } = useSelector((store: RootState) => store.authSlice)
-    const [conversation, setConversation] = React.useState<MessageOwner>()
+    const [conversation, setConversation] = useState<MessageOwner>()
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const chatBox = React.useRef<HTMLDivElement>()
+    const chatBox = useRef<HTMLDivElement>()
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!router.isReady) return
         if (state === 'nil') {
             dispatch(loadUserConversations())
             return
         }
         const c = data.find(o => o.id.toString() === router.query.id)
-        console.log(c)
         if (c !== undefined) setConversation(c)
     }, [data, router])
 
@@ -37,7 +37,6 @@ const Page = () => {
             }
             const { status } = await Api().post('/user/messages/create', JSON.stringify(payload))
         } catch (error) {
-            console.log(error)
             return false
         }
         setConversation({
@@ -54,9 +53,16 @@ const Page = () => {
         return true
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (chatBox.current == undefined) return
         chatBox.current.scrollTop = chatBox.current.scrollHeight
+    }, [conversation])
+
+    useEffect(() => {
+        markMessageAsRead({
+            owner: conversation?.messages[0].owner_type,
+            id: conversation?.id
+        })
     }, [conversation])
 
     return <UserDashboardLayout className="md:p-1">
