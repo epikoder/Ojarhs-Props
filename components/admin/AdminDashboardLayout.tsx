@@ -1,4 +1,5 @@
 import { Card, Paper, Toolbar } from "@mui/material";
+import ChangePassword from "components/ChangePassword";
 import { useRouter } from "next/router";
 import Script from "next/script";
 import React from "react"
@@ -55,6 +56,7 @@ export const AdminDashboardLayout: React.FC<{
                     <Card className='grid grid-cols-12 gap-1 duration-300 transition-all ease-in-out' style={{
                         height: 'calc(100% - 136px)'
                     }}>
+                        <ChangePassword button={<></>} />
                         <SideBar className="col-span-6 md:col-span-4 lg:col-span-3 h-full" />
                         <div className={`p-2 lg:p-4 w-full overflow-scroll ${sideBarState ? 'col-span-6' : 'col-span-12'} md:col-span-8 lg:col-span-9 ${props.className ?? ''}`} style={props.style}>
                             {(props.children !== undefined && typeof props.children === 'function') && <React.Fragment>

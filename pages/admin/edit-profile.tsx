@@ -40,28 +40,25 @@ const Page = () => {
                             handleUpload={(s) => setForm({ ...form, photo: s })} />
                         <span className="text-sm">PROPFILE PHOTO</span>
                     </div>
-                    {form.fname !== undefined || form.lname !== undefined && <div className="space-y-2 my-2">
-                        {user.roles?.find(s => {
-                            console.log(s)
-                            return s == 'super-admin'
-                        }) && <>
-                                <TextField
-                                    name="fname"
-                                    label='First Name'
-                                    size="small"
-                                    defaultValue={form.fname}
-                                    className="max-w-lg w-full"
-                                    onChange={(e) => setForm({ ...form, fname: e.target.value })}
-                                />
-                                <TextField
-                                    name="lname"
-                                    label='Last Name'
-                                    size="small"
-                                    defaultValue={form.lname}
-                                    className="max-w-lg w-full"
-                                    onChange={(e) => setForm({ ...form, lname: e.target.value })}
-                                />
-                            </>}
+                    {(form.fname !== undefined || form.lname !== undefined) && <div className="space-y-2 my-2">
+                        {user.roles?.find(s => s == 'super-admin') && <>
+                            <TextField
+                                name="fname"
+                                label='First Name'
+                                size="small"
+                                defaultValue={form.fname}
+                                className="max-w-lg w-full"
+                                onChange={(e) => setForm({ ...form, fname: e.target.value })}
+                            />
+                            <TextField
+                                name="lname"
+                                label='Last Name'
+                                size="small"
+                                defaultValue={form.lname}
+                                className="max-w-lg w-full"
+                                onChange={(e) => setForm({ ...form, lname: e.target.value })}
+                            />
+                        </>}
                         <TextField
                             name="phone"
                             label='Phone'

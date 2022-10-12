@@ -8,6 +8,7 @@ import { useAppDispatch } from "store";
 import { toggleSideBar } from "../features/ToggleSideBar";
 import { resolveFilePath } from "../helpers/helpers";
 import { User } from "../Typing.d";
+import { useToggleChangePassword } from "./ChangePassword";
 import { Logo } from "./Logo";
 import { KMenu } from "./Menu";
 import NotificationBox from "./Notification";
@@ -15,6 +16,7 @@ import NotificationBox from "./Notification";
 const AdminMenu = ({ user }: { user: User }) => {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
+	const openChangePassword = useToggleChangePassword()
 	return <>
 		<div className="flex items-center justify-end text-white space-x-3">
 			<NotificationBox />
@@ -35,7 +37,8 @@ const AdminMenu = ({ user }: { user: User }) => {
 							Edit Profile
 						</span>
 					</MenuItem>),
-					(<MenuItem key={'password'} className="space-x-1">
+					(<MenuItem key={'password'} className="space-x-1"
+						onClick={() => openChangePassword()}>
 						<Lock fontSize="small" />
 						<span>
 							Change Password

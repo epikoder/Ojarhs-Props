@@ -23,14 +23,16 @@ export const NoticeBoard = () => {
             >
                 {data.map((n, i) =>
                     <div key={i} className="h-full w-full text-left whitespace-pre-line overflow-scroll">
-                        <div className="font-semibold bg-black text-sec text-center rounded-sm p-1">
-                            OJARH NOTICE
-                        </div>
+                        {
+                            n.type === 'text' && <div className="font-semibold bg-black text-sec text-center rounded-sm p-1">
+                                OJARH NOTICE
+                            </div>
+                        }
                         {n.type === 'text' && <div className="text-center font-semibold">
                             {n.title}
                         </div>}
-                        {n.type === 'image' && <img src={resolveFilePath(n.content)} className='h-full object-cover' />}
-                        {n.type === 'text' && <div className="p-2 overflow-y-scroll">
+                        {n.type === 'image' && <img src={resolveFilePath(n.content)} className='h-full object-contain' />}
+                        {n.type === 'text' && <div className="p-2 overflow-y-scroll text-center">
                             {n.content}
                         </div>}
                     </div>

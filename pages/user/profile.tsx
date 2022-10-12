@@ -8,6 +8,7 @@ import { UserInfo } from "../../components/user/UserInfo"
 import { loadNextOfKin } from "../../actions/auth"
 import { RootState, useAppDispatch } from "../../store"
 import { User, UserApplicationStatus } from "../../Typing.d"
+import ChangePassword from "components/ChangePassword"
 
 const NextOfKin = () => {
     const { state, data } = useSelector((store: RootState) => store.authSlice.nextOfKin)
@@ -48,8 +49,9 @@ const NextOfKin = () => {
 const Profile = () => {
     return <UserDashboardLayout>
         {({ user, application }: { user: User, application: UserApplicationStatus }) => <>
-            <div className="p-2 md:my-2 rounded-md w-full">
+            <div className="p-2 md:my-2 rounded-md w-full space-y-3">
                 <UserInfo user={user} />
+                <ChangePassword />
                 <div className="flex justify-center">
                     <div className="space-y-2 my-2 max-w-screen-lg w-full">
                         <Info title="Reference No." value={user.reference} />

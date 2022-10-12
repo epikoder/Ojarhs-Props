@@ -153,7 +153,7 @@ const NewNoticeForm = ({ close }: { close: () => void }) => {
 	})
 
 	const create = async () => {
-		if (form.title === '' || form.content === '') return
+		if (form.content === '') return
 		setLoading(true)
 		try {
 			await Api().post('/admin/notice', JSON.stringify(form))
