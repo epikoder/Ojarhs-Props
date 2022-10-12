@@ -4,7 +4,10 @@ import { resolveFilePath } from "../../helpers/helpers";
 import { User } from "../../Typing.d";
 import CountDownTimer from "./Countdown";
 
-export const UserInfo = ({ user }: { user: User }) => {
+import React from "react";
+import RandomData from "./RandomData";
+
+export const UserInfo = ({ user }: { user: User }) => {   
     const router = useRouter()
     return <>
         <div className="flex flex-row items-start">
@@ -27,7 +30,11 @@ export const UserInfo = ({ user }: { user: User }) => {
                 <div className="text-sm font-semibold text-ellipsis overflow-hidden whitespace-nowrap w-36 md:w-60 lg:w-[40vh] my-2">
                     {user.address}
                 </div>
+                <div>
+                  <RandomData />
+                </div>
             </div>
         </div>
     </>
+
 }
