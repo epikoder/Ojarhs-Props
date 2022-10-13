@@ -16,9 +16,11 @@ export const UserDashboardLayout: React.FC<{
     }) => React.ReactNode,
     className?: string, style?: React.CSSProperties
 }> = (props) => {
-    const { authenticated, user, appState, application } = useSelector((store: RootState) => store.authSlice)
+    const authSlice = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()
+    const [authenticated, user, appState, application] =
+        [authSlice?.authenticated, authSlice?.user, authSlice?.appState, authSlice?.application]
 
     React.useEffect(() => {
         if (authenticated) return

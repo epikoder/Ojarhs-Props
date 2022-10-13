@@ -47,7 +47,7 @@ const CardProcess = ({ handleClick, title }: {
     onClick={async () => {
       setLoading(true)
       setSuccess(await handleClick())
-      setTimeout(() => setLoading(false), 2000)
+      setLoading(false)
     }}
   >
     {title || 'export'}

@@ -26,10 +26,11 @@ export const AdminDashboardLayout: React.FC<{
     style?: React.CSSProperties
 }> = (props) => {
     const sideBarState = useSelector((store: RootState) => store.toggleSideBar.status);
-    const { authenticated, user, appState } = useSelector((store: RootState) => store.authSlice)
+    const authSlice = useSelector((store: RootState) => store.authSlice)
     const [loading, setLoading] = React.useState<boolean>(false)
     const dispatch = useAppDispatch()
     const router = useRouter()
+    const [authenticated, user, appState] = [authSlice?.authenticated, authSlice?.user, authSlice?.appState]
 
     React.useEffect(() => {
         if (authenticated) return

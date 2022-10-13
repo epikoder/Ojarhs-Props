@@ -1,4 +1,3 @@
-import React from "react";
 import Plaza from "../components/Plaza";
 import HomeSignUp from "../components/HomeSignUp";
 import TopSection from "../components/TopSection";
@@ -15,6 +14,7 @@ import { useRouter } from "next/router";
 import { Card } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import { resolveFilePath } from "../helpers/helpers";
+import { useEffect, useRef } from "react";
 
 type indexSliderType = {
 	postion: 'left' | 'right' | 'center'
@@ -56,7 +56,7 @@ const IndexSlider = () => {
 		},
 	]
 
-	const ref = React.useRef<HTMLSpanElement[]>([])
+	const ref = useRef<HTMLSpanElement[]>([])
 	const _ = (index: number) => {
 		const els: HTMLCollectionOf<HTMLSpanElement> = document.getElementsByClassName(index.toString() + '-slider') as HTMLCollectionOf<HTMLSpanElement>
 		Array.from(Array(els.length).keys()).forEach(e => {
@@ -120,7 +120,7 @@ function Home() {
 	const { data, state } = useSelector((store: RootState) => store.indexSlice);
 	const router = useRouter();
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dispatch(loadIndex());
 		dispatch(loadAdverts());
 		dispatch(loadNotice())

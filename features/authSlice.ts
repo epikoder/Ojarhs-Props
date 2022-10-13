@@ -216,7 +216,7 @@ const authSlice = createSlice({
             state.status = 'success'
             state.message = payload.message
             state.authenticated = true
-
+            StartNotify()
         })
 
         builder.addCase(loginApi.pending, (state, { }) => {
@@ -249,7 +249,7 @@ const authSlice = createSlice({
             state.status = 'success'
             state.message = payload.message
             state.authenticated = true
-
+            StartNotify()
         })
 
         builder.addCase(loginAdminApi.pending, (state, { }) => {
