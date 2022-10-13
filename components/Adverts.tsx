@@ -38,7 +38,8 @@ export const PropertyAdvert = () => {
   const { property, state } = useSelector((store: RootState) => store.indexAdvertSlice)
   const i = Math.round((property.length / 2))
   const f = property.slice(0, i)
-  const s = property.slice(i + 1)
+  const s = property.slice(i)
+
   return <>
     {state !== 'success' && <Slider slider />}
     {state === 'success' &&
@@ -64,7 +65,7 @@ export const PropertyAdvert = () => {
             }
           </Carousel>
         </div>
-        <div className="bg-black text-center px-2 text-white 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] h-[35vh]">
+        <div className='2xl:h-[70vh] px-2 xl:h-[55vh] lg:h-[50vh] md:h-[45vh] sm:h-[60vh] h-[40vh]'>
           <Carousel
             className={'h-full'}
             autoPlay={true}

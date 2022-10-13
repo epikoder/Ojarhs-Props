@@ -201,6 +201,7 @@ const Page = () => {
 						handleChange={(arr) => {
 							setForm({ ...form, appliances: List.toString(arr) })
 						}}
+						error={getError('appliances') !== undefined}
 					/>
 					<FormInput props={{
 						title: 'Address',

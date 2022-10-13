@@ -1,11 +1,12 @@
 import { Button, TextField } from "@mui/material"
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { ImageUpload } from "../../components/ImageUpload"
 import { updateUserProfile } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { UserUpdateForm } from "../../Typing.d"
 import { AdminDashboardLayout } from "components/admin/AdminDashboardLayout"
+import { clearUpdateProfile } from "features/authSlice"
 
 const Page = () => {
     const { user, profileUpdate } = useSelector((store: RootState) => store.authSlice)
@@ -30,6 +31,8 @@ const Page = () => {
             country: user.country === form.country ? '' : form.country
         }))
     }
+
+    useEffect(() => { dispatch(clearUpdateProfile()) }, [])
 
     return <AdminDashboardLayout>
         {({ user }) =>
@@ -76,7 +79,7 @@ const Page = () => {
                             onChange={(e) => setForm({ ...form, address: e.target.value })}
                         />
                         <div className="text-center max-w-lg w-full">
-                            <div className={`text-${profileUpdate.state === 'success' ? 'blue' : 'red'}-500`}>
+                            <div className={`${profileUpdate.state === 'success' ? 'text-sec' : 'text-red-500'}`}>
                                 {profileUpdate.message}
                             </div>
                         </div>

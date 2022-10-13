@@ -190,6 +190,11 @@ const authSlice = createSlice({
             state.appState = 'completed'
             state.message = undefined
             state.error = {}
+        },
+
+        clearUpdateProfile: (state) => {
+            state.profileUpdate.message = ''
+            state.profileUpdate.state = 'nil'
         }
     },
 
@@ -292,6 +297,6 @@ const authSlice = createSlice({
     },
 })
 
-export const { logout, setAuthenticated, checkIsAuthenticated, clearErr, setAppState } = authSlice.actions
+export const { logout, setAuthenticated, checkIsAuthenticated, clearErr, setAppState, clearUpdateProfile } = authSlice.actions
 
 export default authSlice.reducer

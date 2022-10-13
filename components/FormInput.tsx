@@ -237,9 +237,10 @@ export const FormCountryInput = ({ props }: {
     </>
 }
 
-export const ApplianceInput = ({ value, handleChange }: {
+export const ApplianceInput = ({ value, handleChange, error }: {
     handleChange?: (s: string[]) => void
     value?: string[]
+    error?: boolean
 }): JSX.Element => {
     const [list, setList] = useState<string[]>(value || [])
     const [text, setText] = useState<string>('')
@@ -259,7 +260,7 @@ export const ApplianceInput = ({ value, handleChange }: {
     }, [value])
 
     return <>
-        <Card className="min-h-[3rem] rounded-md flex flex-wrap p-1 border border-gray-500" >
+        <Card className={`min-h-[3rem] rounded-md flex flex-wrap p-1 border border-${error ? 'red' : 'gray'}-500`} >
             {(list).map((s, i) =>
                 <Card elevation={3} key={i} className='px-2 flex items-center text-sec space-x-1 rounded-lg m-1'>
                     <span>{s}</span>

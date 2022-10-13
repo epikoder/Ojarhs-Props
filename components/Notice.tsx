@@ -9,7 +9,7 @@ function Notice() {
 			<div className='col-span-4 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] sm:h-[60vh] h-[40vh]'>
 				<NoticeBoard />
 			</div>
-			<div className="bg-black text-center px-2 col-span-5 text-white 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] h-[35vh]">
+			<div className="text-center px-2 col-span-5 2xl:h-[70vh] xl:h-[55vh] lg:h-[50vh] md:h-[45vh] h-[35vh]">
 				<MiddleAdvert />
 			</div>
 		</div>

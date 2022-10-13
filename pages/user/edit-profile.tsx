@@ -1,5 +1,5 @@
 import { Button, TextField } from "@mui/material"
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { FormCountryInput } from "../../components/FormInput"
 import { ImageUpload } from "../../components/ImageUpload"
@@ -7,6 +7,7 @@ import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { updateUserProfile } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
 import { UserUpdateForm } from "../../Typing.d"
+import { clearUpdateProfile } from "features/authSlice"
 
 const Page = () => {
     const { user, profileUpdate } = useSelector((store: RootState) => store.authSlice)
@@ -35,6 +36,8 @@ const Page = () => {
         }))
     }
 
+    useEffect(() => { dispatch(clearUpdateProfile()) }, [])
+
     return <UserDashboardLayout>
         {({ user }) =>
             <React.Fragment>
@@ -44,7 +47,7 @@ const Page = () => {
                             handleUpload={(s) => setForm({ ...form, photo: s })} />
                         <span className="text-sm">PROPFILE PHOTO</span>
                     </div>
-                    {form.fname !== undefined || form.lname !== undefined && <div className="space-y-2 my-2">
+                    {(form.fname !== undefined || form.lname !== undefined) && <div className="space-y-2 my-2">
                         <TextField
                             name="fname"
                             label='First Name'

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import List from "helpers/list";
 import { loadAdverts } from "../actions";
 import { Advert, LoadState } from "../Typing.d";
 
@@ -28,9 +29,9 @@ const indexAdvertSlice = createSlice({
                     property = property.concat(a)
                 }
             })
-            state.slider = slider
-            state.property = property
-            state.middle = middle
+            state.slider = List.shuffle(slider)
+            state.property = List.shuffle(property)
+            state.middle = List.shuffle(middle)
             state.state = 'success'
         })
         builder.addCase(loadAdverts.rejected, (state) => { state.state = 'failed' })

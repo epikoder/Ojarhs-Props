@@ -62,7 +62,6 @@ export const updateUserProfile = createAsyncThunk<ApiResponse<loginResponse>, Us
         const response = await Api().put<ApiResponse<loginResponse>>("/user/update-profile", JSON.stringify(payload))
         return response.data
     } catch (error) {
-        console.log(error)
         return rejectWithValue({})
     }
 })

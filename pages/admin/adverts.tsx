@@ -64,6 +64,17 @@ const columns: GridColDef[] = [
 		renderCell: ({ row }) => <SwitchAction row={row} />
 	},
 	{
+		field: 'expires_at',
+		headerName: 'Status',
+		headerAlign: 'center',
+		align: 'center',
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		width: 120,
+		renderCell: ({ value, row }) => <Status active={(new Date(row.expires_at).getTime() > (new Date()).getTime()) && row.approved} />
+	},
+	{
 		field: 'action',
 		headerName: ':',
 		headerAlign: 'center',
@@ -75,6 +86,14 @@ const columns: GridColDef[] = [
 		renderCell: ({ value, row }) => <DeleteAction row={row} />
 	},
 ];
+
+const Status = ({ active }: { active: boolean }) => {
+	return <>
+		<div className={`bg-${active ? 'blue' : 'red'}-500 px-2 py-1 rounded-md text-white `}>
+			{active ? 'Active' : 'Inactive'}
+		</div>
+	</>
+}
 
 const DeleteAction = ({ row }: { row: any }) => {
 	const dispatch = useAppDispatch()
