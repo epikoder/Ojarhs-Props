@@ -1,5 +1,5 @@
 
-type TnnyMessage = {
+type NsocketMessage = {
 	uid: string
 	type: string
 	body: string
@@ -7,28 +7,22 @@ type TnnyMessage = {
 	namespace: string
 }
 
-interface TnnyEvents {
-	Default: Map<string, () => void>
-}
-
-interface _TnnyClient {
+interface _NSocketClient {
 	connect(): void
-	on(n: string, f: (m: TnnyMessage) => void): void
-	emit(n: string, m: TnnyMessage): void
+	on(n: string, f: (m: NsocketMessage) => void): void
+	emit(n: string, m: NsocketMessage): void
 }
 
-class TnnyClient implements _TnnyClient {
+class NSocketClient implements _NSocketClient {
 	private url: string
 	private client: WebSocket
-	private config?: TnnyEvents
-	constructor(url?: string, _config?: TnnyEvents) {
+	constructor(url?: string) {
 		if (url == undefined) {
 			let p = location?.protocol === "http" ? 'ws://' : 'wss://'
 			let h = location?.host
 			url = p + h + '/socket'
 		}
 		this.url = url
-		this.config = _config
 	}
 	connect() {
 		this.client = new WebSocket(this.url)
@@ -39,4 +33,4 @@ class TnnyClient implements _TnnyClient {
 	emit(namespace: string) { }
 }
 
-export default TnnyClient
+export default NSocketClient

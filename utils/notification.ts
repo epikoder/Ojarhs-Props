@@ -1,8 +1,8 @@
-import TnnyClient from "vendor/iosoc";
+import NSocketClient from "vendor/nsocket";
 import { WSURL } from "../config";
 
 export const StartNotify = () => {
-	tnny.connect()
+	nsocket.connect()
 }
 
-const tnny = new TnnyClient(WSURL)
+const nsocket = new NSocketClient(WSURL)
