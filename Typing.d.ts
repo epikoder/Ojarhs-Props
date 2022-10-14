@@ -48,7 +48,7 @@ export type Tenant = {
 	country: string;
 	guarantor_name: string
 	guarantor_phone: string
-	guarantor_address: string    
+	guarantor_address: string
 };
 
 export type Inputs = {
