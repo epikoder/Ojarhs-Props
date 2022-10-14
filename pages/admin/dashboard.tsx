@@ -9,7 +9,9 @@ function Dashboard() {
 			({ user }) => <div className="space-y-4">
 				<Card elevation={2} className='max-w-fit p-4 text-lg'>
 					<span className="text-sec">Welcome{' '}</span>
-					<span>
+					<span style={{
+						fontFamily: 'Space Grotesk'
+					}}>
 						{user.lname} {user.fname}
 					</span>
 				</Card>

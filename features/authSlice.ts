@@ -127,11 +127,20 @@ const logoutAsync = async (token: string) => {
         await fetch(BASEURL + '/auth/logout', {
             method: 'POST',
             mode: "cors",
-            credentials: 'include'
+            credentials: 'include',
+            headers: {
+                authorization: 'Bearer ' + token,
+            }
         })
     } catch (error) {
 
     }
+    store.dispatch(setAuthenticated({
+        authenticated: false,
+        application: 'nil',
+    }))
+    clearUserToken()
+
 }
 
 const authSlice = createSlice({
@@ -139,15 +148,8 @@ const authSlice = createSlice({
     initialState: initialState,
     reducers: {
         logout: (state) => {
-            state.appState = 'completed'
-            state.authenticated = false
-            state.user = undefined
-            state.message = undefined
-            state.token = {} as loginResponse
-            state.error = {}
-            logoutAsync(state.token?.refresh)
-            clearUserToken()
-            // TODO: Clear token cache
+            state.appState = 'pending'
+            logoutAsync(state.token?.access)
         },
 
         setAppState: (state, { payload }: { payload: 'pending' | 'completed' }) => {
@@ -186,8 +188,7 @@ const authSlice = createSlice({
             checkIsAuthenticatedAsync()
         },
 
-        clearErr: (state) => {
-            state.appState = 'completed'
+        clearAuthState: (state) => {
             state.message = undefined
             state.error = {}
         },
@@ -297,6 +298,6 @@ const authSlice = createSlice({
     },
 })
 
-export const { logout, setAuthenticated, checkIsAuthenticated, clearErr, setAppState, clearUpdateProfile } = authSlice.actions
+export const { logout, setAuthenticated, checkIsAuthenticated, clearAuthState, setAppState, clearUpdateProfile } = authSlice.actions
 
 export default authSlice.reducer

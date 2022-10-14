@@ -1,16 +1,8 @@
+import TnnyClient from "vendor/iosoc";
 import { WSURL } from "../config";
-import { io, Socket } from "socket.io-client";
 
 export const StartNotify = () => {
-	ioNotify.start()
+	tnny.connect()
 }
 
-class IoNotify {
-	private client: Socket
-	private connected: boolean
-	start() {
-		// this.client = io(WSURL)
-	}
-}
-
-const ioNotify = new IoNotify()
+const tnny = new TnnyClient(WSURL)

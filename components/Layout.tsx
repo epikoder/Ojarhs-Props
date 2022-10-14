@@ -22,6 +22,7 @@ function Layout(props: PropsWithChildren) {
         <title>Ojarh Properties</title>
       </Head>
       <Script src='/scripts/noimage.js'></Script>
+      <Script strategy='lazyOnload'  src='/scripts/tawk.js'></Script>
       <Header />
       <PageLoader />
       <Box component={'main'}>

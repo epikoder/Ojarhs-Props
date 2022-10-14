@@ -3,10 +3,10 @@ import { useRouter } from "next/router"
 import React from "react"
 import { useSelector } from "react-redux"
 import { CopyRight } from "../../components/Copyright"
-import { FormInput, FormPasswordControlledInput } from "../../components/FormInput"
+import { FormInput, FormPasswordInput } from "../../components/FormInput"
 import Loader from "../../components/Loader"
 import { Logo } from "../../components/Logo"
-import { checkIsAuthenticated } from "../../features/authSlice"
+import { checkIsAuthenticated, clearAuthState } from "../../features/authSlice"
 import { loginAdminApi } from "../../actions/auth"
 import { RootState, useAppDispatch } from "../../store"
 
@@ -38,6 +38,7 @@ const AdminLogin = () => {
         if (authenticated && user.is_admin) setTimeout(() => {
             const path = sessionStorage.getItem('current')
             router.replace(path !== null && (path !== '/admin/login' && !path.includes('/user/') && path !== '/') ? path : '/admin/dashboard')
+            dispatch(clearAuthState())
         }, 200)
     }, [authenticated, router, user])
 
@@ -81,22 +82,20 @@ const AdminLogin = () => {
                             <h1 className="text-center text-lg font-semibold my-4">
                                 Login
                             </h1>
-                            <div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
+                            <div className={`text-center text-sm font-sans text-${message.status ? 'sec' : 'red-500'}`}>
                                 {message.text !== undefined && message.text}
                             </div>
                             <FormInput props={{
                                 title: "Email",
                                 name: "email",
                                 required: true,
-                                value: form.email,
                                 handleChange: function (s: any): void {
                                     setForm({ ...form, email: s })
                                 }
                             }} />
-                            <FormPasswordControlledInput
+                            <FormPasswordInput
                                 props={{
                                     title: 'Password',
-                                    hidden: show,
                                     name: 'password',
                                     handleChange: (s) => setForm({ ...form, password: s })
                                 }}
@@ -106,7 +105,7 @@ const AdminLogin = () => {
                                 htmlFor='flexCheckDefault'
                             >
                                 <input
-                                    className='form-check-input appearance-none h-5 w-5 border checked:bg-red-600 checked:border-red-600 focus:outline-none transition duration-200  align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
+                                    className='form-check-input appearance-none h-5 w-5 border focus:outline-none transition duration-200  align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer'
                                     type='checkbox'
                                     value=''
                                     id='flexCheckDefault'

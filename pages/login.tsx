@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import { RootState, useAppDispatch } from "../store";
 import { loginApi } from "../actions/auth";
 import { useRouter } from "next/router";
-import { checkIsAuthenticated } from "../features/authSlice";
+import { checkIsAuthenticated, clearAuthState } from "../features/authSlice";
 import { Button, Card, Checkbox, CircularProgress, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Paper, TextField, useTheme } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
@@ -39,6 +39,7 @@ function Login() {
 		if (authenticated) setTimeout(() => {
 			if (user !== undefined && user.is_admin) return router.replace("/admin")
 			router.replace('/user/dashboard')
+			dispatch(clearAuthState())
 		}, 200)
 	}, [authenticated, router, user])
 
