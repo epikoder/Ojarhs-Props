@@ -8,7 +8,7 @@ export const STORAGEURL = IsRelease ? "https://ojarhproperties.com" : "http://oj
 export const OjarhEmail = "support@ojarhproperties.com"
 export const OjarhAddress = "22 Oraifite Road, Uruagu Nnewi, Anambra State"
 export const OjarhPhone = "+2349161103990"
-export const pk_key = PaystackMode === 'live'
+export const pk_key = PaystackMode as string === 'live'
     ? 'pk_live_4c0f3320aee947b3031bbd229db688dde451e17b' :
     'pk_test_7974282ff9c7f73d5afc1a79fd11746cba653e28'
 export const applicationFee = 10000
