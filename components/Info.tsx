@@ -6,7 +6,7 @@ export const Info = ({ title, value }: {
     value: number | string
 }) => {
     return <React.Fragment>
-        <Card elevation={1} className='p-1 px-2 max-w-md'>
+        <Card elevation={2} className='p-1 px-2 max-w-md'>
             <div className="text-xs lg:text-sm text-gray-300">
                 {title}
             </div>

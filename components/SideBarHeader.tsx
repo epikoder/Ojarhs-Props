@@ -1,35 +1,57 @@
-import { ExternalLinkIcon, LinkIcon } from "@heroicons/react/outline";
-import { MenuIcon } from "@heroicons/react/solid";
-import { AppBar, Toolbar } from "@mui/material";
-import Image from "next/image";
+import { Edit, Lock, Logout, Menu, OpenInNew } from "@mui/icons-material";
+import { Avatar, MenuItem } from "@mui/material";
+import { logout } from "features/authSlice";
 import { useRouter } from "next/router";
 import React, { HTMLAttributes } from "react";
 import { useDispatch } from "react-redux";
+import { useAppDispatch } from "store";
 import { toggleSideBar } from "../features/ToggleSideBar";
 import { resolveFilePath } from "../helpers/helpers";
 import { User } from "../Typing.d";
+import { useToggleChangePassword } from "./ChangePassword";
 import { Logo } from "./Logo";
+import { KMenu } from "./Menu";
+import NotificationBox from "./Notification";
 
 const AdminMenu = ({ user }: { user: User }) => {
 	const router = useRouter()
+	const dispatch = useAppDispatch()
+	const openChangePassword = useToggleChangePassword()
 	return <>
-		<div className="flex items-center justify-end text-white">
-			<div className="hidden md:flex justify-around w-[50vw]">
-				{/* MENU */}
-			</div>
+		<div className="flex items-center justify-end text-white space-x-3">
+			<NotificationBox />
 			<div
 				className="mx-2 cursor-pointer hover:text-red-500 duration-300 ease-in-out transition-all text-sm flex items-center"
 				onClick={() => router.push('/')}>
 				<span>{'Home'}</span>
-				<ExternalLinkIcon height={10} />
+				<OpenInNew fontSize="small" />
 			</div>
-			<div>
-				<img
-					src={resolveFilePath(user !== undefined ? user.photo : '')}
-					alt='ME'
-					className="rounded-full h-14 w-14"
-				/>
-			</div>
+
+			<KMenu className="rounded-full"
+				button={<Avatar src={resolveFilePath(user?.photo)} />}
+				menu={[
+					(<MenuItem key={'edit'} className="space-x-1"
+						onClick={() => router.push('/admin/edit-profile')}>
+						<Edit fontSize="small" />
+						<span>
+							Edit Profile
+						</span>
+					</MenuItem>),
+					(<MenuItem key={'password'} className="space-x-1"
+						onClick={() => openChangePassword()}>
+						<Lock fontSize="small" />
+						<span>
+							Change Password
+						</span>
+					</MenuItem>),
+					(<MenuItem key={'logout'} className="space-x-1" onClick={() => dispatch(logout())}>
+						<Logout fontSize="small" />
+						<span>
+							Logout
+						</span>
+					</MenuItem>)
+				]}
+			/>
 		</div>
 	</>
 }
@@ -41,7 +63,7 @@ function AdminHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
 			<div className={`w-full px-4 ${props.className ?? ''} bg-main`}>
 				<div className='flex space-x-5 items-center justify-between'>
 					<div className="flex items-center">
-						<MenuIcon
+						<Menu
 							className='w-6 h-6 text-white mx-2 md:hidden'
 							onClick={() => dispatch(toggleSideBar())}
 						/>
@@ -50,7 +72,6 @@ function AdminHeader(props: { user: User } & HTMLAttributes<HTMLDivElement>) {
 					<AdminMenu user={props.user} />
 				</div>
 			</div>
-			{/* <Toolbar className="mt-4" /> */}
 		</>
 	);
 }

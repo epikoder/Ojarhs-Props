@@ -2,21 +2,20 @@ import React, { useState } from 'react'
 import { loadUserProperties, loadUserServices } from "actions/user/dashboard";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "store";
-import { UserServices } from "../../components/user/UserServices"
 import CountDownTimer from './Countdown';
 
 function RandomData() {       
     const dispatch = useAppDispatch()
    
-    React.useEffect(() => {
-        dispatch(loadUserServices({}))
+    React.useEffect(() => {        
+        dispatch(loadUserServices({}))   
     }, [])
 
     React.useEffect(() => {
         dispatch(loadUserProperties({}))
     }, [])
 
-    const [service, setService] = useState(useSelector((store: RootState) => store.accountSlice.services))    
+    const [service, setService] = useState(useSelector((store: RootState) => store.accountSlice.services))        
     const [properties, setProperties] = useState(useSelector((store: RootState) => store.accountSlice.properties))
 
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import { Api } from "../helpers/api";
 import { loginResponse, ApiResponse, UserApplicationStatus, NextOfKin, NextOfKinApi } from "../Typing"
 

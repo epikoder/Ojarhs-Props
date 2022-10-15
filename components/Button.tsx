@@ -1,5 +1,4 @@
-import { Button as MUIButton } from '@mui/material'
-import React, { HTMLAttributes } from 'react'
+import React from 'react'
 
 export const OjarhButton = ({ text, position = 'center', rounded = false, onClick, fullWidth = false, className = 'hover:bg-red-600' }: {
   text: string

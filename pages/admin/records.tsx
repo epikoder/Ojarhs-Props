@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store";
 import Loader from "../../components/Loader";
 import { loadRecord } from "../../actions/admin/record";
-import { money } from "../../helpers/helpers";
+import { money, resolveFilePath } from "../../helpers/helpers";
+import { Api } from "../../helpers/api";
 
 function Records() {
 	const { data, state } = useSelector((store: RootState) => store.recordSlice)
@@ -42,31 +43,100 @@ function Records() {
 									value={totalProperties}
 									className='yoda'
 									endIcon={<House fontSize="large" className="text-white" />}
-									func={() => { }}
+									handleClick={async (): Promise<boolean> => {
+										try {
+											const { data } = await Api().get('/admin/records/properties')
+											const a = document.createElement('a')
+											a.href = resolveFilePath(data.data)
+											a.download = (data.data as string).split('/').pop()
+											a.id = 'download-file'
+											a.click()
+											return true
+										} catch (error) {
+											console.log(error)
+										}
+										return false
+									}}
 								/>
 								<DashCards
 									name='total Tenants'
 									value={data.tenant}
 									className='wiretap'
 									endIcon={<Person fontSize="large" className="text-white" />}
+									handleClick={async (): Promise<boolean> => {
+										try {
+											const { data } = await Api().get('/admin/records/tenants')
+											const a = document.createElement('a')
+											a.href = resolveFilePath(data.data)
+											a.download = (data.data as string).split('/').pop()
+											a.id = 'download-file'
+											a.click()
+											return true
+										} catch (error) {
+											console.log(error)
+										}
+										return false
+									}}
 								/>
 								<DashCards
 									name='total Staffs'
 									value={data.staff}
 									className='red-sunset'
 									endIcon={<Person2 fontSize="large" className="text-white" />}
+									handleClick={async (): Promise<boolean> => {
+										try {
+											const { data } = await Api().get('/admin/records/staffs')
+											const a = document.createElement('a')
+											a.href = resolveFilePath(data.data)
+											a.download = (data.data as string).split('/').pop()
+											a.id = 'download-file'
+											a.click()
+											return true
+										} catch (error) {
+											console.log(error)
+										}
+										return false
+									}}
 								/>
 								<DashCards
 									name={`Total Rent Paid - ${data.rent.total}`}
 									value={money(data.rent.amount)}
 									className='gradlegray'
 									endIcon={<Money fontSize="large" className="text-white" />}
+									handleClick={async (): Promise<boolean> => {
+										try {
+											const { data } = await Api().get('/admin/records/rents')
+											const a = document.createElement('a')
+											a.href = resolveFilePath(data.data)
+											a.download = (data.data as string).split('/').pop()
+											a.id = 'download-file'
+											a.click()
+											return true
+										} catch (error) {
+											console.log(error)
+										}
+										return false
+									}}
 								/>
 								<DashCards
 									name='printing jobs'
 									value={data.invoice}
 									className='vanusa'
 									endIcon={<Print fontSize="large" className="text-white" />}
+									handleClick={async (): Promise<boolean> => {
+										try {
+											const { data } = await Api().get('/admin/records/invoices')
+											const a = document.createElement('a')
+											a.href = resolveFilePath(data.data)
+											a.download = (data.data as string).split('/').pop()
+											a.id = 'download-file'
+											a.click()
+											return true
+										} catch (error) {
+											console.log(error)
+										}
+										return false
+									}}
 								/>
 								<DashCards
 									name='Receipts'

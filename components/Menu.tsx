@@ -1,13 +1,15 @@
-import { Button, Menu, MenuItem } from "@mui/material";
-import React from "react";
+import { Button, Menu } from "@mui/material";
+import { MouseEvent, useState } from "react";
+import { ReactNode } from "react";
 
-export const KMenu = ({ button, menu = [] }: {
+export const KMenu = ({ button, menu, className }: {
     button: JSX.Element
-    menu?: JSX.Element[] | string[]
+    menu?: ReactNode
+    className?: string
 }) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
@@ -22,6 +24,7 @@ export const KMenu = ({ button, menu = [] }: {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
+                className={className}
                 sx={{
                     color: 'black'
                 }}
@@ -33,16 +36,13 @@ export const KMenu = ({ button, menu = [] }: {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                onClick={handleClose}
                 MenuListProps={{
                     'aria-labelledby': 'basic-button',
                 }}
                 PaperProps={{ color: 'transparent' }}
             >
-                {menu.length !== 0 && menu.map((m, i) => <div key={i} onClick={handleClose}>
-                    <MenuItem dense >
-                        {m}
-                    </MenuItem>
-                </div>)}
+                {Array(menu).length !== 0 && Array(menu).map((m, i) => m)}
             </Menu>
         </div>
     );

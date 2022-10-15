@@ -3,14 +3,12 @@ import { Button, MenuItem, Select, TextField } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
 import { PaystackConsumer } from "react-paystack"
-import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
-import { FormInput } from "../../../components/FormInput"
 import { ImageUpload } from "../../../components/ImageUpload"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
-import { advertPrices, pk_key } from "../../../constants"
+import { advertPrices, pk_key } from "../../../config"
 import { Api } from "../../../helpers/api"
 import { IsLinkValid, money } from "../../../helpers/helpers"
-import { ApiResponse, User } from "../../../Typing.d"
+import { ApiResponse } from "../../../Typing.d"
 
 const Page = () => {
     const [loading, setLoading] = React.useState(false)
@@ -58,7 +56,7 @@ const Page = () => {
     }
 
     return <UserDashboardLayout>
-        {({ user }: { user: User }) => <>
+        {({ user }) => <>
             <div className="flex flex-col justify-center p-2">
                 <div className="w-full">
                     <ArrowBack className="w-14 h-8 text-red-500" onClick={() => router.back()} />

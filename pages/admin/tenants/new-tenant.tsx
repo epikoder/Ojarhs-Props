@@ -4,12 +4,11 @@ import { useSelector } from "react-redux";
 import { ApplianceInput, FormCountryInput, FormInput, FormPhoneInput } from "../../../components/FormInput";
 import { DocumentUpload, ImageUpload } from "../../../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../../../Typing.d";
-import Loader from "../../../components/Loader";
 import { emailValidator } from "../../../helpers/validation";
 import { useRouter } from "next/router";
-import { Button, CircularProgress, IconButton, Switch } from "@mui/material";
+import { Button, CircularProgress, IconButton, MenuItem, Select, Switch } from "@mui/material";
 import List from "../../../helpers/list";
-import { BASEURL } from "../../../constants";
+import { BASEURL } from "../../../config";
 import { RootState } from "../../../store";
 import { ArrowBack } from "@mui/icons-material";
 
@@ -202,26 +201,8 @@ const Page = () => {
 						handleChange={(arr) => {
 							setForm({ ...form, appliances: List.toString(arr) })
 						}}
+						error={getError('appliances') !== undefined}
 					/>
-					{/* <FormPasswordInput props={{
-						title: 'Password',
-						name: "password",
-						requried: true,
-						message: getError("password") || form.password !== '' && form.password !== undefined && form.password.length < 8 ? ' ' : undefined,
-						handleChange: (s) => {
-							setForm({
-								...form, password: s as unknown as string
-							})
-						}
-					}} />
-					<FormConfirmPasswordInput
-						props={{
-							title: 'Confirm Password',
-							name: "c_password",
-							requried: true,
-							password: form.password
-						}}
-					/> */}
 					<FormInput props={{
 						title: 'Address',
 						name: "address",
@@ -545,23 +526,20 @@ const Page = () => {
 				</>
 				}
 
-				<label
-					htmlFor=''
-					className='space-x-4 w-full '
-				>
-					<span className=' mb-2 text-md idden'>
+				<div>
+					<span className='mb-2 text-md'>
 						Document Upload
 					</span>
 					<div className="flex justify-center">
-						<select name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value)}>
-							<option value="0">CHOOSE DOCUMENT TYPE</option>
-							{types.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
-						</select>
+						<Select size="small" value={docType} name="" id="" className="text-sm my-2" onChange={(e) => setDocType(e.target.value as string)}>
+							<MenuItem className="text-sm" value="0">CHOOSE DOCUMENT TYPE</MenuItem>
+							{types.map((e) => <MenuItem className="text-sm" key={e.id} value={e.id}>{e.name}</MenuItem>)}
+						</Select>
 					</div>
 					<DocumentUpload key={'document'} handleUpload={(s) => setForm({
 						...form, upload: s as unknown as string
 					})} documentType={docType} disabled={docType === '0'} />
-				</label>
+				</div>
 				<div className="col-span-2">
 					<div className="flex items-center justify-center">
 						<span className="text-sm px-4 ">

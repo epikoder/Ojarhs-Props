@@ -7,7 +7,6 @@ import { useRouter } from "next/router"
 import React from "react"
 import { AdminDashboardLayout } from "../../../../components/admin/AdminDashboardLayout"
 import { Api } from "../../../../helpers/api"
-import { emailValidator } from "../../../../helpers/validation"
 import { ApiResponse, Expense } from "../../../../Typing"
 
 const Page = () => {
@@ -155,7 +154,7 @@ const Page = () => {
                                     variant='outlined'
                                     size="small"
                                     startIcon={loading.state && <CircularProgress size={14} />}
-                                    disabled={loading.state === 'pending' || !checkValid()}
+                                    disabled={loading.state || !checkValid()}
                                     onClick={() => create(loading)}
                                 >
                                     CREATE

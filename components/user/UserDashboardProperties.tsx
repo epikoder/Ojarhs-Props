@@ -7,6 +7,7 @@ import { RootState, useAppDispatch } from "../../store"
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { MoreVert } from "@mui/icons-material"
 import { KMenu } from "../Menu"
+import { MenuItem } from "@mui/material"
 
 const columns: GridColDef[] = [
     {
@@ -87,8 +88,8 @@ const ActionCell = ({ row }: { row: any }) => {
     return KMenu({
         button: <MoreVert fontSize="small" className='text-white' />,
         menu: [
-            (<span className="text-sm" key={1} onClick={() => router.push('/property/' + row.slug)} >VIEW</span>),
-            (<span className="text-sm" key={2} onClick={() => router.push('/user/packout/' + row.slug)} >REQUEST PACKOUT</span>)
+            (<MenuItem className="text-sm" key={1} onClick={() => router.push('/property/' + row.slug)} >VIEW</MenuItem>),
+            (<MenuItem className="text-sm" key={2} onClick={() => router.push('/user/packout')} >REQUEST PACKOUT</MenuItem>)
         ]
     })
 }

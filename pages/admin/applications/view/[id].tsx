@@ -145,7 +145,7 @@ const Page = () => {
                         <textarea
                             onChange={(e) => setForm({ ...form, message: e.target.value })}
                             placeholder="Message"
-                            className="border border-gray-300 w-full h-32 p-2 my-2"
+                            className="border border-gray-300 w-full h-32 p-2 my-2 bg-transparent"
                         />
                     </div>}
                     <div className="my-10 flex justify-center">

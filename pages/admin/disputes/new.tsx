@@ -7,7 +7,7 @@ import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLa
 import { SearchTenants } from "../../../components/admin/Search"
 import { TypeBox } from "../../../components/ChatComponents"
 import { FormInput } from "../../../components/FormInput"
-import { disputeLevel } from "../../../constants"
+import { disputeLevel } from "../../../config"
 import { resetMessageState } from "../../../features/admin/messageSlice"
 import { createAdminMessage } from "../../../actions/admin/admin"
 import { loadAllTenants } from "../../../actions/admin/tenant"

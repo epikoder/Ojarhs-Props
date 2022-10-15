@@ -9,7 +9,7 @@ import { emailValidator } from "../../../../helpers/validation";
 import { useRouter } from "next/router";
 import { IconButton, Switch } from "@mui/material";
 import List from "../../../../helpers/list";
-import { BASEURL } from "../../../../constants";
+import { BASEURL } from "../../../../config";
 import { RootState } from "../../../../store";
 import { Api } from "../../../../helpers/api";
 import { ArrowBack } from "@mui/icons-material";

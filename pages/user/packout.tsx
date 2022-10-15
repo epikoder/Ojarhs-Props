@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, IconButton, MenuItem, Select, TextField } from "@mui/material"
-import React from "react"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, MenuItem, Select, TextField } from "@mui/material"
+import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import Loader from "../../components/Loader"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
@@ -73,31 +73,51 @@ const Status = ({ row }: { row: any }) => {
 
 const DeleteAction = ({ row }: { row: any }) => {
     const dispatch = useAppDispatch()
-    return <IconButton disabled={row.status === 1} onClick={async () => {
-        try {
-            await Api().delete('/user/packout?id=' + row.id)
-            dispatch(loadUserPackoutRequest({}))
-        } catch (error) {
+    const [dialogOpen, setDialogOpen] = useState(false)
+    return <>
+        <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+            <DialogTitle sx={{ fontSize: 15, textAlign: 'center' }}>
+                DELETE PROPERTY
+            </DialogTitle>
+            <DialogContent>
+                This action is irreversible
+            </DialogContent>
+            <DialogActions>
+                <Button color="error" onClick={() => setDialogOpen(false)}>
+                    CANCEL
+                </Button>
+                <Button color="success" onClick={async () => {
+                    setDialogOpen(false)
+                    try {
+                        await Api().delete('/user/packout?id=' + row.id)
+                        dispatch(loadUserPackoutRequest({}))
+                    } catch (error) {
 
-        }
-    }}>
-        <Delete fontSize="small" className={`${row.status === 0 ? 'text-red-500' : ''} cursor-pointer`} />
-    </IconButton>
+                    }
+                }}>
+                    CONFIRM
+                </Button>
+            </DialogActions>
+        </Dialog>
+        <IconButton disabled={row.status === 1} onClick={() => setDialogOpen(true)}>
+            <Delete fontSize="small" className={`${row.status === 0 ? 'text-red-500' : ''} cursor-pointer`} />
+        </IconButton>
+    </>
 }
 
 
 const NewRequest = ({ close }: { close: () => void }) => {
     const { state, data } = useSelector((store: RootState) => store.accountSlice.properties)
-    const [loading, setLoading] = React.useState(false)
+    const [loading, setLoading] = useState(false)
     const dispatch = useAppDispatch()
-    const [message, setMessage] = React.useState('')
+    const [message, setMessage] = useState('')
 
-    const [form, setForm] = React.useState({
+    const [form, setForm] = useState({
         space: '',
         message: '',
         date: null as Dayjs
     })
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(loadUserProperties({}))
     }, [])
 
@@ -117,7 +137,7 @@ const NewRequest = ({ close }: { close: () => void }) => {
 
     return <>
         {loading && <Loader />}
-        <div className="min-h-[20vh] p-2 max-w-screen-md w-[80vw] space-y-2" >
+        <div className="min-h-[20vh] p-2 max-w-sm w-[80vw] space-y-2" >
             <div className="text-center w-full">
                 New Packout Request
             </div>
@@ -144,7 +164,7 @@ const NewRequest = ({ close }: { close: () => void }) => {
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value as string })}
                     disabled={form.space === ''}
-                    className="bg-white border border-gray-500 p-2 w-full h-[40vh] outline-red-500 px-1"
+                    className="bg-transparent border border-gray-300 p-2 w-full h-[40vh] outline-red-500 px-1"
                     placeholder="Please state your reason..." />
                 <div className="text-xs text-center px-1">
                     <span> {form.message.length} </span>
@@ -183,10 +203,10 @@ const NewRequest = ({ close }: { close: () => void }) => {
 
 const Page = () => {
     const { state, data } = useSelector((store: RootState) => store.accountSlice.packRequest)
-    const [isOpen, setIsOpen] = React.useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
     const dispatch = useAppDispatch()
 
-    React.useEffect(() => {
+    useEffect(() => {
         dispatch(loadUserPackoutRequest({ packout: true }))
     }, [])
 

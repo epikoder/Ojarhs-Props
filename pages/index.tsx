@@ -1,11 +1,9 @@
-import Head from "next/head";
-import React from "react";
 import Plaza from "../components/Plaza";
 import HomeSignUp from "../components/HomeSignUp";
 import TopSection from "../components/TopSection";
 import Notice from "../components/Notice";
 import { PropertyAdvert } from "../components/Adverts";
-import Testimonials from "../components/Testimonials";
+import Review from "../components/Review";
 import Layout from "../components/Layout";
 import { loadAdverts, loadIndex, loadNotice } from "../actions";
 import { RootState, useAppDispatch } from "../store";
@@ -18,6 +16,7 @@ import Image from "next/image"
 import { Carousel } from "react-responsive-carousel";
 import Adverts from "./admin/adverts";
 import { resolveFilePath } from "../helpers/helpers";
+import { useEffect, useRef } from "react";
 
 
 type indexSliderType = {
@@ -60,7 +59,7 @@ const IndexSlider = () => {
 		},
 	]
 
-	const ref = React.useRef<HTMLSpanElement[]>([])
+	const ref = useRef<HTMLSpanElement[]>([])
 	const _ = (index: number) => {
 		const els: HTMLCollectionOf<HTMLSpanElement> = document.getElementsByClassName(index.toString() + '-slider') as HTMLCollectionOf<HTMLSpanElement>
 		Array.from(Array(els.length).keys()).forEach(e => {
@@ -124,8 +123,10 @@ function Home() {
 	const { data, state } = useSelector((store: RootState) => store.indexSlice);
 	const router = useRouter();
 
-	React.useEffect(() => {
-		dispatch(loadIndex({}));
+	useEffect(() => {
+		dispatch(loadIndex());
+		dispatch(loadAdverts());
+		dispatch(loadNotice())
 	}, [dispatch]);
 
 	return (
@@ -177,7 +178,7 @@ function Home() {
 						<PropertyAdvert />
 						<Plaza name='plaza warehouse' store={data.warehouse} prop='' />
 						<Plaza name='Services' store={data.services} prop='' />
-						<Testimonials testimony={data.testimonies} />
+						<Review />
 					</>
 				)}
 			</div>

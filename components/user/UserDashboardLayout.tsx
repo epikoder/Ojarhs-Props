@@ -1,22 +1,26 @@
-import { Paper } from "@mui/material"
-import Head from "next/head"
 import { useRouter } from "next/router"
-import Script from "next/script"
 import React from "react"
 import { useSelector } from "react-redux"
 import { checkIsAuthenticated, logout } from "../../features/authSlice"
 import { RootState, useAppDispatch } from "../../store"
-import { CopyRight } from "../Copyright"
-import Footer from "../Footer"
-import Header from "../Header"
+import { User, UserApplicationStatus } from "../../Typing"
 import Layout from "../Layout"
-import Loader, { PageLoader } from "../Loader"
+import Loader from "../Loader"
 import { UserSideBar } from "./UserSideBar"
 
-export const UserDashboardLayout = (props?: { children?: (props?: any) => React.ReactNode | undefined, className?: string, style?: React.CSSProperties }) => {
-    const { authenticated, user, appState, application } = useSelector((store: RootState) => store.authSlice)
+export const UserDashboardLayout: React.FC<{
+    children?: (props: {
+        authenticated: boolean
+        user: User
+        application: UserApplicationStatus
+    }) => React.ReactNode,
+    className?: string, style?: React.CSSProperties
+}> = (props) => {
+    const authSlice = useSelector((store: RootState) => store.authSlice)
     const dispatch = useAppDispatch()
     const router = useRouter()
+    const [authenticated, user, appState, application] =
+        [authSlice?.authenticated, authSlice?.user, authSlice?.appState, authSlice?.application]
 
     React.useEffect(() => {
         if (authenticated) return

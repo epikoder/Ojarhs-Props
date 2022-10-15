@@ -1,5 +1,4 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material"
-import Head from "next/head"
 import React, { HTMLAttributes } from "react"
 import { useSelector } from "react-redux"
 import { loadPlans, loadPropertyTypes } from "../actions/resource"
@@ -27,6 +26,7 @@ export const PaymentPlans = ({ value, handleChange, className, error }: {
                     label={<span className="text-xs uppercase">{"Payment Plan"}</span>}
                     className="text-sm uppercase"
                     size="small"
+                    error={error}
                     onChange={(e) => handleChange(e.target.value)}
                 >
                     <MenuItem className="uppercase text-xs" value={''} > {'Choose plan'} </MenuItem>
@@ -59,6 +59,7 @@ export const PropertyType = ({ value, handleChange, className, error }: {
                     label={<span className="text-xs uppercase">{"PROPERTY TYPE"}</span>}
                     className="text-sm uppercase"
                     size="small"
+                    error={error}
                     onChange={(e) => handleChange(e.target.value as string)}
                 >
                     <MenuItem className="uppercase text-xs" value={''} > {'Choose type'} </MenuItem>

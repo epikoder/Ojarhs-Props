@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASEURL } from "../constants";
+import { BASEURL } from "../config";
 import { fixSpace } from "../helpers/helpers";
-import { Advert, ApiResponse, Notice, Service, Space, Testimony } from "../Typing";
+import { Advert, ApiResponse, Notice, Service, Space } from "../Typing";
 
 export type indexData = {
     status: 'failed' | 'success'
@@ -9,7 +9,6 @@ export type indexData = {
     office: Space[],
     warehouse: Space[],
     services: Service[],
-    testimonies: Testimony[]
 }
 
 export const loadIndex =

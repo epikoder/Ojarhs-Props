@@ -6,7 +6,8 @@ import { ApiResponse, LoadState, loginResponse, NextOfKin, User, UserApplication
 import * as jose from 'jose'
 import { store } from "../store";
 import { updateUserProfile } from "../actions/user/dashboard";
-import { Cookies } from "next/dist/server/web/spec-extension/cookies";
+import { BASEURL } from "../config";
+import { StartNotify } from "utils/notification";
 
 type AuthState = {
     authenticated: boolean
@@ -56,10 +57,8 @@ export type JWTCLAIMS = {
 }
 
 const checkIsAuthenticatedAsync = async () => {
-    console.log("CHEEEEEEKKIII")
     try {
         const { data } = await Api().get<ApiResponse<loginResponse, { application: UserApplicationStatus }>>("/user/user")
-        console.log("CHEEEEEEKKIII", "SI")
         const auth = {} as {
             authenticated: boolean
             token?: loginResponse
@@ -85,7 +84,6 @@ const checkIsAuthenticatedAsync = async () => {
         }
         store.dispatch(setAuthenticated(auth))
     } catch (error) {
-        console.log("CHEEEEEEKKIII", "FA")
         store.dispatch(setAuthenticated({ authenticated: false }))
     }
 }
@@ -126,13 +124,10 @@ const checkIsAuthenticatedAdminAsync = async () => {
 
 const logoutAsync = async (token: string) => {
     try {
-        await fetch('/user/logout', {
+        await fetch(BASEURL + '/auth/logout', {
             method: 'POST',
             mode: "cors",
-            credentials: 'include',
-            headers: {
-                authorization: 'Bearer ' + token
-            }
+            credentials: 'include'
         })
     } catch (error) {
 
@@ -144,14 +139,13 @@ const authSlice = createSlice({
     initialState: initialState,
     reducers: {
         logout: (state) => {
-            console.log('LOGGGING OUT')
             state.appState = 'completed'
             state.authenticated = false
             state.user = undefined
             state.message = undefined
             state.token = {} as loginResponse
             state.error = {}
-            logoutAsync(state.token?.access)
+            logoutAsync(state.token?.refresh)
             clearUserToken()
             // TODO: Clear token cache
         },
@@ -173,6 +167,9 @@ const authSlice = createSlice({
             state.user = payload.user
             state.token = payload.token
             state.application = payload.application
+            if (state.authenticated) {
+                StartNotify()
+            }
         },
 
         checkIsAuthenticated: (state, { payload }: {
@@ -180,7 +177,6 @@ const authSlice = createSlice({
                 isAdmin?: boolean
             }
         }) => {
-            console.log('=======')
             if (state.authenticated === true && state.user !== undefined) return
             state.appState = 'pending'
             if (payload.isAdmin) {
@@ -194,6 +190,11 @@ const authSlice = createSlice({
             state.appState = 'completed'
             state.message = undefined
             state.error = {}
+        },
+
+        clearUpdateProfile: (state) => {
+            state.profileUpdate.message = ''
+            state.profileUpdate.state = 'nil'
         }
     },
 
@@ -215,7 +216,7 @@ const authSlice = createSlice({
             state.status = 'success'
             state.message = payload.message
             state.authenticated = true
-
+            StartNotify()
         })
 
         builder.addCase(loginApi.pending, (state, { }) => {
@@ -248,7 +249,7 @@ const authSlice = createSlice({
             state.status = 'success'
             state.message = payload.message
             state.authenticated = true
-
+            StartNotify()
         })
 
         builder.addCase(loginAdminApi.pending, (state, { }) => {
@@ -296,6 +297,6 @@ const authSlice = createSlice({
     },
 })
 
-export const { logout, setAuthenticated, checkIsAuthenticated, clearErr, setAppState } = authSlice.actions
+export const { logout, setAuthenticated, checkIsAuthenticated, clearErr, setAppState, clearUpdateProfile } = authSlice.actions
 
 export default authSlice.reducer

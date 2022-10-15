@@ -1,9 +1,9 @@
 import { ArrowBack, AttachFile, Dangerous, FastForward, Image as ImageIcon, Send } from "@mui/icons-material"
-import { Card, CircularProgress, Dialog, DialogContent, IconButton } from "@mui/material"
+import { Avatar, Card, CircularProgress, Dialog, DialogContent, IconButton } from "@mui/material"
 import { useRouter } from "next/router"
 import React, { ChangeEvent } from "react"
 import { useSelector } from "react-redux"
-import { BASEURL, disputeLevel } from "../constants"
+import { BASEURL, disputeLevel } from "../config"
 import { resolveFilePath } from "../helpers/helpers"
 import { RootState } from "../store"
 import { DisputeLevel, Message, MessageType } from "../Typing.d"
@@ -22,10 +22,7 @@ export const ChatHeader = ({ message, title }: { message: Message, title: string
                 <div className="max-w-[40%] text-gray-100 two-lines ellipse">
                     {title}
                 </div>
-                <img src={resolveFilePath((message.sender.id === user.id ? message.receiver : message.sender).photo)}
-                    alt=""
-                    className={'w-[4rem] h-[4rem] object-cover rounded-full'}
-                />
+                <Avatar src={resolveFilePath((message.sender.id === user.id ? message.receiver : message.sender).photo)} />
             </Card>
         }
     </>
@@ -55,9 +52,8 @@ export const ChatList = ({ message, title, route, dispute_level }: { message: Me
                 onClick={() => { router.push(route + '?id=' + message.owner_id + '&type=' + message.owner_type) }}
             >
                 <div className="flex space-x-3 max-w-[70%]">
-                    <img
+                    <Avatar
                         src={resolveFilePath((message.sender.id === user.id ? message.receiver : message.sender).photo)}
-                        className={'w-[4rem] h-[4rem] object-cover rounded-full'}
                     />
                     <div className="flex flex-col justify-around max-w-[100%]">
                         <div className="text-gray-200 flex items-center space-x-2">
@@ -110,9 +106,7 @@ export const MessageComponent = ({ message }: { message: Message }) => {
     return <>
         <div className={`flex ${isSender ? 'justify-end' : 'justify-start'} m-2 lg:m-4`}>
             <div className="flex items-end space-x-1">
-                {!isSender && <img src={resolveFilePath((receiver).photo)}
-                    alt=""
-                    className={'w-[3rem] h-[3rem] object-cover rounded-full'}
+                {!isSender && <Avatar src={resolveFilePath((receiver).photo)}
                 />}
                 <Card elevation={1} className="max-w-[80vw] lg:max-w-[60vw] px-2 py-1 lg:px-4 text-sm whitespace-pre-line">
                     <div>

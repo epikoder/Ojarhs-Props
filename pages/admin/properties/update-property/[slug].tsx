@@ -170,7 +170,7 @@ function UpdateProp() {
 
                             <FormInput
                                 props={{
-                                    value: form.description,
+                                    value: form.size,
                                     handleChange: (s) => setForm({
                                         ...form, size: s
                                     }),
@@ -184,7 +184,7 @@ function UpdateProp() {
                                 props={{
                                     value: form.description,
                                     handleChange: (s) => setForm({
-                                        ...form, name: s
+                                        ...form, description: s
                                     }),
                                     title: 'Description',
                                     message: formError.description,

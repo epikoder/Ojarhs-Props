@@ -1,18 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Service, Space } from "../../../Typing.d";
-import { ImageUpload, VideoUpload } from "../../../components/ImageUpload";
-import { GalleryUploader } from "../../../components/admin/GalleryUploader";
-import { PaymentPlans, PropertyType } from "../../../components/Resource";
+import { Service } from "../../../Typing.d";
+import { ImageUpload } from "../../../components/ImageUpload";
+import { PaymentPlans } from "../../../components/Resource";
 import { RootState, useAppDispatch } from "../../../store";
 import Loader from "../../../components/Loader";
-import { addNewPropertyThunck, addNewServiceThunck } from "../../../actions/admin/admin";
+import { addNewServiceThunck } from "../../../actions/admin/admin";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import { useRouter } from "next/router";
 import { resetPropertyState } from "../../../features/admin/propertySlice";
-import { ArrowLeftIcon } from "@heroicons/react/solid";
-import { Button } from "@mui/material";
+import { Button, Card, IconButton } from "@mui/material";
 import { FormInput } from "../../../components/FormInput";
+import { ArrowBack } from "@mui/icons-material";
 
 function NewService() {
 	const dispatch = useAppDispatch();
@@ -27,10 +26,11 @@ function NewService() {
 		manager: '',
 		slug: '',
 	} as Service)
-	const [formError, setFormError] = React.useState<Service>({} as Service)
+	const [formError, setFormError] = React.useState<Partial<Service>>({})
 	const { status, err, message } = useSelector((store: RootState) => store.serviceSlice)
 
 	React.useEffect(() => {
+		console.log(err)
 		if (err === undefined) return
 		setFormError(err as unknown as Service)
 	}, [err])
@@ -49,11 +49,11 @@ function NewService() {
 		<AdminDashboardLayout>
 			{() =>
 				<React.Fragment>
-					<div>
-						<ArrowLeftIcon className="cursor-pointer text-red-500" onClick={() => router.back()} width={40} height={30} />
-					</div>
+					<IconButton onClick={() => router.back()}>
+						<ArrowBack />
+					</IconButton>
 					<div className="flex justify-center">
-						<div className='rounded-md bg-white border my-4 mb-8 shadow-md relative max-w-4xl px-1 lg:px-4 w-full'>
+						<Card elevation={3} className='rounded-md my-4 shadow-md relative max-w-4xl px-1 lg:px-4 w-full'>
 							<h1 className='red text-center mt-4'>
 								<div className="uppercase text-sm">Add New Service</div>
 							</h1>
@@ -73,13 +73,16 @@ function NewService() {
 								<div>
 									<PaymentPlans
 										value={form.plan}
-										handleChange={(s) => setForm({ ...form, plan: s })} />
+										handleChange={(s) => setForm({ ...form, plan: s })}
+										error={formError.plan !== undefined}
+									/>
 								</div>
 								<div>
 									<textarea
 										onChange={(e) => setForm({ ...form, description: e.target.value })}
-										className='w-full border border-gray-300 p-2'
+										className={`w-full border ${formError.description !== undefined ? 'border-red-500' : 'border-gray-500'} p-2 bg-transparent`}
 										placeholder="Decription"
+										value={form.description}
 									/>
 								</div>
 								<div>
@@ -111,13 +114,16 @@ function NewService() {
 									<Button
 										variant='outlined'
 										disabled={status === 'pending'}
-										onClick={() => dispatch(addNewServiceThunck(form))}
+										onClick={() => {
+											setFormError({})
+											dispatch(addNewServiceThunck(form))
+										}}
 									>
 										{status !== 'pending' ? 'Add New' : 'Please wait...'}
 									</Button>
 								</div>
 							</form>
-						</div>
+						</Card>
 					</div>
 				</React.Fragment>}
 		</AdminDashboardLayout>

@@ -1,4 +1,4 @@
-import { STORAGEURL } from "../constants"
+import { STORAGEURL } from "../config"
 import { Space } from "../Typing.d";
 
 export const resolveFilePath = (s: string): string | undefined => { return s !== "" ? STORAGEURL + '/' + s : undefined };

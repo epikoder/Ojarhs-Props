@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatComponents"
 import Loader from "../../../components/Loader"
@@ -8,6 +8,7 @@ import { Api } from "../../../helpers/api"
 import { loadUserDispute } from "../../../actions/user/message"
 import { RootState, useAppDispatch } from "../../../store"
 import { MessageForm, MessageOwner, MessageType } from "../../../Typing.d"
+import { markMessageAsRead } from "actions/message"
 
 const Page = () => {
     const { data, state } = useSelector((store: RootState) => store.accountSlice.message.disputes)
@@ -60,8 +61,15 @@ const Page = () => {
         chatBox.current.scrollTop = chatBox.current.scrollHeight
     }, [conversation])
 
+    useEffect(() => {
+        markMessageAsRead({
+            owner: conversation?.messages[0].owner_type,
+            id: conversation?.id
+        })
+    }, [conversation])
+
     return <UserDashboardLayout className="md:p-1">
-        {({ user }) => <>
+        {() => <>
             {conversation !== undefined && <div>
                 <ChatHeader title={conversation.title} message={conversation.messages[0]} />
                 <div className="flex flex-col justify-between h-[65vh] md:h-[60vh] lg:h-[60vh] 2xl:h-[68vh] bg-main">

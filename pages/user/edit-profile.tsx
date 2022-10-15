@@ -1,13 +1,13 @@
 import { Button, TextField } from "@mui/material"
-import React from "react"
+import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { FormCountryInput, FormPhoneInput } from "../../components/FormInput"
+import { FormCountryInput } from "../../components/FormInput"
 import { ImageUpload } from "../../components/ImageUpload"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
-import { resolveFilePath } from "../../helpers/helpers"
 import { updateUserProfile } from "../../actions/user/dashboard"
 import { RootState, useAppDispatch } from "../../store"
-import { User, UserUpdateForm } from "../../Typing.d"
+import { UserUpdateForm } from "../../Typing.d"
+import { clearUpdateProfile } from "features/authSlice"
 
 const Page = () => {
     const { user, profileUpdate } = useSelector((store: RootState) => store.authSlice)
@@ -26,7 +26,6 @@ const Page = () => {
                 country: user.country,
                 photo: undefined
             })
-            console.log("form changed")
         }
     }, [user])
 
@@ -37,8 +36,10 @@ const Page = () => {
         }))
     }
 
+    useEffect(() => { dispatch(clearUpdateProfile()) }, [])
+
     return <UserDashboardLayout>
-        {({ user }: { user: User }) =>
+        {({ user }) =>
             <React.Fragment>
                 <form className="p-4 max-w-sm">
                     <div>
@@ -46,7 +47,7 @@ const Page = () => {
                             handleUpload={(s) => setForm({ ...form, photo: s })} />
                         <span className="text-sm">PROPFILE PHOTO</span>
                     </div>
-                    {form.country !== undefined && <div className="space-y-2 my-2">
+                    {(form.fname !== undefined || form.lname !== undefined) && <div className="space-y-2 my-2">
                         <TextField
                             name="fname"
                             label='First Name'

@@ -4,14 +4,13 @@ import React, { PropsWithChildren } from "react"
 import { UserDashboardLayout } from "../../components/user/UserDashboardLayout"
 import { UserDashboardProperties } from "../../components/user/UserDashboardProperties"
 import { UserInfo } from "../../components/user/UserInfo"
-import { applicationFee } from "../../constants"
+import { applicationFee } from "../../config"
 import { money } from "../../helpers/helpers"
-import { User, UserApplicationStatus } from "../../Typing.d"
 
 const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
     const router = useRouter()
     return <UserDashboardLayout>
-        {({ user, application }: { user: User, application: UserApplicationStatus }) => <>
+        {({ user, application }) => <>
             <div className="p-2">
                 <UserInfo user={user} />
                 {application === 'verified' && <UserDashboardProperties />}
@@ -36,8 +35,8 @@ const UserDashboard = ({ props }: { props: PropsWithChildren }) => {
                     <Card className="py-4 mt-8 px-2 text-sm rounded-md text-white text-center">
                         <h6 className="text-red-500">NOTICE</h6>
                         <div className="lg:mx-12">
-                            {`Your application has been received, you'll be notified via email
-                            on the status of your application`}
+                            {`Thanks, you have successfully submitted your application 
+                            Ojarh global properties Estate Agent will contact you for an interview.`}
                         </div>
                     </Card>
                     <div className="m-4 flex justify-center">

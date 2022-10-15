@@ -1,9 +1,7 @@
-import { XCircleIcon } from "@heroicons/react/outline"
 import { Cancel } from "@mui/icons-material"
 import { Button, Card, IconButton } from "@mui/material"
 import React from "react"
 import List from "../../helpers/list"
-import { Map } from "../../Typing.d"
 import { ImageUpload, VideoUpload } from "../ImageUpload"
 
 type FilesType = {

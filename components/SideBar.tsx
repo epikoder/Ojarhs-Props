@@ -40,7 +40,7 @@ const MySideBar = ({ mobile }: { mobile?: boolean }) => <div>
 	/>
 	<SideBarItem mobile={mobile} name='Ojarh Printing' link="/admin/printing" />
 	<SideBarItem mobile={mobile} name='Packout Request' link="/admin/packout" />
-	<SideBarItem mobile={mobile} name='Manage Sub-Admin' />
+	<SideBarItem mobile={mobile} name='Manage Sub-Admin' link='/admin/subadmin' />
 	<SideBarItem
 		mobile={mobile}
 		name='Ojarh Office'

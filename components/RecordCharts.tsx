@@ -1,6 +1,5 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { Card } from "@mui/material";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 

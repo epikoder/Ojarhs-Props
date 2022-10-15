@@ -1,8 +1,8 @@
 import { Delete, Edit } from "@mui/icons-material";
-import { Button } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
-import React from "react";
+import  { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout";
 import GridTable from "../../../components/Grid";
@@ -21,7 +21,7 @@ const columns: GridColDef[] = [
 	},
 	{
 		field: 'name',
-		headerName: 'Name',
+		headerName: 'Full Name',
 		width: 250,
 		align: 'center',
 		headerAlign: 'center',
@@ -106,8 +106,28 @@ const UpdateAction = ({ row }: { row: any }) => {
 }
 
 const DeleteAction = ({ row }: { row: any }) => {
+	const [dialogOpen, setDialogOpen] = useState(false)
 	return <>
-		<div className="cursor-pointer" onClick={() => row.delete()}>
+		<Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+			<DialogTitle sx={{ fontSize: 15, textAlign: 'center' }}>
+				DELETE PROPERTY
+			</DialogTitle>
+			<DialogContent>
+				This action is irreversible
+			</DialogContent>
+			<DialogActions>
+				<Button color="error" onClick={() => setDialogOpen(false)}>
+					CANCEL
+				</Button>
+				<Button color="success" onClick={() => {
+					setDialogOpen(false)
+					row.delete()
+				}}>
+					CONFIRM
+				</Button>
+			</DialogActions>
+		</Dialog>
+		<div className="cursor-pointer" onClick={() => setDialogOpen(true)}>
 			<Delete />
 		</div>
 	</>
@@ -118,7 +138,7 @@ function Staffs() {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dispatch(loadStaffs())
 	}, [])
 
@@ -132,7 +152,7 @@ function Staffs() {
 
 	return <AdminDashboardLayout>
 		{() => (
-			<React.Fragment>
+			<>
 				<div className='flex justify-between items-center'>
 					<h1 className='text-lg red'>Staffs</h1>
 
@@ -148,7 +168,7 @@ function Staffs() {
 						rows={data.map((s, i) => ({ ...s, _id: i + 1, delete: () => deleteStaff(s.id) }))}
 					/>
 				</div>
-			</React.Fragment>
+			</>
 		)}
 	</AdminDashboardLayout>
 }

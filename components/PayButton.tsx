@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, ButtonProps, CircularProgress, styled } from "@mui/material"
+import { Button, CircularProgress } from "@mui/material"
 import { ApiResponse, Service, Space } from "../Typing.d"
 import { Api } from "../helpers/api"
 import { fixSpace } from "../helpers/helpers"
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../store"
 import { useRouter } from "next/router"
 import { PaystackConsumer } from "react-paystack"
-import { pk_key } from "../constants"
+import { pk_key } from "../config"
 
 const NotAvailable = 'NOT AVAILABLE'
 const NotFound = 'NOT FOUND'
@@ -139,6 +139,7 @@ export const PayButton = ({ slug, type, disabled }: { slug: string, type: 'servi
                 }}
                     onClick={() => initializePayment()}
                     fullWidth
+                    className='pay-btn'
                     disableElevation
                     disabled={loading}
                     style={{ fontFamily: 'space grotesk' }}

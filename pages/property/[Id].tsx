@@ -85,7 +85,7 @@ const Details = () => {
 										}}>
 											{data.name}
 										</div>
-										<div className="text-gray-500">
+										<div className="text-sec">
 											<PlaceIcon fontSize="small" />
 											{data.address}
 										</div>
@@ -144,7 +144,7 @@ const Details = () => {
 									}}>
 										{data.name}
 									</div>
-									<div className="text-gray-500">
+									<div className="text-sec">
 										<PlaceIcon fontSize="small" />
 										{data.address}
 									</div>

@@ -1,8 +1,8 @@
-import { XCircleIcon } from "@heroicons/react/outline"
-import { Card } from "@mui/material"
+import { Cancel } from "@mui/icons-material"
+import { Card, IconButton } from "@mui/material"
 import React, { useRef, useState } from "react"
 import { useSelector } from "react-redux"
-import { BASEURL, STORAGEURL } from "../constants"
+import { BASEURL, STORAGEURL } from "../config"
 import { resolveFilePath } from "../helpers/helpers"
 import { RootState, useAppDispatch } from "../store"
 import Loader from "./Loader"
@@ -84,7 +84,7 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
     const showPreview = (value !== undefined && (url === '' || forceValue)) && (errMessage === '' || errMessage === undefined)
 
     return <>
-        <Card className="h-36 m-none hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-36 m-none hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
             if (loading || disabled) return
             if (!required && url !== '') {
                 setUrl('')
@@ -108,9 +108,9 @@ export const ImageUpload = ({ value, handleUpload, required = false, disabled = 
                     </div>) : loading ? <Loader /> : <>
                         <div className="relative h-full w-full">
                             <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
-                            <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                            <div className="hover:bg-gray-500 duration-300 transition-all text-transparent hover:text-gray-100 ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
                             </div>
-                            <div className="z-20 duration-300 transition-all text-transparent hover:text-black ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
+                            <div className="z-20 duration-300 transition-all text-transparent hover:text-gray-100 ease-in-out opacity-30 absolute flex flex-col justify-center items-center w-full h-full">
                                 REMOVE
                             </div>
                         </div>
@@ -204,10 +204,10 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
 
     if (!headless) {
         return <>
-            <Card className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+            <Card elevation={2} className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
                 if (loading || disabled) return
                 const uploader = ref.current;
-                if (uploader !== undefined && blob === undefined) {
+                if (uploader !== undefined && blob === undefined && src === undefined) {
                     uploader.click()
                 }
             }} style={{
@@ -215,15 +215,16 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                 height: height
             }}>
 
-                <div className={blob === undefined && src === undefined || disabled ? 'hidden' : "absolute z-30 text-orange-500 cursor-pointer top-0"}
+                <IconButton className={blob === undefined && src === undefined || disabled ? 'hidden' : "absolute z-30 text-orange-500 top-0"}
                     onClick={() => {
                         setBlob(undefined)
                         if (src !== undefined && handleUpload) {
                             handleUpload('', blob)
                         }
+                        ref.current?.click()
                     }}>
-                    <XCircleIcon width={25} />
-                </div>
+                    <Cancel />
+                </IconButton>
                 {
                     ((value !== undefined || src !== undefined) && (blob === undefined || forceValue)) ?
                         (<video
@@ -247,7 +248,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
     }
 
     return <>
-        <div className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-36 hover:cursor-pointer w-36 flex flex-col justify-center items-center rounded-md relative" onClick={() => {
             if (loading || disabled) return
             const uploader = ref.current;
             if (uploader !== undefined && blob === undefined) {
@@ -275,7 +276,7 @@ export const VideoUpload = ({ value, handleUpload, required = false, disabled = 
                         </div>
                     </>)
             }
-        </div>
+        </Card>
         <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='video/*' />
     </>
 }
@@ -291,7 +292,6 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
     const [message, setMessage] = useState<string>('')
     const ref = useRef<HTMLInputElement>()
     const { access } = useSelector((store: RootState) => store.authSlice.token)
-    const dispatch = useAppDispatch()
 
     function onUpload() {
         setUrl('')
@@ -362,7 +362,7 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
     }
 
     return <>
-        <div className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-center bg-gray-300 rounded-md relative" onClick={() => {
+        <Card elevation={2} className="h-[50vh] hover:cursor-pointer w-80 flex flex-col justify-center items-center relative" onClick={() => {
             if (loading || disabled || (documentType === '' || documentType === '0')) return
             if (!required && url !== '') {
                 setUrl('')
@@ -374,13 +374,13 @@ export const DocumentUpload = ({ documentType, handleUpload, required = false, d
             }
         }}>
             {
-                url === '' ? (<div className="p-1">
+                url === '' ? (<div className="p-1 text-center">
                     {message !== '' ? message : 'SELECT PHOTO'}
                 </div>) : loading ? <Loader /> : <>
                     <img src={url} alt="" className="absolute object-cover h-full w-full rounded-md" />
                 </>
             }
-        </div>
+        </Card>
         {ready && <input ref={ref} type={"file"} className='hidden' onChange={onUpload} disabled={disabled} accept='image/*' />}
     </>
 }

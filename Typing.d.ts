@@ -1,4 +1,4 @@
-export type User = Tenant & {
+export type User = Partial<Tenant> & {
 	is_admin: boolean
 	is_disabled: boolean
 	is_locked: boolean
@@ -27,12 +27,6 @@ export type Space = {
 	created_at?: Date
 	updated_at?: Date
 }
-
-export type Testimony = {
-	name: string;
-	photo?: string
-	testimony: string;
-};
 
 export type Tenant = {
 	id: string
@@ -120,16 +114,7 @@ export type SignUpForm = {
 	next_of_kins: NextOfKin[]
 }
 
-export type UserUpdateForm = {
-	fname: string
-	lname: string
-	phone: string
-	photo: string
-	address: string
-	lga: string
-	state: string
-	country: string    
-}
+export type UserUpdateForm = Partial<User>
 
 export type Country = {
 	id: number
@@ -141,7 +126,7 @@ export type ApiResponse<T = any, TT = any> = {
 	status: 'success' | 'failed'
 	message?: string
 	error?: { [key: string]: string }
-	data: T
+	data?: T
 	extra?: TT
 }
 
@@ -161,6 +146,13 @@ export type DashboardDataState<T> = {
 	message?: string
 }
 export type UserApplicationStatus = 'nil' | 'pending' | 'verified' | 'rejected' | 'document-required'
+export type UserApplication = {
+	id: string
+	user_id: string
+	status: UserApplicationStatus
+	message: string
+	document: string
+}
 
 export type Advert = {
 	id: number

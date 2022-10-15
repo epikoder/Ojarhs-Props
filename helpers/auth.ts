@@ -12,7 +12,6 @@ export const getTokenStore = (): Storage => {
 }
 
 export const setUserToken = (data: loginResponse) => {
-    console.log("SETTING DATA", data)
     getTokenStore().setItem(_tokenKey, `${data.access},${data.access_expires_at}`)
 }
 

@@ -1,8 +1,8 @@
 import { Delete } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
-import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ReactSwitch from "react-switch";
 import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayout";
@@ -64,6 +64,17 @@ const columns: GridColDef[] = [
 		renderCell: ({ row }) => <SwitchAction row={row} />
 	},
 	{
+		field: 'expires_at',
+		headerName: 'Status',
+		headerAlign: 'center',
+		align: 'center',
+		filterable: false,
+		hideable: false,
+		disableColumnMenu: true,
+		width: 120,
+		renderCell: ({ value, row }) => <Status active={(new Date(row.expires_at).getTime() > (new Date()).getTime()) && row.approved} />
+	},
+	{
 		field: 'action',
 		headerName: ':',
 		headerAlign: 'center',
@@ -76,11 +87,21 @@ const columns: GridColDef[] = [
 	},
 ];
 
+const Status = ({ active }: { active: boolean }) => {
+	return <>
+		<div className={`bg-${active ? 'blue' : 'red'}-500 px-2 py-1 rounded-md text-white `}>
+			{active ? 'Active' : 'Inactive'}
+		</div>
+	</>
+}
+
 const DeleteAction = ({ row }: { row: any }) => {
 	const dispatch = useAppDispatch()
-	const [loading, setLoading] = React.useState(false)
+	const [loading, setLoading] = useState(false)
+	const [dialogOpen, setDialogOpen] = useState(false)
 
 	const _delete = async () => {
+		() => setDialogOpen(false)
 		setLoading(true)
 		try {
 			const { data, status } = await Api().delete<ApiResponse<boolean>>(`/admin/adverts/delete?id=${row.id}`)
@@ -94,15 +115,31 @@ const DeleteAction = ({ row }: { row: any }) => {
 	}
 
 	return <>
+		<Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
+			<DialogTitle sx={{ fontSize: 15, textAlign: 'center' }}>
+				DELETE ADVERT
+			</DialogTitle>
+			<DialogContent>
+				This action is irreversible
+			</DialogContent>
+			<DialogActions>
+				<Button color="error" onClick={() => setDialogOpen(false)}>
+					CANCEL
+				</Button>
+				<Button color="success" onClick={_delete}>
+					CONFIRM
+				</Button>
+			</DialogActions>
+		</Dialog>
 		{loading && <div className="h-full relative">
 			<Loader />
 		</div>}
-		{!loading && <Delete onClick={_delete} className="text-red-500 cursor-pointer" height={20} />}
+		{!loading && <Delete onClick={() => setDialogOpen(true)} className="text-red-500 cursor-pointer" height={20} />}
 	</>
 }
 
 const SwitchAction = ({ row }: { row: any }) => {
-	const [loading, setLoading] = React.useState(false)
+	const [loading, setLoading] = useState(false)
 	const dispatch = useAppDispatch()
 
 	return <>
@@ -134,13 +171,13 @@ function Adverts() {
 	const router = useRouter()
 	const dispatch = useAppDispatch()
 
-	React.useEffect(() => {
+	useEffect(() => {
 		dispatch(loadAdminAdverts())
 	}, [dispatch])
 
 	const { data, status } = useSelector((store: RootState) => store.advertSlice)
 	return <AdminDashboardLayout>
-		{() => <React.Fragment>
+		{() => <>
 			<div className='flex justify-between items-cente px-2 py-2 '>
 				<h1 className='lg:text-2xl text-md red'>Adverts</h1>
 				<Button
@@ -162,7 +199,7 @@ function Adverts() {
 					state={status}
 				/>}
 			</div>
-		</React.Fragment>}
+		</>}
 	</AdminDashboardLayout>
 }
 

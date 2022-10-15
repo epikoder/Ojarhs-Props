@@ -132,7 +132,7 @@ const Page = () => {
                                 variant='outlined'
                                 size="small"
                                 startIcon={loading.state && <CircularProgress size={14} />}
-                                disabled={loading.state === 'pending' || !checkValid()}
+                                disabled={loading.state || !checkValid()}
                                 onClick={() => create(loading)}
                             >
                                 CREATE

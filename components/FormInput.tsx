@@ -2,7 +2,7 @@ import { Cancel, Visibility, VisibilityOff } from "@mui/icons-material"
 import { Card, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
-import { BASEURL } from "../constants"
+import { BASEURL } from "../config"
 import { HidePassword, ShowPassword } from "../features/TogglePassword"
 import List from "../helpers/list"
 import { Country } from "../Typing.d"
@@ -123,9 +123,10 @@ export const FormPasswordInput = ({ props }: {
     return <>
         <div className="my-2">
             <FormControl sx={{ m: 1, width: '100%', margin: 0 }} variant="outlined" size="small">
-                <InputLabel>Password</InputLabel>
+                <InputLabel>{props.title || 'Password'}</InputLabel>
                 <OutlinedInput
                     type={!hidden ? 'text' : 'password'}
+                    placeholder={props.title}
                     onChange={(e) => {
                         props.handleChange(e.target.value)
                     }}
@@ -142,7 +143,7 @@ export const FormPasswordInput = ({ props }: {
                             </IconButton>
                         </InputAdornment>
                     }
-                    label="Password"
+                    label={props.title}
                 />
             </FormControl>
         </div>
@@ -236,12 +237,13 @@ export const FormCountryInput = ({ props }: {
     </>
 }
 
-export const ApplianceInput = ({ value, handleChange }: {
+export const ApplianceInput = ({ value, handleChange, error }: {
     handleChange?: (s: string[]) => void
     value?: string[]
+    error?: boolean
 }): JSX.Element => {
-    const [list, setList] = React.useState<string[]>(value || [])
-    const [text, setText] = React.useState<string>('')
+    const [list, setList] = useState<string[]>(value || [])
+    const [text, setText] = useState<string>('')
     const ref = React.useRef(false)
 
     React.useEffect(() => {
@@ -258,13 +260,15 @@ export const ApplianceInput = ({ value, handleChange }: {
     }, [value])
 
     return <>
-        <Card className="min-h-[3rem] rounded-md flex flex-wrap p-1" >
+        <Card className={`min-h-[3rem] rounded-md flex flex-wrap p-1 border border-${error ? 'red' : 'gray'}-500`} >
             {(list).map((s, i) =>
-                <Card key={i} className='px-2 py-1 flex items-center text-sec space-x-1 bg-gray-500 rounded-full m-1'>
+                <Card elevation={3} key={i} className='px-2 flex items-center text-sec space-x-1 rounded-lg m-1'>
                     <span>{s}</span>
-                    <Cancel fontSize="small" onClick={() => {
+                    <IconButton size="small" onClick={() => {
                         setList(List.remove(list, i))
-                    }} />
+                    }} >
+                        <Cancel fontSize="small" />
+                    </IconButton>
                 </Card>)}
             <input
                 value={text}
@@ -274,7 +278,7 @@ export const ApplianceInput = ({ value, handleChange }: {
                     backgroundColor: 'transparent',
                 }}
                 type={'text'}
-                placeholder='Enter to save'
+                placeholder='Appliances... click enter save'
                 onKeyDownCapture={e => {
                     if (e.key === 'Enter') {
                         e.preventDefault()
