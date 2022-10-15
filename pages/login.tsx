@@ -36,9 +36,9 @@ function Login() {
 	}, [authenticated, dispatch])
 
 	useEffect(() => {
-		if (authenticated) setTimeout(() => {
+		if (authenticated) setTimeout(async() => {
 			if (user !== undefined && user.is_admin) return router.replace("/admin")
-			router.replace('/user/dashboard')
+			await router.replace('/user/dashboard')
 			dispatch(clearAuthState())
 		}, 200)
 	}, [authenticated, router, user])

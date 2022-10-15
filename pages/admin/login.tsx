@@ -35,9 +35,9 @@ const AdminLogin = () => {
     }, [authenticated, dispatch])
 
     React.useEffect(() => {
-        if (authenticated && user.is_admin) setTimeout(() => {
+        if (authenticated && user.is_admin) setTimeout(async () => {
             const path = sessionStorage.getItem('current')
-            router.replace(path !== null && (path !== '/admin/login' && !path.includes('/user/') && path !== '/') ? path : '/admin/dashboard')
+            await router.replace(path !== null && (path !== '/admin/login' && !path.includes('/user/') && path !== '/') ? path : '/admin/dashboard')
             dispatch(clearAuthState())
         }, 200)
     }, [authenticated, router, user])
