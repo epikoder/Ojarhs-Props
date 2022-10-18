@@ -36,7 +36,7 @@ function Login() {
 	}, [authenticated, dispatch])
 
 	useEffect(() => {
-		if (authenticated) setTimeout(async() => {
+		if (authenticated) setTimeout(async () => {
 			if (user !== undefined && user.is_admin) return router.replace("/admin")
 			await router.replace('/user/dashboard')
 			dispatch(clearAuthState())
@@ -68,7 +68,7 @@ function Login() {
 						Login
 					</div>
 
-					<div className={`text-center text-sm font-sans text-${message.status ? 'blue' : 'red'}-500`}>
+					<div className={`text-center text-sm font-sans ${message.status ? 'text-sec' : 'text-red-500'}`}>
 						{message.text !== undefined && message.text}
 					</div>
 					<form ref={formRef} onSubmit={e => e.preventDefault()} className="space-y-2 py-2 p-4 items-center justify-center">

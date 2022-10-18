@@ -265,13 +265,9 @@ function Header() {
 						</>
 							:
 							<>
-								<Box className="w-full">
+								<Box className="w-full space-y-2">
 									<div className="flex justify-center">
-										<div className="border-4 border-gray-500 rounded-full">
-											<IconButton onClick={() => router.push('/login')}>
-												<Person fontSize="large" className="text-black h-12 w-12" />
-											</IconButton>
-										</div>
+										<Avatar className="h-12 w-12" onClick={() => router.push('/login')} />
 									</div>
 									<MenuItemMobile title="Login" href="/login" />
 								</Box>

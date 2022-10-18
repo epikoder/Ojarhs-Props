@@ -29,7 +29,6 @@ export const UserDashboardLayout: React.FC<{
     }, [])
 
     React.useEffect(() => {
-        console.log("CHECKING", authenticated, appState)
         if (authenticated === false && appState === 'completed') {
             router.push('/login')
             return
