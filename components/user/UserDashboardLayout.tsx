@@ -38,7 +38,7 @@ export const UserDashboardLayout: React.FC<{
             router.replace("/admin/dashboard")
             return
         }
-    }, [authenticated])
+    }, [authenticated, appState])
 
     return <Layout>
         {(appState === 'completed' && authenticated && user !== undefined) &&

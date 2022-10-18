@@ -13,7 +13,7 @@ export const ChatHeader = ({ message, title }: { message: Message, title: string
     const { user } = useSelector((store: RootState) => store.authSlice)
     return <>
         {user !== undefined && message !== undefined &&
-            <Card className="flex justify-between items-center h-[5rem] p-1 px-2 w-full">
+            <Card className="flex justify-between items-center p-1 px-2 w-full">
                 <div>
                     <IconButton onClick={() => router.back()}>
                         <ArrowBack className="text-white" fontSize="small" />
@@ -48,7 +48,7 @@ export const ChatList = ({ message, title, route, dispute_level }: { message: Me
     const { user } = useSelector((store: RootState) => store.authSlice)
     return <>
         {user !== undefined && message !== undefined &&
-            <Card className="flex justify-between rounded-lg p-1 px-2 cursor-pointer"
+            <Card elevation={2} className="flex justify-between rounded-lg p-1 px-2 cursor-pointer"
                 onClick={() => { router.push(route + '?id=' + message.owner_id + '&type=' + message.owner_type) }}
             >
                 <div className="flex space-x-3 max-w-[70%]">

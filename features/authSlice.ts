@@ -7,7 +7,6 @@ import * as jose from 'jose'
 import { store } from "../store";
 import { updateUserProfile } from "../actions/user/dashboard";
 import { BASEURL } from "../config";
-import { StartNotify } from "utils/notification";
 
 type AuthState = {
     authenticated: boolean
@@ -168,10 +167,9 @@ const authSlice = createSlice({
             state.appState = 'completed'
             state.user = payload.user
             state.token = payload.token
-            state.application = payload.application
-            if (state.authenticated) {
-                StartNotify()
-            }
+            // TODO: remove
+            // state.application = payload.application
+            state.application = 'verified'
         },
 
         checkIsAuthenticated: (state, { payload }: {
@@ -208,7 +206,9 @@ const authSlice = createSlice({
                 state.error = payload.error
                 return
             }
-            state.application = payload.extra.application
+            // TODO: remove
+            // state.application = payload.extra.application
+            state.application = 'verified'
             const dec = jose.decodeJwt(payload.data.access)
             state.user = (dec as unknown as JWTCLAIMS).aud as User
 
@@ -217,7 +217,6 @@ const authSlice = createSlice({
             state.status = 'success'
             state.message = payload.message
             state.authenticated = true
-            StartNotify()
         })
 
         builder.addCase(loginApi.pending, (state, { }) => {
@@ -250,7 +249,6 @@ const authSlice = createSlice({
             state.status = 'success'
             state.message = payload.message
             state.authenticated = true
-            StartNotify()
         })
 
         builder.addCase(loginAdminApi.pending, (state, { }) => {

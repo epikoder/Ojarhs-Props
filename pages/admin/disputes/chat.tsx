@@ -67,11 +67,13 @@ const Page = () => {
         })
     }, [conversation])
 
-    return <AdminDashboardLayout className="md:p-1">
+    return <AdminDashboardLayout style={{
+        padding: '0px'
+    }}>
         {({ user }) => <>
             {conversation !== undefined && <div>
                 <ChatHeader title={conversation.title} message={conversation.messages[0]} />
-                <div className="flex flex-col justify-between h-[65vh] md:h-[60vh] lg:h-[75vh] bg-main">
+                <div className="flex flex-col justify-between h-[75vh] md:h-[70vh] lg:h-[75vh] bg-main">
                     <div className="h-[80%] overflow-y-scroll" ref={chatBox}>
                         {conversation.messages.map((m, i) =>
                             <div key={i}>
@@ -79,8 +81,8 @@ const Page = () => {
                             </div>
                         )}
                     </div>
-                    <div className="relative lg:flex justify-center my-1">
-                        <div className="bottom-0 md:bottom-14 lg:max-w-[50vw] w-full px-2" style={{ zIndex: 99 }}>
+                    <div className="relative lg:flex justify-center">
+                        <div className="bottom-0 md:bottom-14 lg:max-w-[50vw] w-full px-2" style={{ zIndex: 99999 }}>
                             <TypeBox onSend={send} hideFilePicker={false} />
                         </div>
                     </div>

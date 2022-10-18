@@ -184,7 +184,7 @@ function Header() {
 											dashboard
 										</Button>
 									</NavLink>
-									{/* <NotificationBox /> */}
+									<NotificationBox />
 								</> :
 									<>
 										<NavLink href='/login'>
