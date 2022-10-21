@@ -92,6 +92,7 @@ const Page = () => {
             type: type,
             sender: user,
             receiver,
+            owner_type: "disputes",
         }
         socket.emit(channel, payload)
         return true
