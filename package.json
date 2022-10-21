@@ -36,12 +36,15 @@
     "react-redux": "^8.0.2",
     "react-responsive-carousel": "^3.2.23",
     "react-switch": "^7.0.0",
+    "socket.io-client": "^4.5.3",
     "tailwind-scrollbar-hide": "^1.1.7",
-    "tw-elements": "^1.0.0-alpha12"
+    "tw-elements": "^1.0.0-alpha12",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.9",
     "@types/react": "^18.0.17",
+    "@types/uuid": "^8.3.4",
     "autoprefixer": "^10.4.8",
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.3",

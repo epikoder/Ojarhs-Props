@@ -144,7 +144,6 @@ const AccountSlice = createSlice({
         })
         builder.addCase(loadUserDispute.fulfilled, (state, { payload }) => {
             state.message.disputes.state = 'success'
-            console.log("GOT DISPUTES", payload)
             state.message.disputes.data = payload
         })
         builder.addCase(loadUserDispute.rejected, (state) => {

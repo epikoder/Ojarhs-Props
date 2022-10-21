@@ -2,6 +2,7 @@ import { ArrowBack } from "@mui/icons-material"
 import { Box, Button, Card, CircularProgress, FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
+import { SocketState, useSocketBloc } from "utils/socket"
 import { FormInput } from "../../../components/FormInput"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
 import { disputeLevel } from "../../../config"
@@ -11,6 +12,7 @@ import { DisputeLevel, MesssageForm } from "../../../Typing.d"
 const Page = () => {
     const router = useRouter()
     const formRef = React.useRef<HTMLFormElement>()
+    const [_, { notify }] = useSocketBloc(SocketState)
 
     const [form, setForm] = React.useState<MesssageForm>({
         title: '',
@@ -32,6 +34,10 @@ const Page = () => {
             setMessage({
                 state: true,
                 message: 'Message sent successfully'
+            })
+            notify({
+                type: 'dispute',
+                message: 'You have a new dispute',
             })
             setTimeout(() => {
                 return router.back()

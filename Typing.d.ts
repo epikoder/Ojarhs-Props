@@ -185,16 +185,6 @@ export interface MessageOwner {
 
 export type MessageType = 'text' | 'image' | 'pdf'
 export type DisputeLevel = 0 | 1 | 2
-export type MessageForm = {
-	id?: number
-	content: string
-	type: MessageType
-	is_dispute?: boolean
-	is_report?: boolean
-	owner_id?: number
-	owner_type?: 'conversations' | 'disputes' | 'reports'
-	receiver?: string
-}
 
 export type Message = {
 	id?: number
@@ -208,7 +198,7 @@ export type Message = {
 	owner_type?: 'conversations' | 'disputes' | 'reports'
 	sender?: User
 	receiver?: User
-	created_at: Date
+	created_at?: Date
 }
 export type MesssageForm = {
 	id?: string
@@ -294,4 +284,11 @@ export type Contact = {
 	subject: string
 	message: string
 	response?: string
+}
+
+export type Notifications = {
+	type: 'dispute' | 'message' | 'report'
+	message: string,
+	receiver_id?: string,
+	created_at?: Date
 }

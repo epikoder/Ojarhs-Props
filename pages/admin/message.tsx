@@ -53,7 +53,6 @@ function Message() {
 				<div className="my-2 h-full">
 					<Table
 						state={state}
-						perPage={10}
 						data={data}
 						tableBody={(o: MessageOwner, i: number) => <div key={i} className='my-1'>
 							<ChatListGenerator o={o} />

@@ -2,8 +2,8 @@ import { DisputeLevel } from "./Typing"
 
 const IsRelease = true
 const PaystackMode: 'live' | 'sandbox' = 'live'
-export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "http://ojarh-properties.com/api"
-export const WSURL = IsRelease ? "wss://ojarhproperties.com/socket" : "ws://ojarh-properties.com/socket"
+export const BASEURL = IsRelease ? "https://ojarhproperties.com/api" : "http://localhost:80/api"
+export const WSURL = IsRelease ? "wss://socket.ojarhproperties.com" : "ws://localhost:8000"
 export const STORAGEURL = IsRelease ? "https://ojarhproperties.com" : "http://ojarh-properties.com"
 export const OjarhEmail = "support@ojarhproperties.com"
 export const OjarhAddress = "22 Oraifite Road, Uruagu Nnewi, Anambra State"

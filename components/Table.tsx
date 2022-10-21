@@ -3,7 +3,7 @@ import { IconButton } from "@mui/material"
 import React from "react"
 import { LoadState } from "../Typing.d"
 
-export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, perPage = 20, navLimit = 10 }: {
+export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, perPage = 15, navLimit = 10 }: {
     tableHead: () => JSX.Element,
     tableBody: (value: any, index: number) => JSX.Element,
     data: any[],
@@ -20,7 +20,7 @@ export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, pe
             {<TableHead />}
             {data !== undefined && <div>
                 <div>
-                    <div className="min-h-[50vh]">
+                    <div className="min-h-[70vh]">
                         {((state === 'success' || state === 'nil') && data.length !== 0) && data
                             .slice(page * perPage, page === 0 ? perPage : (page + 1) * perPage)
                             .map((value, index) => tableBody(value, page === 0 ? index : (perPage * page) + index))}
@@ -65,16 +65,12 @@ export const Table = ({ tableBody, tableHead: TableHead, state, data, noData, pe
                         }
                         {
                             pages.map((i) =>
-                                <>
-                                    {
-                                        ((Math.abs(i - page) <= navLimit)) &&
-                                        <div key={i}
-                                            className={`transit cursor-pointer border border-1 px-2 py-1 hover:bg-red-500 hover:text-white ${page === i && 'bg-red-500 text-white'}`}
-                                            onClick={() => setPage(i)}>
-                                            {i + 1}
-                                        </div>
-                                    }
-                                </>)
+                                ((Math.abs(i - page) <= navLimit)) &&
+                                <div key={i}
+                                    className={`my-2 transit cursor-pointer border border-1 px-2 py-1 hover:bg-red-500 hover:text-white ${page === i && 'bg-red-500 text-white'}`}
+                                    onClick={() => setPage(i)}>
+                                    {i + 1}
+                                </div>)
                         }
                         {
                             page + navLimit < pages.length - 1 && <>

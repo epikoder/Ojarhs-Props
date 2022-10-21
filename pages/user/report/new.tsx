@@ -2,6 +2,7 @@ import { ArrowBack } from "@mui/icons-material"
 import { Button, Card, CircularProgress, IconButton } from "@mui/material"
 import { useRouter } from "next/router"
 import React from "react"
+import { SocketState, useSocketBloc } from "utils/socket"
 import { FormInput } from "../../../components/FormInput"
 import { UserDashboardLayout } from "../../../components/user/UserDashboardLayout"
 import { Api } from "../../../helpers/api"
@@ -10,6 +11,7 @@ import { MesssageForm } from "../../../Typing.d"
 const Page = () => {
     const router = useRouter()
     const formRef = React.useRef<HTMLFormElement>()
+    const [_, { notify }] = useSocketBloc(SocketState)
 
     const [form, setForm] = React.useState<MesssageForm>({
         title: '',
@@ -30,6 +32,10 @@ const Page = () => {
             setMessage({
                 state: true,
                 message: 'Message sent successfully'
+            })
+            notify({
+                type: 'report',
+                message: 'You have a new report',
             })
             setTimeout(() => {
                 return router.back()

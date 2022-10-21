@@ -11,11 +11,13 @@ import { createAdminMessage } from "../../../actions/admin/admin"
 import { loadAllTenants } from "../../../actions/admin/tenant"
 import { RootState, useAppDispatch } from "../../../store"
 import { MesssageForm } from "../../../Typing.d"
+import { SocketState, useSocketBloc } from "utils/socket"
 
 const Page = () => {
     const { data, status } = useSelector((store: RootState) => store.tenantsSlice)
     const { state } = useSelector((store: RootState) => store.messageSlice)
     const router = useRouter()
+    const [_, { notify }] = useSocketBloc(SocketState)
 
     const dispatch = useAppDispatch()
     const formRef = React.useRef<HTMLFormElement>()
@@ -33,6 +35,11 @@ const Page = () => {
 
     React.useEffect(() => {
         if (state === 'success' && form.title !== '' && form.content !== '' && form.receiver !== '') {
+            notify({
+                message: 'You have a new message',
+                type: 'message',
+                receiver_id: form.receiver
+            })
             setTimeout(() => {
                 return router.back()
             }, 800)

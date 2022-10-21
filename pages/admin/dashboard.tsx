@@ -2,8 +2,35 @@ import { AdminDashboardLayout } from "../../components/admin/AdminDashboardLayou
 import { Card } from "@mui/material";
 import DashCards from "components/DashCards";
 import { Chat, Message, Report } from "@mui/icons-material";
+import { BlacReact, Cubit } from "blac";
+import { Api } from "helpers/api";
+import { ApiResponse } from "Typing";
+import { useEffect } from "react";
 
+type DashboardStateData = {
+	message: number, report: number, dispute: number
+}
+class DashboardState extends Cubit<DashboardStateData> {
+	constructor() {
+		super({ message: 0, dispute: 0, report: 0 })
+	}
+
+	fetchData = async () => {
+		try {
+			const { data } = await Api().get<ApiResponse<DashboardStateData>>('/admin/dashboard')
+			this.emit(data.data || { message: 0, dispute: 0, report: 0 })
+		} catch (error) {
+
+		}
+	}
+}
+const { useBloc } = new BlacReact([new DashboardState()])
 function Dashboard() {
+	const [{ dispute, message, report }, { fetchData }] = useBloc(DashboardState)
+
+	useEffect(() => {
+		fetchData()
+	}, [])
 	return <AdminDashboardLayout>
 		{
 			({ user }) => <div className="space-y-4">
@@ -18,17 +45,17 @@ function Dashboard() {
 				<div className="grid gap-2 md:grid-cols-2">
 					<DashCards
 						name="Messages"
-						value={102}
+						value={message}
 						endIcon={<Message />}
 						className='pt-2 p-4 text-lg' />
 					<DashCards
 						name="Disputes"
-						value={58}
+						value={dispute}
 						endIcon={<Chat />}
 						className=' pt-2 p-4 text-lg' />
 					<DashCards
 						name="Reports"
-						value={10}
+						value={report}
 						endIcon={<Report />}
 						className='pt-2 p-4 text-lg' />
 				</div>

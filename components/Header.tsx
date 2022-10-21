@@ -204,7 +204,7 @@ function Header() {
 						</IconButton>
 						:
 						<div className='lg:hidden flex'>
-							{/* <NotificationBox /> */}
+							<NotificationBox />
 							<IconButton
 								onClick={openMenu}>
 								<Menu />

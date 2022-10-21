@@ -1,81 +1,125 @@
 import { useRouter } from "next/router"
-import React, { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
 import { ChatHeader, MessageComponent, TypeBox } from "../../../components/ChatComponents"
 import Loader from "../../../components/Loader"
-import { Api } from "../../../helpers/api"
 import { loadAdminDisputes } from "../../../actions/admin/admin"
 import { RootState, useAppDispatch } from "../../../store"
 import { Message, MessageOwner, MessageType } from "../../../Typing.d"
 import { markMessageAsRead } from "actions/message"
+import { SocketState, useSocketBloc } from "utils/socket"
+import { BlacReact, Cubit } from "blac"
+import { Api } from "helpers/api"
+
+class ChatState extends Cubit<{ chat?: MessageOwner, channel?: string }>{
+    constructor() {
+        super({})
+    }
+    addMessage = (m: Message) => this.emit({
+        ...this.state, chat: { ...this.state.chat, messages: this.state.chat.messages.concat(m) }
+    })
+    setChatState = (state: { chat: MessageOwner, channel: string }) => this.emit(state)
+}
+const { useBloc: useChatBloc } = new BlacReact([new ChatState()])
 
 const Page = () => {
     const { data, state } = useSelector((store: RootState) => store.messageSlice)
     const { user } = useSelector((store: RootState) => store.authSlice)
-    const [conversation, setConversation] = React.useState<MessageOwner>()
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const chatBox = React.useRef<HTMLDivElement>()
+    const chatBox = useRef<HTMLDivElement>()
+    const [socket, {notify}] = useSocketBloc(SocketState)
+    const [{ chat, channel }, { addMessage, setChatState }] = useChatBloc(ChatState)
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!router.isReady) return
         if (state === 'nil') {
             dispatch(loadAdminDisputes())
             return
         }
         const c = data.find(o => o.id.toString() === router.query.id)
-        console.log(c)
-        if (c !== undefined) setConversation(c)
+        if (c !== undefined) {
+            const channel = 'message-dispute-' + c?.id
+            setChatState({ chat: c, channel })
+        }
     }, [data, router])
 
+    useEffect(() => {
+        socket.on(channel, (m: Message) => {
+            addMessage({ ...m, is_read: chatBox.current !== undefined })
+            if (chatBox.current) {
+                markMessageAsRead({
+                    owner: chat?.messages[0].owner_type,
+                    id: chat?.id
+                })
+            }
+        })
+    }, [channel])
+
     const send = async (message: string, type: MessageType = 'text'): Promise<boolean> => {
-        try {
-            const { status } = await Api().post('/admin/messages/create', JSON.stringify({
-                content: message,
-                id: conversation.id,
-                type: type,
-                is_dispute: true
-            } as Message))
-        } catch (error) {
-            console.log(error)
-            return false
-        }
-        setConversation({
-            ...conversation, messages: conversation.messages.concat({
-                content: type == 'text' ? message : 'storage/chat/' + message,
+        const receiver = chat.messages[0].sender.id === user.id ? chat.messages[0].receiver : chat.messages[0].sender
+        if (type !== 'text') {
+            try {
+                await Api().post('/admin/messages/create', JSON.stringify({
+                    content: message,
+                    id: chat.id,
+                    type: type,
+                    is_dispute: true
+                } as Message))
+            } catch (error) {
+                return false
+            }
+            addMessage({
+                content: 'storage/chat/' + message,
                 created_at: new Date(),
                 type: type,
-                owner_id: conversation.id,
+                owner_id: chat.id,
                 owner_type: "disputes",
                 sender: user,
-                receiver: conversation.messages[0].sender.id === user.id ? conversation.messages[0].receiver : conversation.messages[0].sender,
+                receiver: receiver,
             })
-        })
+            notify({
+                message: 'You got a new dispute',
+                type: 'dispute',
+                receiver_id: receiver.id,
+            })
+            return true
+        }
+        const payload: Message = {
+            content: message,
+            id: chat.id,
+            type: type,
+            sender: user,
+            receiver: receiver,
+        }
+        socket.emit(channel, payload)
         return true
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (chatBox.current == undefined) return
         chatBox.current.scrollTop = chatBox.current.scrollHeight
-    }, [conversation])
+    }, [chat])
 
     useEffect(() => {
         markMessageAsRead({
-            owner: conversation?.messages[0].owner_type,
-            id: conversation?.id
+            owner: chat?.messages[0].owner_type,
+            id: chat?.id
         })
-    }, [conversation])
+    }, [chat])
 
     return <AdminDashboardLayout style={{
         padding: '0px'
     }}>
         {({ user }) => <>
-            {conversation !== undefined && <div>
-                <ChatHeader title={conversation.title} message={conversation.messages[0]} />
-                <div className="flex flex-col justify-between h-[75vh] md:h-[70vh] lg:h-[75vh] bg-main">
-                    <div className="h-[80%] overflow-y-scroll" ref={chatBox}>
-                        {conversation.messages.map((m, i) =>
+            {chat !== undefined && <div>
+                <ChatHeader title={chat.title} message={chat.messages[0]} />
+                <div className="flex flex-col justify-between bg-main" style={{
+                    height: `calc(100vh - 200px)`
+                }}>
+                    <div className="overflow-y-scroll" ref={chatBox}>
+                        {chat.messages.map((m, i) =>
                             <div key={i}>
                                 <MessageComponent message={m} />
                             </div>
@@ -88,7 +132,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>}
-            {(state === 'success' || state === 'failed') && conversation === undefined &&
+            {(state === 'success' || state === 'failed') && chat === undefined &&
                 <div className="p-12 flex flex-col justify-center items-center">
                     CHAT NOT FOUND
                 </div>}
