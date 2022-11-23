@@ -9,8 +9,8 @@ export const OjarhEmail = "support@ojarhproperties.com"
 export const OjarhAddress = "22 Oraifite Road, Uruagu Nnewi, Anambra State"
 export const OjarhPhone = "+2349161103990"
 export const pk_key = PaystackMode as string === 'live'
-    ? 'pk_live_4c0f3320aee947b3031bbd229db688dde451e17b' :
-    'pk_test_7974282ff9c7f73d5afc1a79fd11746cba653e28'
+    ? 'pk_live_6ec1727801554d5e3a8ff0d12dbd1dccefba2877' :
+    'pk_test_3d46650f14145a55353137f119f1b3df6fcd80d7'
 export const applicationFee = 10000
 export const advertPrices = [{
     position: 'slider',
