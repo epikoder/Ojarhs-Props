@@ -1,7 +1,7 @@
 import React from "react"
 import { AdminDashboardLayout } from "../../../components/admin/AdminDashboardLayout"
 import { useSelector } from "react-redux";
-import { ApplianceInput, FormCountryInput, FormInput, FormPhoneInput } from "../../../components/FormInput";
+import { ApplianceInput, FormConfirmPasswordInput, FormCountryInput, FormInput, FormPasswordInput, FormPhoneInput } from "../../../components/FormInput";
 import { DocumentUpload, ImageUpload } from "../../../components/ImageUpload";
 import { ApiResponse, NextOfKin, SignUpForm } from "../../../Typing.d";
 import { emailValidator } from "../../../helpers/validation";
@@ -539,6 +539,27 @@ const Page = () => {
 					<DocumentUpload key={'document'} handleUpload={(s) => setForm({
 						...form, upload: s as unknown as string
 					})} documentType={docType} disabled={docType === '0'} />
+				</div>
+				<div>
+					<FormPasswordInput
+						props={{
+							title: 'Password',
+							name: 'password',
+							handleChange(s) {
+								setForm({
+									...form, password: s
+								})
+							},
+						}}
+					/>
+					<FormConfirmPasswordInput
+					props={{
+						name: 'c_password',
+						title: 'Confirm Password',
+						password: form.password,
+						requried: true
+					}}
+					/>
 				</div>
 				<div className="col-span-2">
 					<div className="flex items-center justify-center">
