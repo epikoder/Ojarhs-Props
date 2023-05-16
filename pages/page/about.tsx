@@ -22,6 +22,9 @@ const Page = () => {
 									<div className='font-medium text-3xl text-black'>
 										ABOUT<span className='text-red-500'>{" US"}</span>
 									</div>
+									<div>
+										{new Date().getFullYear() - 2020} years of experience
+									</div>
 									<hr
 										className='w-4/5 my-px bg-red-500'
 										style={{ height: "2px" }}
@@ -94,11 +97,11 @@ const Page = () => {
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2  justify-center my-4'>
 					<div className='relative md:w-full w-[70%] h-[30vh] md:h-full mx-auto quality '>
-						<img
+						<Image
 							src='/image/quality-removebg-preview.png'
 							alt='quality'
-							className="w-full max-h-[50vh] h-full object-cover"
-						/>
+							layout='fill'
+						/>{" "}
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto flex flex-col justify-center'>
 						{`We take pride in our work, performing to the highest possible standard team work: over values are not
@@ -149,7 +152,7 @@ const Page = () => {
 				</div>
 				<div className='grid grid-cols-1 md:grid-cols-2 items-center justify-center my-4'>
 					<div className='pl-4 overflow-hidden relative rounded-lg md:w-[80%] w-[70%] h-[30vh] md:h-[45vh] mx-auto quality '>
-						<img src='/image/ourvision.png' alt='quality' className="w-full max-h-[50vh] h-full object-cover" />
+						<Image src='/image/tower.jpg' alt='quality' layout='fill' />{" "}
 					</div>
 					<div className='p-4 max-w-md  lg:text-lg mx-auto'>
 						{`Ojarh global properties are specialist in residential, commercial and block management as well as many
@@ -278,7 +281,7 @@ const Page = () => {
 						</div>
 					</div>
 					<div
-						className='relative rounded-lg overflow-hidden md:rounded-none w-[80%] mx-auto md:w-full h-[30vh] md:h-full '
+						className='relative rounded-lg overflow-hidden md:rounded-none w-[60%] mx-auto md:w-full h-[30vh] md:h-full offer '
 						style={{
 							backgroundImage: "url('/image/offer.jpg')",
 							backgroundRepeat: "no-repeat",

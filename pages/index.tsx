@@ -12,9 +12,12 @@ import { useSelector } from "react-redux";
 import { Search } from "../components/Search";
 import { useRouter } from "next/router";
 import { Card } from "@mui/material";
+import Image from "next/image"
 import { Carousel } from "react-responsive-carousel";
+import Adverts from "./admin/adverts";
 import { resolveFilePath } from "../helpers/helpers";
 import { useEffect, useRef } from "react";
+
 
 type indexSliderType = {
 	postion: 'left' | 'right' | 'center'

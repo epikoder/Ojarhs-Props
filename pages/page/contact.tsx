@@ -204,14 +204,8 @@ const Page = () => {
 								</div>
 								<div className='flex space-x-2'>
 									<Place />
-									<div>{OjarhAddress}</div>
-								</div>
 							</div>
-						</div>
-					</div>
 				</div>
-
-				<div className="lg:max-w-[60vw] mb-4 mx-auto w-[90%] md:w-[80%] rounded-lg overflow-hidden">
 					<div className='mapouter w-full h-full'>
 						<div className='gmap_canvas w-full h-full'>
 							<iframe
@@ -226,6 +220,8 @@ const Page = () => {
 						</div>
 					</div>
 				</div>
+                </div>
+                </div>
 			</Paper>
 		</Layout>
 	);
